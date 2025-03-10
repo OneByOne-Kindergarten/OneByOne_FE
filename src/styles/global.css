@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Pretendard";
+  src: url("/fonts/PretendardVariable.woff2") format("woff2");
+}
+
+:root {
+  --font-pretendard: "Pretendard", sans-serif;
+}
+
+@layer base {
+  html {
+    @apply antialiased;
+  }
+
+  /* 기본 스타일 */
+}
+
+@layer components {
+  /* 컴포넌트 스타일 */
+}
+
+@layer utilities {
+  /* 유틸리티 스타일 */
+}
