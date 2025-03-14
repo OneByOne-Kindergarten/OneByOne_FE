@@ -1,8 +1,10 @@
 ---
 name: Bug
-title: ""
+about: for fix
+title: ''
 labels: bug
 assignees: 0zuth
+
 ---
 
 ## 📄 Description
