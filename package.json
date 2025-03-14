@@ -12,12 +12,19 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@radix-ui/react-slot": "^1.1.2",
     "@tanstack/react-query": "^5.67.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "express": "^4.21.2",
+    "lucide-react": "^0.479.0",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.3.0",
-    "vite-plugin-next-react-router": "^0.7.1"
+    "tailwind-merge": "^3.0.2",
+    "tailwindcss-animate": "^1.0.7",
+    "vite-plugin-ssr": "^0.4.142"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.5",
@@ -30,6 +37,7 @@
     "@storybook/react": "^8.6.4",
     "@storybook/react-vite": "^8.6.4",
     "@storybook/test": "^8.6.4",
+    "@types/express": "^5.0.0",
     "@types/node": "^22.13.10",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
@@ -49,11 +57,13 @@
     "prettier": "^3.5.3",
     "storybook": "^8.6.4",
     "tailwindcss": "^3.4.1",
+    "terser": "^5.39.0",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.24.1",
     "vite": "^6.2.0",
-    "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^3.0.8"
+    "vite-plugin-compression": "^0.5.1",
+    "vitest": "^3.0.8",
+    "webpack-bundle-analyzer": "^4.10.2"
   },
   "eslintConfig": {
     "extends": [
