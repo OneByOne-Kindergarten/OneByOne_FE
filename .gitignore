@@ -12,10 +12,6 @@ dist
 dist-ssr
 *.local
 
-# GitHub folder
-.github/
-GITHUB/
-
 # environment variables file
 .env.*.local
 
