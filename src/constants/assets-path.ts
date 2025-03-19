@@ -1,5 +1,5 @@
 export const SVG_PATHS = {
-  KINDERGARTEN: {
+  SCHOOL: {
     active: "/src/assets/icons/school-active.svg",
     inactive: "/src/assets/icons/school-inactive.svg",
   },
@@ -40,4 +40,11 @@ export const SVG_PATHS = {
   POLICY: "/src/assets/icons/policy.svg",
   SEARCH: "/src/assets/icons/search.svg",
   SETTING: "/src/assets/icons/setting.svg",
+  LOCATION: "/src/assets/icons/location.svg",
+  HOME: "/src/assets/icons/home.svg",
+  BUILDING: "/src/assets/icons/building.svg",
+  CHILD: "/src/assets/icons/child.svg",
+  CLASS: "/src/assets/icons/class.svg",
+  BOSS: "/src/assets/icons/boss.svg",
+  CLOCK: "/src/assets/icons/clock.svg",
 };
