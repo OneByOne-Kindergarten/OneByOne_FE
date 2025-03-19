@@ -9,7 +9,9 @@ import path from "path";
 export default defineConfig({
   plugins: [
     react(),
-    ssr(),
+    ssr({
+      disableAutoFullBuild: true,
+    }),
     svgr(),
     viteCompression({
       algorithm: "gzip",
