@@ -27,10 +27,35 @@ export const SVG_PATHS = {
     left: "/src/assets/icons/arrow-left.svg",
     right: "/src/assets/icons/arrow-right.svg",
   },
-  START: {
+  STAR: {
     gray: "/src/assets/icons/star-gray.svg",
+    darkgray: "/src/assets/icons/star-darkgray.svg",
     yellow: "/src/assets/icons/star-yellow.svg",
   },
+  EYE: {
+    off: "/src/assets/icons/eye-off.svg",
+    on: "/src/assets/icons/eye-on.svg",
+  },
+  CHAT: {
+    color: "/src/assets/icons/chat-color.svg",
+    line: "/src/assets/icons/chat-line.svg",
+  },
+  OAUTH: {
+    kakao: "/src/assets/icons/kakao.svg",
+    naver: "/src/assets/icons/naver.svg",
+    apple: "/src/assets/icons/apple.svg",
+  },
+  CHARACTER: {
+    chicken: "/src/assets/icons/character-chicken.svg",
+    chick: "/src/assets/icons/character-chick.svg",
+    user: "/src/assets/icons/character-user.svg",
+  },
+  NOTICE: "/src/assets/icons/notice.svg",
+  DOCUMENT_CHECK: "/src/assets/icons/document-check.svg",
+  CHART: "/src/assets/icons/chart.svg",
+  THUMBS_UP: "/src/assets/icons/thumbs-up.svg",
+  REPLY: "/src/assets/icons/reply.svg",
+  SHARE: "/src/assets/icons/share.svg",
   ALARM: "/src/assets/icons/alarm.svg",
   ALERT: "/src/assets/icons/alert.svg",
   BOOKMARKER: "/src/assets/icons/bookmarker.svg",
