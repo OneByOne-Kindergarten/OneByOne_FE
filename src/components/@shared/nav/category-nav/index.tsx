@@ -1,27 +1,26 @@
 import { Link } from "react-router-dom";
 
-interface CategoryItem {
+interface CategoryOption {
   href: string;
   label: string;
 }
 
 interface CategoryNavProps {
   id?: string;
-  items: CategoryItem[];
+  options: CategoryOption[];
   currentPath: string;
   className?: string;
 }
 
-// 개별 카테고리
-function CategoryItem({
+// 카테고리 옵션
+function CategoryOption({
   id,
   href,
   label,
   currentPath,
-}: CategoryItem & { id?: string; currentPath: string }) {
+}: CategoryOption & { id?: string; currentPath: string }) {
   const resolvedHref = id ? href.replace("id", id) : href;
 
-  // 현재 경로와 비교하여 활성 상태 결정
   const isActive = currentPath === resolvedHref;
   const activeStyle = "text-primary";
   const inactiveStyle = "text-primary-normal03";
@@ -58,14 +57,14 @@ function CategoryItem({
 // 메인 카테고리 네비게이션
 export default function CategoryNav({
   id,
-  items,
+  options,
   currentPath,
   className = "flex gap-5 px-5 py-3 font-semibold text-lg",
 }: CategoryNavProps) {
   return (
     <nav className={className}>
-      {items.map((item, index) => (
-        <CategoryItem
+      {options.map((item, index) => (
+        <CategoryOption
           key={index}
           id={id}
           href={item.href}

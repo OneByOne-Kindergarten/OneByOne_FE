@@ -1,8 +1,10 @@
 export const URL = {
   HOME: "/",
+  SIGNIN: "/signin",
+  SIGNUP: "/signup",
   SCHOOL: "/school",
-  COMMUNITY: "/community",
-  COMMUNITY_STUDENT: "/community/student",
+  COMMUNITY_TEACHER: "/community-teacher",
+  COMMUNITY_STUDENT: "/community-student",
   BOOKMARKS: "/bookmarks",
   USER: "/user",
   SCHOOL_DETAIL: "/school/:id",
