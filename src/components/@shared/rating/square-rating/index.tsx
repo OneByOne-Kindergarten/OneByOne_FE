@@ -93,3 +93,5 @@ export const SquareRatingGroup = React.memo(
     );
   }
 );
+
+SquareRatingGroup.displayName = "SquareRatingGroup";

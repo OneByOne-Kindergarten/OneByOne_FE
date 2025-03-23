@@ -1,22 +1,47 @@
 import * as React from "react";
-
+import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/utils/cn";
 
-const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
-  ({ className, type, ...props }, ref) => {
-    return (
-      <input
-        type={type}
-        className={cn(
-          "flex h-11 w-full rounded-md bg-primary-foreground text-primary p-5 text-sm transition-colors focus-visible:outline-1 focus-visible:outline-primary-normal03 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-primary-normal03 disabled:cursor-not-allowed disabled:opacity-50",
-          className
-        )}
-        ref={ref}
-        {...props}
-      />
-    );
+// cva를 사용하여 input 스타일 정의
+const inputVariants = cva(
+  "flex h-11 w-full rounded-md bg-primary-foreground text-primary transition-colors focus-visible:outline-1 focus-visible:outline-primary-normal03 placeholder:text-primary-normal03 disabled:cursor-not-allowed disabled:opacity-50",
+  {
+    variants: {
+      font: {
+        xs: "text-xs",
+        xs_sb: "font-semibold text-xs",
+        sm: "text-sm",
+        sm_sb: "font-semibold text-sm",
+        md: "text-base",
+        md_sb: "font-semibold text-base",
+        lg: "text-lg",
+        lg_sb: "font-semibold text-lg",
+      },
+      size: {
+        default: "p-5",
+        sm: "p-3",
+      },
+    },
+    defaultVariants: {
+      font: "sm", // 기본 폰트 설정
+      size: "default", // 기본 사이즈 설정
+    },
   }
 );
+
+const Input = React.forwardRef<
+  HTMLInputElement,
+  React.ComponentProps<"input"> & VariantProps<typeof inputVariants>
+>(({ className, font, size, type, ...props }, ref) => {
+  return (
+    <input
+      type={type}
+      className={cn(inputVariants({ font, size, className }))}
+      ref={ref}
+      {...props}
+    />
+  );
+});
 Input.displayName = "Input";
 
 export default Input;
