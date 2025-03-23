@@ -91,9 +91,11 @@ export default function PostEditor() {
                   selectedCategory === option.value ? "secondary" : "primary"
                 }
                 size="md"
+                font="md"
                 shape="full"
                 onClick={() => handleCategoryChange(option.value)}
                 type="button"
+                className="font-normal"
               >
                 {option.label}
               </Button>
@@ -114,7 +116,12 @@ export default function PostEditor() {
                   </span>
                 </div>
                 <FormControl>
-                  <Input placeholder="제목을 입력해주세요" {...field} />
+                  <Input
+                    font="md"
+                    size="sm"
+                    placeholder="제목을 입력해주세요"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -136,6 +143,8 @@ export default function PostEditor() {
                 </div>
                 <FormControl>
                   <Textarea
+                    font="md"
+                    padding="sm"
                     placeholder="자유롭게 내용을 작성해주세요. 
                     
 • 불편할 수 있는 비속어 사용은 피해 주세요. 

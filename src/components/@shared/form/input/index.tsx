@@ -19,12 +19,13 @@ const inputVariants = cva(
       },
       size: {
         default: "p-5",
-        sm: "p-3",
+        sm: "p-4",
+        xs: "p-3",
       },
     },
     defaultVariants: {
-      font: "sm", // 기본 폰트 설정
-      size: "default", // 기본 사이즈 설정
+      font: "sm",
+      size: "default",
     },
   }
 );

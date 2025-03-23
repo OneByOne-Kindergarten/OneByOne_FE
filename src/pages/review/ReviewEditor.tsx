@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import Button from "@/components/@shared/buttons/button";
+import AlertCard from "@/components/@shared/alert/alert-card";
 import { Toggle } from "@/components/@shared/buttons/toggle-button";
 import {
   Form,
@@ -410,7 +411,7 @@ export default function ReviewEditor() {
 
   const Step3Form = useMemo(() => {
     return (
-      <>
+      <section className="flex flex-col gap-10">
         <FormField
           control={form.control}
           name="overallRating"
@@ -432,7 +433,12 @@ export default function ReviewEditor() {
             </FormItem>
           )}
         />
-      </>
+        <AlertCard>
+          <strong>익명성 보장을 위한 안내</strong> <br /> 확실한 익명 보장을
+          위해 리뷰가 등록되면 리뷰에 익명 닉네임, 프로필 등 작성자에 대한
+          정보가 표기되지 않습니다.
+        </AlertCard>
+      </section>
     );
   }, [form]);
 

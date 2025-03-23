@@ -7,6 +7,7 @@ import { SVG_PATHS } from "@/constants/assets-path";
 import Badge from "@/components/@shared/badge";
 import { Toggle } from "@/components/@shared/buttons/toggle-button";
 import Button from "@/components/@shared/buttons/button";
+import AlertCard from "@/components/@shared/alert/alert-card";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import { CATEGORY_LABELS } from "@/constants/community";
 import type { Post } from "@/types/community";
@@ -114,17 +115,10 @@ export default function CommunityPost() {
                 <h2 className="font-semibold">{post.title}</h2>
                 <p className="text-sm">{post.content}</p>
               </div>
-              <div className="p-3 bg-primary-foreground rounded-md flex gap-2 items-start">
-                <div className="flex justify-center items-center bg-primary-normal01 rounded-full w-4 h-4">
-                  <span className="p-2 text-primary-dark01 text-xs font-bold">
-                    i
-                  </span>
-                </div>
-                <span className="text-xs text-primary-dark02">
-                  비속어 및 특정 인물에 대한 명예훼손으로 간주되는 내용이 포함될
-                  경우 삭제될 수 있습니다.
-                </span>
-              </div>
+              <AlertCard>
+                비속어 및 특정 인물에 대한 명예훼손으로 간주되는 내용이 포함될
+                경우 삭제될 수 있습니다.
+              </AlertCard>
             </section>
 
             <section className="flex justify-between">

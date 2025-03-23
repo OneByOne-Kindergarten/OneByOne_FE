@@ -40,11 +40,11 @@ const buttonVariants = cva(
       font: {
         xs_sb: "text-xs font-semibold",
         sm_sb: "text-sm font-semibold",
-        sm_md: "text-sm",
+        sm: "text-sm",
         md_sb: "text-md font-semibold",
-        md_md: "text-md font-medium",
+        md: "text-md",
         lg_sb: "text-lg font-semibold",
-        lg_md: "text-lg font-medium",
+        lg: "text-lg",
       },
 
       shape: {
