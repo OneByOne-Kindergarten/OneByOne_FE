@@ -10,6 +10,8 @@ export default function User() {
       description="사용자 프로필 및 설정"
       headerTitle="프로필"
       currentPath={URL.USER}
+      mainBg="gray"
+      hasBackButton={false}
     >
       <div>
         <section className="flex flex-col">
@@ -144,7 +146,7 @@ export default function User() {
         </div>
       </div>
 
-      <div className="mx-5 mb-16">
+      <div className="mx-5">
         <Button size="lg" variant="primary">
           로그아웃
         </Button>

@@ -1,8 +1,9 @@
 import { useParams } from "react-router-dom";
 import { URL } from "@/constants/url";
 import { SVG_PATHS } from "@/constants/assets-path";
+import { REVIEW_TYPES } from "@/constants/review";
 import PageLayout from "@/components/@shared/layout/page-layout";
-import CategoryNav from "@/components/@shared/nav/category-nav";
+import NavBar from "@/components/@shared/nav/nav-bar";
 import SchoolInfoItem from "@/components/school/school-info-item";
 import SchoolInfoChart from "@/components/school/school-info-chart";
 
@@ -10,8 +11,19 @@ export default function SchoolDetail() {
   const { id } = useParams<{ id: string }>();
   const safeId = id || "unknown";
 
-  // mockData
-  const schoolData = {
+  const CATEGORY_OPTIONS = [
+    { href: `/school/${safeId}`, label: "기관정보" },
+    {
+      href: `/school/${safeId}/review?type=${REVIEW_TYPES.WORK}`,
+      label: "근무리뷰",
+    },
+    {
+      href: `/school/${safeId}/review?type=${REVIEW_TYPES.LEARNING}`,
+      label: "실습리뷰",
+    },
+  ];
+
+  const SCHOOL_DETAIL_INFO = {
     address: "서울특별시 강남구 테헤란로 123",
     bossName: "홍길동",
     establishmentType: "사립",
@@ -37,15 +49,6 @@ export default function SchoolDetail() {
     },
   };
 
-  const categoryOptions = [
-    { href: URL.SCHOOL_DETAIL.replace(":id", safeId), label: "기관정보" },
-    { href: URL.SCHOOL_REVIEW_WORK.replace(":id", safeId), label: "근무리뷰" },
-    {
-      href: URL.SCHOOL_REVIEW_LEARNING.replace(":id", safeId),
-      label: "실습리뷰",
-    },
-  ];
-
   return (
     <PageLayout
       title={`원바원 | ${safeId} 상세정보`}
@@ -54,9 +57,9 @@ export default function SchoolDetail() {
       currentPath={URL.SCHOOL_DETAIL.replace(":id", safeId)}
       wrapperBg="white"
     >
-      <CategoryNav
+      <NavBar
         id={safeId}
-        options={categoryOptions}
+        options={CATEGORY_OPTIONS}
         currentPath={URL.SCHOOL_DETAIL.replace(":id", safeId)}
       />
       <section className="px-5 pt-3 pb-20">
@@ -73,7 +76,7 @@ export default function SchoolDetail() {
                 altText="위치 아이콘"
               >
                 <p className="text-base font-semibold text-primary-dark02">
-                  {schoolData.address}
+                  {SCHOOL_DETAIL_INFO.address}
                 </p>
               </SchoolInfoItem>
               <div className="bg-primary-normal01 h-40 rounded-md">map</div>
@@ -84,7 +87,7 @@ export default function SchoolDetail() {
               title="원장"
               altText="원장 아이콘"
             >
-              {schoolData.bossName}
+              {SCHOOL_DETAIL_INFO.bossName}
             </SchoolInfoItem>
 
             <SchoolInfoItem
@@ -94,14 +97,14 @@ export default function SchoolDetail() {
             >
               <div className="flex flex-col gap-3">
                 <p className="text-base font-semibold text-primary-dark02">
-                  {schoolData.establishmentType}
+                  {SCHOOL_DETAIL_INFO.establishmentType}
                 </p>
                 <div className="flex flex-col">
                   <p>
-                    설립 <span>{schoolData.establishmentDate}</span>
+                    설립 <span>{SCHOOL_DETAIL_INFO.establishmentDate}</span>
                   </p>
                   <p>
-                    개원 <span>{schoolData.openDate}</span>
+                    개원 <span>{SCHOOL_DETAIL_INFO.openDate}</span>
                   </p>
                 </div>
               </div>
@@ -112,21 +115,21 @@ export default function SchoolDetail() {
               title="운영시간"
               altText="시계 아이콘"
             >
-              {schoolData.operationHours}
+              {SCHOOL_DETAIL_INFO.operationHours}
             </SchoolInfoItem>
 
             <SchoolInfoChart
               title="학급"
-              totalCount={schoolData.classes.total}
+              totalCount={SCHOOL_DETAIL_INFO.classes.total}
               unit="class"
-              stats={schoolData.classes.stats}
+              stats={SCHOOL_DETAIL_INFO.classes.stats}
             />
 
             <SchoolInfoChart
               title="원생"
-              totalCount={schoolData.students.total}
+              totalCount={SCHOOL_DETAIL_INFO.students.total}
               unit="student"
-              stats={schoolData.students.stats}
+              stats={SCHOOL_DETAIL_INFO.students.stats}
             />
 
             <SchoolInfoItem
@@ -135,12 +138,12 @@ export default function SchoolDetail() {
               altText="홈 아이콘"
             >
               <a
-                href={schoolData.homepage}
+                href={SCHOOL_DETAIL_INFO.homepage}
                 className="text-primary-dark02 font-semibold hover:underline"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {schoolData.homepage}
+                {SCHOOL_DETAIL_INFO.homepage}
               </a>
             </SchoolInfoItem>
           </ul>

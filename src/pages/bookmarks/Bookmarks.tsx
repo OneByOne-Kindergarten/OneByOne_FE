@@ -10,6 +10,7 @@ export default function Bookmarks() {
       currentPath={URL.BOOKMARKS}
       headerTitle="즐겨찾기"
       mainBg="gray"
+      hasBackButton={false}
     >
       <ul className="flex flex-col gap-2 my-3">
         <SchoolCard />

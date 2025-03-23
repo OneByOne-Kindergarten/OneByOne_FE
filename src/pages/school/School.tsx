@@ -11,6 +11,7 @@ export default function School() {
       headerTitle="기관 찾기"
       currentPath={URL.SCHOOL}
       mainBg="gray"
+      hasBackButton={false}
     >
       <section className="p-5 flex flex-col gap-3">
         <div className="bg-primary-normal01 h-52 rounded-md text-primary-normal02">

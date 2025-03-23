@@ -16,7 +16,7 @@ const LAST_VISITED_PATHS_KEY = "lastVisitedPaths";
 const ROOT_URL_KEYS: UrlKeys[] = [
   "HOME",
   "SCHOOL",
-  "COMMUNITY_TEACHER",
+  "COMMUNITY",
   "BOOKMARKS",
   "USER",
 ];
@@ -24,19 +24,25 @@ const ROOT_URL_KEYS: UrlKeys[] = [
 // 상위 UrlKey 및 하위 UrlKey 그룹화
 const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
   HOME: ["HOME"],
-  SCHOOL: [
-    "SCHOOL",
-    "SCHOOL_DETAIL",
-    "SCHOOL_REVIEW_WORK",
-    "SCHOOL_REVIEW_LEARNING",
+  SCHOOL: ["SCHOOL", "SCHOOL_DETAIL", "SCHOOL_REVIEW", "SCHOOL_REVIEW_EDITOR"],
+  COMMUNITY: [
+    "COMMUNITY",
+    "COMMUNITY_TEACHER",
+    "COMMUNITY_STUDENT",
+    "COMMUNITY_POST",
+    "COMMUNITY_POST_EDITOR",
   ],
-  COMMUNITY_TEACHER: ["COMMUNITY_TEACHER", "COMMUNITY_STUDENT"],
   BOOKMARKS: ["BOOKMARKS"],
   USER: ["USER"],
+  COMMUNITY_TEACHER: [],
   COMMUNITY_STUDENT: [],
+  COMMUNITY_POST: [],
+  COMMUNITY_POST_EDITOR: [],
   SCHOOL_DETAIL: [],
-  SCHOOL_REVIEW_WORK: [],
-  SCHOOL_REVIEW_LEARNING: [],
+  SCHOOL_REVIEW: [],
+  SCHOOL_REVIEW_EDITOR: [],
+  SIGNIN: [],
+  SIGNUP: [],
 };
 
 const NAV_BAR_ITEMS = [
@@ -49,7 +55,7 @@ const NAV_BAR_ITEMS = [
   },
   {
     label: "커뮤니티",
-    urlKey: "COMMUNITY_TEACHER" as UrlKeys,
+    urlKey: "COMMUNITY" as UrlKeys,
     ariaLabel: "커뮤니티 페이지로 이동",
     dataButtonName: "커뮤니티",
     iconPaths: SVG_PATHS.COMMUNITY,
@@ -71,24 +77,40 @@ const NAV_BAR_ITEMS = [
 ];
 
 export default function GlobalNavBar({ currentPath }: GlobalNavBarProps) {
-  // 현재 경로를 UrlKey로 변환
+  const getPathWithoutParams = (path: string): string => {
+    return path.split("?")[0];
+  };
+
+  // 경로 UrlKey로 변환
   const getCurrentUrlKey = (): UrlKeys | undefined => {
+    const pathWithoutParams = getPathWithoutParams(currentPath);
+
+    const exactMatch = Object.entries(URL).find(
+      ([_, path]) => getPathWithoutParams(path) === pathWithoutParams
+    );
+    if (exactMatch) return exactMatch[0] as UrlKeys;
+
+    // 정확히 일치하지 않는 경우 패턴 매칭
     return Object.entries(URL).find(([, path]) => {
       const pathPattern =
         path.replace(/:[^/]+/g, "[^/]+").replace(/\//g, "\\/") + "$";
       const regex = new RegExp(pathPattern);
-      return regex.test(currentPath);
+      return regex.test(pathWithoutParams);
     })?.[0] as UrlKeys | undefined;
   };
 
-  // 세션 스토리지에서 마지막으로 방문한 경로 정보 가져오기
+  const isCommunityPost = (): boolean => {
+    return getPathWithoutParams(currentPath).startsWith("/community-post/");
+  };
+
   const getLastVisitedPaths = (): Record<UrlKeys, string> => {
+    if (typeof window === "undefined") return {} as Record<UrlKeys, string>;
     const storedPaths = sessionStorage.getItem(LAST_VISITED_PATHS_KEY);
     return storedPaths ? JSON.parse(storedPaths) : {};
   };
 
-  // 세션 스토리지에 마지막으로 방문한 경로 정보 저장
   const saveLastVisitedPath = (urlKey: UrlKeys, path: string) => {
+    if (typeof window === "undefined") return;
     const lastVisitedPaths = getLastVisitedPaths();
     lastVisitedPaths[urlKey] = path;
     sessionStorage.setItem(
@@ -99,9 +121,15 @@ export default function GlobalNavBar({ currentPath }: GlobalNavBarProps) {
 
   useEffect(() => {
     const currentUrlKey = getCurrentUrlKey();
-    if (!currentUrlKey) return;
+    if (!currentUrlKey) {
+      // 게시글 작성 페이지일 경우 커뮤니티로 처리
+      if (isCommunityPost()) {
+        saveLastVisitedPath("COMMUNITY", currentPath);
+      }
+      return;
+    }
 
-    // 현재 경로가 속한 상위 메뉴 찾기
+    // 현재 경로가 속한 상위 페이지 검색
     const parentUrlKey = ROOT_URL_KEYS.find((rootKey) =>
       URL_GROUPS[rootKey]?.includes(currentUrlKey)
     );
@@ -111,8 +139,17 @@ export default function GlobalNavBar({ currentPath }: GlobalNavBarProps) {
     }
   }, [currentPath]);
 
-  // 해당 URL 키에 대한 경로 가져오기
   const getUrlForKey = (urlKey: UrlKeys): string => {
+    const currentUrlKey = getCurrentUrlKey();
+
+    // 에디터 페이지에서는 이전 페이지로 이동
+    if (
+      currentUrlKey === "SCHOOL_REVIEW_EDITOR" ||
+      currentUrlKey === "COMMUNITY_POST_EDITOR"
+    ) {
+      return "#";
+    }
+
     // URL 객체에 해당 키가 없는 경우 대비
     if (!(urlKey in URL)) {
       console.warn(`URL key ${urlKey} not found in URL object`);
@@ -123,6 +160,11 @@ export default function GlobalNavBar({ currentPath }: GlobalNavBarProps) {
       return URL[urlKey];
     }
 
+    if (urlKey === "COMMUNITY") {
+      const lastVisitedPaths = getLastVisitedPaths();
+      return lastVisitedPaths[urlKey] || `${URL[urlKey]}?type=teacher`;
+    }
+
     const lastVisitedPaths = getLastVisitedPaths();
     return lastVisitedPaths[urlKey] || URL[urlKey];
   };
@@ -130,15 +172,21 @@ export default function GlobalNavBar({ currentPath }: GlobalNavBarProps) {
   // 현재 경로가 urlKey 그룹에 속하는지 확인
   const isPathActive = (urlKey: UrlKeys): boolean => {
     const currentUrlKey = getCurrentUrlKey();
+    const pathWithoutParams = getPathWithoutParams(currentPath);
 
     if (urlKey === "HOME") {
-      return currentPath === "/";
+      return pathWithoutParams === "/";
     }
 
     // URL_GROUPS에 해당 키가 없는 경우 대비
     if (!(urlKey in URL_GROUPS)) {
       console.warn(`URL key ${urlKey} not found in URL_GROUPS`);
       return false;
+    }
+
+    // 커뮤니티 게시글 페이지인 경우
+    if (urlKey === "COMMUNITY" && isCommunityPost()) {
+      return true;
     }
 
     return (
@@ -150,7 +198,6 @@ export default function GlobalNavBar({ currentPath }: GlobalNavBarProps) {
     <nav className="fixed bottom-0 h-14 items-center w-full text-xs min-w-80 max-w-3xl bg-white flex py-3 px-8 mx-auto justify-between border-t border-opacity-5 font-bold">
       {NAV_BAR_ITEMS.map(
         ({ label, urlKey, ariaLabel, dataButtonName, iconPaths }) => {
-          // URL 객체에 없는 키가 사용되었는지 확인
           if (!(urlKey in URL)) {
             console.warn(`Invalid URL key: ${urlKey}`);
             return null;
@@ -158,6 +205,18 @@ export default function GlobalNavBar({ currentPath }: GlobalNavBarProps) {
 
           const isActive = isPathActive(urlKey);
           const linkPath = getUrlForKey(urlKey);
+          const currentUrlKey = getCurrentUrlKey();
+
+          // 뒤로가기 적용 페이지
+          const handleClick = (e: React.MouseEvent) => {
+            if (
+              currentUrlKey === "SCHOOL_REVIEW_EDITOR" ||
+              currentUrlKey === "COMMUNITY_POST_EDITOR"
+            ) {
+              e.preventDefault();
+              window.history.back();
+            }
+          };
 
           return (
             <Link
@@ -166,6 +225,7 @@ export default function GlobalNavBar({ currentPath }: GlobalNavBarProps) {
               aria-label={ariaLabel}
               data-button-name={dataButtonName}
               data-section-name="gnb"
+              onClick={handleClick}
               className={`flex flex-col text-xxs items-center ${isActive ? "text-primary" : "text-primary-normal03"}`}
             >
               <img

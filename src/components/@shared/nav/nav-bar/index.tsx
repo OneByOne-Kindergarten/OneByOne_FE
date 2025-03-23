@@ -1,31 +1,44 @@
 import { Link } from "react-router-dom";
 
-interface CategoryOption {
+interface Option {
   href: string;
   label: string;
 }
 
-interface CategoryNavProps {
+interface NavBarProps {
   id?: string;
-  options: CategoryOption[];
+  options: Option[];
   currentPath: string;
   className?: string;
 }
 
-// 카테고리 옵션
-function CategoryOption({
+function Option({
   id,
   href,
   label,
   currentPath,
-}: CategoryOption & { id?: string; currentPath: string }) {
-  const resolvedHref = id ? href.replace("id", id) : href;
+}: Option & { id?: string; currentPath: string }) {
+  const resolvedHref = id ? href.replace(":id", id) : href;
 
-  const isActive = currentPath === resolvedHref;
+  // 쿼리 파라미터가 있는 경우
+  const isActive = (() => {
+    const [path, params] = currentPath.split("?");
+    const [targetPath, targetParams] = resolvedHref.split("?");
+
+    if (!currentPath.startsWith(targetPath) && !targetPath.startsWith(path)) {
+      return false;
+    }
+
+    if (params && targetParams) {
+      return currentPath === resolvedHref;
+    }
+
+    return path === targetPath;
+  })();
+
   const activeStyle = "text-primary";
   const inactiveStyle = "text-primary-normal03";
 
-  // 환경에 따라 Link 또는 a 태그 사용
   const isClientSide = typeof window !== "undefined";
 
   if (isClientSide) {
@@ -33,6 +46,9 @@ function CategoryOption({
       <Link
         to={resolvedHref}
         className={isActive ? activeStyle : inactiveStyle}
+        onClick={(e) => {
+          console.log("Navigating to:", resolvedHref);
+        }}
       >
         {isActive ? (
           <span className="pb-1 border-b-2 border-primary">{label}</span>
@@ -55,16 +71,16 @@ function CategoryOption({
 }
 
 // 메인 카테고리 네비게이션
-export default function CategoryNav({
+export default function NavBar({
   id,
   options,
   currentPath,
-  className = "flex gap-5 px-5 py-3 font-semibold text-lg",
-}: CategoryNavProps) {
+  className = "flex bg-white gap-5 px-5 py-3 font-semibold text-lg",
+}: NavBarProps) {
   return (
     <nav className={className}>
       {options.map((item, index) => (
-        <CategoryOption
+        <Option
           key={index}
           id={id}
           href={item.href}

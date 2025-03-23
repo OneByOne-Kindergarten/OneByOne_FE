@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Button } from ".";
+import Button from ".";
 
 const meta = {
   title: "Component/Button",
@@ -15,7 +15,7 @@ const meta = {
         "primary",
         "secondary",
         "transparent",
-        "transparentGray",
+        "transparent_gray",
         "destructive",
         "link",
       ],
@@ -59,7 +59,7 @@ export const Confirm: Story = {
 export const Cancel: Story = {
   args: {
     children: "취소",
-    variant: "transparentGray",
+    variant: "transparent_gray",
     size: "sm",
   },
 };

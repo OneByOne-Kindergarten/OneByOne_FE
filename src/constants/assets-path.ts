@@ -50,6 +50,7 @@ export const SVG_PATHS = {
     chick: "/src/assets/icons/character-chick.svg",
     user: "/src/assets/icons/character-user.svg",
   },
+  KEBAB: "/src/assets/icons/kebab.svg",
   NOTICE: "/src/assets/icons/notice.svg",
   DOCUMENT_CHECK: "/src/assets/icons/document-check.svg",
   CHART: "/src/assets/icons/chart.svg",
