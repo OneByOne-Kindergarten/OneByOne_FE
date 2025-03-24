@@ -74,7 +74,8 @@ export default function PostEditor() {
       title="원바원 | 커뮤니티 글쓰기"
       description="원바원 커뮤니티 게시글 작성"
       currentPath={URL.COMMUNITY}
-      headerTitle="게시글 작성"
+      headerTitle=" "
+      headerType="save"
       wrapperBg="white"
       hasBackButton={true}
     >
@@ -88,9 +89,9 @@ export default function PostEditor() {
               <Button
                 key={option.value}
                 variant={
-                  selectedCategory === option.value ? "secondary" : "primary"
+                  selectedCategory === option.value ? "secondary" : "default"
                 }
-                size="md"
+                size="lg"
                 font="md"
                 shape="full"
                 onClick={() => handleCategoryChange(option.value)}

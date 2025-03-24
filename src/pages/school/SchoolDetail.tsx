@@ -54,6 +54,7 @@ export default function SchoolDetail() {
       title={`원바원 | ${safeId} 상세정보`}
       description={`${safeId} 유치원 상세 정보`}
       headerTitle={`${safeId}`}
+      headerType="school"
       currentPath={URL.SCHOOL_DETAIL.replace(":id", safeId)}
       wrapperBg="white"
     >

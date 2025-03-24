@@ -57,6 +57,7 @@ export default function Community() {
         communityType === "teacher" ? "교사" : "예비교사"
       } 커뮤니티`}
       headerTitle="커뮤니티"
+      headerType="community"
       description="유치원 교사와 예비교사를 위한 커뮤니티"
       currentPath={`/community?type=${communityType}&category=${categoryType}`}
       mainClassName="flex flex-col gap-6 pb-6 mb-28"

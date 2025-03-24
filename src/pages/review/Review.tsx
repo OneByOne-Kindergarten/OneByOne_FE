@@ -50,6 +50,7 @@ export default function Review() {
       title={`원바원 | ${safeId} ${REVIEW_TYPE_LABELS[reviewType]}`}
       description={`${safeId} 유치원 ${REVIEW_TYPE_LABELS[reviewType]} 정보`}
       headerTitle={`${safeId}`}
+      headerType="school"
       currentPath={reviewPath}
       mainBg={reviewType === REVIEW_TYPES.WORK ? "gray" : "white"}
       mainClassName={reviewType === REVIEW_TYPES.WORK ? "gap-0 mb-28" : "mb-28"}

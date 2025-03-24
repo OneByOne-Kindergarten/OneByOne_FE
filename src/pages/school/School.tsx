@@ -9,6 +9,7 @@ export default function School() {
       title="원바원 | 기관 찾기"
       description="지도와 검색을 통해 기관 찾기"
       headerTitle="기관 찾기"
+      headerType="school"
       currentPath={URL.SCHOOL}
       mainBg="gray"
       hasBackButton={false}

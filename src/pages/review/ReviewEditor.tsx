@@ -152,6 +152,7 @@ export default function ReviewEditor() {
                   <Toggle
                     variant="primary"
                     font="md"
+                    size="lg"
                     shape="full"
                     value="less_than_2_years"
                     pressed={field.value === "less_than_2_years"}
@@ -162,6 +163,7 @@ export default function ReviewEditor() {
                   <Toggle
                     variant="primary"
                     font="md"
+                    size="lg"
                     shape="full"
                     value="between_2_and_5_years"
                     pressed={field.value === "between_2_and_5_years"}
@@ -174,6 +176,7 @@ export default function ReviewEditor() {
                   <Toggle
                     variant="primary"
                     font="md"
+                    size="lg"
                     shape="full"
                     value="more_than_5_years"
                     pressed={field.value === "more_than_5_years"}
@@ -476,7 +479,8 @@ export default function ReviewEditor() {
   return (
     <PageLayout
       title="원바원 | 리뷰 작성"
-      headerTitle="리뷰 작성"
+      headerTitle=" "
+      headerType="save"
       description="유치원 리뷰 작성"
       currentPath={`/school/${safeId}/review/new?type=${reviewType}`}
       hasBackButton
@@ -499,7 +503,7 @@ export default function ReviewEditor() {
             )}
 
             <Button onClick={handleNext} size="md" className="w-20">
-              {step === 3 ? "완료" : "다음"}
+              {step === 3 ? "등록" : "다음"}
             </Button>
           </div>
         </div>

@@ -10,7 +10,8 @@ import { URL } from "@/constants/url";
 type UrlKeys = keyof typeof URL;
 
 interface HeaderProps extends VariantProps<typeof headerVariants> {
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  title?: string;
   hasBackButton?: boolean;
   onBackButtonClick?: () => void;
 }
@@ -61,6 +62,7 @@ const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
   SCHOOL_REVIEW_EDITOR: [],
   SIGNIN: [],
   SIGNUP: [],
+  TEST: [],
 };
 
 // 에디터 페이지 관련 키
@@ -77,6 +79,7 @@ const SESSION_STORAGE_BASED_URL_KEYS: UrlKeys[] = [
 
 export default function Header({
   children,
+  title,
   hasBorder = true,
   hasBackButton,
   onBackButtonClick,
@@ -85,12 +88,10 @@ export default function Header({
   const location = useLocation();
   const [shouldShowBackButton, setShouldShowBackButton] = useState(false);
 
-  // 현재 경로에서 쿼리 파라미터 제거
   const getPathWithoutParams = useCallback((path: string): string => {
     return path.split("?")[0];
   }, []);
 
-  // 현재 경로를 UrlKey로 변환
   const getCurrentUrlKey = useCallback((): UrlKeys | undefined => {
     const pathWithoutParams = getPathWithoutParams(location.pathname);
 
@@ -112,7 +113,6 @@ export default function Header({
 
   // 뒤로가기 버튼 표시 여부 결정
   useEffect(() => {
-    // props로 전달된 경우 그대로 사용
     if (hasBackButton !== undefined) {
       setShouldShowBackButton(hasBackButton);
       return;
@@ -147,7 +147,7 @@ export default function Header({
     setShouldShowBackButton(segments.length >= 1);
   }, [hasBackButton, location.pathname, getCurrentUrlKey]);
 
-  // 뒤로가기 처리 함수
+  // 뒤로가기 처리
   const handleBackNavigation = () => {
     console.log("현재 경로:", location.pathname);
 
@@ -236,7 +236,10 @@ export default function Header({
           <img src={SVG_PATHS.ARROW.left} alt="뒤로 가기" className="w-6 h-6" />
         </button>
       )}
-      <h1>{children}</h1>
+      <div className="flex items-center justify-between w-full">
+        {title && <h1>{title}</h1>}
+        {children}
+      </div>
     </header>
   );
 }
