@@ -2,7 +2,7 @@ import React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/utils/cn";
 
-const squareVariants = cva("cursor-pointer transition-colors", {
+const boxVariants = cva("cursor-pointer transition-colors", {
   variants: {
     size: {
       sm: "w-6 h-6",
@@ -20,14 +20,14 @@ const squareVariants = cva("cursor-pointer transition-colors", {
   },
 });
 
-export interface RatingSquareProps
+export interface RatingBoxProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof squareVariants> {
+    VariantProps<typeof boxVariants> {
   value: number;
   isSelected?: boolean;
 }
 
-export const RatingSquare = React.memo(
+export const RatingBox = React.memo(
   ({
     className,
     value,
@@ -35,12 +35,10 @@ export const RatingSquare = React.memo(
     isSelected = false,
     onClick,
     ...props
-  }: RatingSquareProps) => {
+  }: RatingBoxProps) => {
     return (
       <div
-        className={cn(
-          squareVariants({ size, selected: isSelected, className })
-        )}
+        className={cn(boxVariants({ size, selected: isSelected, className }))}
         onClick={onClick}
         aria-selected={isSelected}
         role="button"
@@ -52,8 +50,6 @@ export const RatingSquare = React.memo(
   }
 );
 
-RatingSquare.displayName = "RatingSquare";
-
 export interface RatingGroupProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
   value: number;
@@ -62,7 +58,7 @@ export interface RatingGroupProps
   size?: "sm" | "md" | "lg";
 }
 
-export const SquareRatingGroup = React.memo(
+export const BoxRatingGroup = React.memo(
   ({
     value,
     onChange,
@@ -81,7 +77,7 @@ export const SquareRatingGroup = React.memo(
     return (
       <div className={cn("flex gap-2", className)} {...props}>
         {Array.from({ length: max }, (_, i) => i + 1).map((rating) => (
-          <RatingSquare
+          <RatingBox
             key={rating}
             value={rating}
             size={size}
@@ -93,5 +89,3 @@ export const SquareRatingGroup = React.memo(
     );
   }
 );
-
-SquareRatingGroup.displayName = "SquareRatingGroup";

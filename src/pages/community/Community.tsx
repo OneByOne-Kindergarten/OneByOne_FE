@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 
-import { URL } from "@/constants/url";
 import { COMMUNITY_CATEGORIES, CATEGORY_LABELS } from "@/constants/community";
 import NavBar from "@/components/@shared/nav/nav-bar";
 import PageLayout from "@/components/@shared/layout/page-layout";

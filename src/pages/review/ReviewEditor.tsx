@@ -1,10 +1,11 @@
 import { useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+
 import PageLayout from "@/components/@shared/layout/page-layout";
-import Button from "@/components/@shared/buttons/button";
+import Button from "@/components/@shared/buttons/base-button";
 import AlertCard from "@/components/@shared/alert/alert-card";
-import { Toggle } from "@/components/@shared/buttons/toggle-button";
+import Toggle from "@/components/@shared/buttons/base-toggle";
 import {
   Form,
   FormItem,
@@ -16,7 +17,7 @@ import {
 import Input from "@/components/@shared/form/input";
 import Textarea from "@/components/@shared/form/textarea";
 import { setReviewState, getReviewState } from "@/utils/sessionStorage";
-import { SquareRatingGroup } from "@/components/@shared/rating/square-rating";
+import { BoxRatingGroup } from "@/components/@shared/rating/box-rating";
 import { StarRating } from "@/components/@shared/rating/star-rating";
 
 // 폼 필드 및 유효성 검사 인터페이스
@@ -218,7 +219,7 @@ export default function ReviewEditor() {
                 </FormLabel>
                 <FormControl>
                   <div className="flex justify-center">
-                    <SquareRatingGroup
+                    <BoxRatingGroup
                       value={field.value}
                       onChange={(value) => field.onChange(value)}
                       size="md"
@@ -261,7 +262,7 @@ export default function ReviewEditor() {
               </FormLabel>
               <FormControl>
                 <div className="flex justify-center">
-                  <SquareRatingGroup
+                  <BoxRatingGroup
                     value={field.value}
                     onChange={(value) => field.onChange(value)}
                     size="md"
@@ -310,7 +311,7 @@ export default function ReviewEditor() {
               </FormLabel>
               <FormControl>
                 <div className="flex justify-center">
-                  <SquareRatingGroup
+                  <BoxRatingGroup
                     value={field.value}
                     onChange={(value) => field.onChange(value)}
                     size="md"
@@ -352,7 +353,7 @@ export default function ReviewEditor() {
               </FormLabel>
               <FormControl>
                 <div className="flex justify-center">
-                  <SquareRatingGroup
+                  <BoxRatingGroup
                     value={field.value}
                     onChange={(value) => field.onChange(value)}
                     size="md"
@@ -394,7 +395,7 @@ export default function ReviewEditor() {
               </FormLabel>
               <FormControl>
                 <div className="flex justify-center">
-                  <SquareRatingGroup
+                  <BoxRatingGroup
                     value={field.value}
                     onChange={(value) => field.onChange(value)}
                     size="md"
@@ -490,12 +491,7 @@ export default function ReviewEditor() {
 
           <div className="flex justify-between mt-4">
             {step > 1 ? (
-              <Button
-                onClick={handlePrev}
-                size="md"
-                variant="outline"
-                className="w-20"
-              >
+              <Button onClick={handlePrev} size="md" className="w-20">
                 이전
               </Button>
             ) : (

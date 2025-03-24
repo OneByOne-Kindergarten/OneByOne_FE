@@ -3,6 +3,31 @@ import { SVG_PATHS } from "@/constants/assets-path";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/utils/cn";
 
+const starRatingVariants = cva("flex items-center cursor-pointer", {
+  variants: {
+    size: {
+      sm: "gap-1",
+      md: "gap-2",
+      lg: "gap-3",
+    },
+  },
+  defaultVariants: {
+    size: "md",
+  },
+});
+
+const starIconVariants = cva("text-tertiary-2 transition-all", {
+  variants: {
+    size: {
+      sm: "w-4 h-4",
+      lg: "w-10 h-10",
+    },
+  },
+  defaultVariants: {
+    size: "sm",
+  },
+});
+
 export const StarIcon = React.memo(
   ({
     filled = false,
@@ -17,35 +42,6 @@ export const StarIcon = React.memo(
     />
   )
 );
-
-StarIcon.displayName = "StarIcon";
-
-// 별점 아이템 스타일
-const starRatingVariants = cva("flex items-center cursor-pointer", {
-  variants: {
-    size: {
-      sm: "gap-1",
-      md: "gap-2",
-      lg: "gap-3",
-    },
-  },
-  defaultVariants: {
-    size: "md",
-  },
-});
-
-// 별 아이콘 스타일
-const starIconVariants = cva("text-tertiary-2 transition-all", {
-  variants: {
-    size: {
-      sm: "w-4 h-4",
-      lg: "w-10 h-10",
-    },
-  },
-  defaultVariants: {
-    size: "sm",
-  },
-});
 
 export interface StarRatingProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange">,
@@ -105,5 +101,3 @@ export const StarRating = React.memo(
     );
   }
 );
-
-StarRating.displayName = "StarRating";
