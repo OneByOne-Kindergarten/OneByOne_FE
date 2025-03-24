@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { URL } from "@/constants/url";
 import { SVG_PATHS } from "@/constants/assets-path";
-
 import Badge from "@/components/@shared/badge";
-import { Toggle } from "@/components/@shared/buttons/toggle-button";
-import Button from "@/components/@shared/buttons/button";
+import Toggle from "@/components/@shared/buttons/base-toggle";
+import Button from "@/components/@shared/buttons/base-button";
 import AlertCard from "@/components/@shared/alert/alert-card";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import { CATEGORY_LABELS } from "@/constants/community";
@@ -162,7 +160,7 @@ export default function CommunityPost() {
             </div>
             <p className="text-primary-dark01 text-sm">댓글 내용</p>
             <div className="flex justify-end gap-2">
-              <Toggle variant="transparent_gray" size="sm" border="default">
+              <Toggle variant="transparent_gray" size="sm" border="gray">
                 좋아요 <span>{post.likeCount}</span>
               </Toggle>
               <Button

@@ -1,7 +1,7 @@
 import { URL } from "@/constants/url";
 import { Link } from "react-router-dom";
 import PageLayout from "@/components/@shared/layout/page-layout";
-import Button from "@/components/@shared/buttons/button";
+import Button from "@/components/@shared/buttons/base-button";
 
 export default function Home() {
   return (

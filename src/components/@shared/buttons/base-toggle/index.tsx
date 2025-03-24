@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/utils/cn";
 
 const toggleVariants = cva(
-  "inline-flex items-center justify-center gap-2 transition-colors hover:bg-muted hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 data-[state=on]:bg-accent data-[state=on]:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex h-fit items-center justify-center gap-1 transition-colors hover:bg-muted hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 data-[state=on]:bg-accent data-[state=on]:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -14,17 +14,18 @@ const toggleVariants = cva(
         transparent_gray: "hover:opacity-100 opacity-20",
       },
       border: {
-        default: "border border-primary-normal01",
+        gray: "border border-primary-normal01",
         none: "border-none",
       },
       size: {
-        default: "px-3 py-2",
-        sm: "py-1 px-[6px]",
+        sm: "py-0.5 px-1.5",
+        md: "px-3 py-2",
         lg: "h-10 px-2.5 min-w-10",
       },
       shape: {
+        default: "rounded-md",
+        rounded: "rounded-lg",
         full: "rounded-full",
-        md: "rounded-md",
       },
       font: {
         xs: "text-xs",
@@ -39,8 +40,9 @@ const toggleVariants = cva(
     },
     defaultVariants: {
       variant: "default",
-      size: "default",
+      size: "md",
       border: "none",
+      shape: "default",
     },
   }
 );
@@ -61,4 +63,4 @@ const Toggle = React.forwardRef<
 
 Toggle.displayName = TogglePrimitive.Root.displayName;
 
-export { Toggle, toggleVariants };
+export default Toggle;

@@ -1,5 +1,5 @@
 import { URL } from "@/constants/url";
-import Button from "@/components/@shared/buttons/button";
+import Button from "@/components/@shared/buttons/base-button";
 import SchoolCard from "@/components/school/school-card";
 import PageLayout from "@/components/@shared/layout/page-layout";
 

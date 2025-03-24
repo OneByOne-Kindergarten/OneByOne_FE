@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
-import Button from "@/components/@shared/buttons/button";
+import Button from "@/components/@shared/buttons/base-button";
 import Badge from "@/components/@shared/badge";
 import { getMockCommunityPosts } from "@/services/mockApi";
 import type { Post } from "@/types/community";
@@ -84,7 +84,7 @@ export default function CommunityLayout({
           <Button
             key={option.value}
             shape="full"
-            variant={currentCategory === option.value ? "secondary" : "primary"}
+            variant={currentCategory === option.value ? "secondary" : "default"}
             onClick={() => handleCategoryChange(option.value)}
           >
             {option.label}

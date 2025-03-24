@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { URL } from "@/constants/url";
 import PageLayout from "@/components/@shared/layout/page-layout";
-import Button from "@/components/@shared/buttons/button";
+import Button from "@/components/@shared/buttons/base-button";
 import { COMMUNITY_CATEGORIES, CATEGORY_LABELS } from "@/constants/community";
 import {
   getCommunityType,

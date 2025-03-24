@@ -10,7 +10,7 @@ import {
 } from "@/components/@shared/form";
 import Input from "@/components/@shared/form/input";
 import ToggleInput from "@/components/@shared/form/toggle-input";
-import Button from "@/components/@shared/buttons/button";
+import Button from "@/components/@shared/buttons/base-button";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import { URL } from "@/constants/url";
 

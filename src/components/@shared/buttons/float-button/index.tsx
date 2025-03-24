@@ -1,7 +1,7 @@
 import * as React from "react";
 import { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import Button from "@/components/@shared/buttons/button";
+import Button from "@/components/@shared/buttons/base-button";
 import { cn } from "@/utils/cn";
 
 const floatContainerVariants = cva(
