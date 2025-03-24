@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Loading from "../components/@shared/loading";
 import { URL } from "@/constants/url";
 
+const TestPage = lazy(() => import("../pages/Test"));
 const HomePage = lazy(() => import("../pages/Home"));
 const SchoolPage = lazy(() => import("../pages/school/School"));
 const SignInPage = lazy(() => import("../pages/auth/SignIn"));
@@ -20,6 +21,7 @@ const UserPage = lazy(() => import("../pages/user/User"));
 
 const routes = {
   direct: [
+    { path: URL.TEST, element: <TestPage /> },
     { path: URL.HOME, element: <HomePage /> },
     { path: URL.BOOKMARKS, element: <BookmarksPage /> },
     { path: URL.USER, element: <UserPage /> },
