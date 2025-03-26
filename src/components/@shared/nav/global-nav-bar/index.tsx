@@ -1,14 +1,17 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import { URL } from "@/constants/url";
+import { URL_PATHS } from "@/constants/url-path";
 import { SVG_PATHS } from "@/constants/assets-path";
+import {
+  getPathWithoutParams,
+  getUrlKeyFromPath,
+  UrlKeys,
+} from "@/utils/urlUtils";
 
 interface GlobalNavBarProps {
   currentPath: string;
 }
-
-type UrlKeys = keyof typeof URL;
 
 const LAST_VISITED_PATHS_KEY = "lastVisitedPaths";
 
@@ -43,6 +46,7 @@ const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
   SCHOOL_REVIEW_EDITOR: [],
   SIGNIN: [],
   SIGNUP: [],
+  TEST: [],
 };
 
 const NAV_BAR_ITEMS = [
@@ -77,26 +81,9 @@ const NAV_BAR_ITEMS = [
 ];
 
 export default function GlobalNavBar({ currentPath }: GlobalNavBarProps) {
-  const getPathWithoutParams = (path: string): string => {
-    return path.split("?")[0];
-  };
-
-  // 경로 UrlKey로 변환
+  // 경로 UrlKey로 변환 - 공통 유틸 함수 사용
   const getCurrentUrlKey = (): UrlKeys | undefined => {
-    const pathWithoutParams = getPathWithoutParams(currentPath);
-
-    const exactMatch = Object.entries(URL).find(
-      ([_, path]) => getPathWithoutParams(path) === pathWithoutParams
-    );
-    if (exactMatch) return exactMatch[0] as UrlKeys;
-
-    // 정확히 일치하지 않는 경우 패턴 매칭
-    return Object.entries(URL).find(([, path]) => {
-      const pathPattern =
-        path.replace(/:[^/]+/g, "[^/]+").replace(/\//g, "\\/") + "$";
-      const regex = new RegExp(pathPattern);
-      return regex.test(pathWithoutParams);
-    })?.[0] as UrlKeys | undefined;
+    return getUrlKeyFromPath(currentPath);
   };
 
   const isCommunityPost = (): boolean => {
@@ -150,23 +137,23 @@ export default function GlobalNavBar({ currentPath }: GlobalNavBarProps) {
       return "#";
     }
 
-    // URL 객체에 해당 키가 없는 경우 대비
-    if (!(urlKey in URL)) {
-      console.warn(`URL key ${urlKey} not found in URL object`);
+    // URL_PATHS 객체에 해당 키가 없는 경우 대비
+    if (!(urlKey in URL_PATHS)) {
+      console.warn(`URL key ${urlKey} not found in URL_PATHS`);
       return "/";
     }
 
     if (!ROOT_URL_KEYS.includes(urlKey)) {
-      return URL[urlKey];
+      return URL_PATHS[urlKey];
     }
 
     if (urlKey === "COMMUNITY") {
       const lastVisitedPaths = getLastVisitedPaths();
-      return lastVisitedPaths[urlKey] || `${URL[urlKey]}?type=teacher`;
+      return lastVisitedPaths[urlKey] || `${URL_PATHS[urlKey]}?type=teacher`;
     }
 
     const lastVisitedPaths = getLastVisitedPaths();
-    return lastVisitedPaths[urlKey] || URL[urlKey];
+    return lastVisitedPaths[urlKey] || URL_PATHS[urlKey];
   };
 
   // 현재 경로가 urlKey 그룹에 속하는지 확인
@@ -198,7 +185,7 @@ export default function GlobalNavBar({ currentPath }: GlobalNavBarProps) {
     <nav className="fixed bottom-0 h-14 items-center w-full text-xs min-w-80 max-w-3xl bg-white flex py-3 px-8 mx-auto justify-between border-t border-opacity-5 font-bold">
       {NAV_BAR_ITEMS.map(
         ({ label, urlKey, ariaLabel, dataButtonName, iconPaths }) => {
-          if (!(urlKey in URL)) {
+          if (!(urlKey in URL_PATHS)) {
             console.warn(`Invalid URL key: ${urlKey}`);
             return null;
           }

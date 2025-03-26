@@ -1,4 +1,4 @@
-export const URL = {
+export const URL_PATHS = {
   TEST: "test",
   HOME: "/",
   SIGNIN: "/signin",

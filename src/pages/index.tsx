@@ -1,4 +1,4 @@
-import { URL } from "@/constants/url";
+import { URL_PATHS } from "@/constants/url-path";
 import { Link } from "react-router-dom";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import Button from "@/components/@shared/buttons/base-button";
@@ -8,7 +8,7 @@ export default function Home() {
     <PageLayout
       title="원바원"
       description="유치원 교사들을 위한 유치원 리뷰 및 커뮤니티 서비스"
-      currentPath={URL.HOME}
+      currentPath={URL_PATHS.HOME}
       isGlobalNavBar={false}
       mainClassName="my-auto flex flex-col gap-[10vh]"
       wrapperBg="white"
@@ -29,7 +29,7 @@ export default function Home() {
         <div className="flex gap-2 text-xs">
           <p className="text-primary-dark01">아직 회원이 아니신가요?</p>
           <Link
-            to={URL.SIGNUP}
+            to={URL_PATHS.SIGNUP}
             className="text-tertiary-3 font-semibold underline"
           >
             회원가입

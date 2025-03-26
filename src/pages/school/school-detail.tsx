@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { URL } from "@/constants/url";
+import { URL_PATHS } from "@/constants/url-path";
 import { SVG_PATHS } from "@/constants/assets-path";
 import { REVIEW_TYPES } from "@/constants/review";
 import PageLayout from "@/components/@shared/layout/page-layout";
@@ -55,13 +55,13 @@ export default function SchoolDetail() {
       description={`${safeId} 유치원 상세 정보`}
       headerTitle={`${safeId}`}
       headerType="school"
-      currentPath={URL.SCHOOL_DETAIL.replace(":id", safeId)}
+      currentPath={URL_PATHS.SCHOOL_DETAIL.replace(":id", safeId)}
       wrapperBg="white"
     >
       <NavBar
         id={safeId}
         options={CATEGORY_OPTIONS}
-        currentPath={URL.SCHOOL_DETAIL.replace(":id", safeId)}
+        currentPath={URL_PATHS.SCHOOL_DETAIL.replace(":id", safeId)}
       />
       <section className="px-5 pt-3 pb-20">
         <h1 className="text-xl font-bold mb-3 text-primary-dark02">{safeId}</h1>

@@ -12,7 +12,7 @@ import Input from "@/components/@shared/form/input";
 import ToggleInput from "@/components/@shared/form/toggle-input";
 import Button from "@/components/@shared/buttons/base-button";
 import PageLayout from "@/components/@shared/layout/page-layout";
-import { URL } from "@/constants/url";
+import { URL_PATHS } from "@/constants/url-path";
 
 export default function SignIn() {
   const form = useForm();
@@ -22,7 +22,7 @@ export default function SignIn() {
       title="원바원 | 로그인"
       headerTitle=" "
       headerHasBorder={false}
-      currentPath={URL.HOME}
+      currentPath={URL_PATHS.HOME}
       isGlobalNavBar={false}
       mainClassName="mt-16 flex flex-col gap-16"
       wrapperBg="white"
@@ -75,7 +75,7 @@ export default function SignIn() {
         </div>
         <div className="flex gap-2">
           <p className="text-primary-dark03">아직 회원이 아니신가요?</p>
-          <Link to={URL.SIGNUP} className="text-tertiary-3 font-semibold">
+          <Link to={URL_PATHS.SIGNUP} className="text-tertiary-3 font-semibold">
             회원가입
           </Link>
         </div>

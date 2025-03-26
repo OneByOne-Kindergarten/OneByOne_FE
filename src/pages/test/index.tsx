@@ -1,12 +1,9 @@
 import { useState } from "react";
-import { URL } from "@/constants/url";
+import { URL_PATHS } from "@/constants/url-path";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import Toggle from "@/components/@shared/buttons/base-toggle";
 import { SVG_PATHS } from "@/constants/assets-path";
 import Button from "@/components/@shared/buttons/base-button";
-import Header from "@/components/@shared/headers/base-header";
-import CommunityHeader from "@/components/@shared/headers/community-header";
-import SchoolHeader from "@/components/@shared/headers/school-header";
 import Badge from "@/components/@shared/badge";
 import PopupModal from "@/components/@shared/modal/pop-up";
 import BottomSheet from "@/components/@shared/modal/bottom-sheet";
@@ -68,7 +65,7 @@ export default function TEST() {
     <PageLayout
       title="원바원"
       description="컴포넌트 테스트 페이지"
-      currentPath={URL.TEST}
+      currentPath={URL_PATHS.TEST}
       isGlobalNavBar={false}
       mainClassName="my-auto flex flex-col gap-[10vh] p-4"
       wrapperBg="white"

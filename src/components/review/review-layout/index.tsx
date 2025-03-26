@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { setReviewState } from "@/utils/sessionStorage";
+import { setReviewState } from "@/utils/lastVisitedPathUtils";
 import PostButton from "@/components/@shared/buttons/post-button";
 import Toggle from "@/components/@shared/buttons/base-toggle";
 import { SVG_PATHS } from "@/constants/assets-path";

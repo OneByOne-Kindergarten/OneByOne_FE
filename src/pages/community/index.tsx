@@ -6,7 +6,7 @@ import NavBar from "@/components/@shared/nav/nav-bar";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import CommunityLayout from "@/components/community/community-layout";
 import PostButton from "@/components/@shared/buttons/post-button";
-import { setCommunityState } from "@/utils/sessionStorage";
+import { setCommunityState } from "@/utils/lastVisitedPathUtils";
 
 export default function Community() {
   const [searchParams, setSearchParams] = useSearchParams();

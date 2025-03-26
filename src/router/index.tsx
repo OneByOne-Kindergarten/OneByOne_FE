@@ -1,47 +1,45 @@
 import { Suspense, lazy } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Loading from "../components/@shared/loading";
-import { URL } from "@/constants/url";
+import { URL_PATHS } from "@/constants/url-path";
 
-const TestPage = lazy(() => import("../pages/Test"));
-const HomePage = lazy(() => import("../pages/Home"));
-const SchoolPage = lazy(() => import("../pages/school/School"));
-const SignInPage = lazy(() => import("../pages/auth/SignIn"));
-const SignUpPage = lazy(() => import("../pages/auth/SignUp"));
-const SchoolDetailPage = lazy(() => import("../pages/school/SchoolDetail"));
-const ReviewPage = lazy(() => import("../pages/review/Review"));
-const ReviewEditorPage = lazy(() => import("../pages/review/ReviewEditor"));
-const CommunityPage = lazy(() => import("../pages/community/Community"));
-const CommunityPostPage = lazy(
-  () => import("../pages/community/CommunityPost")
-);
-const PostEditorPage = lazy(() => import("../pages/community/PostEditor"));
-const BookmarksPage = lazy(() => import("../pages/bookmarks/Bookmarks"));
-const UserPage = lazy(() => import("../pages/user/User"));
+const TestPage = lazy(() => import("../pages/test"));
+const HomePage = lazy(() => import("../pages"));
+const SchoolPage = lazy(() => import("../pages/school"));
+const SignInPage = lazy(() => import("../pages/auth/sign-in"));
+const SignUpPage = lazy(() => import("../pages/auth/sign-up"));
+const SchoolDetailPage = lazy(() => import("../pages/school/school-detail"));
+const ReviewPage = lazy(() => import("../pages/review"));
+const ReviewEditorPage = lazy(() => import("../pages/review/review-editor"));
+const CommunityPage = lazy(() => import("../pages/community"));
+const CommunityPostPage = lazy(() => import("../pages/community/post"));
+const PostEditorPage = lazy(() => import("../pages/community/post-editor"));
+const BookmarksPage = lazy(() => import("../pages/bookmarks"));
+const UserPage = lazy(() => import("../pages/user"));
 
 const routes = {
   direct: [
-    { path: URL.TEST, element: <TestPage /> },
-    { path: URL.HOME, element: <HomePage /> },
-    { path: URL.BOOKMARKS, element: <BookmarksPage /> },
-    { path: URL.USER, element: <UserPage /> },
-    { path: URL.SIGNIN, element: <SignInPage /> },
-    { path: URL.SIGNUP, element: <SignUpPage /> },
+    { path: URL_PATHS.TEST, element: <TestPage /> },
+    { path: URL_PATHS.HOME, element: <HomePage /> },
+    { path: URL_PATHS.BOOKMARKS, element: <BookmarksPage /> },
+    { path: URL_PATHS.USER, element: <UserPage /> },
+    { path: URL_PATHS.SIGNIN, element: <SignInPage /> },
+    { path: URL_PATHS.SIGNUP, element: <SignUpPage /> },
     // 유치원 페이지
-    { path: URL.SCHOOL, element: <SchoolPage /> },
-    { path: URL.SCHOOL_DETAIL, element: <SchoolDetailPage /> },
-    { path: URL.SCHOOL_REVIEW, element: <ReviewPage /> },
-    { path: URL.SCHOOL_REVIEW_EDITOR, element: <ReviewEditorPage /> },
+    { path: URL_PATHS.SCHOOL, element: <SchoolPage /> },
+    { path: URL_PATHS.SCHOOL_DETAIL, element: <SchoolDetailPage /> },
+    { path: URL_PATHS.SCHOOL_REVIEW, element: <ReviewPage /> },
+    { path: URL_PATHS.SCHOOL_REVIEW_EDITOR, element: <ReviewEditorPage /> },
     // 커뮤니티 페이지
-    { path: URL.COMMUNITY, element: <CommunityPage /> },
-    { path: URL.COMMUNITY_POST_EDITOR, element: <PostEditorPage /> },
-    { path: URL.COMMUNITY_POST, element: <CommunityPostPage /> },
+    { path: URL_PATHS.COMMUNITY, element: <CommunityPage /> },
+    { path: URL_PATHS.COMMUNITY_POST_EDITOR, element: <PostEditorPage /> },
+    { path: URL_PATHS.COMMUNITY_POST, element: <CommunityPostPage /> },
   ],
 
   redirect: [
-    { path: "*", to: URL.HOME },
-    { path: URL.COMMUNITY_TEACHER, to: "/community?type=teacher" },
-    { path: URL.COMMUNITY_STUDENT, to: "/community?type=pre-teacher" },
+    { path: "*", to: URL_PATHS.HOME },
+    { path: URL_PATHS.COMMUNITY_TEACHER, to: "/community?type=teacher" },
+    { path: URL_PATHS.COMMUNITY_STUDENT, to: "/community?type=pre-teacher" },
     { path: "/school/:id/work-review", to: "/school/:id/review?type=work" },
     {
       path: "/school/:id/learning-review",

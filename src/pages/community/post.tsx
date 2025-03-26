@@ -11,7 +11,10 @@ import { CATEGORY_LABELS } from "@/constants/community";
 import type { Post } from "@/types/community";
 import { formatDate } from "@/utils/dateUtils";
 import { getMockPostDetail } from "@/services/mockApi";
-import { getCommunityType, setCommunityState } from "@/utils/sessionStorage";
+import {
+  getCommunityType,
+  setCommunityState,
+} from "@/utils/lastVisitedPathUtils";
 
 interface ExtendedPost extends Post {
   author: string;
@@ -40,7 +43,7 @@ export default function CommunityPost() {
       if (postData.categoryType) {
         setCommunityTypeState(postData.categoryType);
 
-        // 세션 스토리지에 게시글 정보 저장 - 뒤로가기를 위한 커뮤니티 타입 및 카테고리 정보 유지
+        // 세션 스토리지에 게시글 정보 저장
         const category = (postData as any).category || "top10";
         const communityState = {
           type: postData.categoryType,
@@ -48,7 +51,6 @@ export default function CommunityPost() {
           category: category,
         };
 
-        console.log("커뮤니티 게시글 상태 저장:", communityState);
         setCommunityState(communityState);
       }
     }

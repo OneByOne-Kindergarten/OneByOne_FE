@@ -16,7 +16,7 @@ import {
 } from "@/components/@shared/form";
 import Input from "@/components/@shared/form/input";
 import Textarea from "@/components/@shared/form/textarea";
-import { setReviewState, getReviewState } from "@/utils/sessionStorage";
+import { setReviewState, getReviewState } from "@/utils/lastVisitedPathUtils";
 import { BoxRatingGroup } from "@/components/@shared/rating/box-rating";
 import { StarRating } from "@/components/@shared/rating/star-rating";
 

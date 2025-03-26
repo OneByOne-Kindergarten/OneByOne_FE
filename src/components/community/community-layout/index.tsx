@@ -7,7 +7,7 @@ import type { Post } from "@/types/community";
 import { formatDate } from "@/utils/dateUtils";
 import { SVG_PATHS } from "@/constants/assets-path";
 import { COMMUNITY_CATEGORIES, CATEGORY_LABELS } from "@/constants/community";
-import { setCommunityState } from "@/utils/sessionStorage";
+import { setCommunityState } from "@/utils/lastVisitedPathUtils";
 
 interface CategoryOption {
   value: string;
@@ -120,7 +120,7 @@ export default function CommunityLayout({
                     <span className="min-w-6 text-center">{index + 1}</span>
                   )}
                   <div className="flex flex-col gap-1.5 flex-1">
-                    <Badge variant="secondary">
+                    <Badge variant="primary">
                       {getCategoryLabel(post.category)}
                     </Badge>
                     <Link to={`/community/${post.id}`}>

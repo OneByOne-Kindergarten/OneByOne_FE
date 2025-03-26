@@ -12,7 +12,7 @@ import Input from "@/components/@shared/form/input";
 import ToggleInput from "@/components/@shared/form/toggle-input";
 import Button from "@/components/@shared/buttons/base-button";
 import PageLayout from "@/components/@shared/layout/page-layout";
-import { URL } from "@/constants/url";
+import { URL_PATHS } from "@/constants/url-path";
 
 export default function SignUp() {
   const form = useForm();
@@ -20,7 +20,7 @@ export default function SignUp() {
   return (
     <PageLayout
       title="원바원 | 회원가입"
-      currentPath={URL.HOME}
+      currentPath={URL_PATHS.HOME}
       headerTitle=" "
       headerHasBorder={false}
       isGlobalNavBar={false}
@@ -85,7 +85,7 @@ export default function SignUp() {
       <section className="flex flex-col gap-2 items-center text-xs">
         <div className="flex gap-2">
           <p className="text-primary-dark03">이미 회원이신가요?</p>
-          <Link to={URL.SIGNIN} className="text-tertiary-3 font-semibold">
+          <Link to={URL_PATHS.SIGNIN} className="text-tertiary-3 font-semibold">
             로그인
           </Link>
         </div>

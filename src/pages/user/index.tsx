@@ -1,4 +1,4 @@
-import { URL } from "@/constants/url";
+import { URL_PATHS } from "@/constants/url-path";
 import { SVG_PATHS } from "@/constants/assets-path";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import Button from "@/components/@shared/buttons/base-button";
@@ -9,7 +9,7 @@ export default function User() {
       title="원바원 | 프로필"
       description="사용자 프로필 및 설정"
       headerTitle="프로필"
-      currentPath={URL.USER}
+      currentPath={URL_PATHS.USER}
       mainBg="gray"
       hasBackButton={false}
     >

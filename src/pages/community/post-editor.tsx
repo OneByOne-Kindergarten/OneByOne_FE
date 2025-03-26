@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { URL } from "@/constants/url";
+import { URL_PATHS } from "@/constants/url-path";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import Button from "@/components/@shared/buttons/base-button";
 import { COMMUNITY_CATEGORIES, CATEGORY_LABELS } from "@/constants/community";
@@ -10,7 +10,7 @@ import {
   getCategoryType,
   setCommunityState,
   getCommunityState,
-} from "@/utils/sessionStorage";
+} from "@/utils/lastVisitedPathUtils";
 import {
   Form,
   FormItem,
@@ -40,17 +40,10 @@ export default function PostEditor() {
       label: CATEGORY_LABELS[value],
     }));
 
-  // lastVisitedPaths 저장
-  useEffect(() => {
-    // 세션 스토리지를 읽기만 하고, 경로 정보는 변경하지 않음
-    const currentState = getCommunityState();
-    console.log("저장된 커뮤니티 상태:", currentState);
-  }, []);
-
+  // lastVisitedPaths 업데이트
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
 
-    // 카테고리만 업데이트하고 path는 업데이트하지 않음
     setCommunityState({
       category,
     });
@@ -73,7 +66,7 @@ export default function PostEditor() {
     <PageLayout
       title="원바원 | 커뮤니티 글쓰기"
       description="원바원 커뮤니티 게시글 작성"
-      currentPath={URL.COMMUNITY}
+      currentPath={URL_PATHS.COMMUNITY}
       headerTitle=" "
       headerType="save"
       wrapperBg="white"

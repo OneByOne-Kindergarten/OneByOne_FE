@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 import { SVG_PATHS } from "@/constants/assets-path";
-import { URL } from "@/constants/url";
+import { URL_PATHS } from "@/constants/url-path";
 import Badge from "@/components/@shared/badge";
 
 interface SchoolCardProps {
@@ -22,11 +22,11 @@ export default function SchoolCard({
   return (
     <li className="px-5 py-4 bg-white">
       <Link
-        to={`${URL.SCHOOL}/${id}`}
+        to={`${URL_PATHS.SCHOOL}/${id}`}
         className="flex w-full justify-between items-center"
       >
         <div className="flex flex-col gap-2.5">
-          <Badge variant="primary">{category}</Badge>
+          <Badge variant="tertiary">{category}</Badge>
           <div className="gap-1">
             <p className="text-base font-bold ">{schoolName}</p>
             <div className="flex gap-1.5 ">

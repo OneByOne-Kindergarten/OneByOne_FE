@@ -1,4 +1,4 @@
-import { URL } from "@/constants/url";
+import { URL_PATHS } from "@/constants/url-path";
 import Button from "@/components/@shared/buttons/base-button";
 import SchoolCard from "@/components/school/school-card";
 import PageLayout from "@/components/@shared/layout/page-layout";
@@ -10,7 +10,7 @@ export default function School() {
       description="지도와 검색을 통해 기관 찾기"
       headerTitle="기관 찾기"
       headerType="school"
-      currentPath={URL.SCHOOL}
+      currentPath={URL_PATHS.SCHOOL}
       mainBg="gray"
       hasBackButton={false}
     >

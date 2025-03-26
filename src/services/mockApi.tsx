@@ -2,7 +2,6 @@ import type { Post } from "@/types/community";
 import { COMMUNITY_CATEGORIES } from "@/constants/community";
 import { TEACHER_POSTS, STUDENT_POSTS, USERS } from "@/data/mockData";
 
-// Mock API 함수
 export function getMockCommunityPosts(
   type: "teacher" | "pre-teacher",
   category?: string
