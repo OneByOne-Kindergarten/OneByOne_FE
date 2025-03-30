@@ -16,6 +16,7 @@ import {
 } from "@/components/@shared/form";
 import Input from "@/components/@shared/form/input";
 import Textarea from "@/components/@shared/form/textarea";
+import ProgressBar from "@/components/@shared/progress-bar";
 import { setReviewState, getReviewState } from "@/utils/lastVisitedPathUtils";
 import { BoxRatingGroup } from "@/components/@shared/rating/box-rating";
 import { StarRating } from "@/components/@shared/rating/star-rating";
@@ -26,32 +27,25 @@ interface ReviewFormValues {
   content: string;
   workYear: "less_than_2_years" | "between_2_and_5_years" | "more_than_5_years";
 
-  // 1단계: 복지/급여
+  // 1 step: 복지/급여, 워라벨
   salaryContent: string;
   salaryRating: number;
-
-  // 1단계: 워라벨
   workLifeBalanceContent: string;
   workLifeBalanceRating: number;
 
-  // 2단계: 분위기
+  // 2 step: 분위기, 관리자, 고객
   atmosphereContent: string;
   atmosphereRating: number;
-
-  // 2단계: 관리자
   managerContent: string;
   managerRating: number;
-
-  // 2단계: 고객
   clientContent: string;
   clientRating: number;
 
-  // 3단계: 총점
+  // 3 step: 총점
   overallRating: number;
 }
 
 export default function ReviewEditor() {
-  // 현재 단계 상태 관리
   const [step, setStep] = useState<number>(1);
 
   const form = useForm<ReviewFormValues>({
@@ -63,14 +57,14 @@ export default function ReviewEditor() {
       salaryRating: 3,
       workLifeBalanceContent: "",
       workLifeBalanceRating: 3,
-      // 2 depth
+      // 2 step
       atmosphereContent: "",
       atmosphereRating: 3,
       managerContent: "",
       managerRating: 3,
       clientContent: "",
       clientRating: 3,
-      // 3 depth
+      // 3 step
       overallRating: 4,
     },
   });
@@ -87,7 +81,6 @@ export default function ReviewEditor() {
   // lastVisitedPaths 저장
   useEffect(() => {
     const reviewState = getReviewState();
-    console.log("이전 리뷰 상태:", reviewState);
 
     setReviewState({
       type: reviewType,
@@ -460,22 +453,6 @@ export default function ReviewEditor() {
     }
   }, [step, Step1Form, Step2Form, Step3Form]);
 
-  // 단계 진행 상태 표시 컴포넌트
-  const StepIndicator = useMemo(() => {
-    return (
-      <div className="flex justify-center gap-2 mb-4">
-        {[1, 2, 3].map((s) => (
-          <div
-            key={s}
-            className={`w-3 h-3 rounded-full ${
-              s === step ? "bg-tertiary-2" : "bg-primary-light02"
-            }`}
-          />
-        ))}
-      </div>
-    );
-  }, [step]);
-
   return (
     <PageLayout
       title="원바원 | 리뷰 작성"
@@ -487,8 +464,7 @@ export default function ReviewEditor() {
       wrapperBg="white"
       mainClassName="h-full bg-white flex flex-col gap-6 p-5 pb-5 mb-24"
     >
-      {StepIndicator}
-
+      <ProgressBar value={step} />
       <Form {...form}>
         <div className="flex flex-col gap-5">
           {currentStepForm}

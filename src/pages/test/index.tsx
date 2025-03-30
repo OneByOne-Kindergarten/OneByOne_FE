@@ -4,6 +4,8 @@ import PageLayout from "@/components/@shared/layout/page-layout";
 import Toggle from "@/components/@shared/buttons/base-toggle";
 import { SVG_PATHS } from "@/constants/assets-path";
 import Button from "@/components/@shared/buttons/base-button";
+import BarRating from "@/components/@shared/rating/bar-rating";
+import ProgressBar from "@/components/@shared/progress-bar";
 import Badge from "@/components/@shared/badge";
 import PopupModal from "@/components/@shared/modal/pop-up";
 import BottomSheet from "@/components/@shared/modal/bottom-sheet";
@@ -223,6 +225,14 @@ export default function TEST() {
           </div>
         </section>
       </div>
+
+      <section>
+        <h2 className="bg-gray-200 p-1 mb-2">진행도</h2>
+        <div className="flex flex-wrap gap-2">
+          <BarRating value={4} className="h-2 w-12" />
+          <ProgressBar value={1} />
+        </div>
+      </section>
 
       <PopupModal
         isOpen={isPopupOpen}

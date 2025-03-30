@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { setReviewState } from "@/utils/lastVisitedPathUtils";
 import PostButton from "@/components/@shared/buttons/post-button";
 import Toggle from "@/components/@shared/buttons/base-toggle";
+import BarRating from "@/components/@shared/rating/bar-rating";
 import { SVG_PATHS } from "@/constants/assets-path";
 import { REVIEW_TYPES } from "@/constants/review";
 
@@ -40,45 +41,45 @@ export default function ReviewLayout({ type }: ReviewLayoutProps) {
                 <p>리뷰</p>
                 <span className="text-tertiary-3">12</span>
               </div>
-              <div className="px-2 w-full py-4 bg-primary-foreground mx-auto rounded-lg flex items-center justify-evenly">
+              <div className="px-2 w-full py-4 bg-primary-foreground mx-auto rounded-lg flex items-center gap-6 justify-center">
                 <div className="flex flex-col items-center justify-center">
                   <p className="font-bold text-3xl">5.0</p>
                   <div>★★★★★</div>
                 </div>
                 <hr className="w-px h-20 bg-primary-normal01" />
                 <ul className="flex flex-col font-semibold text-xs w-1/2">
-                  <li className="flex gap-3 text-primary-normal02">
-                    <p className="flex-1">복지/급여</p>
-                    <div className="flex w-3/5 items-center gap-3">
-                      <progress value={5} max={10} />
-                      <span>5.0</span>
+                  <li className="flex flex-1 text-primary-normal02">
+                    <p className="w-24">복지/급여</p>
+                    <div className="flex w-full items-center gap-3">
+                      <BarRating value={3} className="py-0.5 w-full" />
+                      <span>3.0</span>
                     </div>
                   </li>
-                  <li className="flex text-primary-normal02">
-                    <p className="flex-1">워라벨</p>
-                    <div className="flex w-3/5 items-center gap-3">
-                      <progress value={5} max={10} />
-                      <span>5.0</span>
+                  <li className="flex flex-1 text-primary-normal02">
+                    <p className="w-24">워라벨</p>
+                    <div className="flex w-full items-center gap-3">
+                      <BarRating value={4.2} className="py-0.5 w-full" />
+                      <span>4.2</span>
                     </div>
                   </li>
-                  <li className="flex text-primary-normal02">
-                    <p className="flex-1">분위기</p>
-                    <div className="flex w-3/5 items-center gap-3">
-                      <progress value={5} max={10} />
-                      <span>5.0</span>
+                  <li className="flex flex-1 text-primary-normal02">
+                    <p className="w-24">분위기</p>
+                    <div className="flex w-full items-center gap-3">
+                      <BarRating value={1} className="py-0.5 w-full" />
+                      <span>1.0</span>
                     </div>
                   </li>
-                  <li className="flex flex-1 justify-between text-primary-normal02">
-                    <p className="flex-1">관리자</p>
-                    <div className="flex w-3/5 items-center gap-3">
-                      <progress value={5} max={10} />
-                      <span>5.0</span>
+                  <li className="flex flex-1 text-primary-normal02">
+                    <p className="w-24">관리자</p>
+                    <div className="flex w-full items-center gap-3">
+                      <BarRating value={2.4} className="py-0.5 w-full" />
+                      <span>2.4</span>
                     </div>
                   </li>
-                  <li className="flex justify-between text-primary-normal02">
-                    <p className="flex-1">고객</p>
-                    <div className="flex w-3/5 items-center gap-3">
-                      <progress value={5} max={10} />
+                  <li className="flex flex-1 text-primary-normal02">
+                    <p className="w-24">고객</p>
+                    <div className="flex w-full items-center gap-3">
+                      <BarRating value={5} className="py-0.5 w-full" />
                       <span>5.0</span>
                     </div>
                   </li>
