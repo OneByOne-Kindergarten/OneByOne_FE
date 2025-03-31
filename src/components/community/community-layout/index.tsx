@@ -8,6 +8,7 @@ import { formatDate } from "@/utils/dateUtils";
 import { SVG_PATHS } from "@/constants/assets-path";
 import { COMMUNITY_CATEGORIES, CATEGORY_LABELS } from "@/constants/community";
 import { setCommunityState } from "@/utils/lastVisitedPathUtils";
+import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 
 interface CategoryOption {
   value: string;
@@ -93,9 +94,7 @@ export default function CommunityLayout({
       </menu>
 
       {isLoading ? (
-        <div className="flex justify-center p-10">
-          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary"></div>
-        </div>
+        <LoadingSpinner />
       ) : (
         <section className="flex flex-col gap-9">
           {currentCategory === COMMUNITY_CATEGORIES.TOP10 && (

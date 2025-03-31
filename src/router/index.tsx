@@ -1,7 +1,7 @@
 import { Suspense, lazy } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Loading from "../components/@shared/loading";
 import { URL_PATHS } from "@/constants/url-path";
+import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 
 const TestPage = lazy(() => import("../pages/test"));
 const HomePage = lazy(() => import("../pages"));
@@ -50,7 +50,7 @@ const routes = {
 
 export default function AppRouter() {
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={<LoadingSpinner />}>
       <Routes>
         {routes.direct.map((route) => (
           <Route key={route.path} path={route.path} element={route.element} />

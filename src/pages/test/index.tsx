@@ -10,6 +10,7 @@ import Badge from "@/components/@shared/badge";
 import PopupModal from "@/components/@shared/modal/pop-up";
 import BottomSheet from "@/components/@shared/modal/bottom-sheet";
 import Dropdown from "@/components/@shared/drop-down";
+import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 
 export default function TEST() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -231,6 +232,7 @@ export default function TEST() {
         <div className="flex flex-wrap gap-2">
           <BarRating value={4} className="h-2 w-12" />
           <ProgressBar value={1} />
+          <LoadingSpinner />
         </div>
       </section>
 
