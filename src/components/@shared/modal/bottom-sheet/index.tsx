@@ -54,7 +54,7 @@ const BottomSheet = React.forwardRef<HTMLDivElement, BottomSheetProps>(
           >
             {/* 바텀 시트 드래그 핸들 */}
             <div className="absolute top-1 left-1/2 -translate-x-1/2 w-10 h-1 mt-1 bg-primary-light02 rounded-full" />
-            <div className="font-semibold">{title}</div>
+            <h1 className="font-semibold">{title}</h1>
           </ModalHeader>
         )}
         <ModalContent className={cn("overflow-y-auto px-5", contentClassName)}>

@@ -173,7 +173,7 @@ interface ModalHeaderProps
 const ModalHeader = React.forwardRef<HTMLDivElement, ModalHeaderProps>(
   ({ className, align, hasCloseButton, onClose, children, ...props }, ref) => {
     return (
-      <div
+      <section
         className={cn(headerVariants({ align }), className)}
         ref={ref}
         {...props}
@@ -190,7 +190,7 @@ const ModalHeader = React.forwardRef<HTMLDivElement, ModalHeaderProps>(
             <img src={SVG_PATHS.CANCEL} alt="닫기" />
           </button>
         )}
-      </div>
+      </section>
     );
   }
 );
@@ -201,14 +201,14 @@ interface ModalContentProps extends React.HTMLAttributes<HTMLDivElement> {}
 const ModalContent = React.forwardRef<HTMLDivElement, ModalContentProps>(
   ({ className, children, ...props }, ref) => {
     return (
-      <div
+      <section
         className={cn("overflow-auto", className)}
         ref={ref}
         {...props}
         data-testid="modal-content-body"
       >
         {children}
-      </div>
+      </section>
     );
   }
 );
@@ -221,14 +221,14 @@ interface ModalFooterProps
 const ModalFooter = React.forwardRef<HTMLDivElement, ModalFooterProps>(
   ({ className, align, children, ...props }, ref) => {
     return (
-      <div
+      <section
         className={cn(footerVariants({ align }), className)}
         ref={ref}
         {...props}
         data-testid="modal-footer"
       >
         {children}
-      </div>
+      </section>
     );
   }
 );

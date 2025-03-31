@@ -5,6 +5,7 @@ import { cn } from "@/utils/cn";
 const boxVariants = cva("cursor-pointer transition-colors", {
   variants: {
     size: {
+      xs: "w-2 h-2",
       sm: "w-6 h-6",
       md: "w-8 h-8",
       lg: "w-10 h-10",
@@ -53,9 +54,9 @@ export const RatingBox = React.memo(
 export interface RatingGroupProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
   value: number;
-  onChange: (value: number) => void;
+  onChange?: (value: number) => void;
   max?: number;
-  size?: "sm" | "md" | "lg";
+  size?: "xs" | "sm" | "md" | "lg";
 }
 
 export const BoxRatingGroup = React.memo(
@@ -69,7 +70,7 @@ export const BoxRatingGroup = React.memo(
   }: RatingGroupProps) => {
     const handleRatingClick = React.useCallback(
       (rating: number) => {
-        onChange(rating);
+        onChange?.(rating);
       },
       [onChange]
     );

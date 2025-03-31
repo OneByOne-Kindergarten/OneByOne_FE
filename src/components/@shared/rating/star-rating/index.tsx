@@ -47,7 +47,7 @@ export interface StarRatingProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange">,
     VariantProps<typeof starRatingVariants> {
   value: number;
-  onChange: (value: number) => void;
+  onChange?: (value: number) => void;
   max?: number;
   size?: "sm" | "lg";
 }
@@ -63,7 +63,7 @@ export const StarRating = React.memo(
   }: StarRatingProps) => {
     const handleRatingChange = React.useCallback(
       (newRating: number) => {
-        onChange(newRating);
+        onChange?.(newRating);
       },
       [onChange]
     );

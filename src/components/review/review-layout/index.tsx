@@ -3,9 +3,47 @@ import { useNavigate, useParams } from "react-router-dom";
 import { setReviewState } from "@/utils/lastVisitedPathUtils";
 import PostButton from "@/components/@shared/buttons/post-button";
 import Toggle from "@/components/@shared/buttons/base-toggle";
-import BarRating from "@/components/@shared/rating/bar-rating";
-import { SVG_PATHS } from "@/constants/assets-path";
+import RatingFilter from "@/components/review/rating-filter";
+import ReviewCard from "@/components/review/review-card";
+import TotalRatingCard from "@/components/review/total-rating-card";
 import { REVIEW_TYPES } from "@/constants/review";
+
+const REVIEW_DATA = {
+  work: {
+    type: "담임",
+    workYear: "2년 전",
+    id: 3,
+    title: "리뷰 제목",
+    reviewCount: 12,
+    likeCount: 10,
+    shareCount: 4,
+    rating: {
+      total: 4.5,
+      welfare: 4,
+      workLabel: 5,
+      atmosphere: 2,
+      manager: 3,
+      customer: 4,
+    },
+    reviewScore: {
+      welfare: 3,
+      workLabel: 4.2,
+      atmosphere: 1,
+      manager: 2.4,
+      customer: 5,
+    },
+    createdAt: "2025-03-20",
+    content: {
+      welfare:
+        "저는 어쩌구 복지/급여에 관한 리뷰 내용이 들어갈 텍스트 자리입니다. 복지랑 급여 중요해요. 복지/급여에 관한 리뷰 내용이 들어갈 텍스트 자리입니다. ",
+      workLabel:
+        "저는 어쩌구 워라벨에 관한 리뷰 내용이 들어갈 텍스트 자리입니다. 복지랑 급여 중요해요.  ",
+      atmosphere: "분위기 내용",
+      manager: "관리자 내용",
+      customer: "고객 내용",
+    },
+  },
+};
 
 interface ReviewLayoutProps {
   type: "work" | "learning";
@@ -41,58 +79,15 @@ export default function ReviewLayout({ type }: ReviewLayoutProps) {
                 <p>리뷰</p>
                 <span className="text-tertiary-3">12</span>
               </div>
-              <div className="px-2 w-full py-4 bg-primary-foreground mx-auto rounded-lg flex items-center gap-6 justify-center">
-                <div className="flex flex-col items-center justify-center">
-                  <p className="font-bold text-3xl">5.0</p>
-                  <div>★★★★★</div>
-                </div>
-                <hr className="w-px h-20 bg-primary-normal01" />
-                <ul className="flex flex-col font-semibold text-xs w-1/2">
-                  <li className="flex flex-1 text-primary-normal02">
-                    <p className="w-24">복지/급여</p>
-                    <div className="flex w-full items-center gap-3">
-                      <BarRating value={3} className="py-0.5 w-full" />
-                      <span>3.0</span>
-                    </div>
-                  </li>
-                  <li className="flex flex-1 text-primary-normal02">
-                    <p className="w-24">워라벨</p>
-                    <div className="flex w-full items-center gap-3">
-                      <BarRating value={4.2} className="py-0.5 w-full" />
-                      <span>4.2</span>
-                    </div>
-                  </li>
-                  <li className="flex flex-1 text-primary-normal02">
-                    <p className="w-24">분위기</p>
-                    <div className="flex w-full items-center gap-3">
-                      <BarRating value={1} className="py-0.5 w-full" />
-                      <span>1.0</span>
-                    </div>
-                  </li>
-                  <li className="flex flex-1 text-primary-normal02">
-                    <p className="w-24">관리자</p>
-                    <div className="flex w-full items-center gap-3">
-                      <BarRating value={2.4} className="py-0.5 w-full" />
-                      <span>2.4</span>
-                    </div>
-                  </li>
-                  <li className="flex flex-1 text-primary-normal02">
-                    <p className="w-24">고객</p>
-                    <div className="flex w-full items-center gap-3">
-                      <BarRating value={5} className="py-0.5 w-full" />
-                      <span>5.0</span>
-                    </div>
-                  </li>
-                </ul>
-              </div>
+              <TotalRatingCard {...REVIEW_DATA.work.rating} />
             </div>
           </section>
 
           <section className="bg-white flex flex-col gap-5 px-5 py-4 mb-16 mt-2 border-b border-b-primary-normal01">
             <div className="flex justify-between border-b border-b-primary-normal01 pb-4">
-              <div className="flex gap-2.5">
+              <div className="flex gap-2.5 items-center">
                 <Toggle variant="default" size="sm">
-                  <div className="w-2 h-2 rounded-full bg-star" />{" "}
+                  <div className="w-2 h-2 rounded-full bg-star" />
                   <span className="font-semibold text-xs">추천순</span>
                 </Toggle>
                 <Toggle variant="default" size="sm">
@@ -102,66 +97,9 @@ export default function ReviewLayout({ type }: ReviewLayoutProps) {
                   </span>
                 </Toggle>
               </div>
-              <div className="gap-2 py-1 p-3 rounded-sm bg-primary-foreground text-primary-dark01 font-semibold flex items-center">
-                <img src={SVG_PATHS.STAR.darkgray} alt="드롭다운 아이콘" />
-                <p className="text-sm">드롭다운</p>
-              </div>
+              <RatingFilter />
             </div>
-            <div className="flex flex-col gap-7">
-              <div className="flex flex-col gap-3">
-                <div className="flex gap-2 items-center">
-                  <div>★★★★★</div>
-                  <span className="text-sm font-semibold">4.5</span>
-                </div>
-                <div className="flex flex-col gap-1">
-                  <h2 className="font-semibold">리뷰 제목</h2>
-                  <p className="text-xxs text-primary-normal03">
-                    <span>worktype</span> | <span>작성일</span> |{" "}
-                    <span>근무기간</span>
-                  </p>
-                </div>
-              </div>
-              <ul className="flex flex-col gap-2.5">
-                <li className="flex flex-col gap-1 text-xs">
-                  <div className="flex gap-2 items-center">
-                    <h3 className="font-semibold">복지/급여</h3>
-                    <div>■■■■■</div>
-                  </div>
-                  <p>내용</p>
-                </li>
-                <li className="flex flex-col gap-1 text-xs">
-                  <div className="flex gap-2 items-center">
-                    <h3 className="font-semibold">워라벨</h3>
-                    <div>■■■■■</div>
-                  </div>
-                  <p>내용</p>
-                </li>
-                <li className="flex flex-col gap-1 text-xs">
-                  <div className="flex gap-2 items-center">
-                    <h3 className="font-semibold">분위기</h3>
-                    <div>■■■■■</div>
-                  </div>
-                  <p>내용</p>
-                </li>
-                <li className="flex flex-col gap-1 text-xs">
-                  <div className="flex gap-2 items-center">
-                    <h3 className="font-semibold">관리자</h3>
-                    <div>■■■■■</div>
-                  </div>
-                  <p>내용</p>
-                </li>
-                <li className="flex flex-col gap-1 text-xs">
-                  <div className="flex gap-2 items-center">
-                    <h3 className="font-semibold">고객</h3>
-                    <div>■■■■■</div>
-                  </div>
-                  <p>내용</p>
-                </li>
-              </ul>
-              <div className="text-primary-normal03 text-xs underline font-semibold">
-                더보기
-              </div>
-            </div>
+            <ReviewCard review={REVIEW_DATA.work} />
           </section>
         </>
       ) : (

@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useSearchParams, useParams, useNavigate } from "react-router-dom";
 import { REVIEW_TYPES, REVIEW_TYPE_LABELS } from "@/constants/review";
+import { setReviewState } from "@/utils/lastVisitedPathUtils";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import NavBar from "@/components/@shared/nav/nav-bar";
 import ReviewLayout from "@/components/review/review-layout";
 import PostButton from "@/components/@shared/buttons/post-button";
-import { setReviewState } from "@/utils/lastVisitedPathUtils";
 
 export default function Review() {
   const { id } = useParams<{ id: string }>();
