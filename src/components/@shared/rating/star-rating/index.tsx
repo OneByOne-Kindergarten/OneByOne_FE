@@ -88,7 +88,6 @@ export const StarRating = React.memo(
             role="radio"
             aria-checked={star <= value}
             tabIndex={0}
-            className="focus:outline-none focus:ring-2 focus:ring-tertiary-2 focus:ring-opacity-50 rounded-full"
             data-value={star}
           >
             <StarIcon
