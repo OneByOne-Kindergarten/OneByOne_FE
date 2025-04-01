@@ -73,4 +73,5 @@ export const SVG_PATHS = {
   CLASS: "/src/assets/icons/class.svg",
   BOSS: "/src/assets/icons/boss.svg",
   CLOCK: "/src/assets/icons/clock.svg",
+  BROKEN_LINE: "/src/assets/icons/broken-line.svg",
 };

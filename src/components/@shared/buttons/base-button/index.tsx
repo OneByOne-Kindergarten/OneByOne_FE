@@ -11,7 +11,7 @@ const buttonVariants = cva(
         default: "bg-primary-foreground text-primary-normal03 hover:opacity-80",
         primary: "bg-primary text-white disabled:opacity-50 hover:opacity-80",
         secondary:
-          "bg-secondary-main text-primary disabled:bg-primary-normal01 disabled:opacity-40 hover:opacity-80",
+          "bg-secondary-main text-primary disabled:bg-primary-normal01 disabled:opacity-40",
         tertiary:
           "bg-transparent border border-blue-100 text-blue-300 disabled:text-primary-normal03 hover:opacity-80 active:border-blue-400 active:text-blue-400",
         destructive:

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import Button from "@/components/@shared/buttons/base-button";
 import Badge from "@/components/@shared/badge";
-import { getMockCommunityPosts } from "@/services/mockApi";
+import { getMockPosts } from "@/services/mockApi";
 import type { Post } from "@/types/community";
 import { formatDate } from "@/utils/dateUtils";
 import { SVG_PATHS } from "@/constants/assets-path";
@@ -55,7 +55,7 @@ export default function CommunityLayout({
 
     // API 호출 지연 시뮬레이터
     const timer = setTimeout(() => {
-      const fetchedPosts = getMockCommunityPosts(type, currentCategory);
+      const fetchedPosts = getMockPosts(type, currentCategory);
 
       // 서버 응답을 표시용 데이터로 변환
       const postsWithAuthor = fetchedPosts.map((post) => ({
