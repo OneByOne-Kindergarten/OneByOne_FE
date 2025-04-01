@@ -195,7 +195,7 @@ export default function TEST() {
             <Toggle variant="primary" size="md">
               토글
             </Toggle>
-            <Toggle variant="transparent_gray" size="sm">
+            <Toggle size="sm">
               <img
                 src={SVG_PATHS.CHARACTER.chick}
                 alt="테스트"

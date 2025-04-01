@@ -54,7 +54,6 @@ export default function Review() {
       currentPath={reviewPath}
       mainBg={reviewType === REVIEW_TYPES.WORK ? "gray" : "white"}
       mainClassName={reviewType === REVIEW_TYPES.WORK ? "gap-0 mb-28" : "mb-28"}
-      wrapperBg="white"
     >
       <NavBar id={safeId} options={schoolOptions} currentPath={reviewPath} />
       <ReviewLayout type={reviewType as "work" | "learning"} />

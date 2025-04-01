@@ -1,6 +1,9 @@
+import { useState } from "react";
+
+import LikeToggle from "@/components/@shared/buttons/like-toggle";
+import ShareButton from "@/components/@shared/buttons/share-button";
 import { StarRating } from "@/components/@shared/rating/star-rating";
 import { BoxRatingGroup } from "@/components/@shared/rating/box-rating";
-import { useState } from "react";
 
 interface ReviewCardProps {
   review: {
@@ -135,12 +138,25 @@ export default function ReviewCard({ review }: ReviewCardProps) {
           </p>
         </li>
       </ul>
-      <button
-        onClick={() => setIsExpanded(!isExpanded)}
-        className="text-primary-normal03 text-xs underline font-semibold"
-      >
-        {isExpanded ? "접기" : "더보기"}
-      </button>
+      <div className="flex justify-between">
+        <button
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="text-primary-normal03 text-xs text-left underline font-semibold"
+        >
+          {isExpanded ? "접기" : "더보기"}
+        </button>
+        <div className="flex gap-2">
+          <LikeToggle
+            variant="secondary"
+            size="sm"
+            isCount
+            count={review.likeCount}
+          >
+            도움돼요
+          </LikeToggle>
+          <ShareButton variant="secondary" size="xs" />
+        </div>
+      </div>
     </div>
   );
 }

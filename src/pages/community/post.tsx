@@ -1,20 +1,23 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { SVG_PATHS } from "@/constants/assets-path";
-import Badge from "@/components/@shared/badge";
-import Toggle from "@/components/@shared/buttons/base-toggle";
-import Button from "@/components/@shared/buttons/base-button";
-import AlertCard from "@/components/@shared/alert/alert-card";
 import PageLayout from "@/components/@shared/layout/page-layout";
+import Badge from "@/components/@shared/badge";
+import AlertCard from "@/components/@shared/alert/alert-card";
+import LikeToggle from "@/components/@shared/buttons/like-toggle";
+import ShareButton from "@/components/@shared/buttons/share-button";
+import ReplyButton from "@/components/community/reply-button";
+import ChatCount from "@/components/community/chat-count";
+import ChatBar from "@/components/community/chat-bar";
 import { CATEGORY_LABELS } from "@/constants/community";
-import type { Post } from "@/types/community";
+import { SVG_PATHS } from "@/constants/assets-path";
 import { formatDate } from "@/utils/dateUtils";
 import { getMockPostDetail } from "@/services/mockApi";
 import {
   getCommunityType,
   setCommunityState,
 } from "@/utils/lastVisitedPathUtils";
+import type { Post } from "@/types/community";
 
 interface ExtendedPost extends Post {
   author: string;
@@ -60,6 +63,7 @@ export default function CommunityPost() {
 
   return (
     <PageLayout
+      isGlobalNavBar={false}
       title={`원바원 | ${post?.title || "게시글"}`}
       description={`원바원 커뮤니티 게시글 - ${post?.title || ""}`}
       headerTitle="커뮤니티"
@@ -77,9 +81,7 @@ export default function CommunityPost() {
           <article className="px-5 pt-7 pb-4 bg-white flex flex-col gap-7">
             <section className="flex flex-col gap-2.5">
               <div className="flex gap-2 items-center">
-                <Badge variant="secondary">
-                  {CATEGORY_LABELS[post.category]}
-                </Badge>
+                <Badge>{CATEGORY_LABELS[post.category]}</Badge>
               </div>
               <div className="flex justify-between">
                 <div className="flex gap-2.5 items-center">
@@ -122,15 +124,11 @@ export default function CommunityPost() {
             </section>
 
             <section className="flex justify-between">
-              <Toggle variant="transparent_gray" size="sm">
-                좋아요 <span>{post.likeCount}</span>
-              </Toggle>
-              <Button variant="transparent_gray" size="sm" font="sm_sb">
-                답글
-              </Button>
-              <Button variant="transparent_gray" size="sm" font="sm_sb">
-                공유
-              </Button>
+              <LikeToggle size="sm" isCount count={post.likeCount}>
+                좋아요
+              </LikeToggle>
+              <ChatCount count={post.likeCount} />
+              <ShareButton size="xs" />
             </section>
           </article>
           <section className="flex flex-col gap-2 p-5 bg-white">
@@ -160,22 +158,20 @@ export default function CommunityPost() {
                 className="mb-auto"
               />
             </div>
-            <p className="text-primary-dark01 text-sm">댓글 내용</p>
+            <p className="text-primary-dark01 text-sm">{post.content}</p>
             <div className="flex justify-end gap-2">
-              <Toggle variant="transparent_gray" size="sm" border="gray">
-                좋아요 <span>{post.likeCount}</span>
-              </Toggle>
-              <Button
-                variant="transparent_gray"
+              <LikeToggle
+                variant="secondary"
                 size="sm"
-                border="gray"
-                shape="rounded"
-                font="sm_sb"
+                isCount
+                count={post.likeCount}
               >
-                답글
-              </Button>
+                좋아요
+              </LikeToggle>
+              <ReplyButton />
             </div>
           </section>
+          <ChatBar />
         </>
       ) : (
         <div className="m-5 flex justify-center items-center h-64">
