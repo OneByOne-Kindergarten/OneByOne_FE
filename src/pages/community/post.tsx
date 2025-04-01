@@ -120,6 +120,7 @@ export default function CommunityPost() {
   return (
     <PageLayout
       isGlobalNavBar={false}
+      headerType="bookmark"
       title={`원바원 | ${post?.title || "게시글"}`}
       description={`원바원 커뮤니티 게시글 - ${post?.title || ""}`}
       headerTitle="커뮤니티"
