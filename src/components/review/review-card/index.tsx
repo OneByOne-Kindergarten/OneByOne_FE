@@ -5,36 +5,37 @@ import ShareButton from "@/components/@shared/buttons/share-button";
 import { StarRating } from "@/components/@shared/rating/star-rating";
 import { BoxRatingGroup } from "@/components/@shared/rating/box-rating";
 
-interface ReviewCardProps {
-  review: {
-    id: number;
-    title: string;
-    type: string;
-    createdAt: string;
-    shareCount: number;
-    likeCount: number;
-    workYear: string;
-    rating: {
-      total: number;
-    };
-    reviewScore: {
-      welfare: number;
-      workLabel: number;
-      atmosphere: number;
-      manager: number;
-      customer: number;
-    };
-    content: {
-      welfare: string;
-      workLabel: string;
-      atmosphere: string;
-      manager: string;
-      customer: string;
-    };
+export type ReviewFieldConfig = {
+  key: string;
+  label: string;
+};
+
+export interface ReviewData {
+  id: number;
+  title: string;
+  type: string;
+  createdAt: string;
+  likeCount: number;
+  workYear: string;
+  rating: {
+    total: number;
   };
+  scores: Record<string, number>;
+  contents: Record<string, string>;
 }
 
-export default function ReviewCard({ review }: ReviewCardProps) {
+export interface ReviewCardProps {
+  review: ReviewData | ReviewData[];
+  fieldConfigs: ReviewFieldConfig[];
+}
+
+function ReviewCardItem({
+  review,
+  fieldConfigs,
+}: {
+  review: ReviewData;
+  fieldConfigs: ReviewFieldConfig[];
+}) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const truncateText = (text: string, maxLength: number = 40) => {
@@ -42,16 +43,14 @@ export default function ReviewCard({ review }: ReviewCardProps) {
     return text.slice(0, maxLength) + " …";
   };
 
-  const getDisplayText = (text: string) => {
-    return isExpanded ? text : truncateText(text);
-  };
-
   return (
     <div className="flex flex-col gap-7">
       <div className="flex flex-col gap-3">
         <div className="flex gap-2 items-center">
           <StarRating value={review.rating.total} />
-          <span className="text-sm font-semibold">{review.rating.total}</span>
+          <span className="text-sm font-semibold">
+            {Number(review.rating.total).toFixed(1)}
+          </span>
         </div>
         <div className="flex flex-col gap-1">
           <h2 className="font-semibold">{review.title}</h2>
@@ -62,81 +61,22 @@ export default function ReviewCard({ review }: ReviewCardProps) {
         </div>
       </div>
       <ul className="flex flex-col gap-3">
-        <li className="flex flex-col gap-1.5 text-xs">
-          <div className="flex items-center">
-            <h3 className="font-semibold w-14">복지/급여</h3>
-            <BoxRatingGroup
-              value={review.reviewScore.welfare}
-              size="xs"
-              className="gap-0.5"
-            />
-          </div>
-          <p className={isExpanded ? "" : "line-clamp-1"}>
-            {isExpanded
-              ? review.content.welfare
-              : truncateText(review.content.welfare)}
-          </p>
-        </li>
-        <li className="flex flex-col gap-1.5 text-xs">
-          <div className="flex items-center">
-            <h3 className="font-semibold w-14">워라벨</h3>
-            <BoxRatingGroup
-              value={review.reviewScore.workLabel}
-              size="xs"
-              className="gap-0.5"
-            />
-          </div>
-          <p className={isExpanded ? "" : "line-clamp-1"}>
-            {isExpanded
-              ? review.content.workLabel
-              : truncateText(review.content.workLabel)}
-          </p>
-        </li>
-        <li className="flex flex-col gap-1.5 text-xs">
-          <div className="flex items-center">
-            <h3 className="font-semibold w-14">분위기</h3>
-            <BoxRatingGroup
-              value={review.reviewScore.atmosphere}
-              size="xs"
-              className="gap-0.5"
-            />
-          </div>
-          <p className={isExpanded ? "" : "line-clamp-1"}>
-            {isExpanded
-              ? review.content.atmosphere
-              : truncateText(review.content.atmosphere)}
-          </p>
-        </li>
-        <li className="flex flex-col gap-1.5 text-xs">
-          <div className="flex items-center">
-            <h3 className="font-semibold w-14">관리자</h3>
-            <BoxRatingGroup
-              value={review.reviewScore.manager}
-              size="xs"
-              className="gap-0.5"
-            />
-          </div>
-          <p className={isExpanded ? "" : "line-clamp-1"}>
-            {isExpanded
-              ? review.content.manager
-              : truncateText(review.content.manager)}
-          </p>
-        </li>
-        <li className="flex flex-col gap-1.5 text-xs">
-          <div className="flex items-center">
-            <h3 className="font-semibold w-14">고객</h3>
-            <BoxRatingGroup
-              value={review.reviewScore.customer}
-              size="xs"
-              className="gap-0.5"
-            />
-          </div>
-          <p className={isExpanded ? "" : "line-clamp-1"}>
-            {isExpanded
-              ? review.content.customer
-              : truncateText(review.content.customer)}
-          </p>
-        </li>
+        {fieldConfigs.map((config) => {
+          const score = review.scores[config.key] || 0;
+          const content = review.contents[config.key] || "";
+
+          return (
+            <li key={config.key} className="flex flex-col gap-1.5 text-xs">
+              <div className="flex items-center">
+                <h3 className="font-semibold w-14">{config.label}</h3>
+                <BoxRatingGroup value={score} size="xs" className="gap-0.5" />
+              </div>
+              <p className={isExpanded ? "" : "line-clamp-1"}>
+                {isExpanded ? content : truncateText(content)}
+              </p>
+            </li>
+          );
+        })}
       </ul>
       <div className="flex justify-between">
         <button
@@ -157,6 +97,24 @@ export default function ReviewCard({ review }: ReviewCardProps) {
           <ShareButton variant="secondary" size="xs" />
         </div>
       </div>
+    </div>
+  );
+}
+
+export default function ReviewCard({ review, fieldConfigs }: ReviewCardProps) {
+  return (
+    <div className="flex flex-col gap-8">
+      {Array.isArray(review) ? (
+        review.map((item) => (
+          <ReviewCardItem
+            key={item.id}
+            review={item}
+            fieldConfigs={fieldConfigs}
+          />
+        ))
+      ) : (
+        <ReviewCardItem review={review} fieldConfigs={fieldConfigs} />
+      )}
     </div>
   );
 }

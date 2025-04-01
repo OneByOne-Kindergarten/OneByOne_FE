@@ -1,9 +1,9 @@
 interface ProgressBarProps {
-  value: number; // 0~3 사이 값
+  value: number;
+  max: number;
 }
 
-export default function ProgressBar({ value }: ProgressBarProps) {
-  const max = 3;
+export default function ProgressBar({ value, max }: ProgressBarProps) {
   const percentage = (value / max) * 100;
   const dots = Array.from({ length: max }, (_, i) => i + 1);
 

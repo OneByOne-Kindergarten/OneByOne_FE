@@ -25,7 +25,14 @@ export const ROOT_URL_KEYS: UrlKeys[] = [
 // 상위 UrlKey 및 하위 UrlKey 그룹화
 export const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
   HOME: ["HOME"],
-  SCHOOL: ["SCHOOL", "SCHOOL_DETAIL", "SCHOOL_REVIEW", "SCHOOL_REVIEW_EDITOR"],
+  SCHOOL: [
+    "SCHOOL",
+    "SCHOOL_DETAIL",
+    "REVIEW",
+    "REVIEW_WORK",
+    "REVIEW_LEARNING",
+    "REVIEW_EDITOR",
+  ],
   COMMUNITY: [
     "COMMUNITY",
     "COMMUNITY_TEACHER",
@@ -40,8 +47,10 @@ export const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
   COMMUNITY_POST: [],
   COMMUNITY_POST_EDITOR: [],
   SCHOOL_DETAIL: [],
-  SCHOOL_REVIEW: [],
-  SCHOOL_REVIEW_EDITOR: [],
+  REVIEW: [],
+  REVIEW_WORK: [],
+  REVIEW_LEARNING: [],
+  REVIEW_EDITOR: [],
   SIGNIN: [],
   SIGNUP: [],
   TEST: [],
@@ -49,7 +58,7 @@ export const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
 
 // 에디터 페이지 관련 키
 export const EDITOR_URL_KEYS: UrlKeys[] = [
-  "SCHOOL_REVIEW_EDITOR",
+  "REVIEW_EDITOR",
   "COMMUNITY_POST_EDITOR",
 ];
 
@@ -115,7 +124,7 @@ export function useUrlNavigation(
       currentUrlKey &&
       SESSION_STORAGE_BASED_URL_KEYS.includes(currentUrlKey)
     ) {
-      if (currentUrlKey === "SCHOOL_REVIEW_EDITOR") {
+      if (currentUrlKey === "REVIEW_EDITOR") {
         const reviewState = getReviewState();
         if (reviewState?.path) {
           navigate(reviewState.path);

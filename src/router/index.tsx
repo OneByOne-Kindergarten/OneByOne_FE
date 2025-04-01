@@ -9,7 +9,7 @@ const SchoolPage = lazy(() => import("../pages/school"));
 const SignInPage = lazy(() => import("../pages/auth/sign-in"));
 const SignUpPage = lazy(() => import("../pages/auth/sign-up"));
 const SchoolDetailPage = lazy(() => import("../pages/school/school-detail"));
-const ReviewPage = lazy(() => import("../pages/review"));
+const ReviewPage = lazy(() => import("../pages/review/index"));
 const ReviewEditorPage = lazy(() => import("../pages/review/review-editor"));
 const CommunityPage = lazy(() => import("../pages/community"));
 const CommunityPostPage = lazy(() => import("../pages/community/post"));
@@ -25,12 +25,13 @@ const routes = {
     { path: URL_PATHS.USER, element: <UserPage /> },
     { path: URL_PATHS.SIGNIN, element: <SignInPage /> },
     { path: URL_PATHS.SIGNUP, element: <SignUpPage /> },
-    // 유치원 페이지
+    // 기관
     { path: URL_PATHS.SCHOOL, element: <SchoolPage /> },
     { path: URL_PATHS.SCHOOL_DETAIL, element: <SchoolDetailPage /> },
-    { path: URL_PATHS.SCHOOL_REVIEW, element: <ReviewPage /> },
-    { path: URL_PATHS.SCHOOL_REVIEW_EDITOR, element: <ReviewEditorPage /> },
-    // 커뮤니티 페이지
+    // 리뷰
+    { path: URL_PATHS.REVIEW, element: <ReviewPage /> },
+    { path: URL_PATHS.REVIEW_EDITOR, element: <ReviewEditorPage /> },
+    // 커뮤니티
     { path: URL_PATHS.COMMUNITY, element: <CommunityPage /> },
     { path: URL_PATHS.COMMUNITY_POST_EDITOR, element: <PostEditorPage /> },
     { path: URL_PATHS.COMMUNITY_POST, element: <CommunityPostPage /> },
@@ -40,11 +41,8 @@ const routes = {
     { path: "*", to: URL_PATHS.HOME },
     { path: URL_PATHS.COMMUNITY_TEACHER, to: "/community?type=teacher" },
     { path: URL_PATHS.COMMUNITY_STUDENT, to: "/community?type=pre-teacher" },
-    { path: "/school/:id/work-review", to: "/school/:id/review?type=work" },
-    {
-      path: "/school/:id/learning-review",
-      to: "/school/:id/review?type=learning",
-    },
+    { path: URL_PATHS.REVIEW_WORK, to: "/school/:id/review?type=work" },
+    { path: URL_PATHS.REVIEW_LEARNING, to: "/school/:id/review?type=learning" },
   ],
 };
 
