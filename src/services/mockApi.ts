@@ -2,7 +2,6 @@ import type { Post, Comment } from "@/types/community";
 import { COMMENTS } from "@/data/mockComments";
 import { POST } from "@/data/mockPost";
 import { TEACHER_POSTS, STUDENT_POSTS, USERS } from "@/data/mockPosts";
-import { COMMUNITY_CATEGORIES } from "@/constants/community";
 
 // 커뮤니티 페이지 API
 export const getMockPosts = (
@@ -22,7 +21,7 @@ export const getMockPosts = (
 
   // 카테고리 필터링
   if (category && category !== "all") {
-    if (category === COMMUNITY_CATEGORIES.TOP10) {
+    if (category === "top10") {
       return posts
         .slice()
         .sort((a, b) => b.likeCount - a.likeCount)
@@ -34,7 +33,7 @@ export const getMockPosts = (
             author: user?.nickname || "익명 사용자",
           };
         });
-    } else if (category === COMMUNITY_CATEGORIES.ALL) {
+    } else if (category === "all") {
       // "all" 카테고리는 필터링하지 않음
     } else {
       posts = posts.filter((post) => post.category === category);

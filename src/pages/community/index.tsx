@@ -1,7 +1,11 @@
 import { useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 
-import { COMMUNITY_CATEGORIES, CATEGORY_LABELS } from "@/constants/community";
+import {
+  PRE_TEACHER_CATEGORIES,
+  TEACHER_CATEGORIES,
+  CategoryOption,
+} from "@/constants/community";
 import NavBar from "@/components/@shared/nav/nav-bar";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import CommunityLayout from "@/components/community/community-layout";
@@ -20,15 +24,13 @@ export default function Community() {
   const communityType =
     searchParams.get("type") === "pre-teacher" ? "pre-teacher" : "teacher";
 
-  const categoryType =
-    searchParams.get("category") || COMMUNITY_CATEGORIES.TOP10;
+  const categoryType = searchParams.get("category") || "top10";
 
-  const categoryOptions = Object.entries(COMMUNITY_CATEGORIES).map(
-    ([key, value]) => ({
-      value,
-      label: CATEGORY_LABELS[value],
-    })
-  );
+  // 현재 타입에 맞는 카테고리 옵션 가져오기
+  const categoryOptions =
+    communityType === "pre-teacher"
+      ? PRE_TEACHER_CATEGORIES
+      : TEACHER_CATEGORIES;
 
   const handleTypeChange = (newType: string) => {
     const newParams = new URLSearchParams(searchParams);
@@ -38,7 +40,6 @@ export default function Community() {
 
   // 세션 스토리지에 위치 정보 저장
   useEffect(() => {
-    // 커뮤니티 상태 한번에 저장
     setCommunityState({
       type: communityType as "teacher" | "pre-teacher",
       category: categoryType,
@@ -46,7 +47,6 @@ export default function Community() {
     });
   }, [communityType, categoryType]);
 
-  // 글쓰기 버튼 클릭 핸들러
   const handleWritePost = () => {
     navigate("/community/new");
   };

@@ -4,7 +4,7 @@ import { cn } from "@/utils/cn";
 
 // cva를 사용하여 textarea 스타일 정의
 const textareaVariants = cva(
-  "flex w-full rounded-md bg-primary-foreground text-sm placeholder:text-primary-normal03 focus-visible:outline-1 focus-visible:outline-primary-normal03 disabled:cursor-not-allowed disabled:opacity-50",
+  "flex w-full resize-none rounded-md bg-primary-foreground text-sm placeholder:text-primary-normal03 focus-visible:outline-1 focus-visible:outline-primary-normal03 disabled:cursor-not-allowed disabled:opacity-50",
   {
     variants: {
       font: {

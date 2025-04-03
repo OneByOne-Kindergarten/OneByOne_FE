@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { URL_PATHS } from "@/constants/url-path";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import Button from "@/components/@shared/buttons/base-button";
-import { COMMUNITY_CATEGORIES, CATEGORY_LABELS } from "@/constants/community";
 import {
   getCommunityType,
   getCategoryType,
@@ -21,6 +20,10 @@ import {
 } from "@/components/@shared/form";
 import Input from "@/components/@shared/form/input";
 import Textarea from "@/components/@shared/form/textarea";
+import {
+  PRE_TEACHER_CATEGORIES,
+  TEACHER_CATEGORIES,
+} from "@/constants/community";
 
 export default function PostEditor() {
   const form = useForm();
@@ -33,12 +36,12 @@ export default function PostEditor() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
-  const categoryOptions = Object.entries(COMMUNITY_CATEGORIES)
-    .filter(([key]) => key !== "TOP10" && key !== "ALL")
-    .map(([_, value]) => ({
-      value,
-      label: CATEGORY_LABELS[value],
-    }));
+  // 현재 커뮤니티 타입에 맞는 카테고리 옵션 가져오기
+  const categoryOptions = (
+    communityType === "pre-teacher"
+      ? PRE_TEACHER_CATEGORIES
+      : TEACHER_CATEGORIES
+  ).filter((option) => option.value !== "top10" && option.value !== "all");
 
   // lastVisitedPaths 업데이트
   const handleCategoryChange = (category: string) => {

@@ -1,17 +1,35 @@
-export const COMMUNITY_CATEGORIES = {
-  TOP10: "top10",
-  ALL: "all",
-  FREE: "free",
-  SALARY: "salary",
-  CLASS: "class",
-  GUIDANCE: "guidance",
-};
+export interface CategoryOption {
+  value: string;
+  label: string;
+}
 
-export const CATEGORY_LABELS = {
-  [COMMUNITY_CATEGORIES.TOP10]: "Top 10",
-  [COMMUNITY_CATEGORIES.ALL]: "전체",
-  [COMMUNITY_CATEGORIES.FREE]: "자유",
-  [COMMUNITY_CATEGORIES.SALARY]: "월급/취업",
-  [COMMUNITY_CATEGORIES.CLASS]: "수업/환경구성",
-  [COMMUNITY_CATEGORIES.GUIDANCE]: "유아지도",
+// 예비교사 커뮤니티
+export const PRE_TEACHER_CATEGORIES: CategoryOption[] = [
+  { value: "top10", label: "Top 10" },
+  { value: "all", label: "전체" },
+  { value: "university", label: "대학생활" },
+  { value: "practice", label: "실습" },
+  { value: "job", label: "취업/면접" },
+];
+
+// 교사 커뮤니티
+export const TEACHER_CATEGORIES: CategoryOption[] = [
+  { value: "top10", label: "Top 10" },
+  { value: "all", label: "전체" },
+  { value: "free", label: "자유" },
+  { value: "salary", label: "월급/취업" },
+  { value: "class", label: "수업/환경구성" },
+  { value: "guidance", label: "유아지도" },
+];
+
+export const CATEGORY_LABELS: Record<string, string> = {
+  top10: "Top 10",
+  all: "전체",
+  university: "대학생활",
+  practice: "실습",
+  job: "취업/면접",
+  free: "자유",
+  salary: "월급/취업",
+  class: "수업/환경구성",
+  guidance: "유아지도",
 };

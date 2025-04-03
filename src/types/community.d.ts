@@ -12,7 +12,8 @@ export interface Post {
   content: string;
   category: string;
   categoryId: string;
-  useId: string;
+  userId: string;
+  author: string;
   views: number;
   likeCount: number;
   commentCount: number;
@@ -25,7 +26,7 @@ export interface Post {
 export interface Like {
   id: string;
   postId: string;
-  useId: string;
+  userId: string;
   createdAt: string;
 }
 
