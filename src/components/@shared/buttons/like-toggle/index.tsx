@@ -1,7 +1,7 @@
 import { useState } from "react";
 import clsx from "clsx";
 import Toggle from "@/components/@shared/buttons/base-toggle";
-import SVG_PATH from "@/assets/icons/thumb-up.svg";
+import { SVG_PATHS } from "@/constants/assets-path";
 
 interface LikeToggleProps {
   children: React.ReactNode;
@@ -73,8 +73,8 @@ export default function LikeToggle({
       size={size}
     >
       <img
-        src={SVG_PATH}
-        alt="thumb-up"
+        src={SVG_PATHS.THUMB_UP}
+        alt="좋아요 아이콘"
         width={20}
         height={20}
         style={liked ? yellowFilterStyle : undefined}

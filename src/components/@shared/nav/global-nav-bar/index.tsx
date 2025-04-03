@@ -27,7 +27,14 @@ const ROOT_URL_KEYS: UrlKeys[] = [
 // 상위 UrlKey 및 하위 UrlKey 그룹화
 const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
   HOME: ["HOME"],
-  SCHOOL: ["SCHOOL", "SCHOOL_DETAIL", "SCHOOL_REVIEW", "SCHOOL_REVIEW_EDITOR"],
+  SCHOOL: [
+    "SCHOOL",
+    "SCHOOL_DETAIL",
+    "REVIEW",
+    "REVIEW_WORK",
+    "REVIEW_LEARNING",
+    "REVIEW_EDITOR",
+  ],
   COMMUNITY: [
     "COMMUNITY",
     "COMMUNITY_TEACHER",
@@ -42,8 +49,10 @@ const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
   COMMUNITY_POST: [],
   COMMUNITY_POST_EDITOR: [],
   SCHOOL_DETAIL: [],
-  SCHOOL_REVIEW: [],
-  SCHOOL_REVIEW_EDITOR: [],
+  REVIEW: [],
+  REVIEW_WORK: [],
+  REVIEW_LEARNING: [],
+  REVIEW_EDITOR: [],
   SIGNIN: [],
   SIGNUP: [],
   TEST: [],
@@ -127,16 +136,6 @@ export default function GlobalNavBar({ currentPath }: GlobalNavBarProps) {
   }, [currentPath]);
 
   const getUrlForKey = (urlKey: UrlKeys): string => {
-    const currentUrlKey = getCurrentUrlKey();
-
-    // 에디터 페이지에서는 이전 페이지로 이동
-    if (
-      currentUrlKey === "SCHOOL_REVIEW_EDITOR" ||
-      currentUrlKey === "COMMUNITY_POST_EDITOR"
-    ) {
-      return "#";
-    }
-
     // URL_PATHS 객체에 해당 키가 없는 경우 대비
     if (!(urlKey in URL_PATHS)) {
       console.warn(`URL key ${urlKey} not found in URL_PATHS`);
@@ -181,6 +180,14 @@ export default function GlobalNavBar({ currentPath }: GlobalNavBarProps) {
     );
   };
 
+  const isEditingPage = (): boolean => {
+    const currentUrlKey = getCurrentUrlKey();
+    return (
+      currentUrlKey === "REVIEW_EDITOR" ||
+      currentUrlKey === "COMMUNITY_POST_EDITOR"
+    );
+  };
+
   return (
     <nav className="fixed bottom-0 h-14 items-center w-full text-xs min-w-80 max-w-3xl bg-white flex py-3 px-8 mx-auto justify-between border-t border-opacity-5 font-bold">
       {NAV_BAR_ITEMS.map(
@@ -192,14 +199,14 @@ export default function GlobalNavBar({ currentPath }: GlobalNavBarProps) {
 
           const isActive = isPathActive(urlKey);
           const linkPath = getUrlForKey(urlKey);
-          const currentUrlKey = getCurrentUrlKey();
+          const editing = isEditingPage();
+
+          // 현재 활성화된 네비게이션만 뒤로가기 처리
+          const shouldGoBack = editing && isActive;
 
           // 뒤로가기 적용 페이지
           const handleClick = (e: React.MouseEvent) => {
-            if (
-              currentUrlKey === "SCHOOL_REVIEW_EDITOR" ||
-              currentUrlKey === "COMMUNITY_POST_EDITOR"
-            ) {
+            if (shouldGoBack) {
               e.preventDefault();
               window.history.back();
             }
@@ -208,7 +215,7 @@ export default function GlobalNavBar({ currentPath }: GlobalNavBarProps) {
           return (
             <Link
               key={label}
-              to={linkPath}
+              to={shouldGoBack ? "#" : linkPath}
               aria-label={ariaLabel}
               data-button-name={dataButtonName}
               data-section-name="gnb"

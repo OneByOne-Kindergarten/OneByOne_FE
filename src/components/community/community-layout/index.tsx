@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import Button from "@/components/@shared/buttons/base-button";
 import Badge from "@/components/@shared/badge";
+import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import { getMockPosts } from "@/services/mockApi";
 import type { Post } from "@/types/community";
 import { formatDate } from "@/utils/dateUtils";
 import { SVG_PATHS } from "@/constants/assets-path";
 import { COMMUNITY_CATEGORIES, CATEGORY_LABELS } from "@/constants/community";
 import { setCommunityState } from "@/utils/lastVisitedPathUtils";
-import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 
 interface CategoryOption {
   value: string;
@@ -109,27 +109,62 @@ export default function CommunityLayout({
               게시글이 없습니다.
             </div>
           ) : (
-            <ul className="font-semibold text-primary-dark01 flex flex-col gap-5">
+            <ul className="flex flex-col gap-5">
               {posts.map((post, index) => (
                 <li
                   key={post.id}
                   className="flex items-center gap-3 flex-1 pb-4 border-b"
                 >
-                  {currentCategory === COMMUNITY_CATEGORIES.TOP10 && (
-                    <span className="min-w-6 text-center">{index + 1}</span>
-                  )}
                   <div className="flex flex-col gap-1.5 flex-1">
-                    <Badge variant="primary">
-                      {getCategoryLabel(post.category)}
-                    </Badge>
+                    <div className="flex gap-2">
+                      {currentCategory === COMMUNITY_CATEGORIES.TOP10 && (
+                        <Badge variant="secondary">{index + 1}</Badge>
+                      )}
+                      <Badge variant="primary">
+                        {getCategoryLabel(post.category)}
+                      </Badge>
+                    </div>
                     <Link to={`/community/${post.id}`}>
-                      <p className="text-primary-dark01">{post.title}</p>
+                      <p className="font-semibold text-primary-dark01">
+                        {post.title}
+                      </p>
                     </Link>
-                    <div className="flex gap-4 text-xs text-gray-500 flex-wrap">
-                      <span>{post.author || "작성자"}</span>
-                      <span>{formatDate(post.createdAt)}</span>
-                      <span>조회 {post.viewCount || post.views}</span>
-                      <span>좋아요 {post.likeCount}</span>
+                    <div className="flex justify-between text-xs text-primary-normal03">
+                      <div className="flex gap-4">
+                        <div className="flex gap-1 items-center">
+                          <img
+                            src={SVG_PATHS.THUMB_UP}
+                            alt="좋아요 아이콘"
+                            width="15"
+                            height="15"
+                          />
+                          <span>{post.likeCount}</span>
+                        </div>
+                        <div className="flex gap-1 items-center">
+                          <img
+                            src={SVG_PATHS.CHAT.line}
+                            alt="말풍선 아이콘"
+                            width="15"
+                            height="15"
+                          />
+                          <span>{post.commentCount}</span>
+                        </div>
+                        <div className="flex gap-1 items-center">
+                          <img
+                            src={SVG_PATHS.EYE.on}
+                            alt="눈 아이콘"
+                            width="15"
+                            height="15"
+                          />
+                          <span>{post.viewCount || post.views}</span>
+                        </div>
+                      </div>
+                      <div>
+                        <span>
+                          {post.author || "작성자"} ·{" "}
+                          {formatDate(post.createdAt)}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </li>

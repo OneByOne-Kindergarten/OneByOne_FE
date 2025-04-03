@@ -54,7 +54,7 @@ export const SVG_PATHS = {
   NOTICE: "/src/assets/icons/notice.svg",
   DOCUMENT_CHECK: "/src/assets/icons/document-check.svg",
   CHART: "/src/assets/icons/chart.svg",
-  THUMBS_UP: "/src/assets/icons/thumbs-up.svg",
+  THUMB_UP: "/src/assets/icons/thumb-up.svg",
   REPLY: "/src/assets/icons/reply.svg",
   SHARE: "/src/assets/icons/share.svg",
   ALARM: "/src/assets/icons/alarm.svg",
