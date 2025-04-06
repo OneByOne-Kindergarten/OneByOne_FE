@@ -5,7 +5,7 @@ export interface SignUpRequest {
   providerId: number;
   nickname: string;
   role: "TEACHER" | "PRE_TEACHER" | "ADMIN";
-  profileImageUrl: string | null;
+  profileImageUrl: string;
 }
 
 export interface SignUpResponse {
@@ -15,7 +15,7 @@ export interface SignUpResponse {
   providerId: number;
   nickname: string;
   role: "TEACHER" | "PRE_TEACHER" | "ADMIN";
-  profileImageUrl: string | null;
+  profileImageUrl: string;
 }
 
 export interface SignInRequest {
