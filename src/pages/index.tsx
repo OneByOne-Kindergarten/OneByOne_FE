@@ -1,5 +1,5 @@
 import { URL_PATHS } from "@/constants/url-path";
-import { SVG_PATHS } from "@/constants/assets-path";
+import { SVG_PATHS, IMAGE_PATHS } from "@/constants/assets-path";
 import { Link } from "react-router-dom";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import Button from "@/components/@shared/buttons/base-button";
@@ -18,7 +18,13 @@ export default function Home() {
         <h2>
           <strong>선생님</strong>들의 <strong>진짜 유치원 이야기</strong>
         </h2>
-        <h1 className="text-3xl">원바원</h1>
+        <img
+          src={IMAGE_PATHS.LOGO}
+          alt="원바원 로고"
+          width={89}
+          height={31}
+          className="mx-auto"
+        />
       </section>
       <section className="flex flex-col gap-9 w-3/4 justify-center mx-auto">
         <div className="flex flex-col gap-3">
