@@ -1,4 +1,5 @@
 import { URL_PATHS } from "@/constants/url-path";
+import { SVG_PATHS } from "@/constants/assets-path";
 import { Link } from "react-router-dom";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import Button from "@/components/@shared/buttons/base-button";
@@ -19,14 +20,48 @@ export default function Home() {
         </h2>
         <h1 className="text-3xl">원바원</h1>
       </section>
-      <section className="flex flex-col gap-9 justify-center mx-auto">
-        <div className="flex flex-col gap-3 ">
-          <Button>KaKao로 시작하기</Button>
-          <Button>Naver로 시작하기</Button>
-          <Button>Apple로 시작하기</Button>
-          <Button>Email로 시작하기</Button>
+      <section className="flex flex-col gap-9 w-3/4 justify-center mx-auto">
+        <div className="flex flex-col gap-3">
+          <Button font="md" className="relative bg-[#FAE300] text-black">
+            <img
+              src={SVG_PATHS.OAUTH.kakao}
+              width="24"
+              height="24"
+              className="absolute left-4"
+            />
+            KaKao로 시작하기
+          </Button>
+          <Button font="md" className="relative bg-[#20C803] text-white">
+            <img
+              src={SVG_PATHS.OAUTH.naver}
+              width="24"
+              height="24"
+              className="absolute left-4"
+            />
+            Naver로 시작하기
+          </Button>
+          <Button font="md" className="relative bg-black text-white">
+            <img
+              src={SVG_PATHS.OAUTH.apple}
+              width="24"
+              height="24"
+              className="absolute left-4"
+            />
+            Apple로 시작하기
+          </Button>
+          <Link to={URL_PATHS.SIGNIN}>
+            <Button font="md" className="relative w-full text-black">
+              <img
+                src={SVG_PATHS.EMAIL}
+                width="24"
+                height="24"
+                className="absolute left-4"
+              />
+              Email로 시작하기
+            </Button>
+          </Link>
         </div>
-        <div className="flex gap-2 text-xs">
+        <div className="flex gap-2 justify-center text-xs">
           <p className="text-primary-dark01">아직 회원이 아니신가요?</p>
           <Link
             to={URL_PATHS.SIGNUP}
