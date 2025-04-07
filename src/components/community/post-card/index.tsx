@@ -19,7 +19,10 @@ export default function PostCard({
   getCategoryLabel,
 }: PostCardProps) {
   return (
-    <li key={post.id} className="flex items-center gap-3 flex-1 pb-4 border-b">
+    <li
+      key={post.id}
+      className="flex items-center gap-3 flex-1 pb-4 border-b border-primary-light02"
+    >
       <div className="flex flex-col gap-1.5 flex-1">
         <div className="flex gap-2">
           {currentCategory === "top10" && (

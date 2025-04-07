@@ -18,6 +18,7 @@ import Metadata from "@/hooks/useMetadata";
  * @param headerType 헤더 타입 (base, community, school, save,bookmark)
  * @param headerHasBorder Header 하단 테두리 유무, 기본 값 true
  * @param hasBackButton 헤더에 뒤로가기 버튼 표시 여부
+ * @param onBackButtonClick 뒤로가기 버튼 클릭 시 실행할 함수
  * @param currentPath
  * @param wrapperBg 기본 값 gray
  * @param mainBg 기본 값 white
@@ -33,6 +34,7 @@ interface PageLayoutProps {
   headerType?: "base" | "community" | "school" | "save" | "bookmark";
   headerHasBorder?: boolean;
   hasBackButton?: boolean;
+  onBackButtonClick?: () => void;
   currentPath: string;
   wrapperBg?: "white" | "gray";
   mainBg?: "white" | "gray";
@@ -48,6 +50,7 @@ export default function PageLayout({
   headerType = "base",
   headerHasBorder,
   hasBackButton,
+  onBackButtonClick,
   currentPath,
   wrapperBg = "gray",
   mainBg = "white",
@@ -61,6 +64,7 @@ export default function PageLayout({
       title: headerTitle,
       hasBorder: headerHasBorder,
       hasBackButton: hasBackButton,
+      onBackButtonClick: onBackButtonClick,
     };
 
     switch (headerType) {

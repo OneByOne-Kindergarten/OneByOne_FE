@@ -1,6 +1,6 @@
 export default function LoadingSpinner() {
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex justify-center pb-8 pt-4">
       <div className="relative w-10 h-10">
         {/* 그라데이션 스피너 */}
         <div

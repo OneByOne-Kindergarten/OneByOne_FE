@@ -12,7 +12,7 @@ interface MainProps extends VariantProps<typeof mainVariants> {
   className?: string;
 }
 
-const mainVariants = cva("h-full pb-14", {
+const mainVariants = cva("h-full", {
   variants: {
     bg: {
       white: "bg-white",

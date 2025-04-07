@@ -1,79 +1,47 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 
+import { signUp } from "@/services/authService";
+import { Step1Form, Step1FormValues } from "@/components/sign-up/Step1Form";
+import { Step2Form, Step2FormValues } from "@/components/sign-up/Step2Form";
+import PageLayout from "@/components/@shared/layout/page-layout";
 import { URL_PATHS } from "@/constants/url-path";
 import { SignUpRequest } from "@/types/auth";
-import { signUp } from "@/services/authService";
-import {
-  Form,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormMessage,
-  FormField,
-} from "@/components/@shared/form";
-import Input from "@/components/@shared/form/input";
-import ToggleInput from "@/components/@shared/form/toggle-input";
-import Button from "@/components/@shared/buttons/base-button";
-import PageLayout from "@/components/@shared/layout/page-layout";
-import ErrorMessage from "@/components/@shared/form/error-message";
-
-// 회원가입 폼 유효성 검사 스키마
-const signUpSchema = z
-  .object({
-    email: z.string().email("유효한 이메일 주소를 입력해주세요."),
-    password: z
-      .string()
-      .min(6, "비밀번호는 최소 6자 이상이어야 합니다.")
-      .max(20, "비밀번호는 최대 20자까지 가능합니다."),
-    confirmPassword: z.string(),
-    nickname: z
-      .string()
-      .min(2, "닉네임은 최소 2자 이상이어야 합니다.")
-      .max(8, "닉네임은 최대 8자까지 가능합니다."),
-    role: z.enum(["TEACHER", "PRE_TEACHER"], {
-      errorMap: () => ({ message: "회원 유형을 선택해주세요." }),
-    }),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "비밀번호가 일치하지 않습니다.",
-    path: ["confirmPassword"],
-  });
-
-type SignUpFormValues = z.infer<typeof signUpSchema>;
 
 export default function SignUp() {
-  const navigate = useNavigate();
+  const [step, setStep] = useState<1 | 2>(1);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [step1Data, setStep1Data] = useState<Step1FormValues | null>(null);
+  const navigate = useNavigate();
 
-  const form = useForm<SignUpFormValues>({
-    resolver: zodResolver(signUpSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-      confirmPassword: "",
-      nickname: "",
-      role: "TEACHER",
-    },
-    mode: "onChange",
-  });
+  const handleCustomBack = () => {
+    if (step === 2) {
+      setStep(1);
+    } else {
+      navigate(-1);
+    }
+  };
 
-  const onSubmit = async (values: SignUpFormValues) => {
+  const handleStep1Complete = (data: Step1FormValues) => {
+    setStep1Data(data);
+    setStep(2);
+  };
+
+  const handleStep2Submit = async (data: Step2FormValues) => {
+    if (!step1Data) return;
+
     setIsLoading(true);
     setError(null);
 
     try {
       const signUpData: SignUpRequest = {
-        email: values.email,
-        password: values.password,
+        email: step1Data.email,
+        password: step1Data.password,
         provider: "LOCAL",
         providerId: 0,
-        nickname: values.nickname,
-        role: values.role,
+        nickname: data.nickname,
+        role: data.role,
         profileImageUrl: "",
       };
 
@@ -107,9 +75,10 @@ export default function SignUp() {
             errorObj.data?.message?.includes("already exists")
           ) {
             setError("이미 가입된 이메일입니다. 로그인을 시도해주세요.");
+            setStep(1);
           } else if (errorObj.status === 500) {
             setError(
-              "서버 오류가 발생했습니다. 로그인을 시도해보세요. 계속 문제가 발생하면 관리자에게 문의하세요."
+              "서버 오류가 발생했습니다. 잠시 후 로그인을 시도해주세요."
             );
           } else {
             setError(
@@ -137,139 +106,28 @@ export default function SignUp() {
       isGlobalNavBar={false}
       mainClassName="my-16 flex flex-col gap-16"
       wrapperBg="white"
+      hasBackButton={true}
+      onBackButtonClick={handleCustomBack}
     >
-      <h1 className="text-center text-lg">회원가입</h1>
+      <h1 className="text-center text-lg">
+        {step === 1 ? (
+          "이메일로 가입"
+        ) : (
+          <>
+            {"반가워요!"} <br /> {"선생님에 대해 알려주세요!"}
+          </>
+        )}
+      </h1>
       <section className="px-5 flex flex-col gap-9">
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-6"
-          >
-            <div className="flex flex-col gap-3.5">
-              <FormField
-                control={form.control}
-                name="role"
-                render={({ field }) => (
-                  <FormItem>
-                    <div className="flex gap-2">
-                      <Button
-                        size="md"
-                        font="sm"
-                        shape="full"
-                        type="button"
-                        variant={
-                          field.value === "TEACHER" ? "secondary" : "default"
-                        }
-                        onClick={() => form.setValue("role", "TEACHER")}
-                      >
-                        교사
-                      </Button>
-                      <Button
-                        size="md"
-                        font="sm"
-                        shape="full"
-                        type="button"
-                        variant={
-                          field.value === "PRE_TEACHER"
-                            ? "secondary"
-                            : "default"
-                        }
-                        onClick={() => form.setValue("role", "PRE_TEACHER")}
-                      >
-                        예비교사
-                      </Button>
-                    </div>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="nickname"
-                render={({ field, fieldState }) => (
-                  <FormItem>
-                    <FormLabel>닉네임</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="닉네임을 입력해주세요."
-                        error={!!fieldState.error}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field, fieldState }) => (
-                  <FormItem>
-                    <FormLabel>이메일</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="이메일을 입력해주세요."
-                        error={!!fieldState.error}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field, fieldState }) => (
-                  <FormItem>
-                    <FormLabel>비밀번호</FormLabel>
-                    <FormControl>
-                      <ToggleInput
-                        placeholder="비밀번호를 입력해주세요."
-                        error={!!fieldState.error}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="confirmPassword"
-                render={({ field, fieldState }) => (
-                  <FormItem>
-                    <FormLabel>비밀번호 확인</FormLabel>
-                    <FormControl>
-                      <ToggleInput
-                        placeholder="비밀번호를 다시 한번 입력해주세요."
-                        error={!!fieldState.error}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            {error && <ErrorMessage error={error} />}
-
-            <Button
-              variant="secondary"
-              type="submit"
-              size="lg"
-              font="md"
-              disabled={
-                isLoading ||
-                !form.formState.isValid ||
-                Object.keys(form.formState.errors).length > 0
-              }
-            >
-              회원가입
-            </Button>
-          </form>
-        </Form>
+        {step === 1 ? (
+          <Step1Form onNext={handleStep1Complete} />
+        ) : (
+          <Step2Form
+            onSubmit={handleStep2Submit}
+            isLoading={isLoading}
+            error={error}
+          />
+        )}
       </section>
       <section className="flex flex-col gap-2 items-center text-xs">
         <div className="flex gap-2">
