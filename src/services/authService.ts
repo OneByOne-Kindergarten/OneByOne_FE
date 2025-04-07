@@ -1,3 +1,5 @@
+import { getDefaultStore } from "jotai/vanilla";
+
 import {
   SignInRequest,
   SignInResponse,
@@ -5,15 +7,16 @@ import {
   SignUpResponse,
 } from "@/types/auth";
 import { apiCall } from "@/utils/apiUtils";
+import { accessTokenAtom } from "@/stores/authStore";
 
-let accessToken: string | null = null;
+const jotaiStore = getDefaultStore();
 
 export const getAccessToken = (): string | null => {
-  return accessToken;
+  return jotaiStore.get(accessTokenAtom);
 };
 
 export const setAccessToken = (token: string | null): void => {
-  accessToken = token;
+  jotaiStore.set(accessTokenAtom, token);
 };
 
 export const getAuthHeaders = (): HeadersInit => {
@@ -41,7 +44,7 @@ export const deleteCookie = (name: string) => {
 
 /**
  * 로그인
- * - 성공 시 accessToken 메모리에 저장, refreshToken 쿠키에 저장
+ * - 성공 시 accessToken을 Jotai 상태에 저장, refreshToken 쿠키에 저장
  *
  * @throws {Error}
  */
@@ -56,7 +59,6 @@ export const signIn = async (data: SignInRequest): Promise<SignInResponse> => {
     });
 
     setAccessToken(result.accessToken);
-
     setCookie("refreshToken", result.refreshToken);
 
     return result;
@@ -94,8 +96,9 @@ export const signUp = async (data: SignUpRequest): Promise<SignUpResponse> => {
 
 export const logout = () => {
   setAccessToken(null);
-
   deleteCookie("refreshToken");
+
+  console.log("로그아웃 완료");
 
   window.location.href = "/";
 };
@@ -117,8 +120,13 @@ export const refreshAccessToken = async (): Promise<void> => {
       throw new Error("refreshToken이 없습니다.");
     }
 
-    // 토큰이 만료되면 로그아웃 처리
-    logout();
+    /* 
+    const response = await apiCall<...>({...});
+    setAccessToken(response.accessToken);
+    setCookie("refreshToken", response.refreshToken);
+    */
+
+    return;
   } catch (error) {
     console.error("토큰 갱신 실패:", error);
     logout();

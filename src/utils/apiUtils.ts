@@ -1,4 +1,4 @@
-import { getAuthHeaders } from "@/services/authService";
+import { getAuthHeaders, refreshAccessToken } from "@/services/authService";
 
 const BASE_URL = import.meta.env.DEV
   ? "/api"
@@ -10,6 +10,7 @@ interface ApiCallOptions<T> {
   data?: T; // request body
   withAuth?: boolean; // auth header
   withCredentials?: boolean;
+  isRetry?: boolean; // 토큰 갱신 후 재시도 여부
 }
 
 /**
@@ -49,6 +50,7 @@ export async function apiCall<TRequest, TResponse>({
   data,
   withAuth = false,
   withCredentials = false,
+  isRetry = false,
 }: ApiCallOptions<TRequest>): Promise<TResponse> {
   try {
     const url = `${BASE_URL}${path}`;
@@ -67,6 +69,24 @@ export async function apiCall<TRequest, TResponse>({
     };
 
     const response = await fetch(url, options);
+
+    if (response.status === 401 && withAuth && !isRetry) {
+      try {
+        await refreshAccessToken();
+
+        return await apiCall<TRequest, TResponse>({
+          method,
+          path,
+          data,
+          withAuth,
+          withCredentials,
+          isRetry: true,
+        });
+      } catch (refreshError) {
+        console.error("토큰 갱신 실패:", refreshError);
+        throw new Error("다시 로그인해주세요.");
+      }
+    }
 
     if (!response.ok) {
       let errorMessage = `${response.status} ${response.statusText}`;
@@ -89,7 +109,7 @@ export async function apiCall<TRequest, TResponse>({
       throw new Error(errorMessage);
     }
 
-    // 200-299
+    // 204
     if (
       response.status === 204 ||
       response.headers.get("content-length") === "0"
