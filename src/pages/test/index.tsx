@@ -231,7 +231,6 @@ export default function TEST() {
         <h2 className="bg-gray-200 p-1 mb-2">진행도</h2>
         <div className="flex flex-wrap gap-2">
           <BarRating value={4} className="h-2 w-12" />
-          <ProgressBar value={1} />
           <LoadingSpinner />
         </div>
       </section>

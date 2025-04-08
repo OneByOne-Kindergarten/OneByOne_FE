@@ -1,5 +1,5 @@
 import { URL_PATHS } from "@/constants/url-path";
-import { SVG_PATHS } from "@/constants/assets-path";
+import { SVG_PATHS, IMAGE_PATHS } from "@/constants/assets-path";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import Button from "@/components/@shared/buttons/base-button";
 
@@ -26,14 +26,24 @@ export default function User() {
               </p>
             </div>
           </div>
-          <div className="flex items-center justify-between bg-tertiary-2 rounded-lg my-2 mx-3 px-5 py-4">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-full bg-primary-normal01" />
-              <p className="font-semibold text-sm text-primary-dark01">
-                아직 교사 인증을 하지 않았어요!
+          <div className="flex items-center justify-between bg-secondary-light02 rounded-lg my-2 mx-3 px-5 py-4 shadow-sm">
+            <div className="flex items-center gap-2 ">
+              <img
+                src={IMAGE_PATHS.CERTIFICATION}
+                alt="서류 인증 이미지"
+                width={43}
+                height={40}
+              />
+              <p className="text-sm text-primary-dark01">
+                <strong>교사 인증하면</strong> <br />
+                <span className="text-xs">
+                  인증된 교사의 혜택을 받을 수 있어요!
+                </span>
               </p>
             </div>
-            <Button size="md">인증하기</Button>
+            <Button variant="primary" size="lg">
+              인증하기
+            </Button>
           </div>
         </section>
 
@@ -49,7 +59,7 @@ export default function User() {
                     width="20"
                     height="20"
                   />
-                  작성한 리뷰 관리
+                  <span>작성한 리뷰 관리</span>
                 </div>
                 <a href="?post">
                   <img
@@ -68,7 +78,7 @@ export default function User() {
                     width="20"
                     height="20"
                   />
-                  계정 설정
+                  <span>계정 설정</span>
                 </div>
                 <a href="?account">
                   <img
@@ -87,7 +97,7 @@ export default function User() {
                     width="20"
                     height="20"
                   />
-                  알림 설정
+                  <span>알림 설정</span>
                 </div>
                 <a href="?alarm">
                   <img
@@ -106,12 +116,31 @@ export default function User() {
               <li className="flex items-center flex-1 justify-between">
                 <div className="flex items-center gap-5">
                   <img
+                    src={SVG_PATHS.DOCUMENT}
+                    alt="문서 아이콘"
+                    width="20"
+                    height="20"
+                  />
+                  <span>공지사항</span>
+                </div>
+                <a href="?notice">
+                  <img
+                    src={SVG_PATHS.ARROW.right}
+                    alt="오른쪽 방향 화살표 아이콘"
+                    width="20"
+                    height="20"
+                  />
+                </a>
+              </li>
+              <li className="flex items-center flex-1 justify-between">
+                <div className="flex items-center gap-5">
+                  <img
                     src={SVG_PATHS.INQUIRY}
                     alt="설정 아이콘"
                     width="20"
                     height="20"
                   />
-                  문의
+                  <span>문의</span>
                 </div>
                 <a href="?inquiry">
                   <img
@@ -130,7 +159,7 @@ export default function User() {
                     width="20"
                     height="20"
                   />
-                  운영 정책
+                  <span>운영 정책</span>
                 </div>
                 <a href="?policy">
                   <img
@@ -144,12 +173,6 @@ export default function User() {
             </menu>
           </section>
         </div>
-      </div>
-
-      <div className="mx-5">
-        <Button size="lg" variant="primary">
-          로그아웃
-        </Button>
       </div>
     </PageLayout>
   );

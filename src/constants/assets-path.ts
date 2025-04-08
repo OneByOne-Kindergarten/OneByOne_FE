@@ -53,7 +53,7 @@ export const SVG_PATHS = {
   EMAIL: "/src/assets/icons/email.svg",
   KEBAB: "/src/assets/icons/kebab.svg",
   NOTICE: "/src/assets/icons/notice.svg",
-  DOCUMENT_CHECK: "/src/assets/icons/document-check.svg",
+  DOCUMENT: "/src/assets/icons/document.svg",
   CHART: "/src/assets/icons/chart.svg",
   THUMB_UP: "/src/assets/icons/thumb-up.svg",
   REPLY: "/src/assets/icons/reply.svg",
@@ -78,5 +78,6 @@ export const SVG_PATHS = {
 };
 
 export const IMAGE_PATHS = {
-  LOGO: "/src/assets/images/logo.png",
+  LOGO: "/src/assets/images/logo.webp",
+  CERTIFICATION: "/src/assets/images/certification.webp",
 };
