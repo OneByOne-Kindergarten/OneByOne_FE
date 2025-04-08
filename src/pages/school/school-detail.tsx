@@ -1,16 +1,19 @@
-import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { URL_PATHS } from "@/constants/url-path";
-import { SVG_PATHS } from "@/constants/assets-path";
-import { REVIEW_TYPES } from "@/constants/review";
+import { useParams } from "react-router-dom";
+
 import PageLayout from "@/components/@shared/layout/page-layout";
 import NavBar from "@/components/@shared/nav/nav-bar";
 import Button from "@/components/@shared/buttons/base-button";
+import Error from "@/components/@shared/layout/error";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import SchoolInfoItem from "@/components/school/school-info-item";
 import SchoolInfoChart from "@/components/school/school-info-chart";
-import { getKindergartenDetail } from "@/services/kindergartenService";
+
+import { URL_PATHS } from "@/constants/url-path";
+import { SVG_PATHS } from "@/constants/assets-path";
+import { REVIEW_TYPES } from "@/constants/review";
 import { Kindergarten } from "@/types/kindergarten";
+import { getKindergartenDetail } from "@/services/kindergartenService";
 
 export default function SchoolDetail() {
   const { id } = useParams<{ id: string }>();
@@ -56,20 +59,7 @@ export default function SchoolDetail() {
 
   if (error || !kindergarten) {
     return (
-      <PageLayout
-        title="원바원 | 오류"
-        description="유치원 상세 정보를 불러오는데 실패했습니다."
-        headerTitle="오류"
-        headerType="school"
-        currentPath={URL_PATHS.SCHOOL_DETAIL.replace(":id", safeId)}
-        wrapperBg="white"
-      >
-        <div className="flex justify-center items-center h-48">
-          <p className="text-center text-red-500">
-            {error || "유치원 정보를 찾을 수 없습니다."}
-          </p>
-        </div>
-      </PageLayout>
+      <Error type="page">{error || "유치원 정보를 찾을 수 없습니다."}</Error>
     );
   }
 
@@ -149,18 +139,17 @@ export default function SchoolDetail() {
       headerType="school"
       currentPath={URL_PATHS.SCHOOL_DETAIL.replace(":id", safeId)}
       wrapperBg="white"
+      kindergartenId={safeId}
+      showBookmark={true}
     >
       <NavBar
         id={safeId}
         options={CATEGORY_OPTIONS}
         currentPath={URL_PATHS.SCHOOL_DETAIL.replace(":id", safeId)}
       />
-      <section className="px-5 pt-3 pb-20">
+      <section className="px-5 pb-20">
         <div className="flex flex-col gap-7">
-          <div className="w-full h-52 bg-primary-normal01 rounded-lg flex items-center justify-center">
-            <p>지도 이미지</p>
-          </div>
-          <h1 className="text-xl font-bold mb-3 text-primary-dark02">
+          <h1 className="text-lg font-bold text-primary-dark02">
             {kindergarten.name}
           </h1>
           <ul className="flex flex-col flex-1 gap-7">
@@ -177,7 +166,7 @@ export default function SchoolDetail() {
               <div className="relative bg-primary-normal01 h-40 rounded-md flex items-center justify-center">
                 <p>지도</p>
                 <Button
-                  variant="transparent_gray"
+                  variant="secondary"
                   shape="full"
                   size="xs"
                   className="absolute px-1.5 gap-1 text-xxs right-3 top-3"
@@ -192,6 +181,16 @@ export default function SchoolDetail() {
                 </Button>
               </div>
             </div>
+
+            <SchoolInfoItem
+              icon={SVG_PATHS.CALL}
+              title="전화"
+              altText="전화기 아이콘"
+            >
+              <p className="text-base font-semibold text-primary-dark02">
+                {kindergarten.phoneNumber}
+              </p>
+            </SchoolInfoItem>
 
             <SchoolInfoItem
               icon={SVG_PATHS.BUILDING}
@@ -225,30 +224,22 @@ export default function SchoolDetail() {
               stats={studentStats}
             />
 
-            <SchoolInfoItem
-              icon={SVG_PATHS.BUILDING}
-              title="전화번호"
-              altText="전화번호 아이콘"
-            >
-              <p className="text-base font-semibold text-primary-dark02">
-                {kindergarten.phoneNumber}
-              </p>
-            </SchoolInfoItem>
-
-            <SchoolInfoItem
-              icon={SVG_PATHS.HOME}
-              title="링크"
-              altText="홈 아이콘"
-            >
-              <a
-                href={kindergarten.homepage}
-                className="text-primary-dark02 font-semibold hover:underline"
-                target="_blank"
-                rel="noopener noreferrer"
+            {kindergarten.homepage && (
+              <SchoolInfoItem
+                icon={SVG_PATHS.HOME}
+                title="홈페이지"
+                altText="홈 아이콘"
               >
-                {kindergarten.homepage}
-              </a>
-            </SchoolInfoItem>
+                <a
+                  href={kindergarten.homepage}
+                  className="text-primary-dark02 font-semibold hover:underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {kindergarten.homepage}
+                </a>
+              </SchoolInfoItem>
+            )}
           </ul>
         </div>
       </section>

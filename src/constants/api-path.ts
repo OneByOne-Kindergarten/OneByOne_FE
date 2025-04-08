@@ -12,4 +12,8 @@ export const API_PATHS = {
     PASSWORD: "/users/password",
     NICKNAME: "/users/nickname",
   },
+  FAVORITE: {
+    KINDERGARTEN: "/favorite-kindergartens",
+    KINDERGARTEN_STATUS: "/favorite-kindergartens/status",
+  },
 };

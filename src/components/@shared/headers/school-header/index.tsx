@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import Header from "@/components/@shared/headers/base-header";
 import Input from "@/components/@shared/form/input";
@@ -11,12 +11,19 @@ import {
 } from "@/components/@shared/form";
 import { SVG_PATHS } from "@/constants/assets-path";
 import SchoolSearchAside from "@/components/school/school-search-aside";
+import {
+  checkFavoriteStatus,
+  toggleFavorite as toggleFavoriteService,
+} from "@/services/favoriteService";
+import { useFavorites } from "@/hooks/useFavorites";
 
 interface SchoolHeaderProps {
   title?: string;
   hasBorder?: boolean;
   hasBackButton?: boolean;
   onBackButtonClick?: () => void;
+  kindergartenId?: string;
+  showBookmark?: boolean;
 }
 
 interface SearchFormValues {
@@ -28,6 +35,8 @@ export default function SchoolHeader({
   hasBorder,
   hasBackButton,
   onBackButtonClick,
+  kindergartenId,
+  showBookmark = false,
 }: SchoolHeaderProps) {
   const form = useForm<SearchFormValues>({
     defaultValues: {
@@ -36,7 +45,10 @@ export default function SchoolHeader({
   });
   const [isSearching, setIsSearching] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [favoriteLoading, setFavoriteLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const { refetch } = useFavorites();
 
   // 검색 모드 활성화
   useEffect(() => {
@@ -44,6 +56,43 @@ export default function SchoolHeader({
       inputRef.current.focus();
     }
   }, [isSearching]);
+
+  // 즐겨찾기 상태 확인
+  useEffect(() => {
+    if (showBookmark && kindergartenId) {
+      fetchFavoriteStatus();
+    }
+  }, [showBookmark, kindergartenId]);
+
+  const fetchFavoriteStatus = async () => {
+    if (!kindergartenId) return;
+
+    try {
+      const response = await checkFavoriteStatus(Number(kindergartenId));
+      setIsFavorite(response);
+    } catch (error) {
+      console.error("즐겨찾기 상태 확인 실패:", error);
+    }
+  };
+
+  // 즐겨찾기 토글
+  const handleToggleFavorite = useCallback(async () => {
+    if (!kindergartenId || favoriteLoading) return;
+
+    try {
+      setFavoriteLoading(true);
+      const result = await toggleFavoriteService(Number(kindergartenId));
+
+      if (result.success) {
+        setIsFavorite(result.isFavorite);
+        refetch();
+      }
+    } catch (error) {
+      console.error("즐겨찾기 토글 실패:", error);
+    } finally {
+      setFavoriteLoading(false);
+    }
+  }, [kindergartenId, favoriteLoading, refetch]);
 
   const handleSearch = () => {
     setIsSearching(true);
@@ -75,10 +124,6 @@ export default function SchoolHeader({
     if (inputRef.current) {
       inputRef.current.focus();
     }
-  };
-
-  const handleBookmark = () => {
-    // TODO: 북마크 기능
   };
 
   const handleMap = () => {
@@ -155,13 +200,24 @@ export default function SchoolHeader({
           onBackButtonClick={onBackButtonClick}
         >
           <div className="flex items-center gap-4">
-            <button onClick={handleBookmark} aria-label="북마크">
-              <img
-                src={SVG_PATHS.BOOKMARKER}
-                alt="북마크"
-                className="w-6 h-6"
-              />
-            </button>
+            {showBookmark && (
+              <button
+                onClick={handleToggleFavorite}
+                aria-label={isFavorite ? "즐겨찾기 취소" : "즐겨찾기 추가"}
+                disabled={favoriteLoading}
+                className={favoriteLoading ? "opacity-50" : ""}
+              >
+                <img
+                  src={
+                    isFavorite
+                      ? SVG_PATHS.BOOKMARKER.active
+                      : SVG_PATHS.BOOKMARKER.inactive
+                  }
+                  alt="북마크"
+                  className="w-6 h-6"
+                />
+              </button>
+            )}
             <button onClick={handleMap} aria-label="지도">
               <img src={SVG_PATHS.MAP} alt="지도" className="w-6 h-6" />
             </button>

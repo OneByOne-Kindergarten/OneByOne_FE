@@ -19,7 +19,7 @@ export default function Home() {
           <strong>선생님</strong>들의 <strong>진짜 유치원 이야기</strong>
         </h2>
         <img
-          src={IMAGE_PATHS.LOGO}
+          src={IMAGE_PATHS.LOGO.MAIN}
           alt="원바원 로고"
           width={89}
           height={31}

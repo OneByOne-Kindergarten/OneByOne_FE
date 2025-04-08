@@ -50,6 +50,7 @@ export const SVG_PATHS = {
     chick: "/src/assets/icons/character-chick.svg",
     user: "/src/assets/icons/character-user.svg",
   },
+  CALL: "/src/assets/icons/call.svg",
   EMAIL: "/src/assets/icons/email.svg",
   KEBAB: "/src/assets/icons/kebab.svg",
   NOTICE: "/src/assets/icons/notice.svg",
@@ -60,7 +61,10 @@ export const SVG_PATHS = {
   SHARE: "/src/assets/icons/share.svg",
   ALARM: "/src/assets/icons/alarm.svg",
   ALERT: "/src/assets/icons/alert.svg",
-  BOOKMARKER: "/src/assets/icons/bookmarker.svg",
+  BOOKMARKER: {
+    active: "/src/assets/icons/bookmarker-active.svg",
+    inactive: "/src/assets/icons/bookmarker-inactive.svg",
+  },
   CANCEL: "/src/assets/icons/cancel.svg",
   INQUIRY: "/src/assets/icons/inquiry.svg",
   MAP: "/src/assets/icons/map.svg",
@@ -78,6 +82,9 @@ export const SVG_PATHS = {
 };
 
 export const IMAGE_PATHS = {
-  LOGO: "/src/assets/images/logo.webp",
+  LOGO: {
+    MAIN: "/src/assets/images/logo-main.webp",
+    INACTIVE: "/src/assets/images/logo-inactive.webp",
+  },
   CERTIFICATION: "/src/assets/images/certification.webp",
 };

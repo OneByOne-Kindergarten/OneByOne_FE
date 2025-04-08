@@ -24,6 +24,8 @@ import Metadata from "@/hooks/useMetadata";
  * @param mainBg 기본 값 white
  * @param mainClassName
  * @param isGlobalNavBar 기본 값 true
+ * @param kindergartenId
+ * @param showBookmark
  */
 
 interface PageLayoutProps {
@@ -40,6 +42,8 @@ interface PageLayoutProps {
   mainBg?: "white" | "gray";
   mainClassName?: string;
   isGlobalNavBar?: boolean;
+  kindergartenId?: string;
+  showBookmark?: boolean;
 }
 
 export default function PageLayout({
@@ -56,6 +60,8 @@ export default function PageLayout({
   mainBg = "white",
   mainClassName = "flex flex-col gap-6 pb-5 mb-24",
   isGlobalNavBar = true,
+  kindergartenId,
+  showBookmark,
 }: PageLayoutProps) {
   const renderHeader = () => {
     if (!headerTitle) return null;
@@ -71,7 +77,13 @@ export default function PageLayout({
       case "community":
         return <CommunityHeader {...headerProps} />;
       case "school":
-        return <SchoolHeader {...headerProps} />;
+        return (
+          <SchoolHeader
+            {...headerProps}
+            kindergartenId={kindergartenId}
+            showBookmark={showBookmark}
+          />
+        );
       case "save":
         return <SaveHeader {...headerProps} />;
       case "bookmark":

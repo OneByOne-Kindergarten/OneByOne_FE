@@ -4,6 +4,9 @@ import Button from "@/components/@shared/buttons/base-button";
 import SchoolCard from "@/components/school/school-card";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import PageLayout from "@/components/@shared/layout/page-layout";
+import Empty from "@/components/@shared/layout/empty";
+import Error from "@/components/@shared/layout/error";
+
 import { getNearbyKindergartens } from "@/services/kindergartenService";
 import { Kindergarten } from "@/types/kindergarten";
 import { URL_PATHS } from "@/constants/url-path";
@@ -107,13 +110,14 @@ export default function School() {
         {loading ? (
           <LoadingSpinner />
         ) : error ? (
-          <div className="px-5 py-10 text-center">
-            <p className="text-red-500">{error}</p>
-          </div>
+          <Error>{error}</Error>
         ) : kindergartens.length === 0 ? (
-          <div className="px-5 py-10 text-center">
-            <p>주변에 유치원이 없습니다.</p>
-          </div>
+          <Empty>
+            <p className="text-sm">주변에 유치원이 없습니다.</p>
+            <span className="text-xxs text-primary-normal02">
+              위치 권한을 확인해주세요.
+            </span>
+          </Empty>
         ) : (
           <ul className="flex flex-col gap-2 pb-5">
             {kindergartens.map((kindergarten) => (
