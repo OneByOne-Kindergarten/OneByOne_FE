@@ -9,7 +9,7 @@ interface LikeToggleProps {
   className?: string;
   isCount?: boolean;
   count?: number;
-  size?: "sm" | "md" | "lg";
+  size?: "xs" | "sm" | "md" | "lg";
   onToggle?: (newCount: number) => void;
 }
 

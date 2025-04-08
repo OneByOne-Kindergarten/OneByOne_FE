@@ -17,6 +17,7 @@ const toggleVariants = cva(
         none: "border-none",
       },
       size: {
+        xs: "py-0.5 px-1",
         sm: "py-0.5 px-1.5",
         md: "px-3 py-2",
         lg: "px-3.5 py-2.5",
