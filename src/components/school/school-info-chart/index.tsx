@@ -2,18 +2,27 @@ import { SVG_PATHS } from "@/constants/assets-path";
 import CircleGraph from "@/components/school/circle-graph";
 import SchoolInfoItem from "@/components/school/school-info-item";
 
+// 항목 별 색상 코드
+const fixedColorClasses = ["bg-star", "bg-green", "bg-tertiary3"];
+const fixedColors = ["#FFD700", "#4CAF50", "#6CA6ED"];
+
 interface StatItemProps {
-  color: string;
+  colorIndex: number;
   age: number;
   count: number;
   percent: string;
   unit: string;
 }
 
-function StatItem({ color, age, count, percent, unit }: StatItemProps) {
+function StatItem({ colorIndex, age, count, percent, unit }: StatItemProps) {
+  // 색상 인덱스에 따라 색상 코드 사용
+  const colorStyle = {
+    backgroundColor: fixedColors[colorIndex % fixedColors.length],
+  };
+
   return (
     <div className="flex gap-4 items-center">
-      <div className={`${color} w-2 h-2 rounded-full`} />
+      <div style={colorStyle} className="w-2 h-2 rounded-full" />
       <p className="text-xs text-primary-dark02">
         만 {age}세 {count}
         {unit} {percent}
@@ -31,7 +40,7 @@ interface SchoolInfoChartProps {
     age: number;
     count: number;
     percent: string;
-    color: string;
+    color?: string;
   }>;
 }
 
@@ -41,6 +50,16 @@ export default function SchoolInfoChart({
   unit,
   stats,
 }: SchoolInfoChartProps) {
+  // 그래프 데이터
+  const graphStats = stats.map((stat, index) => ({
+    ...stat,
+    percent: parseFloat(stat.percent.replace("%", "")),
+    color: fixedColors[index % fixedColors.length],
+  }));
+
+  // unit을 CircleGraph에 표시할 형식으로 변환
+  const graphUnit = unit === "class" ? "개 학급" : "명";
+
   return (
     <div className="flex flex-col gap-1.5">
       <SchoolInfoItem
@@ -56,10 +75,10 @@ export default function SchoolInfoChart({
             {unit === "class" ? "개 학급" : "명"}
           </p>
           <div>
-            {stats.map((stat) => (
+            {stats.map((stat, index) => (
               <StatItem
                 key={stat.age}
-                color={stat.color}
+                colorIndex={index}
                 age={stat.age}
                 count={stat.count}
                 percent={stat.percent}
@@ -68,7 +87,12 @@ export default function SchoolInfoChart({
             ))}
           </div>
         </div>
-        <CircleGraph />
+        <CircleGraph
+          stats={graphStats}
+          totalCount={totalCount}
+          unit={graphUnit}
+          size={100}
+        />
       </div>
     </div>
   );
