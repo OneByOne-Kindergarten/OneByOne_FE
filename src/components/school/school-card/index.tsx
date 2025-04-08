@@ -20,7 +20,7 @@ export default function SchoolCard({
   id = "1",
 }: SchoolCardProps) {
   return (
-    <li className="px-5 py-4 bg-white">
+    <div className="px-5 py-4 bg-white">
       <Link
         to={`${URL_PATHS.SCHOOL}/${id}`}
         className="flex w-full justify-between items-center"
@@ -36,9 +36,9 @@ export default function SchoolCard({
                 width="18"
                 height="18"
               />
-              <span className="text-primary-normal03 text-sm font-medium">
+              <address className="not-italic text-primary-normal03 text-sm font-light">
                 {location}
-              </span>
+              </address>
             </div>
           </div>
         </div>
@@ -52,6 +52,6 @@ export default function SchoolCard({
           <span className="text-base font-bold">{score}</span>
         </div>
       </Link>
-    </li>
+    </div>
   );
 }

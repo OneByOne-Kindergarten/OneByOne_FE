@@ -97,9 +97,12 @@ export default function School() {
         </Button>
       </section>
       <section className="flex flex-col gap-3">
-        <h2 className="font-bold text-lg flex flex-col gap-3 px-5">
-          주변 유치원 {kindergartens.length > 0 && `(${kindergartens.length})`}
-        </h2>
+        <div className="flex font-bold items-center gap-1 px-5">
+          <h2 className="text-lg">주변 유치원</h2>
+          <span className="text-xs">
+            {kindergartens.length > 0 && `(${kindergartens.length})`}
+          </span>
+        </div>
 
         {loading ? (
           <LoadingSpinner />

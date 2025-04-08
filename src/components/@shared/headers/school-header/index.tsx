@@ -10,12 +10,7 @@ import {
   FormMessage,
 } from "@/components/@shared/form";
 import { SVG_PATHS } from "@/constants/assets-path";
-import { searchKindergartens } from "@/services/kindergartenService";
-import {
-  KindergartenSearchParams,
-  KindergartenSearchResponse,
-} from "@/types/kindergarten";
-import SchoolSearchResult from "@/components/school/school-search-result";
+import SchoolSearchAside from "@/components/school/school-search-aside";
 
 interface SchoolHeaderProps {
   title?: string;
@@ -40,59 +35,46 @@ export default function SchoolHeader({
     },
   });
   const [isSearching, setIsSearching] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] =
-    useState<KindergartenSearchResponse | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // 검색 모드 활성화 시 자동으로 입력 필드에 포커스
+  // 검색 모드 활성화
   useEffect(() => {
     if (isSearching && inputRef.current) {
       inputRef.current.focus();
     }
   }, [isSearching]);
 
-  // 검색 버튼 클릭
   const handleSearch = () => {
     setIsSearching(true);
   };
 
-  // 검색
-  const performSearch = async (query: string) => {
-    if (!query || query.trim() === "") return;
-
-    setIsLoading(true);
-    try {
-      const searchParams: KindergartenSearchParams = {
-        name: query,
-        page: 0,
-        size: 10,
-      };
-
-      const result = await searchKindergartens(searchParams);
-
-      setSearchQuery(query);
-      setSearchResults(result);
-    } catch (error) {
-      console.error("유치원 검색 중 오류 발생:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleSearchSubmit = async (data: SearchFormValues) => {
-    await performSearch(data.search);
-  };
-
+  // 최근 검색어 선택 처리
   const handleSearchQuerySelect = async (query: string) => {
     form.setValue("search", query);
     setSearchQuery(query);
   };
 
+  // 검색 폼 제출 처리
+  const handleSearchSubmit = async (data: SearchFormValues) => {
+    if (data.search.trim() !== "") {
+      setSearchQuery(data.search);
+    }
+  };
+
+  // 검색 결과 닫기
   const handleCloseSearchResult = () => {
     setIsSearching(false);
     setSearchQuery("");
+    form.reset();
+  };
+
+  // 검색어 지우기
+  const handleClearSearch = () => {
+    form.setValue("search", "");
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
   };
 
   const handleBookmark = () => {
@@ -106,7 +88,11 @@ export default function SchoolHeader({
   return (
     <>
       {isSearching ? (
-        <Header hasBackButton={true} hasBorder={false}>
+        <Header
+          hasBackButton={true}
+          hasBorder={false}
+          onBackButtonClick={handleCloseSearchResult}
+        >
           <div className="relative w-full">
             <Form {...form}>
               <form
@@ -122,13 +108,12 @@ export default function SchoolHeader({
                         <Input
                           placeholder="유치원 이름을 검색해보세요"
                           variant="default"
-                          className="py-1.5 pr-4 text-sm font-normal text-primary-normal03 w-full pl-9"
+                          className="py-1.5 pr-9 text-sm font-normal text-primary-dark01 w-full pl-9"
                           {...field}
                           ref={(e) => {
                             inputRef.current = e;
                             field.ref(e);
                           }}
-                          disabled={isLoading}
                         />
                       </FormControl>
                       <FormMessage />
@@ -140,8 +125,24 @@ export default function SchoolHeader({
                   alt="돋보기"
                   width={17}
                   height={17}
-                  className="absolute top-2 left-3 opacity-30"
+                  className="absolute top-2 left-3 opacity-30 z-10"
                 />
+                {form.watch("search") && (
+                  <button
+                    type="button"
+                    onClick={handleClearSearch}
+                    className="flex items-center justify-center w-4 h-4 bg-primary-normal01 rounded-full absolute top-2 right-3 z-10"
+                    aria-label="검색어 초기화"
+                  >
+                    <img
+                      src={SVG_PATHS.CANCEL}
+                      alt="X 아이콘"
+                      width={12}
+                      height={12}
+                      className="opacity-30"
+                    />
+                  </button>
+                )}
               </form>
             </Form>
           </div>
@@ -172,11 +173,10 @@ export default function SchoolHeader({
       )}
 
       {isSearching && (
-        <SchoolSearchResult
+        <SchoolSearchAside
           isOpen={isSearching}
           onClose={handleCloseSearchResult}
           searchQuery={searchQuery}
-          initialResults={searchResults || undefined}
           onSearchQuerySelect={handleSearchQuerySelect}
         />
       )}
