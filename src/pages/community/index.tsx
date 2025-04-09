@@ -4,7 +4,6 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import {
   PRE_TEACHER_CATEGORIES,
   TEACHER_CATEGORIES,
-  CategoryOption,
 } from "@/constants/community";
 import NavBar from "@/components/@shared/nav/nav-bar";
 import PageLayout from "@/components/@shared/layout/page-layout";

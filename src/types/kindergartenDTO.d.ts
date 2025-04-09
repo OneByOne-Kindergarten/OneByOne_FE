@@ -3,6 +3,7 @@ export interface Kindergarten {
   name: string;
   establishment: string;
   establishmentDate: string;
+  openDate: string;
   address: string;
   homepage: string;
   phoneNumber: string;

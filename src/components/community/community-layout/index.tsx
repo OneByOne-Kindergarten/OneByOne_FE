@@ -6,7 +6,7 @@ import Button from "@/components/@shared/buttons/base-button";
 import Badge from "@/components/@shared/badge";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import { getMockPosts } from "@/services/mockApi";
-import type { Post } from "@/types/community";
+import { CommunityPostData } from "@/types/communityDTO";
 import { formatDate } from "@/utils/dateUtils";
 import { SVG_PATHS } from "@/constants/assets-path";
 import {
@@ -20,14 +20,20 @@ import { setCommunityState } from "@/utils/lastVisitedPathUtils";
 interface CommunityLayoutProps {
   type: "teacher" | "pre-teacher";
   categoryOptions: CategoryOption[];
+  children?: React.ReactNode;
+  isEditor?: boolean;
 }
 
 export default function CommunityLayout({
   type,
   categoryOptions,
+  children,
+  isEditor = false,
 }: CommunityLayoutProps) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<
+    (CommunityPostData & { author: string })[]
+  >([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const currentCategory = searchParams.get("category") || "top10";
@@ -47,6 +53,8 @@ export default function CommunityLayout({
 
   // 필터 변경
   useEffect(() => {
+    if (isEditor) return;
+
     setIsLoading(true);
 
     // API 호출 지연 시뮬레이터
@@ -57,8 +65,8 @@ export default function CommunityLayout({
         ...post,
         author:
           type === "teacher"
-            ? `선생님${post.id.substring(1)}`
-            : `예비교사${post.id.substring(1)}`,
+            ? `선생님${post.id.toString().substring(1)}`
+            : `예비교사${post.id.toString().substring(1)}`,
       }));
 
       setPosts(postsWithAuthor);
@@ -66,7 +74,7 @@ export default function CommunityLayout({
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [currentCategory, type]);
+  }, [currentCategory, type, isEditor]);
 
   // 커뮤니티 카테고리
   const getCategoryLabel = (categoryValue: string) => {
@@ -76,6 +84,30 @@ export default function CommunityLayout({
   const getCategoryOptions = () => {
     return type === "pre-teacher" ? PRE_TEACHER_CATEGORIES : TEACHER_CATEGORIES;
   };
+
+  if (isEditor) {
+    return (
+      <div className="px-5 flex flex-col gap-9">
+        <section className="flex gap-2 w-full overflow-x-auto scrollbar-x-hidden whitespace-nowrap">
+          {getCategoryOptions().map((option) => (
+            <Button
+              key={option.value}
+              shape="full"
+              font="md"
+              size="lg"
+              variant={
+                currentCategory === option.value ? "secondary" : "default"
+              }
+              onClick={() => handleCategoryChange(option.value)}
+            >
+              {option.label}
+            </Button>
+          ))}
+        </section>
+        {children}
+      </div>
+    );
+  }
 
   return (
     <div className="px-5 flex flex-col gap-9">

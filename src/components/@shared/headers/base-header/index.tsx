@@ -50,7 +50,7 @@ export default function Header({
         </button>
       )}
       <div className="flex items-center justify-between w-full">
-        {title && <h1>{title}</h1>}
+        {title && <h1 className="truncate">{title}</h1>}
         {children}
       </div>
     </header>

@@ -69,7 +69,7 @@ export default function SchoolHeader({
 
     try {
       const response = await checkFavoriteStatus(Number(kindergartenId));
-      setIsFavorite(response);
+      setIsFavorite(response.data);
     } catch (error) {
       console.error("즐겨찾기 상태 확인 실패:", error);
     }
@@ -84,7 +84,7 @@ export default function SchoolHeader({
       const result = await toggleFavoriteService(Number(kindergartenId));
 
       if (result.success) {
-        setIsFavorite(result.isFavorite);
+        setIsFavorite(result.data.favorite);
         refetch();
       }
     } catch (error) {

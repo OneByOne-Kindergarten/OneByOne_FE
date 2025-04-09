@@ -21,7 +21,7 @@ export default function ShareButton({
       size={size}
       variant="transparent_gray"
       border={variant === "secondary" ? "gray" : "none"}
-      className={clsx(className, "gap-0.5")}
+      className={clsx(className, "gap-0.5 my-auto")}
       onClick={onClick}
     >
       <img src={SVG_PATH} alt="share" width={20} height={20} />

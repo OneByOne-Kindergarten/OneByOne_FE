@@ -1,8 +1,19 @@
+import clsx from "clsx";
 import { SVG_PATHS } from "@/constants/assets-path";
 
-export default function ChatCount({ count }: { count: number }) {
+interface ChatCountProps {
+  count: number;
+  className?: string;
+}
+
+export default function ChatCount({ count, className }: ChatCountProps) {
   return (
-    <div className="flex items-center gap-1 text-xs font-semibold text-primary-normal03">
+    <div
+      className={clsx(
+        "flex items-center gap-1 text-xs justify-center font-semibold text-primary-normal03",
+        className
+      )}
+    >
       <img
         src={SVG_PATHS.CHAT.line}
         alt="말풍선 아이콘"

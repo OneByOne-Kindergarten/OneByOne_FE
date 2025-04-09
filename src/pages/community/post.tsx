@@ -8,6 +8,9 @@ import LikeToggle from "@/components/@shared/buttons/like-toggle";
 import ShareButton from "@/components/@shared/buttons/share-button";
 import ChatCount from "@/components/community/chat-count";
 import ChatBar from "@/components/community/chat-bar";
+import Empty from "@/components/@shared/layout/empty";
+import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
+
 import { CATEGORY_LABELS } from "@/constants/community";
 import { SVG_PATHS } from "@/constants/assets-path";
 import { formatDate } from "@/utils/dateUtils";
@@ -15,16 +18,16 @@ import {
   getMockPostDetail,
   getMockComments,
   createMockComment,
-  createMockReply,
 } from "@/services/mockApi";
 import {
   getCommunityType,
   setCommunityState,
 } from "@/utils/lastVisitedPathUtils";
-import type { Post, Comment } from "@/types/community";
+import type { CommunityPostData, CommentItem } from "@/types/communityDTO";
 import ReplyCard from "@/components/community/reply-card";
+import { useToggleLike } from "@/hooks/useCommunity";
 
-interface ExtendedPost extends Post {
+interface ExtendedPost extends CommunityPostData {
   author: string;
 }
 
@@ -37,6 +40,9 @@ export default function CommunityPost() {
   const [communityType, setCommunityTypeState] = useState<
     "teacher" | "pre-teacher"
   >(getCommunityType());
+
+  // 좋아요 토글
+  const { mutate: toggleLike, isPending: isLikeLoading } = useToggleLike();
 
   // 데이터 로드
   useEffect(() => {
@@ -84,43 +90,64 @@ export default function CommunityPost() {
     setComments([...comments, newComment]);
   };
 
-  const handleReply = (author: string) => {
-    setReplyToUser(author);
-  };
+  const handleToggleLike = () => {
+    if (!id || isLikeLoading) return;
 
-  const handleCreateReply = (commentId: string, content: string) => {
-    if (!id || !post) return;
-
-    const newReply = createMockReply(id, commentId, {
-      author: "현재 사용자", // 실제로는 로그인된 사용자 정보
-      content,
-      likeCount: 0,
-      useId: "current-user", // 실제로는 로그인된 사용자 ID
+    toggleLike(Number(id), {
+      onSuccess: (response) => {
+        if (post) {
+          setPost({
+            ...post,
+            likeCount: response.data.likeCount,
+          });
+        }
+      },
     });
-
-    // 댓글 찾아서 답글 추가
-    const updatedComments = comments.map((comment) => {
-      if (comment.id === commentId) {
-        return {
-          ...comment,
-          replies: [...(comment.replies || []), newReply],
-        };
-      }
-      return comment;
-    });
-
-    setComments(updatedComments);
-    setReplyToUser(undefined); // 답글 작성 완료 후 상태 초기화
   };
 
-  const handleCancelReply = () => {
-    setReplyToUser(undefined);
-  };
+  // TODO: 댓글 수정 기능 개발 예정
+  // const handleEditComment = (commentId: string, content: string) => {
+  //   if (!id || !post) return;
+  //   // API 호출 및 상태 업데이트
+  // };
+
+  // TODO: 댓글 삭제 기능 개발 예정
+  // const handleDeleteComment = (commentId: string) => {
+  //   if (!id || !post) return;
+  //   // API 호출 및 상태 업데이트
+  // };
+
+  // TODO: 게시글 수정 기능 개발 예정
+  // const handleEditPost = () => {
+  //   if (!id) return;
+  //   // 수정 페이지로 이동
+  // };
+
+  // TODO: 게시글 삭제 기능 개발 예정
+  // const handleDeletePost = () => {
+  //   if (!id) return;
+  //   // API 호출 및 목록 페이지로 이동
+  // };
+
+  // TODO: 대댓글 기능 개발 예정
+  // const handleReply = (author: string) => {
+  //   setReplyToUser(author);
+  // };
+
+  // TODO: 대댓글 기능 개발 예정
+  // const handleCreateReply = (commentId: string, content: string) => {
+  //   if (!id || !post) return;
+  //   // API 호출 및 상태 업데이트
+  // };
+
+  // TODO: 대댓글 기능 개발 예정
+  // const handleCancelReply = () => {
+  //   setReplyToUser(undefined);
+  // };
 
   return (
     <PageLayout
       isGlobalNavBar={false}
-      headerType="bookmark"
       title={`원바원 | ${post?.title || "게시글"}`}
       description={`원바원 커뮤니티 게시글 - ${post?.title || ""}`}
       headerTitle="커뮤니티"
@@ -130,9 +157,7 @@ export default function CommunityPost() {
       hasBackButton={true}
     >
       {isLoading ? (
-        <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary"></div>
-        </div>
+        <LoadingSpinner />
       ) : post ? (
         <>
           <article className="px-5 pt-7 pb-4 bg-white flex flex-col gap-7">
@@ -179,11 +204,17 @@ export default function CommunityPost() {
               </AlertCard>
             </section>
             <section className="flex justify-between">
-              <LikeToggle size="sm" count={post.likeCount}>
+              <LikeToggle
+                size="xs"
+                count={post.likeCount}
+                className="w-1/3"
+                onClick={handleToggleLike}
+                disabled={isLikeLoading}
+              >
                 좋아요
               </LikeToggle>
-              <ChatCount count={comments.length} />
-              <ShareButton size="xs" />
+              <ChatCount count={comments.length} className="w-1/3" />
+              <ShareButton size="xs" className="w-1/3" />
             </section>
           </article>
 
@@ -195,56 +226,27 @@ export default function CommunityPost() {
                   key={comment.id}
                   comment={comment}
                   postAuthor={post.author}
-                  onReply={handleReply}
+                  // TODO: 대댓글 기능 개발 예정
+                  // onReply={handleReply}
+                  // onEdit={handleEditComment}
+                  // onDelete={handleDeleteComment}
+                  // onCreateReply={handleCreateReply}
+                  // onCancelReply={handleCancelReply}
                 />
               ))
             ) : (
-              <p className="text-sm text-primary-normal03 text-center py-4">
-                첫 번째 댓글을 남겨보세요!
-              </p>
+              <Empty>아직 댓글이 없습니다.</Empty>
             )}
           </section>
 
           <ChatBar
-            replyUserName={replyToUser}
-            onCancelReply={handleCancelReply}
-            onSubmit={(content: string) => {
-              if (replyToUser) {
-                // 답글을 작성할 부모 댓글 찾기
-                const parentComment = comments.find(
-                  (c) => c.author === replyToUser
-                );
-
-                if (parentComment) {
-                  // 직접 댓글에 대한 답글
-                  handleCreateReply(parentComment.id, content);
-                } else {
-                  // 답글에 대한 답글인 경우 - 해당 답글의 부모 댓글 찾기
-                  for (const comment of comments) {
-                    const replyFound = comment.replies?.find(
-                      (r) => r.author === replyToUser
-                    );
-                    if (replyFound) {
-                      // 부모 댓글 ID를 사용
-                      handleCreateReply(comment.id, content);
-                      return;
-                    }
-                  }
-
-                  // 부모 댓글을 찾을 수 없는 경우 - 일반 댓글로 작성
-                  handleCreateComment(content);
-                }
-              } else {
-                // 일반 댓글 작성
-                handleCreateComment(content);
-              }
-            }}
+            onSubmit={handleCreateComment}
+            replyTo={replyToUser}
+            onCancelReply={() => setReplyToUser(undefined)}
           />
         </>
       ) : (
-        <div className="m-5 flex justify-center items-center h-64">
-          <p>게시글을 찾을 수 없습니다.</p>
-        </div>
+        <Empty>게시글을 찾을 수 없습니다.</Empty>
       )}
     </PageLayout>
   );

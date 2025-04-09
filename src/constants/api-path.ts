@@ -1,19 +1,33 @@
 // endpoint
 export const API_PATHS = {
   KINDERGARTEN: {
-    SEARCH: "/kindergarten",
+    BASE: "/kindergarten",
+    SEARCH: "/kindergarten/search",
     DETAIL: (id: number) => `/kindergarten/${id}`,
     NEARBY: "/kindergarten/nearby",
   },
-  USER: {
-    WITHDRAW: "/users/withdraw",
-    SIGN_IN: "/users/signin",
-    SIGN_UP: "/users/signup",
-    PASSWORD: "/users/password",
-    NICKNAME: "/users/nickname",
+  COMMUNITY: {
+    BASE: "/community",
+    POST: {
+      BASE: "/community",
+      DETAIL: (id: number) => `/community/${id}`,
+      LIKE: (id: number) => `/community/${id}/like`,
+      TOP: "/community/top",
+    },
+    COMMENT: {
+      BASE: (postId: number) => `/community/${postId}/comment`,
+    },
   },
   FAVORITE: {
-    KINDERGARTEN: "/favorite-kindergartens",
-    KINDERGARTEN_STATUS: "/favorite-kindergartens/status",
+    BASE: "/favorite-kindergartens",
+    STATUS: "/favorite-kindergartens/status",
+  },
+  USER: {
+    BASE: "/users",
+    SIGN_IN: "/users/signin",
+    SIGN_UP: "/users/signup",
+    WITHDRAW: "/users/withdraw",
+    PASSWORD: "/users/password",
+    NICKNAME: "/users/nickname",
   },
 };

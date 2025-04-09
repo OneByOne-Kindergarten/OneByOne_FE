@@ -6,7 +6,7 @@ import {
   NearbyKindergartensResponse,
   KindergartenSearchParams,
   KindergartenSearchResponse,
-} from "@/types/kindergarten";
+} from "@/types/kindergartenDTO";
 
 /**
  * 유치원 상세 정보 조회

@@ -5,7 +5,7 @@ import {
   SignInResponse,
   SignUpRequest,
   SignUpResponse,
-} from "@/types/auth";
+} from "@/types/authDTO";
 import { apiCall } from "@/utils/apiUtils";
 import { accessTokenAtom } from "@/stores/authStore";
 
@@ -79,8 +79,6 @@ export const signUp = async (data: SignUpRequest): Promise<SignUpResponse> => {
       role: data.role,
       profileImageUrl: data.profileImageUrl || "",
     };
-
-    console.log("회원가입 요청 데이터:", JSON.stringify(requestBody));
 
     return await apiCall<typeof requestBody, SignUpResponse>({
       method: "POST",

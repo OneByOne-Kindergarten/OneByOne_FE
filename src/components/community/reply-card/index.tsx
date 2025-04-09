@@ -3,7 +3,7 @@ import { SVG_PATHS } from "@/constants/assets-path";
 import LikeToggle from "@/components/@shared/buttons/like-toggle";
 import ReplyButton from "@/components/community/reply-button";
 import Badge from "@/components/@shared/badge";
-import type { Comment } from "@/types/community";
+import type { CommentItem } from "@/types/communityDTO";
 
 /**
  * ReplyCard Details
@@ -15,7 +15,7 @@ import type { Comment } from "@/types/community";
  */
 
 interface ReplyCardProps {
-  comment: Comment;
+  comment: CommentItem;
   postAuthor: string;
   isReply?: boolean;
   onReply: (author: string) => void;
@@ -27,16 +27,16 @@ export default function ReplyCard({
   isReply = false,
   onReply,
 }: ReplyCardProps) {
-  const { author, createdAt, content, likeCount, replies } = comment;
-  const isAuthor = author === postAuthor;
+  const { nickName, career, userRole, createdAt, content } = comment;
+  const isAuthor = nickName === postAuthor;
 
   const handleReply = () => {
-    onReply(author);
+    onReply(nickName);
   };
 
   return (
     <>
-      {/* 답글 */}
+      {/* 댓글 */}
       <div className={`${isReply ? "" : "border-b py-5 px-4"}`}>
         <div className="flex flex-1 justify-between">
           <div className="flex gap-2.5 items-center">
@@ -50,7 +50,7 @@ export default function ReplyCard({
             <div>
               <div className="flex items-center gap-1.5">
                 <span className="text-primary-dark02 font-semibold text-sm">
-                  {author}
+                  {nickName}
                 </span>
                 {isAuthor && <Badge>작성자</Badge>}
               </div>
@@ -69,17 +69,17 @@ export default function ReplyCard({
         </div>
         <p className="text-primary-dark01 text-sm mt-2 mb-3">{content}</p>
         <div className="flex justify-end gap-2 ">
-          <LikeToggle variant="secondary" size="sm" isCount count={likeCount}>
+          <LikeToggle variant="secondary" size="sm" isCount count={12}>
             좋아요
           </LikeToggle>
           <ReplyButton onClick={handleReply} />
         </div>
       </div>
 
-      {/* 중첩된 답글 */}
-      {replies && replies.length > 0 && (
+      {/* 대댓글 */}
+      {/* {replies && replies.length > 0 && (
         <ul className="flex flex-col w-full gap-4">
-          {replies.map((reply) => (
+          {replies.map((reply: CommentItem) => (
             <li
               key={comment.id}
               className="flex gap-2.5 items-start py-5 px-4 border-b"
@@ -101,7 +101,7 @@ export default function ReplyCard({
             </li>
           ))}
         </ul>
-      )}
+      )} */}
     </>
   );
 }

@@ -26,7 +26,11 @@ export default function BookmarkHeader({
       onBackButtonClick={onBackButtonClick}
     >
       <button onClick={handleBookmark} aria-label="북마크">
-        <img src={SVG_PATHS.BOOKMARKER} alt="북마크" className="w-6 h-6" />
+        <img
+          src={SVG_PATHS.BOOKMARKER.inactive}
+          alt="북마크"
+          className="w-6 h-6"
+        />
       </button>
     </Header>
   );

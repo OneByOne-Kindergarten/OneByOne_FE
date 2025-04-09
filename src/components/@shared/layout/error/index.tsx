@@ -1,17 +1,17 @@
 import clsx from "clsx";
 import { SVG_PATHS } from "@/constants/assets-path";
 
-interface EmptyProps {
+interface ErrorProps {
   children: React.ReactNode;
   className?: string;
   type?: "page" | "element";
 }
 
-export default function Empty({
+export default function Error({
   children,
   className,
   type = "element",
-}: EmptyProps) {
+}: ErrorProps) {
   return (
     <section
       className={clsx(
@@ -25,7 +25,7 @@ export default function Empty({
         <img src={SVG_PATHS.ALERT} alt="경고 아이콘" width={31} height={31} />
       </div>
       <div className="flex flex-col gap-1.5">
-        <p className="text-primary-dark02 font-semibold">서비스 오류 발생</p>
+        <p className="text-primary-dark02 font-semibold">서비스 오류</p>
         <span className="text-primary-dark01 text-sm">{children}</span>
       </div>
     </section>

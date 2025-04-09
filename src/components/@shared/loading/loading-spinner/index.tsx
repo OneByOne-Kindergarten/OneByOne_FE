@@ -1,13 +1,28 @@
-export default function LoadingSpinner() {
+import clsx from "clsx";
+
+interface LoadingSpinnerProps {
+  type?: "element" | "page";
+  className?: string;
+}
+
+export default function LoadingSpinner({
+  type = "element",
+  className,
+}: LoadingSpinnerProps) {
   return (
-    <div className="flex justify-center pb-8 pt-4">
+    <div
+      className={clsx("flex justify-center items-center", className, {
+        "py-14": type === "element",
+      })}
+      style={type === "page" ? { height: "calc(100vh - 112px)" } : undefined}
+    >
       <div className="relative w-10 h-10">
         {/* 그라데이션 스피너 */}
         <div
           className="absolute inset-0 rounded-full animate-spin"
           style={{
             background:
-              "conic-gradient(from 0deg, transparent 10%, #D9D9D9 40%, #6CA6ED 100%)",
+              "conic-gradient(from 0deg, transparent 10%, #FFFFFF 40%, #6CA6ED 100%)",
             maskImage: "radial-gradient(transparent 50%, white 52%)",
             WebkitMaskImage: "radial-gradient(transparent 50%, white 52%)",
           }}
