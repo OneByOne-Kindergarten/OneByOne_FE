@@ -19,7 +19,6 @@ import { URL_PATHS } from "@/constants/url-path";
 import {
   getCommunityCategoryName,
   getCommunityCategory,
-  getCommunityState,
   setCommunityCategory,
   setCommunityCategoryName,
 } from "@/utils/lastVisitedPathUtils";
@@ -49,7 +48,6 @@ type PostFormData = z.infer<typeof postSchema>;
 export default function PostEditor() {
   const isSubmitting = useRef(false);
 
-  // 메인 카테고리 (TEACHER 또는 PROSPECTIVE_TEACHER)
   const [selectedCategory, setSelectedCategory] = useState<
     "TEACHER" | "PROSPECTIVE_TEACHER"
   >(() => {
@@ -57,13 +55,9 @@ export default function PostEditor() {
     return category || "TEACHER";
   });
 
-  // 하위 카테고리 (예: "free", "university")
   const [selectedCategoryName, setSelectedCategoryName] = useState<string>(
     () => {
-      // 1. 세션 스토리지에서 저장된 하위 카테고리명 가져오기
       const savedCategoryName = getCommunityCategoryName();
-
-      // 2. 선택된 카테고리에 유효한 값이 있는지 확인하여 반환
       return getValidCategoryName(savedCategoryName, selectedCategory);
     }
   );
@@ -84,12 +78,11 @@ export default function PostEditor() {
 
   const { mutate: createPost, isPending, error } = useCreatePost();
 
-  // 메인 카테고리 변경 시 하위 카테고리도 업데이트
+  // 상위 카테고리 변경 시 하위 카테고리 업데이트
   useEffect(() => {
-    // 현재 선택된 communityCategoryName 존재 여부 확인
     const currentCategoryName = form.getValues("communityCategoryName");
 
-    // 유효한 카테고리 이름 확인 (현재 카테고리에 속하는지 검증 후 반환)
+    // 하위 카테고리 유효성 검증
     const newCategoryName = getValidCategoryName(
       currentCategoryName,
       selectedCategory
@@ -97,7 +90,6 @@ export default function PostEditor() {
 
     // 새 카테고리가 선택된 경우에만 업데이트
     if (newCategoryName !== currentCategoryName) {
-      // 폼 값과 상태 업데이트
       setSelectedCategoryName(newCategoryName);
       form.setValue("communityCategoryName", newCategoryName);
     }

@@ -21,7 +21,7 @@ export const CATEGORY_INFO: Record<CommunityCategoryType, CategoryInfo> = {
     categories: [
       { value: "top10", label: "Top 10" },
       { value: "all", label: "전체" },
-      { value: "테스트카테고리", label: "자유" },
+      { value: "free", label: "자유" },
       { value: "salary", label: "월급/취업" },
       { value: "class", label: "수업/환경구성" },
       { value: "guidance", label: "유아지도" },
