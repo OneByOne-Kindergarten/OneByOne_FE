@@ -16,6 +16,7 @@ import Input from "@/components/@shared/form/input";
 import ErrorMessage from "@/components/@shared/form/error-message";
 import Button from "@/components/@shared/buttons/base-button";
 import { SVG_PATHS } from "@/constants/assets-path";
+import { CommunityCategoryType } from "@/constants/community";
 
 // 닉네임, 회원 유형
 const step2Schema = z.object({
@@ -23,7 +24,7 @@ const step2Schema = z.object({
     .string()
     .min(2, "닉네임은 최소 2자 이상이어야 합니다.")
     .max(8, "닉네임은 최대 8자까지 가능합니다."),
-  role: z.enum(["TEACHER", "PRE_TEACHER"], {
+  role: z.enum(["TEACHER", "PROSPECTIVE_TEACHER"], {
     errorMap: () => ({ message: "회원 유형을 선택해주세요." }),
   }),
 });
@@ -47,11 +48,10 @@ export function Step2Form({
     },
     mode: "onChange",
   });
-  const [selectedRole, setSelectedRole] = useState<"TEACHER" | "PRE_TEACHER">(
-    "TEACHER"
-  );
+  const [selectedRole, setSelectedRole] =
+    useState<CommunityCategoryType>("TEACHER");
 
-  const handleRoleChange = (role: "TEACHER" | "PRE_TEACHER") => {
+  const handleRoleChange = (role: CommunityCategoryType) => {
     setSelectedRole(role);
     form.setValue("role", role, { shouldValidate: true });
   };
@@ -114,10 +114,10 @@ export function Step2Form({
               </button>
               <button
                 type="button"
-                onClick={() => handleRoleChange("PRE_TEACHER")}
+                onClick={() => handleRoleChange("PROSPECTIVE_TEACHER")}
                 className={clsx(
                   "w-1/2 px-4 pt-5 pb-7 gap-3 flex flex-col text-left rounded-lg",
-                  selectedRole === "PRE_TEACHER"
+                  selectedRole === "PROSPECTIVE_TEACHER"
                     ? "bg-tertiary-1 text-primary-dark01 outline-1 outline outline-tertiary-3"
                     : "bg-primary-foreground text-primary-normal03"
                 )}

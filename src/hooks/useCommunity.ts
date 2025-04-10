@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useInfiniteQuery } from "@tanstack/react-query";
-import React from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "@/hooks/useToast";
 
 import {
   getCommunityPostDetail,
@@ -19,6 +20,8 @@ import {
   CommentListResponse,
   CommentListParams,
 } from "@/types/communityDTO";
+import { URL_PATHS } from "@/constants/url-path";
+import React from "react";
 
 export const usePopularPosts = () => {
   return useQuery<PopularPostsResponse>({
@@ -73,29 +76,52 @@ export const useCommunityPostDetail = (id: number) => {
   });
 };
 
-export const useCreatePost = (options = { enabled: true }) => {
-  const isFirstRender = React.useRef(true);
-
-  if (isFirstRender.current) {
-    isFirstRender.current = false;
-  }
-
+/**
+ * 게시글 생성 API 호출
+ * - 에러 처리
+ * - 토스트 메세지 관리
+ */
+export const useCreatePost = () => {
   return useMutation<
     CreateCommunityPostResponse,
     Error,
     CreateCommunityPostRequest
   >({
-    mutationFn: async (data) => {
-      try {
-        const response = await createCommunityPost(data);
-        return response;
-      } catch (error) {
-        console.error("게시글 생성 API 오류:", error);
-        throw error;
-      }
+    mutationFn: createCommunityPost,
+    onSuccess: () => {
+      toast({
+        title: "게시글 등록 완료",
+        variant: "default",
+      });
     },
     onError: (error) => {
-      console.error("게시글 생성 Mutation 오류:", error);
+      toast({
+        title: "게시글 등록 실패",
+        variant: "destructive",
+      });
+      console.error("게시글 생성 에러:", error);
+    },
+  });
+};
+
+export const useCreateCommunityPost = () => {
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: (data: CreateCommunityPostRequest) => createCommunityPost(data),
+    onSuccess: () => {
+      toast({
+        title: "게시글 등록 완료",
+        variant: "default",
+      });
+      navigate(URL_PATHS.COMMUNITY);
+    },
+    onError: (error) => {
+      toast({
+        title: "게시글 등록 실패",
+        variant: "destructive",
+      });
+      console.error("게시글 생성 에러:", error);
     },
   });
 };

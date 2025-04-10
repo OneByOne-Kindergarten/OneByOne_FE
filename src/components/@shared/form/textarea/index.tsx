@@ -4,7 +4,7 @@ import { cn } from "@/utils/cn";
 
 // cva를 사용하여 textarea 스타일 정의
 const textareaVariants = cva(
-  "flex w-full resize-none rounded-md bg-primary-foreground text-sm placeholder:text-primary-normal03 focus-visible:outline-1 focus-visible:outline-primary-normal03 disabled:cursor-not-allowed disabled:opacity-50",
+  "flex w-full resize-none border border-transparent rounded-md bg-primary-foreground text-sm placeholder:text-primary-normal03 outline-none disabled:cursor-not-allowed disabled:opacity-50",
   {
     variants: {
       font: {
@@ -26,6 +26,9 @@ const textareaVariants = cva(
         fixed: "h-80",
         auto: "h-24 focus:h-80",
       },
+      error: {
+        true: "border border-destructive",
+      },
     },
     defaultVariants: {
       font: "sm_sb",
@@ -38,10 +41,12 @@ const textareaVariants = cva(
 const Textarea = React.forwardRef<
   HTMLTextAreaElement,
   React.ComponentProps<"textarea"> & VariantProps<typeof textareaVariants>
->(({ className, font, padding, size, ...props }, ref) => {
+>(({ className, font, padding, size, error, ...props }, ref) => {
   return (
     <textarea
-      className={cn(textareaVariants({ font, padding, size, className }))}
+      className={cn(
+        textareaVariants({ font, padding, size, error, className })
+      )}
       ref={ref}
       {...props}
     />

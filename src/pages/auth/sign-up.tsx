@@ -1,19 +1,20 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import { signUp } from "@/services/authService";
+import { SignUpRequest } from "@/types/authDTO";
 import { Step1Form, Step1FormValues } from "@/components/sign-up/Step1Form";
 import { Step2Form, Step2FormValues } from "@/components/sign-up/Step2Form";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import { URL_PATHS } from "@/constants/url-path";
-import { SignUpRequest } from "@/types/auth";
+import { useSignUp } from "@/hooks/useAuth";
 
 export default function SignUp() {
   const [step, setStep] = useState<1 | 2>(1);
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [step1Data, setStep1Data] = useState<Step1FormValues | null>(null);
   const navigate = useNavigate();
+
+  const { mutate: signUpMutate, isPending } = useSignUp();
 
   const handleCustomBack = () => {
     if (step === 2) {
@@ -28,73 +29,23 @@ export default function SignUp() {
     setStep(2);
   };
 
-  const handleStep2Submit = async (data: Step2FormValues) => {
+  const handleStep2Submit = (data: Step2FormValues) => {
     if (!step1Data) return;
 
-    setIsLoading(true);
     setError(null);
 
-    try {
-      const signUpData: SignUpRequest = {
-        email: step1Data.email,
-        password: step1Data.password,
-        provider: "LOCAL",
-        providerId: 0,
-        nickname: data.nickname,
-        role: data.role,
-        profileImageUrl: "",
-      };
+    const signUpData: SignUpRequest = {
+      email: step1Data.email,
+      password: step1Data.password,
+      provider: "LOCAL",
+      providerId: 0,
+      nickname: data.nickname,
+      role: data.role,
+      profileImageUrl: "",
+    };
 
-      if (error?.includes("이미 사용 중인 이메일")) {
-        setError("이미 가입된 이메일입니다. 로그인을 시도해주세요.");
-        return;
-      }
-
-      const response = await signUp(signUpData);
-
-      alert("회원가입이 완료되었습니다.");
-      navigate(URL_PATHS.SIGNIN);
-    } catch (error) {
-      console.error("회원가입 오류:", error);
-
-      if (
-        error instanceof Error &&
-        error.message.includes("Failed to parse JSON response")
-      ) {
-        alert("회원가입이 완료되었습니다.");
-        navigate(URL_PATHS.SIGNIN);
-        return;
-      }
-
-      if (error instanceof Error) {
-        try {
-          const errorObj = JSON.parse(error.message);
-          if (
-            errorObj.data?.message?.includes("이미 사용 중인 이메일") ||
-            errorObj.data?.message?.includes("duplicate") ||
-            errorObj.data?.message?.includes("already exists")
-          ) {
-            setError("이미 가입된 이메일입니다. 로그인을 시도해주세요.");
-            setStep(1);
-          } else if (errorObj.status === 500) {
-            setError(
-              "서버 오류가 발생했습니다. 잠시 후 로그인을 시도해주세요."
-            );
-          } else {
-            setError(
-              errorObj.data?.message ||
-                "회원가입 중 오류가 발생했습니다. 다시 시도해주세요."
-            );
-          }
-        } catch {
-          setError(`회원가입 중 오류가 발생했습니다: ${error.message}`);
-        }
-      } else {
-        setError("회원가입 중 오류가 발생했습니다. 다시 시도해주세요.");
-      }
-    } finally {
-      setIsLoading(false);
-    }
+    // 회원가입 요청 - 에러 처리는 모두 훅에서 진행
+    signUpMutate(signUpData);
   };
 
   return (
@@ -124,7 +75,7 @@ export default function SignUp() {
         ) : (
           <Step2Form
             onSubmit={handleStep2Submit}
-            isLoading={isLoading}
+            isLoading={isPending}
             error={error}
           />
         )}

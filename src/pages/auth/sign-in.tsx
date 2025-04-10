@@ -1,29 +1,30 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
+import { z } from "zod";
 
-import { URL_PATHS } from "@/constants/url-path";
-import { SignInRequest } from "@/types/auth";
-import { signIn } from "@/services/authService";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import {
   Form,
+  FormControl,
+  FormField,
   FormItem,
   FormLabel,
-  FormControl,
   FormMessage,
-  FormField,
 } from "@/components/@shared/form";
 import Input from "@/components/@shared/form/input";
 import ToggleInput from "@/components/@shared/form/toggle-input";
 import Button from "@/components/@shared/buttons/base-button";
-import ErrorMessage from "@/components/@shared/form/error-message";
+import { URL_PATHS } from "@/constants/url-path";
+import { SignInRequest } from "@/types/authDTO";
+import { useSignIn } from "@/hooks/useAuth";
 
-// 로그인 폼 유효성 검사 스키마
 const signInSchema = z.object({
-  email: z.string().email("유효한 이메일 주소를 입력해주세요."),
+  email: z
+    .string()
+    .min(1, "이메일을 입력해주세요.")
+    .email("올바른 이메일 형식이 아닙니다."),
   password: z
     .string()
     .min(6, "비밀번호는 최소 6자 이상이어야 합니다.")
@@ -33,9 +34,7 @@ const signInSchema = z.object({
 type SignInFormValues = z.infer<typeof signInSchema>;
 
 export default function SignIn() {
-  const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const { mutate: signInMutate, isPending } = useSignIn();
 
   const form = useForm<SignInFormValues>({
     resolver: zodResolver(signInSchema),
@@ -46,25 +45,13 @@ export default function SignIn() {
     mode: "onChange",
   });
 
-  const onSubmit = async (values: SignInFormValues) => {
-    setIsLoading(true);
-    setError(null);
+  const onSubmit = (values: SignInFormValues) => {
+    const signInData: SignInRequest = {
+      ...values,
+      fcmToken: "",
+    };
 
-    try {
-      // 웹에서는 fcmToken를 빈 문자열로 처리
-      const signInData: SignInRequest = {
-        ...values,
-        fcmToken: "",
-      };
-
-      const response = await signIn(signInData);
-
-      navigate(URL_PATHS.SCHOOL);
-    } catch (error) {
-      setError("유효하지 않은 이메일 또는 비밀번호입니다.");
-    } finally {
-      setIsLoading(false);
-    }
+    signInMutate(signInData);
   };
 
   return (
@@ -120,16 +107,13 @@ export default function SignIn() {
                 )}
               />
             </div>
-
-            {error && <ErrorMessage error={error} />}
-
             <Button
               variant="secondary"
               type="submit"
               size="lg"
               font="md"
               disabled={
-                isLoading ||
+                isPending ||
                 !form.formState.isValid ||
                 Object.keys(form.formState.errors).length > 0
               }

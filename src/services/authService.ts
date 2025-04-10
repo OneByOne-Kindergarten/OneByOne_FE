@@ -1,5 +1,4 @@
 import { getDefaultStore } from "jotai/vanilla";
-
 import {
   SignInRequest,
   SignInResponse,
@@ -45,7 +44,6 @@ export const deleteCookie = (name: string) => {
 /**
  * 로그인
  * - 성공 시 accessToken을 Jotai 상태에 저장, refreshToken 쿠키에 저장
- *
  * @throws {Error}
  */
 
@@ -80,12 +78,14 @@ export const signUp = async (data: SignUpRequest): Promise<SignUpResponse> => {
       profileImageUrl: data.profileImageUrl || "",
     };
 
-    return await apiCall<typeof requestBody, SignUpResponse>({
+    const result = await apiCall<typeof requestBody, SignUpResponse>({
       method: "POST",
       path: "/users/sign-up",
       data: requestBody,
       withCredentials: true,
     });
+
+    return result;
   } catch (error) {
     console.error("회원가입 에러:", error);
     throw error;
@@ -96,8 +96,6 @@ export const logout = () => {
   setAccessToken(null);
   deleteCookie("refreshToken");
 
-  console.log("로그아웃 완료");
-
   window.location.href = "/";
 };
 
@@ -105,8 +103,7 @@ export const logout = () => {
  * accessToken 갱신
  * - refreshToken을 활용한 새로운 토큰 발급 요청
  * - 성공 시 새 accessToken과 refreshToken을 저장
- * - 실패 시 로그아웃 처리
- *
+ * - 실패 시 로그아웃
  * @throws {Error}
  */
 

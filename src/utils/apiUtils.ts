@@ -83,7 +83,8 @@ export async function apiCall<TRequest, TResponse>({
           isRetry: true,
         });
       } catch (refreshError) {
-        console.error("토큰 갱신 실패:", refreshError);
+        // 서비스 레이어에서 에러 로깅을 처리하므로 여기서는 최소한으로 유지
+        // console.error("토큰 갱신 실패:", refreshError);
         throw new Error("다시 로그인해주세요.");
       }
     }
@@ -103,7 +104,8 @@ export async function apiCall<TRequest, TResponse>({
           });
         }
       } catch (jsonError) {
-        console.warn("Error response is not valid JSON:", jsonError);
+        // 서비스 레이어에서 에러 로깅을 처리하므로 여기서는 최소한으로 유지
+        // console.warn("Error response is not valid JSON:", jsonError);
       }
 
       throw new Error(errorMessage);
@@ -123,15 +125,16 @@ export async function apiCall<TRequest, TResponse>({
       if (contentType && contentType.includes("application/json")) {
         return await response.json();
       } else {
-        console.warn(`Response is not JSON: ${contentType}`);
+        // 서비스 레이어에서 에러 로깅을 처리하므로 여기서는 최소한으로 유지
+        // console.warn(`Response is not JSON: ${contentType}`);
         return {} as TResponse;
       }
     } catch (jsonError) {
-      console.error("Failed to parse JSON response:", jsonError);
+      // 서비스 레이어에서 에러 로깅을 처리하므로 여기서는 최소한으로 유지
+      // console.error("Failed to parse JSON response:", jsonError);
       return {} as TResponse;
     }
   } catch (error) {
-    console.error(`API Call Error for ${path}:`, error);
     throw error;
   }
 }

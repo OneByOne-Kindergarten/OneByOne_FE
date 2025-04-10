@@ -4,7 +4,7 @@ export interface SignUpRequest {
   provider: "LOCAL" | "GOOGLE" | "APPLE";
   providerId: number;
   nickname: string;
-  role: "TEACHER" | "PRE_TEACHER" | "ADMIN";
+  role: "TEACHER" | "PROSPECTIVE_TEACHER" | "ADMIN";
   profileImageUrl: string;
 }
 
@@ -14,7 +14,7 @@ export interface SignUpResponse {
   provider: "LOCAL" | "GOOGLE" | "APPLE";
   providerId: number;
   nickname: string;
-  role: "TEACHER" | "PRE_TEACHER" | "ADMIN";
+  role: "TEACHER" | "PROSPECTIVE_TEACHER" | "ADMIN";
   profileImageUrl: string;
 }
 

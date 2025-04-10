@@ -62,10 +62,6 @@ export const getCommunityPosts = async (
     queryParams.append("userName", params.userName);
   }
 
-  // console.log(
-  //   Object.fromEntries(queryParams.entries())
-  // );
-
   return apiCall<void, CommunityPostData>({
     method: "GET",
     path: `${API_PATHS.COMMUNITY.BASE}?${queryParams.toString()}`,
@@ -99,34 +95,13 @@ export const getCommunityPostDetail = async (
 export const createCommunityPost = async (
   data: CreateCommunityPostRequest
 ): Promise<CreateCommunityPostResponse> => {
-  try {
-    const response = await apiCall<
-      CreateCommunityPostRequest,
-      CreateCommunityPostResponse
-    >({
-      method: "POST",
-      path: API_PATHS.COMMUNITY.BASE,
-      data,
-      withAuth: true,
-    });
-    return response;
-  } catch (error) {
-    console.error("apiCall failed:", error);
-    throw error;
-  }
+  return apiCall<CreateCommunityPostRequest, CreateCommunityPostResponse>({
+    method: "POST",
+    path: API_PATHS.COMMUNITY.BASE,
+    data,
+    withAuth: true,
+  });
 };
-
-// export const updateCommunityPost = async (
-//   postId: number,
-//   data: UpdateCommunityPostRequest
-// ): Promise<UpdateCommunityPostResponse> => {
-//   return apiCall<UpdateCommunityPostRequest, UpdateCommunityPostResponse>({
-//     method: "PUT",
-//     path: API_PATHS.COMMUNITY.POST.DETAIL(postId),
-//     data,
-//     withAuth: true,
-//   });
-// };
 
 /**
  * 게시글 좋아요 상태 조회

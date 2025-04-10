@@ -15,6 +15,9 @@ import {
 } from "@/components/@shared/form";
 import Input from "@/components/@shared/form/input";
 import Textarea from "@/components/@shared/form/textarea";
+import Button from "@/components/@shared/buttons/base-button";
+import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
+
 import { URL_PATHS } from "@/constants/url-path";
 import {
   getCommunityCategoryName,
@@ -27,14 +30,7 @@ import {
   getCategoryOptions,
 } from "@/utils/categoryUtils";
 import { useCreatePost } from "@/hooks/useCommunity";
-import {
-  CreateCommunityPostResponse,
-  CreateCommunityPostRequest,
-} from "@/types/communityDTO";
-import Button from "@/components/@shared/buttons/base-button";
-import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
-import Error from "@/components/@shared/layout/error";
-import { useToast } from "@/hooks/useToast";
+import { CreateCommunityPostRequest } from "@/types/communityDTO";
 
 const postSchema = z.object({
   title: z.string().min(1, "제목을 입력해주세요"),
@@ -63,7 +59,7 @@ export default function PostEditor() {
   );
 
   const navigate = useNavigate();
-  const { toast } = useToast();
+  const { mutate: createPost, isPending } = useCreatePost();
 
   const form = useForm<PostFormData>({
     resolver: zodResolver(postSchema),
@@ -75,8 +71,6 @@ export default function PostEditor() {
     },
     mode: "onBlur",
   });
-
-  const { mutate: createPost, isPending, error } = useCreatePost();
 
   // 상위 카테고리 변경 시 하위 카테고리 업데이트
   useEffect(() => {
@@ -154,46 +148,23 @@ export default function PostEditor() {
 
     isSubmitting.current = true;
 
-    try {
-      const postData: CreateCommunityPostRequest = {
-        title: data.title,
-        content: data.content,
-        category: data.category,
-        communityCategoryName: data.communityCategoryName,
-        communityCategoryDescription:
-          data.category === "TEACHER" ? "교사 커뮤니티" : "예비교사 커뮤니티",
-      };
+    const postData: CreateCommunityPostRequest = {
+      title: data.title,
+      content: data.content,
+      category: data.category,
+      communityCategoryName: data.communityCategoryName,
+      communityCategoryDescription:
+        data.category === "TEACHER" ? "교사 커뮤니티" : "예비교사 커뮤니티",
+    };
 
-      createPost(postData, {
-        onSuccess: (response: CreateCommunityPostResponse) => {
-          toast({
-            title: "게시글 등록 완료",
-            description: "게시글이 성공적으로 등록되었습니다.",
-            variant: "default",
-          });
-          navigate(-1);
-        },
-        onError: (error) => {
-          toast({
-            title: "게시글 등록 실패",
-            description:
-              "게시글 등록 중 오류가 발생했습니다. 다시 시도해주세요.",
-            variant: "destructive",
-          });
-          isSubmitting.current = false;
-        },
-        onSettled: () => {
-          isSubmitting.current = false;
-        },
-      });
-    } catch (e) {
-      toast({
-        title: "오류 발생",
-        description: "게시글 등록 요청을 처리하는 중 오류가 발생했습니다.",
-        variant: "destructive",
-      });
-      isSubmitting.current = false;
-    }
+    createPost(postData, {
+      onSuccess: () => {
+        navigate(-1);
+      },
+      onSettled: () => {
+        isSubmitting.current = false;
+      },
+    });
   };
 
   // 현재 카테고리에 해당하는 하위 카테고리 옵션
@@ -212,12 +183,6 @@ export default function PostEditor() {
     >
       {isPending ? (
         <LoadingSpinner />
-      ) : error ? (
-        <Error type="element">
-          {error instanceof Error
-            ? error.message
-            : "게시글 작성 중 오류가 발생했습니다."}
-        </Error>
       ) : (
         <section className="p-5 flex flex-col gap-5">
           <h2 className="text-base text-primary-dark01 font-semibold">
@@ -249,7 +214,7 @@ export default function PostEditor() {
               <FormField
                 control={form.control}
                 name="title"
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <FormItem>
                     <div className="flex justify-between">
                       <FormLabel className="text-base text-primary-dark01 font-semibold">
@@ -267,6 +232,7 @@ export default function PostEditor() {
                         value={field.value || ""}
                         onChange={(e) => field.onChange(e.target.value)}
                         onBlur={field.onBlur}
+                        error={!!fieldState.error}
                       />
                     </FormControl>
                     <FormMessage />
@@ -277,7 +243,7 @@ export default function PostEditor() {
               <FormField
                 control={form.control}
                 name="content"
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <FormItem>
                     <div className="flex justify-between">
                       <FormLabel className="text-base text-primary-dark01 font-semibold">
@@ -300,6 +266,7 @@ export default function PostEditor() {
                         value={field.value || ""}
                         onChange={(e) => field.onChange(e.target.value)}
                         onBlur={field.onBlur}
+                        error={!!fieldState.error}
                       />
                     </FormControl>
                     <FormMessage />
