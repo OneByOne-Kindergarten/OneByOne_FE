@@ -9,23 +9,28 @@ export interface User {
   role: string;
 }
 
-// 게시글
-export interface CreateCommunityPostRequest {
-  title: string;
-  content: string;
-  category: "TEACHER" | "PRE_TEACHER";
-  communityCategoryName: string;
-  communityCategoryDescription: string;
+export interface CommunityPostParams {
+  title?: string;
+  content?: string;
+  category: "TEACHER" | "PROSPECTIVE_TEACHER";
+  categoryName?: string;
+  userName?: string;
+  page?: number;
+  size?: number;
+  sort?: string[];
 }
 
-export interface CommunityPostData {
+// 개별 게시글
+export interface CommunityPostItem {
   id: number;
   title: string;
   content: string;
-  category: "TEACHER" | "PRE_TEACHER";
+  category: "TEACHER" | "PROSPECTIVE_TEACHER";
   categoryName: string;
+  userNickname: string;
   categoryDescription: string;
-  userName: string;
+  userRole: "TEACHER" | "PROSPECTIVE_TEACHER" | "ADMIN";
+  career: string | null;
   viewCount: number;
   likeCount: number;
   commentCount: number;
@@ -33,9 +38,28 @@ export interface CommunityPostData {
   updatedAt: string;
 }
 
+// 게시글 목록
+export interface CommunityPostData {
+  content: CommunityPostItem[];
+  pageNumber: number;
+  pageSize: number;
+  totalElements: number;
+  totalPages: number;
+  first: boolean;
+  last: boolean;
+}
+
+export interface CreateCommunityPostRequest {
+  title: string;
+  content: string;
+  category: "TEACHER" | "PROSPECTIVE_TEACHER";
+  communityCategoryName: string;
+  communityCategoryDescription: string;
+}
+
 export interface CreateCommunityPostResponse {
   success: boolean;
-  data: CommunityPostData;
+  data: CommunityPostItem;
   message: string;
 }
 
@@ -62,22 +86,22 @@ export interface CommunityPostDetailRequest {
 
 export interface CommunityPostDetailResponse {
   success: boolean;
-  data: CommunityPostData;
+  data: CommunityPostItem;
   message: string;
 }
 
 // 인기 게시글 TOP 10
 export interface PopularPostsResponse {
   success: boolean;
-  data: CommunityPostData[];
+  data: CommunityPostItem[];
   message: string;
 }
 
-// 댓글 관련 타입
-export type UserRole = "TEACHER" | "PRE_TEACHER" | "ADMIN" | "USER";
+// 댓글
+export type UserRole = "TEACHER" | "PROSPECTIVE_TEACHER" | "ADMIN";
 export type CommentStatus = "PENDING" | "APPROVED" | "REJECTED";
 
-// 댓글 목록 조회
+// 댓글 목록
 export interface CommentListParams {
   postId: number;
   page?: number;
@@ -85,6 +109,7 @@ export interface CommentListParams {
   sort?: string[];
 }
 
+// 개별 댓글 정보
 export interface CommentItem {
   id: number;
   content: string;

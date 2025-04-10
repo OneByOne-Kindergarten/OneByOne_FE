@@ -1,16 +1,16 @@
 import { Helmet } from "react-helmet-async";
 import { useEffect } from "react";
 
-interface MetadataProps {
-  title: string;
-  description: string;
-}
-
 /**
  * 메타데이터 설정
  * @param title 페이지 제목
  * @param description 페이지 설명
  */
+
+interface MetadataProps {
+  title: string;
+  description: string;
+}
 
 export function useDocumentMetadata({ description }: { description: string }) {
   useEffect(() => {

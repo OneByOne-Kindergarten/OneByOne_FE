@@ -1,20 +1,25 @@
 import { useMutation, useQuery, useInfiniteQuery } from "@tanstack/react-query";
+import React from "react";
+
 import {
   getCommunityPostDetail,
   getPopularPosts,
   getCommunityPosts,
-  toggleLike,
   createCommunityPost,
+  toggleLike,
+  getLikeStatus,
+  getComments,
 } from "@/services/communityService";
 import {
   CommunityPostDetailResponse,
   PopularPostsResponse,
-  LikeStatusResponse,
   CreateCommunityPostRequest,
   CreateCommunityPostResponse,
+  LikeStatusResponse,
+  CommentListResponse,
+  CommentListParams,
 } from "@/types/communityDTO";
 
-// 인기 게시글 TOP 10 조회
 export const usePopularPosts = () => {
   return useQuery<PopularPostsResponse>({
     queryKey: ["popularPosts"],
@@ -22,21 +27,45 @@ export const usePopularPosts = () => {
   });
 };
 
-// 게시글 목록 조회
-export const useCommunityPosts = (pageSize = 10) => {
+export const useCommunityPosts = (
+  pageSize = 10,
+  category: "TEACHER" | "PROSPECTIVE_TEACHER",
+  options?: {
+    categoryName?: string;
+    title?: string;
+    content?: string;
+    userName?: string;
+  }
+) => {
+  const queryParams = {
+    pageSize,
+    category,
+    categoryName: options?.categoryName,
+    title: options?.title,
+    content: options?.content,
+    userName: options?.userName,
+  };
+
   return useInfiniteQuery({
-    queryKey: ["communityPosts"],
-    queryFn: ({ pageParam = 1 }) => getCommunityPosts(pageParam, pageSize),
+    queryKey: ["communityPosts", queryParams],
+    queryFn: ({ pageParam = 0 }) =>
+      getCommunityPosts({
+        page: pageParam,
+        size: pageSize,
+        category,
+        ...options,
+      }),
     getNextPageParam: (lastPage, allPages) => {
-      // 마지막 페이지가 비어있으면 더 이상 불러올 데이터가 없음
-      if (lastPage.length === 0) return undefined;
-      return allPages.length + 1;
+      if (!lastPage.content || lastPage.content.length === 0) return undefined;
+
+      if (lastPage.last) return undefined;
+
+      return lastPage.pageNumber + 1;
     },
-    initialPageParam: 1,
+    initialPageParam: 0,
   });
 };
 
-// 게시글 상세 조회
 export const useCommunityPostDetail = (id: number) => {
   return useQuery<CommunityPostDetailResponse>({
     queryKey: ["communityPost", id],
@@ -44,33 +73,55 @@ export const useCommunityPostDetail = (id: number) => {
   });
 };
 
-// 게시글 좋아요 토글
+export const useCreatePost = (options = { enabled: true }) => {
+  const isFirstRender = React.useRef(true);
+
+  if (isFirstRender.current) {
+    isFirstRender.current = false;
+  }
+
+  return useMutation<
+    CreateCommunityPostResponse,
+    Error,
+    CreateCommunityPostRequest
+  >({
+    mutationFn: async (data) => {
+      try {
+        const response = await createCommunityPost(data);
+        return response;
+      } catch (error) {
+        console.error("게시글 생성 API 오류:", error);
+        throw error;
+      }
+    },
+    onError: (error) => {
+      console.error("게시글 생성 Mutation 오류:", error);
+    },
+  });
+};
+
+// TODO: 게시글 수정
+
+// TODO: 게시글 삭제
+
 export const useToggleLike = () => {
   return useMutation<LikeStatusResponse, Error, number>({
     mutationFn: (postId) => toggleLike(postId),
   });
 };
 
-// 게시글 작성
-export const useCreatePost = () => {
-  return useMutation<
-    CreateCommunityPostResponse,
-    Error,
-    CreateCommunityPostRequest
-  >({
-    mutationFn: createCommunityPost,
+export const useLikeStatus = (postId: number) => {
+  return useQuery<LikeStatusResponse>({
+    queryKey: ["likeStatus", postId],
+    queryFn: () => getLikeStatus(postId),
+    enabled: !!postId,
   });
 };
 
-// TODO: 게시글 수정
-// export const useUpdatePost = () => {
-//   return useMutation<
-//     UpdateCommunityPostResponse,
-//     Error,
-//     UpdateCommunityPostRequest
-//   >({
-//     mutationFn: updateCommunityPost,
-//   });
-// };
-
-// TODO: 게시글 삭제
+export const useComments = (params: CommentListParams) => {
+  return useQuery<CommentListResponse>({
+    queryKey: ["comments", params],
+    queryFn: () => getComments(params),
+    enabled: !!params.postId,
+  });
+};

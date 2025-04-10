@@ -20,10 +20,8 @@ export default function ChatCount({ count, className }: ChatCountProps) {
         width={20}
         height={20}
       />
-      <div>
-        <span>댓글</span>
-        <span>({count})</span>
-      </div>
+      <span>댓글</span>
+      {count !== undefined && <span className="-ml-1">{`(${count})`}</span>}
     </div>
   );
 }

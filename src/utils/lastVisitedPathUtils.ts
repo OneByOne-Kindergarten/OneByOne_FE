@@ -3,8 +3,8 @@ const LAST_VISITED_PATHS_KEY = "lastVisitedPaths";
 interface LastVisitedPaths {
   community: {
     path: string;
-    type: "teacher" | "pre-teacher";
-    category: string;
+    category?: "teacher" | "pre-teacher";
+    communityCategoryName?: string;
   };
   school?: {
     path: string;
@@ -19,9 +19,9 @@ type PathKey = keyof LastVisitedPaths;
 
 const DEFAULT_LAST_VISITED_PATHS: LastVisitedPaths = {
   community: {
-    path: "/community?type=teacher&category=top10",
-    type: "teacher",
-    category: "top10",
+    path: "/community?type=teacher&communityCategoryName=top10",
+    category: "teacher",
+    communityCategoryName: "top10",
   },
 };
 
@@ -30,7 +30,40 @@ export function getLastVisitedPaths(): LastVisitedPaths {
   try {
     const savedState = sessionStorage.getItem(LAST_VISITED_PATHS_KEY);
     if (savedState) {
-      return JSON.parse(savedState);
+      const parsedState = JSON.parse(savedState);
+
+      // 커뮤니티 객체 정리
+      if (parsedState.community) {
+        const community = parsedState.community;
+
+        // 1. type -> category 마이그레이션
+        if (community.type && !community.category) {
+          community.category = community.type;
+          delete community.type;
+        }
+
+        // 2. 이전 데이터에서 type과 category가 모두 있는 경우
+        // (잘못된 상태) -> type 삭제하고 category 유지
+        if (community.type && community.category) {
+          delete community.type;
+        }
+
+        // 3. category가 문자열이지만 허용된 값('teacher', 'pre-teacher')이 아닌 경우
+        // => communityCategoryName으로 이동하고 category는 기본값으로 설정
+        if (
+          community.category &&
+          typeof community.category === "string" &&
+          community.category !== "teacher" &&
+          community.category !== "pre-teacher"
+        ) {
+          if (!community.communityCategoryName) {
+            community.communityCategoryName = community.category;
+          }
+          community.category = "teacher"; // 기본값으로 설정
+        }
+      }
+
+      return parsedState;
     }
   } catch (error) {
     console.error("세션 스토리지 접근 오류:", error);
@@ -98,20 +131,45 @@ export function setCommunityPath(path: string): void {
   setPath("community", path);
 }
 
+export function getCommunityCategory(): "TEACHER" | "PROSPECTIVE_TEACHER" {
+  const category = getCommunityState().category;
+
+  if (category === "teacher") return "TEACHER";
+  if (category === "pre-teacher") return "PROSPECTIVE_TEACHER";
+
+  return "TEACHER";
+}
+
+export function setCommunityCategory(
+  category: "TEACHER" | "PROSPECTIVE_TEACHER"
+): void {
+  const lowerCategory = category === "TEACHER" ? "teacher" : "pre-teacher";
+  setCommunityState({ category: lowerCategory });
+}
+
+export function getCommunityCategoryName(): string {
+  return getCommunityState().communityCategoryName || "";
+}
+
+export function setCommunityCategoryName(communityCategoryName: string): void {
+  setCommunityState({ communityCategoryName });
+}
+
 export function getCommunityType(): "teacher" | "pre-teacher" {
-  return getCommunityState().type;
+  const category = getCommunityState().category;
+  return category || "teacher";
 }
 
 export function setCommunityType(type: "teacher" | "pre-teacher"): void {
-  setCommunityState({ type });
+  setCommunityState({ category: type });
 }
 
 export function getCategoryType(): string {
-  return getCommunityState().category;
+  return getCommunityCategoryName();
 }
 
 export function setCategoryType(category: string): void {
-  setCommunityState({ category });
+  setCommunityCategoryName(category);
 }
 
 // 커뮤니티 경로 상태

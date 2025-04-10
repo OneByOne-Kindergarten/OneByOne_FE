@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import Badge from "@/components/@shared/badge";
 import { SVG_PATHS } from "@/constants/assets-path";
 import { formatDate } from "@/utils/dateUtils";
-import type { Post } from "@/types/community";
+import type { CommunityPostItem } from "@/types/communityDTO";
 
 interface PostCardProps {
-  post: Post;
+  post: CommunityPostItem;
   index: number;
   currentCategory: string;
   getCategoryLabel: (category: string) => string;
@@ -19,16 +19,13 @@ export default function PostCard({
   getCategoryLabel,
 }: PostCardProps) {
   return (
-    <li
-      key={post.id}
-      className="flex items-center gap-3 flex-1 pb-4 border-b border-primary-light02"
-    >
+    <li className="flex items-center gap-3 flex-1 pb-4 border-b border-primary-light02">
       <div className="flex flex-col gap-1.5 flex-1">
         <div className="flex gap-2">
           {currentCategory === "top10" && (
             <Badge variant="secondary">{index + 1}</Badge>
           )}
-          <Badge variant="primary">{getCategoryLabel(post.category)}</Badge>
+          <Badge variant="primary">{getCategoryLabel(post.categoryName)}</Badge>
         </div>
         <Link to={`/community/${post.id}`}>
           <p className="font-semibold text-primary-dark01">{post.title}</p>
@@ -60,12 +57,12 @@ export default function PostCard({
                 width="15"
                 height="15"
               />
-              <span>{post.viewCount || post.views}</span>
+              <span>{post.viewCount}</span>
             </div>
           </div>
           <div>
             <span>
-              {post.author || "작성자"} · {formatDate(post.createdAt)}
+              {post.userNickname || "작성자"} · {formatDate(post.createdAt)}
             </span>
           </div>
         </div>

@@ -94,19 +94,13 @@ export const searchKindergartens = async (
       });
     }
 
-    console.log(
-      `유치원 검색 API 요청: ${API_PATHS.KINDERGARTEN.SEARCH}?${queryParams.toString()}`
-    );
-    console.log("검색 파라미터:", JSON.stringify(params, null, 2));
-
     const response = await apiCall<void, KindergartenSearchResponse>({
       method: "GET",
-      path: `${API_PATHS.KINDERGARTEN.SEARCH}?${queryParams.toString()}`,
+      path: `${API_PATHS.KINDERGARTEN.BASE}?${queryParams.toString()}`,
       withAuth: true,
       withCredentials: true,
     });
 
-    console.log("유치원 검색 API 응답:", JSON.stringify(response, null, 2));
     return response;
   } catch (error) {
     console.error("유치원 검색 에러:", error);

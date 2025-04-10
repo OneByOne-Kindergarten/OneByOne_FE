@@ -28,9 +28,7 @@ export default function Bookmarks() {
       mainClassName={favorites.length === 0 ? "pb-0 mb-0" : ""}
     >
       {isLoading ? (
-        <div className="flex justify-center items-center py-10">
-          <LoadingSpinner />
-        </div>
+        <LoadingSpinner type="page" />
       ) : isError ? (
         <Error type="page">{error?.message}</Error>
       ) : favorites.length === 0 ? (

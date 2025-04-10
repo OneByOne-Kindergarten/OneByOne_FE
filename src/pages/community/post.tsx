@@ -1,108 +1,104 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import {
+  getCommunityPostDetail,
+  toggleLike,
+} from "@/services/communityService";
 
+import Post from "@/components/community/post";
 import PageLayout from "@/components/@shared/layout/page-layout";
-import Badge from "@/components/@shared/badge";
-import AlertCard from "@/components/@shared/alert/alert-card";
-import LikeToggle from "@/components/@shared/buttons/like-toggle";
-import ShareButton from "@/components/@shared/buttons/share-button";
-import ChatCount from "@/components/community/chat-count";
+import ReplyCard from "@/components/community/reply-card";
 import ChatBar from "@/components/community/chat-bar";
 import Empty from "@/components/@shared/layout/empty";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 
-import { CATEGORY_LABELS } from "@/constants/community";
-import { SVG_PATHS } from "@/constants/assets-path";
-import { formatDate } from "@/utils/dateUtils";
-import {
-  getMockPostDetail,
-  getMockComments,
-  createMockComment,
-} from "@/services/mockApi";
 import {
   getCommunityType,
   setCommunityState,
 } from "@/utils/lastVisitedPathUtils";
-import type { CommunityPostData, CommentItem } from "@/types/communityDTO";
-import ReplyCard from "@/components/community/reply-card";
-import { useToggleLike } from "@/hooks/useCommunity";
-
-interface ExtendedPost extends CommunityPostData {
-  author: string;
-}
+import type { CommunityPostItem } from "@/types/communityDTO";
+import { useLikeStatus, useComments } from "@/hooks/useCommunity";
 
 export default function CommunityPost() {
   const { id } = useParams<{ id: string }>();
-  const [post, setPost] = useState<ExtendedPost | null>(null);
-  const [comments, setComments] = useState<Comment[]>([]);
+  const [post, setPost] = useState<CommunityPostItem | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [replyToUser, setReplyToUser] = useState<string | undefined>(undefined);
-  const [communityType, setCommunityTypeState] = useState<
-    "teacher" | "pre-teacher"
-  >(getCommunityType());
+  const [category, setCategory] = useState<"teacher" | "pre-teacher">(
+    getCommunityType()
+  );
+  const [isLiking, setIsLiking] = useState(false);
 
-  // 좋아요 토글
-  const { mutate: toggleLike, isPending: isLikeLoading } = useToggleLike();
+  const { data: postData, isLoading: postLoading } = useQuery({
+    queryKey: ["post", id],
+    queryFn: () => getCommunityPostDetail(Number(id)),
+    enabled: !!id,
+  });
+
+  const { data: likeStatus, refetch: refetchLikeStatus } = useLikeStatus(
+    Number(id)
+  );
+
+  const { data: commentsData } = useComments({
+    postId: Number(id),
+    page: 1,
+    size: 10,
+  });
+
+  const likeMutation = useMutation({
+    mutationFn: toggleLike,
+    onSuccess: () => {
+      refetchLikeStatus();
+      setIsLiking(false);
+    },
+    onError: (error) => {
+      console.error("좋아요 토글 실패:", error);
+      setIsLiking(false);
+    },
+  });
 
   // 데이터 로드
   useEffect(() => {
-    if (!id) return;
+    if (!id || !postData?.data) return;
 
     setIsLoading(true);
-    const postData = getMockPostDetail(id);
+    setPost(postData.data);
 
-    if (postData) {
-      setPost(postData as ExtendedPost);
+    if (postData.data.category) {
+      // TEACHER/PROSPECTIVE_TEACHER -> teacher/pre-teacher 변환
+      const postCategory =
+        postData.data.category === "TEACHER" ? "teacher" : "pre-teacher";
 
-      // GET: 댓글, 게시글 작성자
-      const { comments: commentsData } = getMockComments(id);
-      setComments(commentsData);
+      setCategory(postCategory);
 
-      if (postData.communityType) {
-        setCommunityTypeState(postData.communityType);
+      // 세션 스토리지에 게시글 정보 저장
+      const menuCategoryName = postData.data.categoryName || "top10";
 
-        // 세션 스토리지에 게시글 정보 저장
-        const category = postData.category || "top10";
-        const communityState = {
-          type: postData.communityType,
-          path: `/community?type=${postData.communityType}${category ? `&category=${category}` : ""}`,
-          category: category,
-        };
+      // 경로 설정
+      const path = `/community?type=${postCategory}${menuCategoryName ? `&category=${menuCategoryName}` : ""}`;
 
-        setCommunityState(communityState);
-      }
+      // 각 값을 개별적으로 저장 (새로운 API 사용)
+      setCommunityState({
+        path,
+        category: postCategory, // 소문자 "teacher" 또는 "pre-teacher"
+        communityCategoryName: menuCategoryName, // 실제 카테고리명 (free, top10 등)
+      });
     }
 
     setIsLoading(false);
-  }, [id]);
+  }, [id, postData]);
 
-  const handleCreateComment = (content: string) => {
-    if (!id || !post) return;
+  const handleLikeToggle = async () => {
+    if (isLiking) return;
 
-    const newComment = createMockComment(id, {
-      author: "현재 사용자", // 실제로는 로그인된 사용자 정보
-      content,
-      likeCount: 0,
-      useId: "current-user", // 실제로는 로그인된 사용자 ID
-    });
-
-    // 새 댓글 추가
-    setComments([...comments, newComment]);
-  };
-
-  const handleToggleLike = () => {
-    if (!id || isLikeLoading) return;
-
-    toggleLike(Number(id), {
-      onSuccess: (response) => {
-        if (post) {
-          setPost({
-            ...post,
-            likeCount: response.data.likeCount,
-          });
-        }
-      },
-    });
+    setIsLiking(true);
+    try {
+      await likeMutation.mutateAsync(Number(id));
+    } catch (error) {
+      console.error("좋아요 토글 실패:", error);
+      setIsLiking(false);
+    }
   };
 
   // TODO: 댓글 수정 기능 개발 예정
@@ -156,82 +152,27 @@ export default function CommunityPost() {
       mainClassName="flex flex-col gap-2 mb-24"
       hasBackButton={true}
     >
-      {isLoading ? (
+      {postLoading ? (
         <LoadingSpinner />
       ) : post ? (
         <>
-          <article className="px-5 pt-7 pb-4 bg-white flex flex-col gap-7">
-            <section className="flex flex-col gap-2.5">
-              <div className="flex gap-2 items-center">
-                <Badge>{CATEGORY_LABELS[post.category]}</Badge>
-              </div>
-              <div className="flex justify-between">
-                <div className="flex gap-2.5 items-center">
-                  <div className="relative w-7 h-7 bg-primary-normal03 rounded-full">
-                    <img
-                      src={SVG_PATHS.CHARACTER.user}
-                      alt="병아리 사용자 캐릭터"
-                      className="absolute w-2/3 h-3/5 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-                    />
-                  </div>
-                  <div>
-                    <span className="text-primary-dark02 font-semibold text-sm">
-                      {post.author}
-                    </span>
-                    <ul className="text-primary-normal03 text-xxs flex gap-1">
-                      <li>{formatDate(post.createdAt)}</li>
-                      <li>조회 {post.viewCount}</li>
-                    </ul>
-                  </div>
-                </div>
-                <img
-                  src={SVG_PATHS.KEBAB}
-                  alt="커뮤니티 게시글 옵션 메뉴"
-                  width="20"
-                  height="20"
-                  className="mb-auto"
-                />
-              </div>
-            </section>
-            <section className="text-primary-dark01 flex flex-col gap-4">
-              <div className="flex flex-col gap-2.5">
-                <h2 className="font-semibold">{post.title}</h2>
-                <p className="text-sm">{post.content}</p>
-              </div>
-              <AlertCard>
-                비속어 및 특정 인물에 대한 명예훼손으로 간주되는 내용이 포함될
-                경우 삭제될 수 있습니다.
-              </AlertCard>
-            </section>
-            <section className="flex justify-between">
-              <LikeToggle
-                size="xs"
-                count={post.likeCount}
-                className="w-1/3"
-                onClick={handleToggleLike}
-                disabled={isLikeLoading}
-              >
-                좋아요
-              </LikeToggle>
-              <ChatCount count={comments.length} className="w-1/3" />
-              <ShareButton size="xs" className="w-1/3" />
-            </section>
-          </article>
+          <Post
+            post={post}
+            likeStatus={likeStatus?.data}
+            commentsData={commentsData}
+            isLiking={isLiking}
+            handleLikeToggle={handleLikeToggle}
+          />
 
           {/* 댓글 섹션 */}
           <section className="flex flex-col bg-white">
-            {comments.length > 0 ? (
-              comments.map((comment) => (
+            {commentsData?.content.length ? (
+              commentsData.content.map((comment) => (
                 <ReplyCard
                   key={comment.id}
                   comment={comment}
-                  postAuthor={post.author}
-                  // TODO: 대댓글 기능 개발 예정
-                  // onReply={handleReply}
-                  // onEdit={handleEditComment}
-                  // onDelete={handleDeleteComment}
-                  // onCreateReply={handleCreateReply}
-                  // onCancelReply={handleCancelReply}
+                  postAuthor={post.userNickname}
+                  onReply={() => {}}
                 />
               ))
             ) : (
@@ -240,8 +181,7 @@ export default function CommunityPost() {
           </section>
 
           <ChatBar
-            onSubmit={handleCreateComment}
-            replyTo={replyToUser}
+            onSubmit={() => {}}
             onCancelReply={() => setReplyToUser(undefined)}
           />
         </>

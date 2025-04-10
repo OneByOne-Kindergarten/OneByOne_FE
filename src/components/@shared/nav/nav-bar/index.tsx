@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 interface Option {
   href: string;
   label: string;
+  iconPath?: string;
 }
 
 interface NavBarProps {
@@ -16,6 +17,7 @@ function Option({
   id,
   href,
   label,
+  iconPath,
   currentPath,
 }: Option & { id?: string; currentPath: string }) {
   const resolvedHref = id ? href.replace(":id", id) : href;
@@ -41,19 +43,25 @@ function Option({
 
   const isClientSide = typeof window !== "undefined";
 
+  const renderContent = () => (
+    <div className="flex items-center gap-2">
+      {iconPath && <img src={iconPath} alt={label} width="20" height="18" />}
+      <span className={isActive ? "font-bold" : ""}>{label}</span>
+    </div>
+  );
+
   if (isClientSide) {
     return (
       <Link
         to={resolvedHref}
         className={isActive ? activeStyle : inactiveStyle}
-        onClick={(e) => {
-          console.log("Navigating to:", resolvedHref);
-        }}
       >
         {isActive ? (
-          <span className="pb-1 border-b-2 border-primary">{label}</span>
+          <div className="pb-1 border-b-2 border-primary">
+            {renderContent()}
+          </div>
         ) : (
-          label
+          renderContent()
         )}
       </Link>
     );
@@ -62,9 +70,9 @@ function Option({
   return (
     <a href={resolvedHref} className={isActive ? activeStyle : inactiveStyle}>
       {isActive ? (
-        <span className="pb-1 border-b-2 border-primary">{label}</span>
+        <div className="pb-1 border-b-2 border-primary">{renderContent()}</div>
       ) : (
-        label
+        renderContent()
       )}
     </a>
   );
@@ -85,6 +93,7 @@ export default function NavBar({
           id={id}
           href={item.href}
           label={item.label}
+          iconPath={item.iconPath}
           currentPath={currentPath}
         />
       ))}

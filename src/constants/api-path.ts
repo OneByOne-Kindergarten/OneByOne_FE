@@ -2,14 +2,12 @@
 export const API_PATHS = {
   KINDERGARTEN: {
     BASE: "/kindergarten",
-    SEARCH: "/kindergarten/search",
     DETAIL: (id: number) => `/kindergarten/${id}`,
     NEARBY: "/kindergarten/nearby",
   },
   COMMUNITY: {
     BASE: "/community",
     POST: {
-      BASE: "/community",
       DETAIL: (id: number) => `/community/${id}`,
       LIKE: (id: number) => `/community/${id}/like`,
       TOP: "/community/top",
