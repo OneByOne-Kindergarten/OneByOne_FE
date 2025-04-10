@@ -41,21 +41,19 @@ export default function Bookmarks() {
       ) : (
         <ul className="flex flex-col gap-2 my-3 ">
           {favorites.map((favorite) => (
-            <div
+            <li
               key={favorite.id}
-              onClick={() =>
-                handleKindergartenClick(favorite.kindergartenId.toString())
-              }
+              onClick={() => handleKindergartenClick(favorite.id.toString())}
               className="cursor-pointer"
             >
               <SchoolCard
-                id={favorite.kindergartenId.toString()}
-                schoolName={favorite.kindergartenName}
-                location={favorite.kindergartenAddress}
-                category=""
+                id={favorite.id.toString()}
+                schoolName={favorite.name}
+                location={favorite.address}
+                establishment={favorite.establishment}
                 score={0}
               />
-            </div>
+            </li>
           ))}
         </ul>
       )}

@@ -8,16 +8,16 @@ interface SchoolCardProps {
   schoolName?: string;
   location?: string;
   score?: number;
-  category?: string;
-  id?: string;
+  establishment?: string;
+  id: string;
 }
 
 export default function SchoolCard({
   schoolName = "기관 이름",
   location = "위치",
   score = 0,
-  category = "설립 유형",
-  id = "1",
+  establishment = "설립 유형",
+  id,
 }: SchoolCardProps) {
   return (
     <div className="px-5 py-4 bg-white">
@@ -26,7 +26,7 @@ export default function SchoolCard({
         className="flex w-full justify-between items-center"
       >
         <div className="flex flex-col gap-2.5">
-          <Badge variant="tertiary">{category}</Badge>
+          <Badge variant="tertiary">{establishment}</Badge>
           <div className="gap-1">
             <p className="text-base font-bold ">{schoolName}</p>
             <div className="flex gap-1.5 ">
