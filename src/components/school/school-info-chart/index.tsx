@@ -2,8 +2,6 @@ import { SVG_PATHS } from "@/constants/assets-path";
 import CircleGraph from "@/components/school/circle-graph";
 import SchoolInfoItem from "@/components/school/school-info-item";
 
-// 항목 별 색상 코드
-const fixedColorClasses = ["bg-star", "bg-green", "bg-tertiary3"];
 const fixedColors = ["#FFD700", "#4CAF50", "#6CA6ED"];
 
 interface StatItemProps {
@@ -53,7 +51,10 @@ export default function SchoolInfoChart({
   // 그래프 데이터
   const graphStats = stats.map((stat, index) => ({
     ...stat,
-    percent: parseFloat(stat.percent.replace("%", "")),
+    percent:
+      typeof stat.percent === "number"
+        ? stat.percent
+        : parseFloat(stat.percent.replace("%", "")) || 0,
     color: fixedColors[index % fixedColors.length],
   }));
 

@@ -64,7 +64,24 @@ export default function SchoolDetail() {
     const totalCount = data.totalClassCount;
 
     const stats = SCHOOL_STATS_AGES.map((age) => {
-      const count = data[`age${age}Count` as keyof Kindergarten] as number;
+      const count = data[`classCount${age}` as keyof Kindergarten] as number;
+      return {
+        age,
+        count,
+        percent:
+          totalCount > 0 ? `${Math.round((count / totalCount) * 100)}%` : "0%",
+        color: SCHOOL_STATS_COLORS[`AGE_${age}` as StatsType],
+      };
+    });
+
+    return stats;
+  };
+
+  const calculateStudentStats = (data: Kindergarten) => {
+    const totalCount = data.totalPupilCount;
+
+    const stats = SCHOOL_STATS_AGES.map((age) => {
+      const count = data[`pupilCount${age}` as keyof Kindergarten] as number;
       return {
         age,
         count,
@@ -96,6 +113,7 @@ export default function SchoolDetail() {
     }
 
     const classStats = calculateStats(kindergarten);
+    const studentStats = calculateStudentStats(kindergarten);
 
     return (
       <>
@@ -175,6 +193,13 @@ export default function SchoolDetail() {
                 totalCount={kindergarten.totalClassCount}
                 unit="class"
                 stats={classStats}
+              />
+
+              <SchoolInfoChart
+                title="원생"
+                totalCount={kindergarten.totalPupilCount}
+                unit="student"
+                stats={studentStats}
               />
 
               {kindergarten.homepage && (

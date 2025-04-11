@@ -2,7 +2,7 @@ interface CircleGraphProps {
   stats: Array<{
     age: number;
     count: number;
-    percent: number;
+    percent: number | string;
     color: string;
   }>;
   size?: number;
@@ -18,26 +18,48 @@ export default function CircleGraph({ stats, size = 100 }: CircleGraphProps) {
   const innerRadius = radius - strokeWidth / 1.3; // 내부 원 반지름
   let startAngle = -90; // 시작 각도 (12시 방향, -90도)
 
-  // 모든 퍼센트의 합이 100이 되도록 보정
-  const totalPercent = stats.reduce((sum, stat) => sum + stat.percent, 0);
+  // percent를 숫자로 변환
+  const parsePercent = (percent: number | string): number => {
+    if (typeof percent === "number") return percent;
+    return parseFloat(percent.replace("%", "")) || 0;
+  };
+
+  const normalizedStats = stats.map((stat) => ({
+    ...stat,
+    percent: parsePercent(stat.percent),
+  }));
+
+  // NaN이나 숫자가 아닌 값 검사
+  const validStats = normalizedStats.filter(
+    (stat) =>
+      !isNaN(stat.percent) &&
+      typeof stat.percent === "number" &&
+      !isNaN(stat.count) &&
+      typeof stat.count === "number"
+  );
+
+  // 모든 퍼센트의 합 보정
+  const totalPercent = validStats.reduce((sum, stat) => sum + stat.percent, 0);
   const scaleFactor = totalPercent > 0 ? 100 / totalPercent : 1;
 
   // 통계 항목 최대 3개까지 표시
   const displayStats =
-    stats.length > 3
+    validStats.length > 3
       ? [
-          ...stats.slice(0, 2),
+          ...validStats.slice(0, 2),
           // 나머지 항목들 "기타"로 표시
           {
             age: 0,
-            count: stats.slice(2).reduce((sum, stat) => sum + stat.count, 0),
-            percent: stats
+            count: validStats
+              .slice(2)
+              .reduce((sum, stat) => sum + stat.count, 0),
+            percent: validStats
               .slice(2)
               .reduce((sum, stat) => sum + stat.percent, 0),
             color: fixedColors[2],
           },
         ]
-      : stats.map((stat, index) => ({
+      : validStats.map((stat, index) => ({
           ...stat,
           color:
             index < fixedColors.length ? fixedColors[index] : fixedColors[0], // 고정된 색상 사용
@@ -58,7 +80,7 @@ export default function CircleGraph({ stats, size = 100 }: CircleGraphProps) {
 
         {/* 그래프 조각 */}
         {displayStats.map((stat, index) => {
-          // 현재 통계의 각도 계산 (퍼센트를 각도로 변환, 보정된 값 사용)
+          // 현재 통계의 각도 계산
           const adjustedPercent = stat.percent * scaleFactor;
           const angle = (adjustedPercent / 100) * 360;
 
@@ -75,7 +97,7 @@ export default function CircleGraph({ stats, size = 100 }: CircleGraphProps) {
           const endY =
             radius + innerRadius * Math.sin((endAngle * Math.PI) / 180);
 
-          // 각도가 180도를 넘는지 확인 (큰 원호인지 작은 원호인지)
+          // 각도가 180도를 넘는지 확인
           const largeArcFlag = angle > 180 ? 1 : 0;
 
           // SVG 패스 생성
