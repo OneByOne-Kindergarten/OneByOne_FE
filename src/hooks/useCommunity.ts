@@ -1,5 +1,9 @@
-import { useMutation, useQuery, useInfiniteQuery } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import {
+  useMutation,
+  useQuery,
+  useInfiniteQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { toast } from "@/hooks/useToast";
 
 import {
@@ -10,6 +14,7 @@ import {
   toggleLike,
   getLikeStatus,
   getComments,
+  createComment,
 } from "@/services/communityService";
 import {
   CommunityPostDetailResponse,
@@ -19,14 +24,16 @@ import {
   LikeStatusResponse,
   CommentListResponse,
   CommentListParams,
+  CreateCommentRequest,
+  CreateCommentResponse,
 } from "@/types/communityDTO";
-import { URL_PATHS } from "@/constants/url-path";
-import React from "react";
 
 export const usePopularPosts = () => {
   return useQuery<PopularPostsResponse>({
     queryKey: ["popularPosts"],
     queryFn: getPopularPosts,
+    staleTime: 1000 * 60 * 15, // 15분
+    gcTime: 1000 * 60 * 30, // 30분
   });
 };
 
@@ -49,6 +56,11 @@ export const useCommunityPosts = (
     userName: options?.userName,
   };
 
+  // 'all' 카테고리는 더 짧은 staleTime 적용
+  const isAllCategory =
+    options?.categoryName === undefined || options?.categoryName === "all";
+  const staleTimeValue = isAllCategory ? 1000 * 10 : 1000 * 30; // 'all' 카테고리는 10초, 나머지는 30초
+
   return useInfiniteQuery({
     queryKey: ["communityPosts", queryParams],
     queryFn: ({ pageParam = 0 }) =>
@@ -66,6 +78,9 @@ export const useCommunityPosts = (
       return lastPage.pageNumber + 1;
     },
     initialPageParam: 0,
+    staleTime: staleTimeValue,
+    refetchOnMount: true, // 컴포넌트 마운트 시 항상 refetch
+    gcTime: 1000 * 60 * 5, // 5분
   });
 };
 
@@ -82,39 +97,24 @@ export const useCommunityPostDetail = (id: number) => {
  * - 토스트 메세지 관리
  */
 export const useCreatePost = () => {
+  const queryClient = useQueryClient();
+
   return useMutation<
     CreateCommunityPostResponse,
     Error,
     CreateCommunityPostRequest
   >({
     mutationFn: createCommunityPost,
-    onSuccess: () => {
+    onSuccess: (data, variables) => {
+      queryClient.refetchQueries({
+        queryKey: ["communityPosts"],
+        type: "active",
+      });
+
       toast({
         title: "게시글 등록 완료",
         variant: "default",
       });
-    },
-    onError: (error) => {
-      toast({
-        title: "게시글 등록 실패",
-        variant: "destructive",
-      });
-      console.error("게시글 생성 에러:", error);
-    },
-  });
-};
-
-export const useCreateCommunityPost = () => {
-  const navigate = useNavigate();
-
-  return useMutation({
-    mutationFn: (data: CreateCommunityPostRequest) => createCommunityPost(data),
-    onSuccess: () => {
-      toast({
-        title: "게시글 등록 완료",
-        variant: "default",
-      });
-      navigate(URL_PATHS.COMMUNITY);
     },
     onError: (error) => {
       toast({
@@ -133,6 +133,14 @@ export const useCreateCommunityPost = () => {
 export const useToggleLike = () => {
   return useMutation<LikeStatusResponse, Error, number>({
     mutationFn: (postId) => toggleLike(postId),
+    onError: (error) => {
+      toast({
+        title: "좋아요 토글에 실패했습니다.",
+        description: error.message,
+        variant: "destructive",
+      });
+      console.error("좋아요 토글 에러:", error);
+    },
   });
 };
 
@@ -144,10 +152,88 @@ export const useLikeStatus = (postId: number) => {
   });
 };
 
+/**
+ * 댓글 목록 조회
+ * @param params 댓글 목록 조회 파라미터
+ */
 export const useComments = (params: CommentListParams) => {
-  return useQuery<CommentListResponse>({
-    queryKey: ["comments", params],
-    queryFn: () => getComments(params),
+  const queryClient = useQueryClient();
+
+  const startPage = 0;
+
+  const result = useInfiniteQuery<CommentListResponse>({
+    queryKey: ["comments", params.postId],
+    queryFn: ({ pageParam = startPage }) =>
+      getComments({
+        ...params,
+        page: pageParam as number,
+      }),
+    getNextPageParam: (lastPage): number | undefined =>
+      lastPage.last ? undefined : lastPage.pageNumber + 1,
+    initialPageParam: startPage,
     enabled: !!params.postId,
+    staleTime: 1000 * 60, // 1분
+    gcTime: 1000 * 60 * 5, // 5분
+  });
+
+  // 댓글 작성 후 댓글을 다시 불러오기 위한 함수
+  const refetchComments = () => {
+    return queryClient.invalidateQueries({
+      queryKey: ["comments", params.postId],
+    });
+  };
+
+  return {
+    ...result,
+    refetchComments,
+  };
+};
+
+/**
+ * 댓글 작성
+ */
+export const useCreateComment = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<CreateCommentResponse, Error, CreateCommentRequest>({
+    mutationFn: createComment,
+    onSuccess: (data, variables) => {
+      // 게시글 및 댓글 관련 모든 쿼리를 한 번에 무효화
+      queryClient.invalidateQueries({
+        predicate: (query) => {
+          const queryKey = query.queryKey;
+          if (!Array.isArray(queryKey)) return false;
+
+          // 첫 번째 키가 post, comments, likeStatus인 모든 쿼리 무효화
+          const primaryKey = queryKey[0];
+          if (
+            primaryKey === "post" ||
+            primaryKey === "comments" ||
+            primaryKey === "likeStatus"
+          ) {
+            // 두 번째 키가 현재 postId인 경우에만 무효화
+            const secondaryKey = queryKey[1];
+            const postId = variables.postId;
+            return (
+              secondaryKey === postId || secondaryKey === postId.toString()
+            );
+          }
+          return false;
+        },
+      });
+
+      toast({
+        title: "댓글이 등록되었습니다.",
+        variant: "default",
+      });
+    },
+    onError: (error) => {
+      console.error("댓글 작성 에러:", error);
+
+      toast({
+        title: "댓글 등록에 실패했습니다.",
+        variant: "destructive",
+      });
+    },
   });
 };
