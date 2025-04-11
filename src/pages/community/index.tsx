@@ -1,18 +1,43 @@
 import { useEffect, useRef } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
-import {
-  PROSPECTIVE_TEACHER_CATEGORIES,
-  TEACHER_CATEGORIES,
-} from "@/constants/community";
 import NavBar from "@/components/@shared/nav/nav-bar";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import CategorySelector from "@/components/community/category-selector";
 import PopularPostsList from "@/components/community/popular-posts-list";
 import CommunityPostsList from "@/components/community/post-list";
 import PostButton from "@/components/@shared/buttons/post-button";
+
+import {
+  PROSPECTIVE_TEACHER_CATEGORIES,
+  TEACHER_CATEGORIES,
+} from "@/constants/community";
 import { setCommunityState } from "@/utils/lastVisitedPathUtils";
+import { SVG_PATHS } from "@/constants/assets-path";
+
+const communityTypeOptions = [
+  {
+    href: "/community?type=teacher",
+    label: "교사",
+    icon: {
+      path: SVG_PATHS.CHARACTER.chicken,
+      alt: "교사 아이콘",
+      width: 32,
+      height: 32,
+    },
+  },
+  {
+    href: "/community?type=pre-teacher",
+    label: "예비교사",
+    icon: {
+      path: SVG_PATHS.CHARACTER.chick,
+      alt: "예비교사 아이콘",
+      width: 32,
+      height: 32,
+    },
+  },
+];
 
 export default function Community() {
   const [searchParams] = useSearchParams();
@@ -22,11 +47,6 @@ export default function Community() {
   // 카테고리 변경 추적을 위한 ref
   const prevCategoryRef = useRef<string | null>(null);
   const prevTypeRef = useRef<string | null>(null);
-
-  const communityTypeOptions = [
-    { href: "/community?type=teacher", label: "교사" },
-    { href: "/community?type=pre-teacher", label: "예비교사" },
-  ];
 
   const communityType =
     searchParams.get("type") === "pre-teacher" ? "pre-teacher" : "teacher";
@@ -71,10 +91,6 @@ export default function Community() {
     }
   }, [communityType, categoryName, queryClient]);
 
-  const handleWritePost = () => {
-    navigate("/community/new");
-  };
-
   return (
     <PageLayout
       title={`원바원 | ${
@@ -108,7 +124,7 @@ export default function Community() {
         )}
       </div>
 
-      <PostButton onClick={handleWritePost} label="글쓰기" />
+      <PostButton onClick={() => navigate("/community/new")} label="글쓰기" />
     </PageLayout>
   );
 }

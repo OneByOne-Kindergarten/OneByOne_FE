@@ -51,7 +51,7 @@ export default function CommunityHeader({
   if (isSearching) {
     return (
       <Header hasBackButton={hasBackButton} hasBorder={hasBorder}>
-        <div className="relative w-full">
+        <div className="relative w-full mr-5">
           <Form {...form}>
             <FormField
               control={form.control}
@@ -61,8 +61,7 @@ export default function CommunityHeader({
                   <FormControl>
                     <Input
                       placeholder="검색어를 입력해주세요"
-                      variant="outline"
-                      className="py-2 px-3 text-sm w-full"
+                      className="py-1.5 pr-9 text-sm font-normal text-primary-dark01 w-full pl-9"
                       {...field}
                     />
                   </FormControl>
@@ -70,16 +69,36 @@ export default function CommunityHeader({
                 </FormItem>
               )}
             />
+            <img
+              src={SVG_PATHS.SEARCH}
+              alt="돋보기"
+              width={17}
+              height={17}
+              className="absolute top-2 left-3 opacity-30 z-10"
+            />
             <button
               type="button"
-              onClick={handleCancelSearch}
-              className="absolute top-2 right-2 z-10"
-              aria-label="취소"
+              className="flex items-center justify-center w-4 h-4 bg-primary-normal01 rounded-full absolute top-2 right-3 z-10"
+              aria-label="검색어 초기화"
             >
-              <img src={SVG_PATHS.CANCEL} alt="취소" className="w-6 h-6" />
+              <img
+                src={SVG_PATHS.CANCEL}
+                alt="X 아이콘"
+                width={12}
+                height={12}
+                className="opacity-30"
+              />
             </button>
           </Form>
         </div>
+        <button
+          type="button"
+          onClick={handleCancelSearch}
+          className="z-10"
+          aria-label="검색 취소"
+        >
+          <img src={SVG_PATHS.CANCEL} alt="취소" className="w-6 h-6" />
+        </button>
       </Header>
     );
   }

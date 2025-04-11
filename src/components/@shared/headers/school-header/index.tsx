@@ -152,7 +152,6 @@ export default function SchoolHeader({
                       <FormControl>
                         <Input
                           placeholder="유치원 이름을 검색해보세요"
-                          variant="default"
                           className="py-1.5 pr-9 text-sm font-normal text-primary-dark01 w-full pl-9"
                           {...field}
                           ref={(e) => {
