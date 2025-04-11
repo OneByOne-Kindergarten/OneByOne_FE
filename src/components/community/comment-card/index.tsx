@@ -6,7 +6,7 @@ import Badge from "@/components/@shared/badge";
 import type { CommentItem } from "@/types/communityDTO";
 
 /**
- * ReplyCard Details
+ * CommentCard Details
  *
  * @param comment - 댓글 데이터
  * @param postAuthor - 게시글 작성자
@@ -14,19 +14,19 @@ import type { CommentItem } from "@/types/communityDTO";
  * @param onReply - 답글 작성 함수
  */
 
-interface ReplyCardProps {
+interface CommentCardProps {
   comment: CommentItem;
   postAuthor: string;
   isReply?: boolean;
   onReply: (author: string) => void;
 }
 
-export default function ReplyCard({
+export default function CommentCard({
   comment,
   postAuthor,
   isReply = false,
   onReply,
-}: ReplyCardProps) {
+}: CommentCardProps) {
   const { nickName, career, userRole, createdAt, content } = comment;
   const isAuthor = nickName === postAuthor;
 

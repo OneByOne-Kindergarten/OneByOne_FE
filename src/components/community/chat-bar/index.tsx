@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import clsx from "clsx";
 import {
@@ -15,19 +15,27 @@ interface ChatBarProps {
   replyUserName?: string;
   onCancelReply?: () => void;
   onSubmit?: (content: string) => void;
+  value?: string;
+  onChange?: (value: string) => void;
 }
 
 export default function ChatBar({
   replyUserName,
   onCancelReply,
   onSubmit,
+  value,
+  onChange,
 }: ChatBarProps) {
   const [isFocused, setIsFocused] = useState(false);
   const form = useForm({
     defaultValues: {
-      content: "",
+      content: value || "",
     },
   });
+
+  useEffect(() => {
+    form.setValue("content", value || "");
+  }, [value, form]);
 
   const handleCancelReply = () => {
     if (onCancelReply) {
@@ -39,8 +47,18 @@ export default function ChatBar({
     if (onSubmit && data.content.trim()) {
       onSubmit(data.content);
       form.reset();
+      if (onChange) {
+        onChange("");
+      }
     }
   });
+
+  const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (onChange) {
+      onChange(e.target.value);
+    }
+    form.setValue("content", e.target.value);
+  };
 
   return (
     <div className="fixed bottom-0 items-center w-full text-xs min-w-80 max-w-3xl bg-white flex pt-2 pb-3 px-5 mx-auto justify-between border-t border-opacity-5 transition-all duration-200">
@@ -49,7 +67,9 @@ export default function ChatBar({
           <FormField
             control={form.control}
             name="content"
-            render={({ field: { ref, ...fieldProps } }) => (
+            render={({
+              field: { ref, onChange: fieldOnChange, ...fieldProps },
+            }) => (
               <FormItem className="w-full">
                 {replyUserName && (
                   <div className="flex justify-between items-center mb-2">
@@ -76,6 +96,8 @@ export default function ChatBar({
                     <textarea
                       {...fieldProps}
                       ref={ref}
+                      value={value || fieldProps.value}
+                      onChange={handleTextareaChange}
                       placeholder="댓글을 입력해주세요."
                       className={clsx(
                         "flex flex-1 py-2.5 px-4 text-sm w-full bg-primary-foreground rounded-lg transition-all duration-200 resize-none outline-none",

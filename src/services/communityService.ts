@@ -11,6 +11,8 @@ import {
   CommentListResponse,
   CommentListParams,
   CommunityPostParams,
+  CreateCommentRequest,
+  CreateCommentResponse,
 } from "@/types/communityDTO";
 
 /**
@@ -157,4 +159,23 @@ export const getComments = async (
     method: "GET",
     path: `${API_PATHS.COMMUNITY.COMMENT.BASE(params.postId)}?${queryParams}`,
   });
+};
+
+/**
+ * 댓글 작성
+ * @param data
+ * @param data.postId
+ * @param data.content
+ */
+export const createComment = async (
+  data: CreateCommentRequest
+): Promise<CreateCommentResponse> => {
+  const response = await apiCall<CreateCommentRequest, CreateCommentResponse>({
+    method: "POST",
+    path: API_PATHS.COMMUNITY.COMMENT.BASE(data.postId),
+    data,
+    withAuth: true,
+  });
+
+  return response;
 };

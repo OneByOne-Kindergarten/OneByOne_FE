@@ -131,19 +131,19 @@ export function useUrlNavigation(
           return;
         }
       }
-      if (
-        currentUrlKey === "COMMUNITY_POST_EDITOR" ||
-        currentUrlKey === "COMMUNITY_POST"
-      ) {
+      if (currentUrlKey === "COMMUNITY_POST_EDITOR") {
         const communityState = getCommunityState();
         if (communityState?.path) {
           navigate(communityState.path);
           return;
         }
       }
-      // 세션 스토리지에 경로가 없는 경우 기본 뒤로가기
-      navigate(-1);
-      return;
+
+      // 직전으로 이동하는 페이지
+      if (currentUrlKey === "COMMUNITY_POST") {
+        navigate(-1);
+        return;
+      }
     }
 
     if (currentUrlKey && ROOT_URL_KEYS.includes(currentUrlKey)) {

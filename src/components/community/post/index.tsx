@@ -6,24 +6,20 @@ import ShareButton from "@/components/@shared/buttons/share-button";
 
 import { SVG_PATHS } from "@/constants/assets-path";
 import { CATEGORY_LABELS } from "@/constants/community";
-import {
-  CommentListResponse,
-  CommunityPostItem,
-  LikeStatusData,
-} from "@/types/communityDTO";
+import { CommunityPostItem, LikeStatusData } from "@/types/communityDTO";
 import { getCategoryLabel } from "@/utils/categoryUtils";
 import { formatDate } from "@/utils/dateUtils";
 
 export default function Post({
   post,
   likeStatus,
-  commentsData,
+  commentsCount,
   isLiking,
   handleLikeToggle,
 }: {
   post: CommunityPostItem;
   likeStatus?: LikeStatusData;
-  commentsData?: CommentListResponse;
+  commentsCount?: number;
   isLiking: boolean;
   handleLikeToggle: () => void;
 }) {
@@ -104,7 +100,9 @@ export default function Post({
           좋아요
         </LikeToggle>
         <ChatCount
-          count={commentsData?.content.length || 0}
+          count={
+            commentsCount !== undefined ? commentsCount : post.commentCount
+          }
           className="w-1/3"
         />
         <ShareButton size="xs" className="w-1/3" />

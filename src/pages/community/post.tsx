@@ -1,145 +1,73 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useQuery, useMutation } from "@tanstack/react-query";
-import {
-  getCommunityPostDetail,
-  toggleLike,
-} from "@/services/communityService";
 
-import Post from "@/components/community/post";
 import PageLayout from "@/components/@shared/layout/page-layout";
-import ReplyCard from "@/components/community/reply-card";
+import Post from "@/components/community/post";
+import CommentList from "@/components/community/comment-list";
 import ChatBar from "@/components/community/chat-bar";
-import Empty from "@/components/@shared/layout/empty";
+import Error from "@/components/@shared/layout/error";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 
 import {
-  getCommunityType,
-  setCommunityState,
-} from "@/utils/lastVisitedPathUtils";
-import type { CommunityPostItem } from "@/types/communityDTO";
-import { useLikeStatus, useComments } from "@/hooks/useCommunity";
+  useLikeStatus,
+  useCreateComment,
+  useCommunityPostDetail,
+  useToggleLike,
+} from "@/hooks/useCommunity";
 
 export default function CommunityPost() {
   const { id } = useParams<{ id: string }>();
-  const [post, setPost] = useState<CommunityPostItem | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const postId = id ? Number(id) : 0;
+
   const [replyToUser, setReplyToUser] = useState<string | undefined>(undefined);
-  const [category, setCategory] = useState<"teacher" | "pre-teacher">(
-    getCommunityType()
-  );
   const [isLiking, setIsLiking] = useState(false);
+  const [commentInput, setCommentInput] = useState("");
 
-  const { data: postData, isLoading: postLoading } = useQuery({
-    queryKey: ["post", id],
-    queryFn: () => getCommunityPostDetail(Number(id)),
-    enabled: !!id,
-  });
+  const { data: postData, isLoading: postLoading } =
+    useCommunityPostDetail(postId);
 
-  const { data: likeStatus, refetch: refetchLikeStatus } = useLikeStatus(
-    Number(id)
-  );
+  const { data: likeStatus, refetch: refetchLikeStatus } =
+    useLikeStatus(postId);
 
-  const { data: commentsData } = useComments({
-    postId: Number(id),
-    page: 1,
-    size: 10,
-  });
+  const createCommentMutation = useCreateComment();
 
-  const likeMutation = useMutation({
-    mutationFn: toggleLike,
-    onSuccess: () => {
-      refetchLikeStatus();
-      setIsLiking(false);
-    },
-    onError: (error) => {
-      console.error("좋아요 토글 실패:", error);
-      setIsLiking(false);
-    },
-  });
+  const toggleLikeMutation = useToggleLike();
 
-  // 데이터 로드
-  useEffect(() => {
-    if (!id || !postData?.data) return;
-
-    setIsLoading(true);
-    setPost(postData.data);
-
-    if (postData.data.category) {
-      // TEACHER/PROSPECTIVE_TEACHER -> teacher/pre-teacher 변환
-      const postCategory =
-        postData.data.category === "TEACHER" ? "teacher" : "pre-teacher";
-
-      setCategory(postCategory);
-
-      // 세션 스토리지에 게시글 정보 저장
-      const menuCategoryName = postData.data.categoryName || "top10";
-
-      // 경로 설정
-      const path = `/community?type=${postCategory}${menuCategoryName ? `&category=${menuCategoryName}` : ""}`;
-
-      // 각 값을 개별적으로 저장 (새로운 API 사용)
-      setCommunityState({
-        path,
-        category: postCategory, // 소문자 "teacher" 또는 "pre-teacher"
-        communityCategoryName: menuCategoryName, // 실제 카테고리명 (free, top10 등)
-      });
-    }
-
-    setIsLoading(false);
-  }, [id, postData]);
+  const post = postData?.data;
 
   const handleLikeToggle = async () => {
-    if (isLiking) return;
+    if (isLiking || !id) return;
 
     setIsLiking(true);
-    try {
-      await likeMutation.mutateAsync(Number(id));
-    } catch (error) {
-      console.error("좋아요 토글 실패:", error);
-      setIsLiking(false);
-    }
+
+    await toggleLikeMutation.mutateAsync(postId);
+
+    refetchLikeStatus();
+    setIsLiking(false);
   };
 
-  // TODO: 댓글 수정 기능 개발 예정
-  // const handleEditComment = (commentId: string, content: string) => {
-  //   if (!id || !post) return;
-  //   // API 호출 및 상태 업데이트
-  // };
+  const handleSubmitComment = async (content: string) => {
+    if (!id || !content.trim()) return;
 
-  // TODO: 댓글 삭제 기능 개발 예정
-  // const handleDeleteComment = (commentId: string) => {
-  //   if (!id || !post) return;
-  //   // API 호출 및 상태 업데이트
-  // };
+    await createCommentMutation.mutateAsync({
+      postId,
+      content,
+    });
 
-  // TODO: 게시글 수정 기능 개발 예정
-  // const handleEditPost = () => {
-  //   if (!id) return;
-  //   // 수정 페이지로 이동
-  // };
+    setCommentInput("");
+    setReplyToUser(undefined);
+  };
 
-  // TODO: 게시글 삭제 기능 개발 예정
-  // const handleDeletePost = () => {
-  //   if (!id) return;
-  //   // API 호출 및 목록 페이지로 이동
-  // };
+  // 대댓글
+  const handleReply = (author: string) => {
+    setReplyToUser(author);
+    setCommentInput("");
+  };
 
-  // TODO: 대댓글 기능 개발 예정
-  // const handleReply = (author: string) => {
-  //   setReplyToUser(author);
-  // };
-
-  // TODO: 대댓글 기능 개발 예정
-  // const handleCreateReply = (commentId: string, content: string) => {
-  //   if (!id || !post) return;
-  //   // API 호출 및 상태 업데이트
-  // };
-
-  // TODO: 대댓글 기능 개발 예정
-  // const handleCancelReply = () => {
-  //   setReplyToUser(undefined);
-  // };
+  const handleCancelReply = () => {
+    setReplyToUser(undefined);
+    setCommentInput("");
+  };
 
   return (
     <PageLayout
@@ -153,40 +81,29 @@ export default function CommunityPost() {
       hasBackButton={true}
     >
       {postLoading ? (
-        <LoadingSpinner />
+        <LoadingSpinner type="page" />
       ) : post ? (
         <>
           <Post
             post={post}
             likeStatus={likeStatus?.data}
-            commentsData={commentsData}
+            commentsCount={post.commentCount}
             isLiking={isLiking}
             handleLikeToggle={handleLikeToggle}
           />
 
-          {/* 댓글 섹션 */}
-          <section className="flex flex-col bg-white">
-            {commentsData?.content.length ? (
-              commentsData.content.map((comment) => (
-                <ReplyCard
-                  key={comment.id}
-                  comment={comment}
-                  postAuthor={post.userNickname}
-                  onReply={() => {}}
-                />
-              ))
-            ) : (
-              <Empty>아직 댓글이 없습니다.</Empty>
-            )}
-          </section>
+          <CommentList postId={postId} post={post} handleReply={handleReply} />
 
           <ChatBar
-            onSubmit={() => {}}
-            onCancelReply={() => setReplyToUser(undefined)}
+            replyUserName={replyToUser}
+            onCancelReply={handleCancelReply}
+            onSubmit={handleSubmitComment}
+            value={commentInput}
+            onChange={(value) => setCommentInput(value)}
           />
         </>
       ) : (
-        <Empty>게시글을 찾을 수 없습니다.</Empty>
+        <Error type="page">게시글을 찾을 수 없습니다.</Error>
       )}
     </PageLayout>
   );
