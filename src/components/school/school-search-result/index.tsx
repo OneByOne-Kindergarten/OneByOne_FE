@@ -2,7 +2,7 @@ import { useEffect, useCallback, useState } from "react";
 import { FixedSizeList as List } from "react-window";
 
 import SchoolCard from "@/components/school/school-card";
-import { Kindergarten } from "@/types/kindergarten";
+import { Kindergarten } from "@/types/kindergartenDTO";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import ErrorMessage from "@/components/@shared/form/error-message";
 import { useInView } from "react-intersection-observer";
@@ -30,7 +30,7 @@ const KindergartenItem = ({ index, style, data }: KindergartenItemProps) => {
           id={kindergarten.id.toString()}
           schoolName={kindergarten.name}
           location={kindergarten.address}
-          category={kindergarten.establishment}
+          establishment={kindergarten.establishment}
           score={0}
         />
       </div>
@@ -82,7 +82,7 @@ export default function SchoolSearchResult({
 
   const { ref, inView } = useInView({
     threshold: 0.1,
-    rootMargin: "0px 0px 200px 0px", // 하단에서 200px 전에 로드 시작
+    rootMargin: "0px 0px 200px 0px",
   });
 
   // 다음 페이지 로드

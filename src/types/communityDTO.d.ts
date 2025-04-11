@@ -99,7 +99,7 @@ export interface PopularPostsResponse {
 
 // 댓글
 export type UserRole = "TEACHER" | "PROSPECTIVE_TEACHER" | "ADMIN";
-export type CommentStatus = "PENDING" | "APPROVED" | "REJECTED";
+export type CommentStatus = "PENDING" | "PROCESSED" | "REJECTED" | "YET";
 
 // 댓글 목록
 export interface CommentListParams {

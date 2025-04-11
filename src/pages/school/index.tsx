@@ -106,7 +106,7 @@ export default function School() {
                     id={kindergarten.id.toString()}
                     schoolName={kindergarten.name}
                     location={kindergarten.address}
-                    category={kindergarten.establishment}
+                    establishment={kindergarten.establishment}
                     score={0}
                   />
                 ))}

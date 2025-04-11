@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { KindergartenSearchParams } from "@/types/kindergarten";
+import { KindergartenSearchParams } from "@/types/kindergartenDTO";
 import RecentSearches, {
   addToRecentSearches,
 } from "@/components/school/recent-searches";
