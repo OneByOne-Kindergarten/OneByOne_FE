@@ -15,16 +15,23 @@ type KindergartenItemProps = {
   data: {
     items: Kindergarten[];
     onItemClick: (id: string) => void;
+    lastItemRef:
+      | React.RefObject<HTMLDivElement>
+      | ((node?: Element | null) => void);
   };
 };
 
 const KindergartenItem = ({ index, style, data }: KindergartenItemProps) => {
   const kindergarten = data.items[index];
+
+  const isLastItem = index === data.items.length - 1;
+
   return (
     <div style={style}>
       <div
         onClick={() => data.onItemClick(kindergarten.id.toString())}
         className="cursor-pointer py-1"
+        ref={isLastItem ? data.lastItemRef : null}
       >
         <SchoolCard
           id={kindergarten.id.toString()}
@@ -129,15 +136,12 @@ export default function SchoolSearchResult({
             itemData={{
               items: results,
               onItemClick: handleItemClick,
+              lastItemRef: ref,
             }}
             className={styles["scrollbar-hide"]}
           >
             {KindergartenItem}
           </List>
-
-          <div ref={ref} className="w-full h-10">
-            {isFetchingNextPage && null}
-          </div>
         </>
       )}
     </div>
