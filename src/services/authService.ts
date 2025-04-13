@@ -8,10 +8,12 @@ import {
 } from "@/types/authDTO";
 import { apiCall } from "@/utils/apiUtils";
 import { accessTokenAtom } from "@/stores/authStore";
+import { getUserInfo, clearUserInfo } from "@/services/userService";
 import { API_PATHS } from "@/constants/api-path";
 
 const jotaiStore = getDefaultStore();
 
+// 토큰 관련 함수
 export const getAccessToken = (): string | null => {
   return jotaiStore.get(accessTokenAtom);
 };
@@ -25,6 +27,7 @@ export const getAuthHeaders = (): HeadersInit => {
   return token ? { Authorization: `Bearer ${token}` } : {};
 };
 
+// 쿠키 관련 함수
 export const setCookie = (name: string, value: string, days: number = 7) => {
   const date = new Date();
   date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
@@ -45,21 +48,24 @@ export const deleteCookie = (name: string) => {
 
 /**
  * 로그인
- * - 성공 시 accessToken을 Jotai 상태에 저장, refreshToken 쿠키에 저장
+ * - 성공 시 accessToken 전역 상태에 저장, refreshToken 쿠키에 저장
+ * - 성공 시 사용자 정보를 전역 상태에 저장
  * @throws {Error}
  */
-
 export const signIn = async (data: SignInRequest): Promise<SignInResponse> => {
   try {
     const result = await apiCall<SignInRequest, SignInResponse>({
       method: "POST",
-      path: "/users/sign-in",
+      path: API_PATHS.USER.SIGN_IN,
       data,
       withCredentials: true,
     });
 
     setAccessToken(result.accessToken);
     setCookie("refreshToken", result.refreshToken);
+
+    // 로그인 성공 후 사용자 정보 로드
+    await getUserInfo();
 
     return result;
   } catch (error) {
@@ -82,7 +88,7 @@ export const signUp = async (data: SignUpRequest): Promise<SignUpResponse> => {
 
     const result = await apiCall<typeof requestBody, SignUpResponse>({
       method: "POST",
-      path: "/users/sign-up",
+      path: API_PATHS.USER.SIGN_UP,
       data: requestBody,
       withCredentials: true,
     });
@@ -94,9 +100,15 @@ export const signUp = async (data: SignUpRequest): Promise<SignUpResponse> => {
   }
 };
 
+/**
+ * 로그아웃
+ * - 토큰 및 사용자 정보 초기화
+ * - 홈 화면으로 이동
+ */
 export const logout = () => {
   setAccessToken(null);
   deleteCookie("refreshToken");
+  clearUserInfo();
 
   window.location.href = "/";
 };
@@ -113,7 +125,7 @@ export const refreshAccessToken = async (): Promise<boolean> => {
     const refreshToken = getCookie("refreshToken");
 
     if (!refreshToken) {
-      console.error("토큰 갱신 실패: 리프레시 토큰 없음");
+      console.error("토큰 갱신 실패: refreshToken 없음");
       logout();
       return false;
     }

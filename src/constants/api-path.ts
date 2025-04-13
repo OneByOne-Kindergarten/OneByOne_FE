@@ -23,8 +23,8 @@ export const API_PATHS = {
   USER: {
     BASE: "/users",
     REISSUE: "/users/reissue",
-    SIGN_IN: "/users/signin",
-    SIGN_UP: "/users/signup",
+    SIGN_IN: "/users/sign-in",
+    SIGN_UP: "/users/sign-up",
     WITHDRAW: "/users/withdraw",
     PASSWORD: "/users/password",
     NICKNAME: "/users/nickname",
