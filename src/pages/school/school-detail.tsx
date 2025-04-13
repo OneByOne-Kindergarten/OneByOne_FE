@@ -122,104 +122,99 @@ export default function SchoolDetail() {
           options={CATEGORY_OPTIONS}
           currentPath={URL_PATHS.SCHOOL_DETAIL.replace(":id", safeId)}
         />
-        <section className="px-5 pb-20">
-          <div className="flex flex-col gap-7">
-            <h1 className="text-lg font-bold text-primary-dark02">
-              {kindergarten.name}
-            </h1>
-            <ul className="flex flex-col flex-1 gap-7">
-              <div className="flex flex-col gap-1.5">
-                <SchoolInfoItem
-                  icon={SVG_PATHS.LOCATION}
-                  title="위치정보"
-                  altText="위치 아이콘"
+        <section className="px-5 py-5 pb-20">
+          <ul className="flex flex-col flex-1 gap-7">
+            <div className="flex flex-col gap-1.5">
+              <SchoolInfoItem
+                icon={SVG_PATHS.LOCATION}
+                title="위치정보"
+                altText="위치 아이콘"
+              >
+                <address className="not-italic text-base font-semibold text-primary-dark02">
+                  {kindergarten.address}
+                </address>
+              </SchoolInfoItem>
+              <div className="relative bg-primary-normal01 h-40 rounded-md flex items-center justify-center">
+                <p>지도</p>
+                <Button
+                  variant="secondary"
+                  shape="full"
+                  size="xs"
+                  className="absolute px-1.5 gap-1 text-xxs right-3 top-3"
                 >
-                  <address className="not-italic text-base font-semibold text-primary-dark02">
-                    {kindergarten.address}
-                  </address>
-                </SchoolInfoItem>
-                <div className="relative bg-primary-normal01 h-40 rounded-md flex items-center justify-center">
-                  <p>지도</p>
-                  <Button
-                    variant="secondary"
-                    shape="full"
-                    size="xs"
-                    className="absolute px-1.5 gap-1 text-xxs right-3 top-3"
-                  >
-                    <img
-                      src={SVG_PATHS.MAP}
-                      alt="지도 아이콘"
-                      width={14}
-                      height={14}
-                    />
-                    지도보기
-                  </Button>
+                  <img
+                    src={SVG_PATHS.MAP}
+                    alt="지도 아이콘"
+                    width={14}
+                    height={14}
+                  />
+                  지도보기
+                </Button>
+              </div>
+            </div>
+
+            <SchoolInfoItem
+              icon={SVG_PATHS.CALL}
+              title="전화"
+              altText="전화기 아이콘"
+            >
+              <p className="text-base font-semibold text-primary-dark02">
+                {kindergarten.phoneNumber}
+              </p>
+            </SchoolInfoItem>
+
+            <SchoolInfoItem
+              icon={SVG_PATHS.BUILDING}
+              title="설립"
+              altText="건물 아이콘"
+            >
+              <div className="flex flex-col gap-3">
+                <p className="text-base font-semibold text-primary-dark02">
+                  {kindergarten.establishment}
+                </p>
+                <div className="flex flex-col">
+                  <p>
+                    설립{" "}
+                    <span>{formatDate(kindergarten.establishmentDate)}</span>
+                  </p>
+                  <p>
+                    개원 <span>{formatDate(kindergarten.openDate)}</span>
+                  </p>
                 </div>
               </div>
+            </SchoolInfoItem>
 
+            <SchoolInfoChart
+              title="학급"
+              totalCount={kindergarten.totalClassCount}
+              unit="class"
+              stats={classStats}
+            />
+
+            <SchoolInfoChart
+              title="원생"
+              totalCount={kindergarten.totalPupilCount}
+              unit="student"
+              stats={studentStats}
+            />
+
+            {kindergarten.homepage && (
               <SchoolInfoItem
-                icon={SVG_PATHS.CALL}
-                title="전화"
-                altText="전화기 아이콘"
+                icon={SVG_PATHS.HOME}
+                title="홈페이지"
+                altText="홈 아이콘"
               >
-                <p className="text-base font-semibold text-primary-dark02">
-                  {kindergarten.phoneNumber}
-                </p>
-              </SchoolInfoItem>
-
-              <SchoolInfoItem
-                icon={SVG_PATHS.BUILDING}
-                title="설립"
-                altText="건물 아이콘"
-              >
-                <div className="flex flex-col gap-3">
-                  <p className="text-base font-semibold text-primary-dark02">
-                    {kindergarten.establishment}
-                  </p>
-                  <div className="flex flex-col">
-                    <p>
-                      설립{" "}
-                      <span>{formatDate(kindergarten.establishmentDate)}</span>
-                    </p>
-                    <p>
-                      개원 <span>{formatDate(kindergarten.openDate)}</span>
-                    </p>
-                  </div>
-                </div>
-              </SchoolInfoItem>
-
-              <SchoolInfoChart
-                title="학급"
-                totalCount={kindergarten.totalClassCount}
-                unit="class"
-                stats={classStats}
-              />
-
-              <SchoolInfoChart
-                title="원생"
-                totalCount={kindergarten.totalPupilCount}
-                unit="student"
-                stats={studentStats}
-              />
-
-              {kindergarten.homepage && (
-                <SchoolInfoItem
-                  icon={SVG_PATHS.HOME}
-                  title="홈페이지"
-                  altText="홈 아이콘"
+                <a
+                  href={kindergarten.homepage}
+                  className="text-primary-dark02 font-semibold hover:underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  <a
-                    href={kindergarten.homepage}
-                    className="text-primary-dark02 font-semibold hover:underline"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {kindergarten.homepage}
-                  </a>
-                </SchoolInfoItem>
-              )}
-            </ul>
-          </div>
+                  {kindergarten.homepage}
+                </a>
+              </SchoolInfoItem>
+            )}
+          </ul>
         </section>
       </>
     );

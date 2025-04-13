@@ -54,7 +54,7 @@ export const CATEGORY_INFO: Record<CommunityCategoryType, CategoryInfo> = {
 // 카테고리 라벨 맵
 export const CATEGORY_LABELS: Record<string, string> = {
   TEACHER: "교사",
-  PRE_TEACHER: "예비교사",
+  PROSPECTIVE_TEACHER: "예비교사",
   top10: "Top 10",
   all: "전체",
   free: "자유",
