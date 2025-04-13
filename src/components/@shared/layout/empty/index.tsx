@@ -13,7 +13,7 @@ export default function Empty({
   type = "element",
 }: EmptyProps) {
   return (
-    <section
+    <div
       className={clsx(
         className,
         "flex justify-center flex-col gap-3 items-center text-center",
@@ -29,6 +29,6 @@ export default function Empty({
       <div className="flex flex-col gap-1.5 text-primary-normal03">
         {children}
       </div>
-    </section>
+    </div>
   );
 }

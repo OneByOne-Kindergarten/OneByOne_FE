@@ -1,118 +1,134 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { SVG_PATHS } from "@/constants/assets-path";
-import Input from "@/components/@shared/form/input";
+import { useState, useEffect, useRef, Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+import { Link } from "react-router-dom";
+
 import Header from "@/components/@shared/headers/base-header";
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormControl,
-  FormMessage,
-} from "@/components/@shared/form";
+import SearchInput from "@/components/@shared/form/search-input";
+import CommunitySearchAside from "@/components/community/community-search-aside";
+import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
+import Error from "@/components/@shared/layout/error";
+
+import { SVG_PATHS } from "@/constants/assets-path";
 
 interface CommunityHeaderProps {
   title?: string;
-  hasBorder?: boolean;
   hasBackButton?: boolean;
   onBackButtonClick?: () => void;
+  hasWriteButton?: boolean;
+  category?: "TEACHER" | "PROSPECTIVE_TEACHER";
+  hasBorder?: boolean;
 }
 
 export default function CommunityHeader({
   title = "커뮤니티",
-  hasBorder,
-  hasBackButton,
+  hasBackButton = false,
   onBackButtonClick,
+  hasWriteButton = false,
+  category = "TEACHER",
+  hasBorder = true,
 }: CommunityHeaderProps) {
-  const form = useForm();
-  const navigate = useNavigate();
   const [isSearching, setIsSearching] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
 
+  // 검색 모드 활성화 시 포커스
+  useEffect(() => {
+    if (isSearching && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isSearching]);
+
+  // 검색 모드 활성화
   const handleSearch = () => {
     setIsSearching(true);
   };
 
-  const handleCancelSearch = () => {
-    setIsSearching(false);
+  const handleSearchQuerySelect = (query: string) => {
+    setSearchQuery(query);
   };
 
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    const searchInput = form.elements.namedItem("search") as HTMLInputElement;
-
-    // TODO: API 호출
-    console.log("검색어:", searchInput.value);
-
-    setIsSearching(false);
+  const handleSearchSubmit = (query: string) => {
+    setSearchQuery(query);
   };
 
-  if (isSearching) {
-    return (
-      <Header hasBackButton={hasBackButton} hasBorder={hasBorder}>
-        <div className="relative w-full mr-5">
-          <Form {...form}>
-            <FormField
-              control={form.control}
-              name="search"
-              render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormControl>
-                    <Input
-                      placeholder="검색어를 입력해주세요"
-                      className="py-1.5 pr-9 text-sm font-normal text-primary-dark01 w-full pl-9"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <img
-              src={SVG_PATHS.SEARCH}
-              alt="돋보기"
-              width={17}
-              height={17}
-              className="absolute top-2 left-3 opacity-30 z-10"
-            />
-            <button
-              type="button"
-              className="flex items-center justify-center w-4 h-4 bg-primary-normal01 rounded-full absolute top-2 right-3 z-10"
-              aria-label="검색어 초기화"
-            >
-              <img
-                src={SVG_PATHS.CANCEL}
-                alt="X 아이콘"
-                width={12}
-                height={12}
-                className="opacity-30"
-              />
-            </button>
-          </Form>
-        </div>
-        <button
-          type="button"
-          onClick={handleCancelSearch}
-          className="z-10"
-          aria-label="검색 취소"
-        >
-          <img src={SVG_PATHS.CANCEL} alt="취소" className="w-6 h-6" />
-        </button>
-      </Header>
-    );
-  }
+  const handleCloseSearchResult = () => {
+    setIsSearching(false);
+    setSearchQuery("");
+  };
+
+  const handleClearSearch = () => {
+    setSearchQuery("");
+  };
 
   return (
-    <Header
-      title={title}
-      hasBorder={hasBorder}
-      hasBackButton={hasBackButton}
-      onBackButtonClick={onBackButtonClick}
-    >
-      <button onClick={handleSearch} className="ml-auto" aria-label="검색">
-        <img src={SVG_PATHS.SEARCH} alt="검색" className="w-6 h-6" />
-      </button>
-    </Header>
+    <>
+      {/* 검색 패널 */}
+      {isSearching ? (
+        <aside className="fixed inset-0 z-50 flex bg-white flex-col w-full min-w-80 max-w-3xl mx-auto h-full">
+          <Header
+            hasBackButton={true}
+            hasBorder={false}
+            onBackButtonClick={handleCloseSearchResult}
+          >
+            <SearchInput
+              placeholder="게시물 제목으로 검색해보세요"
+              initialValue={searchQuery}
+              onSubmit={handleSearchSubmit}
+              onClear={handleClearSearch}
+              autoFocus={true}
+              ref={inputRef}
+            />
+          </Header>
+
+          {/* 검색 결과 */}
+          <div className="flex-1 flex flex-col h-[calc(100vh-56px)]">
+            <ErrorBoundary
+              onReset={() => {}}
+              fallback={
+                <Error type="element">
+                  오류가 발생했습니다. 다시 시도해주세요.
+                </Error>
+              }
+            >
+              <Suspense fallback={<LoadingSpinner type="page" />}>
+                <CommunitySearchAside
+                  isOpen={isSearching}
+                  onClose={handleCloseSearchResult}
+                  searchQuery={searchQuery}
+                  onSearchQuerySelect={handleSearchQuerySelect}
+                  category={category}
+                />
+              </Suspense>
+            </ErrorBoundary>
+          </div>
+        </aside>
+      ) : (
+        <Header
+          title={title}
+          hasBackButton={hasBackButton}
+          onBackButtonClick={onBackButtonClick}
+          hasBorder={hasBorder}
+        >
+          <div className="flex items-center gap-4">
+            <button onClick={handleSearch} aria-label="검색">
+              <img src={SVG_PATHS.SEARCH} alt="검색" className="w-6 h-6" />
+            </button>
+            {hasWriteButton && (
+              <Link
+                to="/community/write"
+                className="flex items-center justify-center rounded-full w-6 h-6 bg-primary-normal01"
+                aria-label="글쓰기"
+              >
+                <img
+                  src={SVG_PATHS.POST.create}
+                  alt="연필 아이콘"
+                  className="w-3 h-3"
+                />
+              </Link>
+            )}
+          </div>
+        </Header>
+      )}
+    </>
   );
 }

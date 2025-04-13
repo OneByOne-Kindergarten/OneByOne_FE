@@ -13,6 +13,8 @@ import styles from "@/styles/scroll.module.css";
 interface PostListProps {
   type: "teacher" | "pre-teacher";
   categoryName: string;
+  searchQuery?: string;
+  searchType?: "title" | "content";
 }
 
 interface PostItemProps {
@@ -47,7 +49,12 @@ const PostItem = ({ index, style, data }: PostItemProps) => {
   );
 };
 
-export default function PostList({ type, categoryName }: PostListProps) {
+export default function PostList({
+  type,
+  categoryName,
+  searchQuery = "",
+  searchType = "title",
+}: PostListProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [maxListHeight, setMaxListHeight] = useState(window.innerHeight - 200);
   const [containerWidth, setContainerWidth] = useState<number | string>("100%");
@@ -58,6 +65,12 @@ export default function PostList({ type, categoryName }: PostListProps) {
 
   const categoryParams = categoryName !== "all" ? { categoryName } : undefined;
 
+  const searchParams = searchQuery
+    ? searchType === "title"
+      ? { title: searchQuery }
+      : { content: searchQuery }
+    : undefined;
+
   const {
     data: communityPostsData,
     isLoading,
@@ -67,7 +80,10 @@ export default function PostList({ type, categoryName }: PostListProps) {
   } = useCommunityPosts(
     10,
     type === "teacher" ? "TEACHER" : "PROSPECTIVE_TEACHER",
-    categoryParams
+    {
+      ...categoryParams,
+      ...searchParams,
+    }
   );
 
   // 창 크기 변경 시 높이 업데이트
@@ -123,6 +139,11 @@ export default function PostList({ type, categoryName }: PostListProps) {
 
   return (
     <section ref={containerRef}>
+      {searchQuery && (
+        <div className="mb-4 text-sm text-primary-normal03">
+          {uniquePosts.length}개의 검색 결과
+        </div>
+      )}
       <List
         height={listHeight}
         width={containerWidth}

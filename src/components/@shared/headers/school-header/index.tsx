@@ -1,16 +1,13 @@
-import { useState, useEffect, useRef, useCallback } from "react";
-import { useForm } from "react-hook-form";
+import { useState, useEffect, useRef, useCallback, Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+
+import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
+import Error from "@/components/@shared/layout/error";
 import Header from "@/components/@shared/headers/base-header";
-import Input from "@/components/@shared/form/input";
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormControl,
-  FormMessage,
-} from "@/components/@shared/form";
-import { SVG_PATHS } from "@/constants/assets-path";
+import SearchInput from "@/components/@shared/form/search-input";
 import SchoolSearchAside from "@/components/school/school-search-aside";
+
+import { SVG_PATHS } from "@/constants/assets-path";
 import {
   checkFavoriteStatus,
   toggleFavorite as toggleFavoriteService,
@@ -26,10 +23,6 @@ interface SchoolHeaderProps {
   showBookmark?: boolean;
 }
 
-interface SearchFormValues {
-  search: string;
-}
-
 export default function SchoolHeader({
   title = "원바원",
   hasBorder,
@@ -38,11 +31,6 @@ export default function SchoolHeader({
   kindergartenId,
   showBookmark = false,
 }: SchoolHeaderProps) {
-  const form = useForm<SearchFormValues>({
-    defaultValues: {
-      search: "",
-    },
-  });
   const [isSearching, setIsSearching] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isFavorite, setIsFavorite] = useState(false);
@@ -99,31 +87,24 @@ export default function SchoolHeader({
   };
 
   // 최근 검색어 선택 처리
-  const handleSearchQuerySelect = async (query: string) => {
-    form.setValue("search", query);
+  const handleSearchQuerySelect = (query: string) => {
     setSearchQuery(query);
   };
 
   // 검색 폼 제출 처리
-  const handleSearchSubmit = async (data: SearchFormValues) => {
-    if (data.search.trim() !== "") {
-      setSearchQuery(data.search);
-    }
+  const handleSearchSubmit = (query: string) => {
+    setSearchQuery(query);
   };
 
   // 검색 결과 닫기
   const handleCloseSearchResult = () => {
     setIsSearching(false);
     setSearchQuery("");
-    form.reset();
   };
 
-  // 검색어 지우기
+  // 검색어 초기화 처리
   const handleClearSearch = () => {
-    form.setValue("search", "");
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
+    setSearchQuery("");
   };
 
   const handleMap = () => {
@@ -132,65 +113,40 @@ export default function SchoolHeader({
 
   return (
     <>
+      {/* 검색 패널 */}
       {isSearching ? (
-        <Header
-          hasBackButton={true}
-          hasBorder={false}
-          onBackButtonClick={handleCloseSearchResult}
-        >
-          <div className="relative w-full">
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(handleSearchSubmit)}
-                className="w-full"
-              >
-                <FormField
-                  control={form.control}
-                  name="search"
-                  render={({ field }: { field: any }) => (
-                    <FormItem className="w-full">
-                      <FormControl>
-                        <Input
-                          placeholder="유치원 이름을 검색해보세요"
-                          className="py-1.5 pr-9 text-sm font-normal text-primary-dark01 w-full pl-9"
-                          {...field}
-                          ref={(e) => {
-                            inputRef.current = e;
-                            field.ref(e);
-                          }}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+        <aside className="fixed inset-0 z-50 flex bg-white flex-col w-full min-w-80 max-w-3xl mx-auto h-full">
+          <Header
+            hasBackButton={true}
+            hasBorder={false}
+            onBackButtonClick={handleCloseSearchResult}
+          >
+            <SearchInput
+              placeholder="유치원 이름으로 검색해보세요"
+              initialValue={searchQuery}
+              onSubmit={handleSearchSubmit}
+              onClear={handleClearSearch}
+              autoFocus={true}
+              ref={inputRef}
+            />
+          </Header>
+
+          {/* 검색 결과 */}
+          <div className="flex-1 flex flex-col h-[calc(100vh-56px)]">
+            <ErrorBoundary
+              fallback={<Error type="page">잠시 후 다시 시도해주세요.</Error>}
+            >
+              <Suspense fallback={<LoadingSpinner type="page" />}>
+                <SchoolSearchAside
+                  isOpen={isSearching}
+                  onClose={handleCloseSearchResult}
+                  searchQuery={searchQuery}
+                  onSearchQuerySelect={handleSearchQuerySelect}
                 />
-                <img
-                  src={SVG_PATHS.SEARCH}
-                  alt="돋보기"
-                  width={17}
-                  height={17}
-                  className="absolute top-2 left-3 opacity-30 z-10"
-                />
-                {form.watch("search") && (
-                  <button
-                    type="button"
-                    onClick={handleClearSearch}
-                    className="flex items-center justify-center w-4 h-4 bg-primary-normal01 rounded-full absolute top-2 right-3 z-10"
-                    aria-label="검색어 초기화"
-                  >
-                    <img
-                      src={SVG_PATHS.CANCEL}
-                      alt="X 아이콘"
-                      width={12}
-                      height={12}
-                      className="opacity-30"
-                    />
-                  </button>
-                )}
-              </form>
-            </Form>
+              </Suspense>
+            </ErrorBoundary>
           </div>
-        </Header>
+        </aside>
       ) : (
         <Header
           title={title}
@@ -225,15 +181,6 @@ export default function SchoolHeader({
             </button>
           </div>
         </Header>
-      )}
-
-      {isSearching && (
-        <SchoolSearchAside
-          isOpen={isSearching}
-          onClose={handleCloseSearchResult}
-          searchQuery={searchQuery}
-          onSearchQuerySelect={handleSearchQuerySelect}
-        />
       )}
     </>
   );

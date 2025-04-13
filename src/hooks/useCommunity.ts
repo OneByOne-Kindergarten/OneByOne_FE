@@ -1,6 +1,8 @@
 import {
   useMutation,
   useQuery,
+  useSuspenseQuery,
+  useSuspenseInfiniteQuery,
   useInfiniteQuery,
   useQueryClient,
 } from "@tanstack/react-query";
@@ -56,12 +58,7 @@ export const useCommunityPosts = (
     userName: options?.userName,
   };
 
-  // 'all' 카테고리는 더 짧은 staleTime 적용
-  const isAllCategory =
-    options?.categoryName === undefined || options?.categoryName === "all";
-  const staleTimeValue = isAllCategory ? 1000 * 10 : 1000 * 30; // 'all' 카테고리는 10초, 나머지는 30초
-
-  return useInfiniteQuery({
+  return useSuspenseInfiniteQuery({
     queryKey: ["communityPosts", queryParams],
     queryFn: ({ pageParam = 0 }) =>
       getCommunityPosts({
@@ -78,8 +75,8 @@ export const useCommunityPosts = (
       return lastPage.pageNumber + 1;
     },
     initialPageParam: 0,
-    staleTime: staleTimeValue,
-    refetchOnMount: true, // 컴포넌트 마운트 시 항상 refetch
+    refetchOnMount: true,
+    staleTime: 1000 * 60 * 1, // 1분
     gcTime: 1000 * 60 * 5, // 5분
   });
 };
@@ -112,13 +109,13 @@ export const useCreatePost = () => {
       });
 
       toast({
-        title: "게시글 등록 완료",
+        title: "게시글을 등록했습니다.",
         variant: "default",
       });
     },
     onError: (error) => {
       toast({
-        title: "게시글 등록 실패",
+        title: "게시글 등록에 실패했습니다.",
         variant: "destructive",
       });
       console.error("게시글 생성 에러:", error);
@@ -220,11 +217,6 @@ export const useCreateComment = () => {
           }
           return false;
         },
-      });
-
-      toast({
-        title: "댓글이 등록되었습니다.",
-        variant: "default",
       });
     },
     onError: (error) => {

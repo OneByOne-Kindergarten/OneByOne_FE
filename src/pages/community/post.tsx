@@ -77,7 +77,7 @@ export default function CommunityPost() {
       headerTitle="커뮤니티"
       currentPath={`/community/${id}`}
       mainBg="gray"
-      mainClassName="flex flex-col gap-2 mb-24"
+      mainClassName="flex flex-1 flex-col gap-2 mb-16"
       hasBackButton={true}
     >
       {postLoading ? (

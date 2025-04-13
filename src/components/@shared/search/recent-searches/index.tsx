@@ -3,7 +3,7 @@ import { SVG_PATHS } from "@/constants/assets-path";
 
 // 최근 검색어 관리 상수
 const RECENT_SEARCHES_KEY = "recentSearches";
-const MAX_RECENT_SEARCHES = 5;
+const MAX_RECENT_SEARCHES = 8;
 
 interface RecentSearchesProps {
   onSelectQuery: (query: string) => void;
@@ -12,12 +12,10 @@ interface RecentSearchesProps {
 export default function RecentSearches({ onSelectQuery }: RecentSearchesProps) {
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
 
-  // 컴포넌트 마운트 시 최근 검색어 불러오기
   useEffect(() => {
     loadRecentSearches();
   }, []);
 
-  // 최근 검색어 불러오기
   const loadRecentSearches = () => {
     try {
       const savedSearches = localStorage.getItem(RECENT_SEARCHES_KEY);
@@ -29,7 +27,7 @@ export default function RecentSearches({ onSelectQuery }: RecentSearchesProps) {
     }
   };
 
-  // 최근 검색어 삭제
+  // 최근 검색어 개별 삭제
   const removeRecentSearch = (query: string, event: React.MouseEvent) => {
     event.stopPropagation();
     try {
@@ -60,12 +58,13 @@ export default function RecentSearches({ onSelectQuery }: RecentSearchesProps) {
   };
 
   return (
-    <div className="overflow-y-auto h-full flex flex-col px-6 py-1 gap-5 mb-6">
+    <section className="overflow-y-auto h-full flex flex-col px-6 py-1.5 gap-5 mb-6">
       <div className="flex text-sm justify-between items-center">
-        <h3 className="font-semibold text-primary-dark01">최근 검색어</h3>
+        <h1 className="font-semibold text-primary-dark01">최근 검색어</h1>
         {recentSearches.length > 0 && (
           <button
             onClick={clearAllRecentSearches}
+            aria-label="검색어 전체 삭제"
             className="font-semibold text-primary-normal03 hover:opacity-70"
           >
             전체삭제
@@ -74,8 +73,8 @@ export default function RecentSearches({ onSelectQuery }: RecentSearchesProps) {
       </div>
 
       {recentSearches.length === 0 ? (
-        <p className="text-primary-normal03 text-sm font-semibold py-2">
-          최근 검색 내역이 없습니다.
+        <p className="text-primary-normal03 text-center text-sm py-20">
+          최근 검색어가 없습니다.
         </p>
       ) : (
         <ul className="flex flex-col gap-5">
@@ -87,13 +86,14 @@ export default function RecentSearches({ onSelectQuery }: RecentSearchesProps) {
               <button
                 onClick={() => handleRecentSearchClick(query)}
                 className="text-sm text-primary-dark01 hover:opacity-70"
+                aria-label={`${query} 검색`}
               >
                 {query}
               </button>
               <button
                 onClick={(e) => removeRecentSearch(query, e)}
                 className="ml-1 text-gray-400 hover:text-gray-600 text-xs"
-                aria-label="삭제"
+                aria-label="검색어 삭제"
               >
                 <img
                   src={SVG_PATHS.CANCEL}
@@ -106,7 +106,7 @@ export default function RecentSearches({ onSelectQuery }: RecentSearchesProps) {
           ))}
         </ul>
       )}
-    </div>
+    </section>
   );
 }
 
@@ -115,7 +115,6 @@ export const addToRecentSearches = (query: string) => {
   if (!query || query.trim() === "") return;
 
   try {
-    // 로컬 스토리지에서 직접 가져와 최신 값 보장
     const savedSearches = localStorage.getItem(RECENT_SEARCHES_KEY);
     let currentSearches: string[] = [];
 

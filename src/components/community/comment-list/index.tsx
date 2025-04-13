@@ -44,7 +44,7 @@ export default function CommentList({
     commentsData?.pages?.flatMap((page) => page.content) || [];
 
   return (
-    <section className="flex flex-col bg-white">
+    <section className="flex flex-col flex-1 bg-white">
       {isLoading ? (
         <LoadingSpinner />
       ) : allComments && allComments.length > 0 ? (
@@ -59,13 +59,13 @@ export default function CommentList({
           ))}
 
           {hasNextPage && (
-            <div ref={loadMoreRef} className="w-full py-4 flex justify-center">
+            <div ref={loadMoreRef} className="w-full h-1 flex justify-center">
               {isFetchingNextPage && null}
             </div>
           )}
         </>
       ) : (
-        <Empty>아직 댓글이 없습니다.</Empty>
+        <Empty className="my-auto">아직 댓글이 없습니다.</Empty>
       )}
     </section>
   );

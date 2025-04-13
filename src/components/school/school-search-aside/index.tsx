@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { KindergartenSearchParams } from "@/types/kindergartenDTO";
+
 import RecentSearches, {
   addToRecentSearches,
-} from "@/components/school/recent-searches";
+} from "@/components/@shared/search/recent-searches";
 import SchoolSearchResult from "@/components/school/school-search-result";
 import { useSearchKindergartens } from "@/hooks/useSearchKindergartens";
+import type { KindergartenSearchParams } from "@/types/kindergartenDTO";
 
 interface SchoolSearchAsideProps {
   isOpen: boolean;
@@ -21,11 +22,10 @@ export default function SchoolSearchAside({
   onSearchQuerySelect,
 }: SchoolSearchAsideProps) {
   const navigate = useNavigate();
+  const [isInitialRender, setIsInitialRender] = useState(true);
   const [searchParams, setSearchParams] = useState<KindergartenSearchParams>({
     name: searchQuery,
   });
-
-  if (!isOpen) return null;
 
   // 검색어가 변경될 때마다 검색 파라미터 업데이트
   useEffect(() => {
@@ -36,14 +36,19 @@ export default function SchoolSearchAside({
     }
   }, [searchQuery]);
 
+  // 초기 렌더링 이후 상태 업데이트
+  useEffect(() => {
+    if (isInitialRender) {
+      setIsInitialRender(false);
+    }
+  }, []);
+
   const {
     results,
     totalItems,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-    isLoading,
-    error,
   } = useSearchKindergartens(searchParams);
 
   const handleKindergartenClick = (id: string) => {
@@ -51,32 +56,35 @@ export default function SchoolSearchAside({
     onClose();
   };
 
-  const showRecentSearches =
-    !searchQuery || (searchQuery && results.length === 0 && !isLoading);
-  const showSearchResults = !!searchQuery;
+  const isSearchResult = searchQuery && results.length > 0;
 
   return (
-    <aside
+    <div
       className={`absolute inset-0 top-14 z-40 ${
-        showSearchResults ? "bg-primary-foreground" : "bg-white"
+        isSearchResult ? "bg-primary-foreground" : "bg-white"
       }`}
     >
-      {showSearchResults && (
+      {results.length > 0 ? (
         <SchoolSearchResult
           searchQuery={searchQuery}
           results={results}
           totalItems={totalItems}
-          isLoading={isLoading}
           isFetchingNextPage={isFetchingNextPage}
           hasNextPage={hasNextPage}
           fetchNextPage={fetchNextPage}
-          error={error}
           onKindergartenClick={handleKindergartenClick}
         />
+      ) : (
+        searchQuery && (
+          <p className="text-sm text-center text-primary-normal03 py-8">
+            검색 결과가 없습니다.
+          </p>
+        )
       )}
-      {showRecentSearches && (
+
+      {!isInitialRender && !isSearchResult && (
         <RecentSearches onSelectQuery={onSearchQuerySelect} />
       )}
-    </aside>
+    </div>
   );
 }

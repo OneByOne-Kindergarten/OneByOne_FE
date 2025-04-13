@@ -52,6 +52,10 @@ export default function Community() {
     searchParams.get("type") === "pre-teacher" ? "pre-teacher" : "teacher";
   const categoryName = searchParams.get("category") || "top10";
 
+  // 검색 관련 파라미터
+  const searchQuery = searchParams.get("query") || "";
+  const searchType = searchParams.get("searchType") || "title";
+
   const categoryOptions =
     communityType === "pre-teacher"
       ? PROSPECTIVE_TEACHER_CATEGORIES
