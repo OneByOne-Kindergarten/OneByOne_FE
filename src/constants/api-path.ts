@@ -22,6 +22,7 @@ export const API_PATHS = {
   },
   USER: {
     BASE: "/users",
+    REISSUE: "/users/reissue",
     SIGN_IN: "/users/signin",
     SIGN_UP: "/users/signup",
     WITHDRAW: "/users/withdraw",

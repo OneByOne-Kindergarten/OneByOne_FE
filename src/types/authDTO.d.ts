@@ -28,3 +28,8 @@ export interface SignInResponse {
   accessToken: string;
   refreshToken: string;
 }
+
+export interface TokenRefreshResponse {
+  accessToken: string;
+  refreshToken: string;
+}

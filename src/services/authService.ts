@@ -4,9 +4,11 @@ import {
   SignInResponse,
   SignUpRequest,
   SignUpResponse,
+  TokenRefreshResponse,
 } from "@/types/authDTO";
 import { apiCall } from "@/utils/apiUtils";
 import { accessTokenAtom } from "@/stores/authStore";
+import { API_PATHS } from "@/constants/api-path";
 
 const jotaiStore = getDefaultStore();
 
@@ -104,26 +106,47 @@ export const logout = () => {
  * - refreshToken을 활용한 새로운 토큰 발급 요청
  * - 성공 시 새 accessToken과 refreshToken을 저장
  * - 실패 시 로그아웃
- * @throws {Error}
+ * @returns {Promise<boolean>} 토큰 갱신 성공 여부
  */
-
-export const refreshAccessToken = async (): Promise<void> => {
+export const refreshAccessToken = async (): Promise<boolean> => {
   try {
     const refreshToken = getCookie("refreshToken");
 
     if (!refreshToken) {
-      throw new Error("refreshToken이 없습니다.");
+      console.error("토큰 갱신 실패: 리프레시 토큰 없음");
+      logout();
+      return false;
     }
 
-    /* 
-    const response = await apiCall<...>({...});
-    setAccessToken(response.accessToken);
-    setCookie("refreshToken", response.refreshToken);
-    */
+    const BASE_URL = import.meta.env.DEV
+      ? "/api"
+      : import.meta.env.VITE_PUBLIC_API_URL;
 
-    return;
+    const response = await fetch(`${BASE_URL}${API_PATHS.USER.REISSUE}`, {
+      method: "POST",
+      headers: {
+        accept: "*/*",
+        Authorization: `Bearer ${refreshToken}`,
+      },
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      console.error(`토큰 갱신 실패: ${response.status}`);
+      logout();
+      return false;
+    }
+
+    const result = (await response.json()) as TokenRefreshResponse;
+
+    // 새 토큰 저장
+    setAccessToken(result.accessToken);
+    setCookie("refreshToken", result.refreshToken);
+
+    return true;
   } catch (error) {
-    console.error("토큰 갱신 실패:", error);
+    console.error("토큰 갱신 중 오류:", error);
     logout();
+    return false;
   }
 };

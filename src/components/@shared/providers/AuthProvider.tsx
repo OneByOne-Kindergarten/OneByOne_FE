@@ -1,15 +1,24 @@
 import { ReactNode, useEffect } from "react";
 import { useAtom } from "jotai";
-import { accessTokenAtom, isAuthenticatedAtom } from "@/stores/authStore";
-import { getCookie } from "@/services/authService";
+import { accessTokenAtom } from "@/stores/authStore";
+import { getCookie, refreshAccessToken } from "@/services/authService";
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useAtom(accessTokenAtom);
-  const [isAuthenticated] = useAtom(isAuthenticatedAtom);
 
   useEffect(() => {
-    const refreshToken = getCookie("refreshToken");
-  }, [token, isAuthenticated]);
+    const checkAndRefreshToken = async () => {
+      const refreshToken = getCookie("refreshToken");
+
+      if (refreshToken) {
+        if (!token) {
+          await refreshAccessToken();
+        }
+      }
+    };
+
+    checkAndRefreshToken();
+  }, [token]);
 
   return <>{children}</>;
 }

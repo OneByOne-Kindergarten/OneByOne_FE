@@ -70,22 +70,24 @@ export async function apiCall<TRequest, TResponse>({
 
     const response = await fetch(url, options);
 
+    // 401 에러 발생 시 토큰 갱신
     if (response.status === 401 && withAuth && !isRetry) {
       try {
-        await refreshAccessToken();
+        const refreshSuccess = await refreshAccessToken();
 
-        return await apiCall<TRequest, TResponse>({
-          method,
-          path,
-          data,
-          withAuth,
-          withCredentials,
-          isRetry: true,
-        });
+        // 토큰 갱신 성공 시 원래 요청 재시도
+        if (refreshSuccess) {
+          return await apiCall<TRequest, TResponse>({
+            method,
+            path,
+            data,
+            withAuth,
+            withCredentials,
+            isRetry: true,
+          });
+        }
       } catch (refreshError) {
-        // 서비스 레이어에서 에러 로깅을 처리하므로 여기서는 최소한으로 유지
-        // console.error("토큰 갱신 실패:", refreshError);
-        throw new Error("다시 로그인해주세요.");
+        throw new Error("인증이 만료되었습니다. 다시 로그인해주세요.");
       }
     }
 
@@ -104,7 +106,6 @@ export async function apiCall<TRequest, TResponse>({
           });
         }
       } catch (jsonError) {
-        // 서비스 레이어에서 에러 로깅을 처리하므로 여기서는 최소한으로 유지
         // console.warn("Error response is not valid JSON:", jsonError);
       }
 
@@ -125,12 +126,10 @@ export async function apiCall<TRequest, TResponse>({
       if (contentType && contentType.includes("application/json")) {
         return await response.json();
       } else {
-        // 서비스 레이어에서 에러 로깅을 처리하므로 여기서는 최소한으로 유지
         // console.warn(`Response is not JSON: ${contentType}`);
         return {} as TResponse;
       }
     } catch (jsonError) {
-      // 서비스 레이어에서 에러 로깅을 처리하므로 여기서는 최소한으로 유지
       // console.error("Failed to parse JSON response:", jsonError);
       return {} as TResponse;
     }
