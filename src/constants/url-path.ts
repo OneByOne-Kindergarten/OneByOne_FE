@@ -16,4 +16,7 @@ export const URL_PATHS = {
   COMMUNITY_POST_EDITOR: "/community/new",
   BOOKMARKS: "/bookmarks",
   USER: "/user",
+
+  // 테스트 페이지
+  PERMISSION_TEST: "/permission-test",
 };

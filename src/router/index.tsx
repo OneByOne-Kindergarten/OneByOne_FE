@@ -17,6 +17,9 @@ const PostEditorPage = lazy(() => import("../pages/community/post-editor"));
 const BookmarksPage = lazy(() => import("../pages/bookmarks"));
 const UserPage = lazy(() => import("../pages/user"));
 
+// 테스트 페이지
+const PermissionTestPage = lazy(() => import("../components/example/PermissionExample"));
+
 const routes = {
   direct: [
     { path: URL_PATHS.TEST, element: <TestPage /> },
@@ -35,6 +38,9 @@ const routes = {
     { path: URL_PATHS.COMMUNITY, element: <CommunityPage /> },
     { path: URL_PATHS.COMMUNITY_POST_EDITOR, element: <PostEditorPage /> },
     { path: URL_PATHS.COMMUNITY_POST, element: <CommunityPostPage /> },
+
+    // 테스트 페이지
+    { path: URL_PATHS.PERMISSION_TEST, element: <PermissionTestPage /> },
   ],
 
   redirect: [
