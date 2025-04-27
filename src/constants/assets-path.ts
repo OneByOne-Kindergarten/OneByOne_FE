@@ -90,4 +90,7 @@ export const IMAGE_PATHS = {
     INACTIVE: "/src/assets/images/logo-inactive.webp",
   },
   CERTIFICATION: "/src/assets/images/certification.webp",
+  GUIDE: {
+    PROFILE: "/src/assets/images/guide-profile.webp",
+  },
 };
