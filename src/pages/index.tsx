@@ -66,6 +66,14 @@ export default function Home() {
               Email로 시작하기
             </Button>
           </Link>
+          
+          {/* 권한 테스트 페이지 링크 */}
+          <Link to={URL_PATHS.PERMISSION_TEST}>
+            <Button font="md" className="relative w-full bg-blue-500 text-white mt-4">
+              Flutter 권한 테스트 페이지
+            </Button>
+          </Link>
+          
         </div>
         <div className="flex gap-2 justify-center text-xs">
           <p className="text-primary-dark01">아직 회원이 아니신가요?</p>
