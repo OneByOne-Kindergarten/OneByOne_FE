@@ -16,6 +16,7 @@ const CommunityPostPage = lazy(() => import("../pages/community/post"));
 const PostEditorPage = lazy(() => import("../pages/community/post-editor"));
 const BookmarksPage = lazy(() => import("../pages/bookmarks"));
 const UserPage = lazy(() => import("../pages/user"));
+const UserEditorPage = lazy(() => import("../pages/user/user-editor"));
 
 const routes = {
   direct: [
@@ -35,6 +36,8 @@ const routes = {
     { path: URL_PATHS.COMMUNITY, element: <CommunityPage /> },
     { path: URL_PATHS.COMMUNITY_POST_EDITOR, element: <PostEditorPage /> },
     { path: URL_PATHS.COMMUNITY_POST, element: <CommunityPostPage /> },
+    // 프로필
+    { path: URL_PATHS.USER_EDITOR, element: <UserEditorPage /> },
   ],
 
   redirect: [

@@ -7,4 +7,5 @@ export interface User {
   nickname: string;
   profileImageUrl: string | null;
   role: string;
+  career: string;
 }

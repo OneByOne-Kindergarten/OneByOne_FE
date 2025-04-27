@@ -16,4 +16,5 @@ export const URL_PATHS = {
   COMMUNITY_POST_EDITOR: "/community/new",
   BOOKMARKS: "/bookmarks",
   USER: "/user",
+  USER_EDITOR: "/user/edit",
 };

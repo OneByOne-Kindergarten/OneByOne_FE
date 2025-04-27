@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 
 import PageLayout from "@/components/@shared/layout/page-layout";
 import Button from "@/components/@shared/buttons/base-button";
-import { getCategoryLabel } from "@/utils/categoryUtils";
+import ProfileImage from "@/components/user/profile-image";
+import ProfileDetail from "@/components/user/profile-detail";
 
 import { URL_PATHS } from "@/constants/url-path";
 import { SVG_PATHS, IMAGE_PATHS } from "@/constants/assets-path";
@@ -26,33 +27,10 @@ export default function User() {
         {/* 사용자 프로필 */}
         <div className="flex items-center justify-between bg-white px-5 w-full py-4">
           <div className="flex items-center gap-7">
-            <div className="flex items-center justify-center w-20 h-20 bg-primary-normal03 overflow-hidden rounded-full">
-              {user?.profileImageUrl ? (
-                <img
-                  src={user.profileImageUrl}
-                  alt="사용자 프로필 이미지"
-                  className="absolute top-0 left-0 object-cover"
-                />
-              ) : (
-                <img
-                  src={SVG_PATHS.CHARACTER.user}
-                  alt="기본 프로필 이미지"
-                  width={38}
-                  height={47}
-                  className="object-cover"
-                />
-              )}
-            </div>
-            <div className="flex flex-col gap-1">
-              <h2 className="font-bold text-lg text-primary-dark02">
-                {user?.nickname}
-              </h2>
-              <p className="font-semibold text-xs text-primary-normal03">
-                {getCategoryLabel(user?.role || "")}
-              </p>
-            </div>
+            <ProfileImage profileImageUrl={user?.profileImageUrl} />
+            <ProfileDetail user={user} />
           </div>
-          <Link to="?notice">
+          <Link to={URL_PATHS.USER_EDITOR}>
             <img
               src={SVG_PATHS.ARROW.right}
               alt="오른쪽 방향 화살표 아이콘"
