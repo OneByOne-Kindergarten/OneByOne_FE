@@ -81,6 +81,7 @@ export const SVG_PATHS = {
   BOSS: "/src/assets/icons/boss.svg",
   CLOCK: "/src/assets/icons/clock.svg",
   BROKEN_LINE: "/src/assets/icons/broken-line.svg",
+  QUESTION: "/src/assets/icons/question.svg",
 };
 
 export const IMAGE_PATHS = {
