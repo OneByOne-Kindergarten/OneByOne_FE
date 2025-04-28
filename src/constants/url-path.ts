@@ -16,7 +16,8 @@ export const URL_PATHS = {
   COMMUNITY_POST_EDITOR: "/community/new",
   BOOKMARKS: "/bookmarks",
   USER: "/user",
-  USER_EDITOR: "/user/edit",
-  USER_NICKNAME_EDITOR: "/user/edit/nickname",
+  USER_PROFILE_EDITOR: "/user/profile",
+  USER_NICKNAME_EDITOR: "/user/profile/nickname",
+  USER_ACCOUNT_SETTING: "/user/account-setting",
   PERMISSION_TEST: "/permission-test",
 };

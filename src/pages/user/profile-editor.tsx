@@ -10,13 +10,9 @@ import { URL_PATHS } from "@/constants/url-path";
 import { IMAGE_PATHS } from "@/constants/assets-path";
 import { Switch } from "@/components/switch";
 
-export default function UserEditorPage() {
+export default function ProfileEditorPage() {
   const [user] = useAtom(userAtom);
   const navigate = useNavigate();
-
-  const handleNicknameEdit = () => {
-    navigate(URL_PATHS.USER_NICKNAME_EDITOR);
-  };
 
   return (
     <PageLayout
@@ -32,7 +28,7 @@ export default function UserEditorPage() {
           <h2 className="font-semibold text-primary-dark01">프로필</h2>
           <button
             className="text-sm text-primary-normal03"
-            onClick={handleNicknameEdit}
+            onClick={() => navigate(URL_PATHS.USER_NICKNAME_EDITOR)}
           >
             편집
           </button>
