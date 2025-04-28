@@ -36,12 +36,12 @@ const PopupModal = React.forwardRef<HTMLDivElement, PopupModalProps>(
             align="center"
             hasCloseButton={props.hasCloseButton}
             onClose={props.onClose}
-            className="text-lg font-medium pt-4 pb-2"
+            className="text-lg font-medium pt-4 pb-2 text-primary-dark02"
           >
             {title}
           </ModalHeader>
         )}
-        <ModalContent className="max-h-[50vh] overflow-y-auto p-3">
+        <ModalContent className="max-h-[50vh] overflow-y-auto p-3 text-primary-dark01">
           {children}
         </ModalContent>
         {footer && (
