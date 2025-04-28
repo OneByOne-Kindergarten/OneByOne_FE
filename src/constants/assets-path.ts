@@ -83,6 +83,8 @@ export const SVG_PATHS = {
   BROKEN_LINE: "/src/assets/icons/broken-line.svg",
   QUESTION: "/src/assets/icons/question.svg",
   CERTIFICATION: "/src/assets/icons/certification-mark.svg",
+  LOGOUT: "/src/assets/icons/logout.svg",
+  LEAVE: "/src/assets/icons/leave.svg",
 };
 
 export const IMAGE_PATHS = {
