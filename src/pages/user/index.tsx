@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import { userAtom } from "@/stores/userStore";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import PageLayout from "@/components/@shared/layout/page-layout";
 import Button from "@/components/@shared/buttons/base-button";
@@ -12,6 +12,7 @@ import { SVG_PATHS, IMAGE_PATHS } from "@/constants/assets-path";
 
 export default function User() {
   const [user] = useAtom(userAtom);
+  const navigate = useNavigate();
 
   return (
     <PageLayout
@@ -30,7 +31,7 @@ export default function User() {
             <ProfileImage profileImageUrl={user?.profileImageUrl} />
             <ProfileDetail user={user} />
           </div>
-          <Link to={URL_PATHS.USER_EDITOR}>
+          <Link to={URL_PATHS.USER_PROFILE_EDITOR}>
             <img
               src={SVG_PATHS.ARROW.right}
               alt="오른쪽 방향 화살표 아이콘"
@@ -96,7 +97,7 @@ export default function User() {
                 />
                 <span>계정 설정</span>
               </div>
-              <Link to="?account">
+              <Link to={URL_PATHS.USER_ACCOUNT_SETTING}>
                 <img
                   src={SVG_PATHS.ARROW.right}
                   alt="오른쪽 방향 화살표 아이콘"

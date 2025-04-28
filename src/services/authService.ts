@@ -7,7 +7,7 @@ import {
   TokenRefreshResponse,
 } from "@/types/authDTO";
 import { apiCall } from "@/utils/apiUtils";
-import { accessTokenAtom } from "@/stores/authStore";
+import { accessTokenAtom, isAuthenticatedAtom } from "@/stores/authStore";
 import { getUserInfo, clearUserInfo } from "@/services/userService";
 import { API_PATHS } from "@/constants/api-path";
 
@@ -102,15 +102,13 @@ export const signUp = async (data: SignUpRequest): Promise<SignUpResponse> => {
 
 /**
  * 로그아웃
- * - 토큰 및 사용자 정보 초기화
- * - 홈 화면으로 이동
+ * - 로컬 상태 초기화
  */
-export const logout = () => {
-  setAccessToken(null);
-  deleteCookie("refreshToken");
+export const signOut = async (): Promise<void> => {
+  // 로컬 상태 초기화
+  jotaiStore.set(accessTokenAtom, null);
+  jotaiStore.set(isAuthenticatedAtom, false);
   clearUserInfo();
-
-  window.location.href = "/";
 };
 
 /**
@@ -126,7 +124,7 @@ export const refreshAccessToken = async (): Promise<boolean> => {
 
     if (!refreshToken) {
       console.error("토큰 갱신 실패: refreshToken 없음");
-      logout();
+      signOut();
       return false;
     }
 
@@ -145,7 +143,7 @@ export const refreshAccessToken = async (): Promise<boolean> => {
 
     if (!response.ok) {
       console.error(`토큰 갱신 실패: ${response.status}`);
-      logout();
+      signOut();
       return false;
     }
 
@@ -158,7 +156,7 @@ export const refreshAccessToken = async (): Promise<boolean> => {
     return true;
   } catch (error) {
     console.error("토큰 갱신 중 오류:", error);
-    logout();
+    signOut();
     return false;
   }
 };

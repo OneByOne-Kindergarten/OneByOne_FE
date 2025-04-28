@@ -5,7 +5,7 @@ import {
   SignUpRequest,
   SignUpResponse,
 } from "@/types/authDTO";
-import { signIn, signUp } from "@/services/authService";
+import { signIn, signUp, signOut } from "@/services/authService";
 import {
   updateNickname,
   updatePassword,
@@ -149,15 +149,59 @@ export const useUpdatePassword = () => {
 };
 
 /**
+ * 로그아웃 API 호출
+ * - 에러 처리
+ * - 토스트 관리
+ * - 성공 시 로그인 페이지로 이동
+ */
+export const useSignOut = () => {
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: signOut,
+    onSuccess: () => {
+      toast({
+        title: "로그아웃 완료",
+        description: "안녕히가세요!",
+        variant: "default",
+      });
+      navigate(URL_PATHS.HOME);
+    },
+    onError: (error) => {
+      let errorMessage = "로그아웃에 실패했습니다. 다시 시도해주세요.";
+
+      if (error instanceof Error) {
+        try {
+          const errorObj = JSON.parse(error.message);
+          if (errorObj.data?.message) {
+            errorMessage = errorObj.data.message;
+          }
+        } catch (e) {
+          if (error.message && error.message !== "Failed to fetch") {
+            errorMessage = error.message;
+          }
+        }
+      }
+
+      toast({
+        title: "로그아웃 실패",
+        description: errorMessage,
+        variant: "destructive",
+      });
+    },
+  });
+};
+
+/**
  * 회원 탈퇴 API 호출
  * - 에러 처리
  * - 토스트 관리
- * - 성공 시 루트 페이지로 이동
+ * - 성공 시 로그인 페이지로 이동
  */
 export const useWithdrawUser = () => {
   const navigate = useNavigate();
 
-  return useMutation<boolean, Error, string>({
+  return useMutation({
     mutationFn: () => withdrawUser(),
     onSuccess: () => {
       toast({
@@ -165,7 +209,7 @@ export const useWithdrawUser = () => {
         description: "그동안 이용해주셔서 감사합니다.",
         variant: "default",
       });
-      navigate(URL_PATHS.HOME);
+      navigate(URL_PATHS.SIGNIN);
     },
     onError: (error) => {
       let errorMessage = "회원 탈퇴에 실패했습니다. 다시 시도해주세요.";
@@ -202,9 +246,9 @@ export const useSignUp = (callbacks?: SignupCallbacks) => {
 
   return useMutation<SignUpResponse, Error, SignUpRequest>({
     mutationFn: signUp,
-    onSuccess: (response) => {
+    onSuccess: () => {
       toast({
-        title: `${response.nickname}님, 회원가입 완료`,
+        title: "회원가입 완료",
         description: "지금 바로 로그인해보세요!",
         variant: "default",
       });
