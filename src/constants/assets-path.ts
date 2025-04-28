@@ -82,6 +82,7 @@ export const SVG_PATHS = {
   CLOCK: "/src/assets/icons/clock.svg",
   BROKEN_LINE: "/src/assets/icons/broken-line.svg",
   QUESTION: "/src/assets/icons/question.svg",
+  CERTIFICATION: "/src/assets/icons/certification-mark.svg",
 };
 
 export const IMAGE_PATHS = {
