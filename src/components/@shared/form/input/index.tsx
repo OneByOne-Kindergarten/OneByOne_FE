@@ -22,7 +22,7 @@ const inputVariants = cva(
         lg: "text-lg",
         lg_sb: "font-semibold text-lg",
       },
-      size: {
+      inputSize: {
         default: "p-5",
         sm: "p-4",
         xs: "py-2 px-3",
@@ -34,25 +34,32 @@ const inputVariants = cva(
     defaultVariants: {
       variant: "default",
       font: "sm",
-      size: "default",
+      inputSize: "default",
       error: false,
     },
   }
 );
 
-const Input = React.forwardRef<
-  HTMLInputElement,
-  React.ComponentProps<"input"> & VariantProps<typeof inputVariants>
->(({ className, font, size, variant, error, type, ...props }, ref) => {
-  return (
-    <input
-      type={type}
-      className={cn(inputVariants({ font, size, variant, error, className }))}
-      ref={ref}
-      {...props}
-    />
-  );
-});
+export interface InputProps
+  extends React.InputHTMLAttributes<HTMLInputElement>,
+    VariantProps<typeof inputVariants> {
+  inputSize?: "default" | "sm" | "xs";
+}
+
+const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  ({ className, font, inputSize, variant, error, type, ...props }, ref) => {
+    return (
+      <input
+        type={type}
+        className={cn(
+          inputVariants({ font, inputSize, variant, error, className })
+        )}
+        ref={ref}
+        {...props}
+      />
+    );
+  }
+);
 Input.displayName = "Input";
 
 export default Input;

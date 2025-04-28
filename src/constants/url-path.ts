@@ -17,5 +17,6 @@ export const URL_PATHS = {
   BOOKMARKS: "/bookmarks",
   USER: "/user",
   USER_EDITOR: "/user/edit",
+  USER_NICKNAME_EDITOR: "/user/edit/nickname",
   PERMISSION_TEST: "/permission-test",
 };

@@ -17,6 +17,7 @@ const PostEditorPage = lazy(() => import("../pages/community/post-editor"));
 const BookmarksPage = lazy(() => import("../pages/bookmarks"));
 const UserPage = lazy(() => import("../pages/user"));
 const UserEditorPage = lazy(() => import("../pages/user/user-editor"));
+const NicknameEditorPage = lazy(() => import("../pages/user/nickname-editor"));
 
 // 테스트 페이지
 const PermissionTestPage = lazy(
@@ -43,6 +44,7 @@ const routes = {
     { path: URL_PATHS.COMMUNITY_POST, element: <CommunityPostPage /> },
     // 프로필
     { path: URL_PATHS.USER_EDITOR, element: <UserEditorPage /> },
+    { path: URL_PATHS.USER_NICKNAME_EDITOR, element: <NicknameEditorPage /> },
     // 테스트 페이지
     { path: URL_PATHS.PERMISSION_TEST, element: <PermissionTestPage /> },
   ],

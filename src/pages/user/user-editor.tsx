@@ -1,4 +1,5 @@
 import { useAtom } from "jotai";
+import { useNavigate } from "react-router-dom";
 import { userAtom } from "@/stores/userStore";
 
 import PageLayout from "@/components/@shared/layout/page-layout";
@@ -8,8 +9,14 @@ import ToolTip from "@/components/@shared/tool-tip";
 import { URL_PATHS } from "@/constants/url-path";
 import { IMAGE_PATHS } from "@/constants/assets-path";
 import { Switch } from "@/components/switch";
+
 export default function UserEditorPage() {
   const [user] = useAtom(userAtom);
+  const navigate = useNavigate();
+
+  const handleNicknameEdit = () => {
+    navigate(URL_PATHS.USER_NICKNAME_EDITOR);
+  };
 
   return (
     <PageLayout
@@ -18,13 +25,22 @@ export default function UserEditorPage() {
       headerTitle="프로필 수정"
       currentPath={URL_PATHS.USER}
       wrapperBg="white"
-      mainClassName="flex flex-col gap-5 pb-5 mb-24"
+      mainClassName="flex flex-col gap-5 pb-5 mb-24 px-5"
     >
-      <section className="flex flex-col py-5 items-center gap-2.5">
+      <section className="flex flex-col py-5 items-center gap-2.5 ">
+        <div className="flex items-center justify-between w-full">
+          <h2 className="font-semibold text-primary-dark01">프로필</h2>
+          <button
+            className="text-sm text-primary-normal03"
+            onClick={handleNicknameEdit}
+          >
+            편집
+          </button>
+        </div>
         <ProfileImage profileImageUrl={user?.profileImageUrl} />
         <ProfileDetail user={user} className="items-center" />
       </section>
-      <section className="flex flex-col gap-6 px-5">
+      <section className="flex flex-col gap-6">
         <div className="flex gap-4">
           <div className="flex items-center gap-2.5">
             <h2 className="font-semibold text-primary-dark01">근무지역</h2>

@@ -6,12 +6,22 @@ import {
   SignUpResponse,
 } from "@/types/authDTO";
 import { signIn, signUp } from "@/services/authService";
+import {
+  updateNickname,
+  updatePassword,
+  withdrawUser,
+} from "@/services/userService";
 import { toast } from "@/hooks/useToast";
 import { useNavigate } from "react-router-dom";
 import { URL_PATHS } from "@/constants/url-path";
 
 interface SignupCallbacks {
   onComplete?: () => void; // 완료 시 추가 동작
+}
+
+interface PasswordUpdateParams {
+  currentPassword: string;
+  newPassword: string;
 }
 
 /**
@@ -50,6 +60,131 @@ export const useSignIn = () => {
 
       toast({
         title: "로그인 실패",
+        description: errorMessage,
+        variant: "destructive",
+      });
+    },
+  });
+};
+
+/**
+ * 닉네임 변경 API 호출
+ * - 에러 처리
+ * - 토스트 관리
+ */
+export const useUpdateNickname = () => {
+  return useMutation<boolean, Error, string>({
+    mutationFn: (newNickname: string) => updateNickname(newNickname),
+    onSuccess: () => {
+      toast({
+        title: "닉네임 변경 성공",
+        description: "닉네임이 성공적으로 변경되었습니다.",
+        variant: "default",
+      });
+    },
+    onError: (error) => {
+      let errorMessage = "닉네임 변경에 실패했습니다. 다시 시도해주세요.";
+
+      if (error instanceof Error) {
+        try {
+          const errorObj = JSON.parse(error.message);
+          if (errorObj.data?.message) {
+            errorMessage = errorObj.data.message;
+          }
+        } catch (e) {
+          if (error.message && error.message !== "Failed to fetch") {
+            errorMessage = error.message;
+          }
+        }
+      }
+
+      toast({
+        title: "닉네임 변경 실패",
+        description: errorMessage,
+        variant: "destructive",
+      });
+    },
+  });
+};
+
+/**
+ * 비밀번호 변경 API 호출
+ * - 에러 처리
+ * - 토스트 관리
+ */
+export const useUpdatePassword = () => {
+  return useMutation<boolean, Error, PasswordUpdateParams>({
+    mutationFn: ({ currentPassword, newPassword }) =>
+      updatePassword(currentPassword, newPassword),
+    onSuccess: () => {
+      toast({
+        title: "비밀번호 변경 성공",
+        description: "비밀번호가 성공적으로 변경되었습니다.",
+        variant: "default",
+      });
+    },
+    onError: (error) => {
+      let errorMessage = "비밀번호 변경에 실패했습니다. 다시 시도해주세요.";
+
+      if (error instanceof Error) {
+        try {
+          const errorObj = JSON.parse(error.message);
+          if (errorObj.data?.message) {
+            errorMessage = errorObj.data.message;
+          }
+        } catch (e) {
+          if (error.message && error.message !== "Failed to fetch") {
+            errorMessage = error.message;
+          }
+        }
+      }
+
+      toast({
+        title: "비밀번호 변경 실패",
+        description: errorMessage,
+        variant: "destructive",
+      });
+    },
+  });
+};
+
+/**
+ * 회원 탈퇴 API 호출
+ * - 에러 처리
+ * - 토스트 관리
+ * - 성공 시 루트 페이지로 이동
+ */
+export const useWithdrawUser = () => {
+  const navigate = useNavigate();
+
+  return useMutation<boolean, Error, string>({
+    mutationFn: () => withdrawUser(),
+    onSuccess: () => {
+      toast({
+        title: "회원 탈퇴 완료",
+        description: "그동안 이용해주셔서 감사합니다.",
+        variant: "default",
+      });
+      navigate(URL_PATHS.HOME);
+    },
+    onError: (error) => {
+      let errorMessage = "회원 탈퇴에 실패했습니다. 다시 시도해주세요.";
+
+      if (error instanceof Error) {
+        try {
+          const errorObj = JSON.parse(error.message);
+          if (errorObj.data?.message) {
+            errorMessage = errorObj.data.message;
+          }
+        } catch (e) {
+          if (error.message && error.message !== "Failed to fetch") {
+            errorMessage = error.message;
+          }
+        }
+      }
+
+      toast({
+        title: "회원 탈퇴 실패",
         description: errorMessage,
         variant: "destructive",
       });
