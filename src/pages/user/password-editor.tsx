@@ -1,0 +1,119 @@
+import { useNavigate } from "react-router-dom";
+import { useAtom } from "jotai";
+import { z } from "zod";
+
+import {
+  Form,
+  FormLabel,
+  FormField,
+  FormItem,
+  FormControl,
+  FormMessage,
+} from "@/components/@shared/form";
+import PageLayout from "@/components/@shared/layout/page-layout";
+import { URL_PATHS } from "@/constants/url-path";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Input from "@/components/@shared/form/input";
+import Button from "@/components/@shared/buttons/base-button";
+import { useUpdatePassword } from "@/hooks/useAuth";
+
+const passwordSchema = z.object({
+  currentPassword: z.string().min(1, "현재 비밀번호를 입력해주세요."),
+  newPassword: z.string().min(1, "새 비밀번호를 입력해주세요."),
+});
+
+type PasswordFormData = z.infer<typeof passwordSchema>;
+
+export default function PasswordEditorPage() {
+  const { mutate: updatePassword, isPending } = useUpdatePassword();
+
+  const form = useForm<PasswordFormData>({
+    resolver: zodResolver(passwordSchema),
+    defaultValues: {
+      currentPassword: "",
+      newPassword: "",
+    },
+  });
+
+  const onSubmit = (data: PasswordFormData) => {
+    updatePassword({
+      currentPassword: data.currentPassword,
+      newPassword: data.newPassword,
+    });
+  };
+
+  const isFormValid =
+    form.formState.isValid &&
+    form.getValues("currentPassword") !== "" &&
+    form.getValues("newPassword") !== "";
+
+  return (
+    <PageLayout
+      title="원바원 | 비밀번호 변경"
+      description="사용자 비밀번호 변경"
+      headerTitle="비밀번호 변경"
+      currentPath={URL_PATHS.USER}
+      wrapperBg="white"
+      mainClassName="flex flex-col px-5"
+    >
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col justify-between gap-12 py-7"
+        >
+          <div className="flex flex-col gap-6">
+            <FormField
+              control={form.control}
+              name="currentPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-primary-dark01 font-semibold">
+                    현재 비밀번호
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder="현재 비밀번호를 입력해주세요"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="newPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-primary-dark01 font-semibold">
+                    새 비밀번호
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder="새 비밀번호를 입력해주세요"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <Button
+            type="submit"
+            disabled={isPending || !isFormValid}
+            className="w-full"
+            variant="secondary"
+          >
+            변경하기
+          </Button>
+        </form>
+      </Form>
+    </PageLayout>
+  );
+}

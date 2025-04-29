@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+
 import { useSignOut, useWithdrawUser } from "@/hooks/useAuth";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import PopUpModal from "@/components/@shared/modal/pop-up";
@@ -11,14 +13,6 @@ export default function AccountSettingPage() {
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
   const { mutate: signOut } = useSignOut();
   const { mutate: withdraw } = useWithdrawUser();
-
-  const handleSignOut = () => {
-    setIsSignOutModalOpen(true);
-  };
-
-  const handleWithdraw = () => {
-    setIsWithdrawModalOpen(true);
-  };
 
   return (
     <PageLayout
@@ -36,13 +30,32 @@ export default function AccountSettingPage() {
             <div className="flex items-center gap-5">
               <img
                 src={SVG_PATHS.LOGOUT}
-                alt="로그아웃 유저 아이콘"
+                alt="유저 아이콘"
+                width="20"
+                height="20"
+              />
+              <span>비밀번호 변경</span>
+            </div>
+            <Link to={URL_PATHS.USER_PASSWORD_EDITOR}>
+              <img
+                src={SVG_PATHS.ARROW.right}
+                alt="오른쪽 방향 화살표 아이콘"
+                width="24"
+                height="24"
+              />
+            </Link>
+          </li>
+          <li className="flex items-center flex-1 justify-between">
+            <div className="flex items-center gap-5">
+              <img
+                src={SVG_PATHS.LOGOUT}
+                alt="유저 아이콘"
                 width="20"
                 height="20"
               />
               <span>로그아웃</span>
             </div>
-            <button onClick={handleSignOut}>
+            <button onClick={() => setIsSignOutModalOpen(true)}>
               <img
                 src={SVG_PATHS.ARROW.right}
                 alt="오른쪽 방향 화살표 아이콘"
@@ -61,7 +74,7 @@ export default function AccountSettingPage() {
               />
               <span>회원 탈퇴</span>
             </div>
-            <button onClick={handleWithdraw}>
+            <button onClick={() => setIsWithdrawModalOpen(true)}>
               <img
                 src={SVG_PATHS.ARROW.right}
                 alt="오른쪽 방향 화살표 아이콘"

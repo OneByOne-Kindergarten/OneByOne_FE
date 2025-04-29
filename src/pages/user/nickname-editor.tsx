@@ -1,9 +1,7 @@
-import { useAtom } from "jotai";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { userAtom } from "@/stores/userStore";
 import { useUpdateNickname } from "@/hooks/useAuth";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import { URL_PATHS } from "@/constants/url-path";
@@ -33,14 +31,13 @@ const nicknameSchema = z.object({
 type NicknameFormData = z.infer<typeof nicknameSchema>;
 
 export default function NicknameEditorPage() {
-  const [user] = useAtom(userAtom);
   const navigate = useNavigate();
   const { mutate: updateNickname, isPending } = useUpdateNickname();
 
   const form = useForm<NicknameFormData>({
     resolver: zodResolver(nicknameSchema),
     defaultValues: {
-      nickname: user?.nickname || "",
+      nickname: "",
     },
   });
 
@@ -90,8 +87,13 @@ export default function NicknameEditorPage() {
               </FormItem>
             )}
           />
-          <Button type="submit" disabled={isPending} className="w-full">
-            저장하기
+          <Button
+            type="submit"
+            disabled={isPending || !form.formState.isValid}
+            className="w-full"
+            variant="secondary"
+          >
+            변경하기
           </Button>
         </form>
       </Form>

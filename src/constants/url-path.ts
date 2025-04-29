@@ -18,6 +18,7 @@ export const URL_PATHS = {
   USER: "/user",
   USER_PROFILE_EDITOR: "/user/profile",
   USER_NICKNAME_EDITOR: "/user/profile/nickname",
+  USER_PASSWORD_EDITOR: "/user/account-setting/password",
   USER_ACCOUNT_SETTING: "/user/account-setting",
   PERMISSION_TEST: "/permission-test",
 };

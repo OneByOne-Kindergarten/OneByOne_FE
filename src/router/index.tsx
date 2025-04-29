@@ -18,6 +18,7 @@ const BookmarksPage = lazy(() => import("../pages/bookmarks"));
 const UserPage = lazy(() => import("../pages/user"));
 const ProfileEditorPage = lazy(() => import("../pages/user/profile-editor"));
 const NicknameEditorPage = lazy(() => import("../pages/user/nickname-editor"));
+const PasswordEditorPage = lazy(() => import("../pages/user/password-editor"));
 const AccountSettingPage = lazy(() => import("../pages/user/account-setting"));
 // 테스트 페이지
 const PermissionTestPage = lazy(
@@ -45,6 +46,7 @@ const routes = {
     // 프로필
     { path: URL_PATHS.USER_PROFILE_EDITOR, element: <ProfileEditorPage /> },
     { path: URL_PATHS.USER_NICKNAME_EDITOR, element: <NicknameEditorPage /> },
+    { path: URL_PATHS.USER_PASSWORD_EDITOR, element: <PasswordEditorPage /> },
     { path: URL_PATHS.USER_ACCOUNT_SETTING, element: <AccountSettingPage /> },
     // 테스트 페이지
     { path: URL_PATHS.PERMISSION_TEST, element: <PermissionTestPage /> },

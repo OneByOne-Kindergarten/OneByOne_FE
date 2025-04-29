@@ -4,8 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 
 import PageLayout from "@/components/@shared/layout/page-layout";
 import Button from "@/components/@shared/buttons/base-button";
-import ProfileImage from "@/components/user/profile-image";
-import ProfileDetail from "@/components/user/profile-detail";
+import ProfileImage from "@/components/user/ProfileImage";
+import ProfileDetail from "@/components/user/ProfileDetail";
 
 import { URL_PATHS } from "@/constants/url-path";
 import { SVG_PATHS, IMAGE_PATHS } from "@/constants/assets-path";

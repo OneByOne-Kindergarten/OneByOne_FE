@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { userAtom } from "@/stores/userStore";
 
 import PageLayout from "@/components/@shared/layout/page-layout";
-import ProfileDetail from "@/components/user/profile-detail";
-import ProfileImage from "@/components/user/profile-image";
+import ProfileDetail from "@/components/user/ProfileDetail";
+import ProfileImage from "@/components/user/ProfileImage";
 import ToolTip from "@/components/@shared/tool-tip";
 import { URL_PATHS } from "@/constants/url-path";
 import { IMAGE_PATHS } from "@/constants/assets-path";

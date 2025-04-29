@@ -95,8 +95,20 @@ export const updatePassword = async (
 
     return true;
   } catch (error) {
-    console.error("비밀번호 변경 실패:", error);
-    return false;
+    if (error instanceof Error) {
+      try {
+        const errorObj = JSON.parse(error.message);
+        if (
+          errorObj.status === 400 &&
+          errorObj.data?.message === "비밀번호가 일치하지 않습니다."
+        ) {
+          return false;
+        }
+      } catch (e) {
+        // 파싱 실패 시 기본 에러 처리
+      }
+    }
+    throw error;
   }
 };
 
