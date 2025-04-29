@@ -12,18 +12,20 @@ import {
   FormMessage,
   FormField,
 } from "@/components/@shared/form";
+import { useRandomNickname } from "@/hooks/useRandomNickname";
 import Input from "@/components/@shared/form/input";
 import ErrorMessage from "@/components/@shared/form/error-message";
 import Button from "@/components/@shared/buttons/base-button";
+import RoleButton from "@/components/sign-up/RoleButton";
 import { SVG_PATHS } from "@/constants/assets-path";
 import { CommunityCategoryType } from "@/constants/community";
 
-// 닉네임, 회원 유형
+// 닉네임, 회원 유형 검증
 const step2Schema = z.object({
   nickname: z
     .string()
     .min(2, "닉네임은 최소 2자 이상이어야 합니다.")
-    .max(8, "닉네임은 최대 8자까지 가능합니다."),
+    .max(10, "닉네임은 최대 10자까지 가능합니다."),
   role: z.enum(["TEACHER", "PROSPECTIVE_TEACHER"], {
     errorMap: () => ({ message: "회원 유형을 선택해주세요." }),
   }),
@@ -51,6 +53,11 @@ export function Step2Form({
   const [selectedRole, setSelectedRole] =
     useState<CommunityCategoryType>("TEACHER");
 
+  const { isRandomNickname, handleRandomNickname, handleManualNickname } =
+    useRandomNickname({
+      setValue: form.setValue,
+    });
+
   const handleRoleChange = (role: CommunityCategoryType) => {
     setSelectedRole(role);
     form.setValue("role", role, { shouldValidate: true });
@@ -72,73 +79,72 @@ export function Step2Form({
             name="nickname"
             render={({ field, fieldState }) => (
               <FormItem>
-                <FormLabel>선생님이 사용하실 닉네임이에요!</FormLabel>
+                <div className="relative flex justify-between items-center">
+                  <FormLabel className="font-semibold text-primary-dark01">
+                    선생님이 사용하실 닉네임이에요!
+                  </FormLabel>
+                  <Button
+                    type="button"
+                    variant="transparent_gray"
+                    font="sm"
+                    size="sm"
+                    onClick={
+                      isRandomNickname
+                        ? handleManualNickname
+                        : handleRandomNickname
+                    }
+                  >
+                    <p>{isRandomNickname ? "직접 설정" : "랜덤 설정"}</p>
+                  </Button>
+                  {isRandomNickname && (
+                    <img
+                      src={SVG_PATHS.CHECK}
+                      width={26}
+                      height={26}
+                      className="absolute top-10 right-3"
+                    />
+                  )}
+                </div>
                 <FormControl>
                   <Input
+                    className={clsx(isRandomNickname && "border-tertiary-3")}
                     placeholder="닉네임을 입력해주세요."
                     error={!!fieldState.error}
                     {...field}
                   />
                 </FormControl>
+                {isRandomNickname && (
+                  <p className="text-xs text-tertiary-3 mt-1">
+                    안전한 커뮤니티 운영을 위한 닉네임이 자동으로 만들어졌어요
+                  </p>
+                )}
                 <FormMessage />
               </FormItem>
             )}
           />
 
           <FormItem>
-            <FormLabel>해당되는 역할을 선택해주세요.</FormLabel>
+            <FormLabel className="font-semibold text-primary-dark01">
+              해당되는 역할을 선택해주세요.
+            </FormLabel>
             <div className="flex w-full gap-3">
-              <button
-                type="button"
+              <RoleButton
+                role="TEACHER"
+                isSelected={selectedRole === "TEACHER"}
                 onClick={() => handleRoleChange("TEACHER")}
-                className={clsx(
-                  "w-1/2 px-4 pt-5 pb-7 gap-3 flex flex-col text-left rounded-lg",
-                  selectedRole === "TEACHER"
-                    ? "bg-tertiary-1 text-primary-dark01 outline-1 outline outline-tertiary-3"
-                    : "bg-primary-foreground text-primary-normal03"
-                )}
-              >
-                <img
-                  src={SVG_PATHS.CHARACTER.chicken}
-                  alt="닭 캐릭터"
-                  width={56}
-                  height={56}
-                  className="ml-auto"
-                />
-                <div className="flex flex-col">
-                  <strong className="text-sm font-semibold">교사예요.</strong>
-                  <span className="text-xxs text-pretty">
-                    교사 경력을 인증할 수 있어요!
-                  </span>
-                </div>
-              </button>
-              <button
-                type="button"
+                character={SVG_PATHS.CHARACTER.chicken}
+                title="교사예요."
+                description="교사 경력을 인증할 수 있어요!"
+              />
+              <RoleButton
+                role="PROSPECTIVE_TEACHER"
+                isSelected={selectedRole === "PROSPECTIVE_TEACHER"}
                 onClick={() => handleRoleChange("PROSPECTIVE_TEACHER")}
-                className={clsx(
-                  "w-1/2 px-4 pt-5 pb-7 gap-3 flex flex-col text-left rounded-lg",
-                  selectedRole === "PROSPECTIVE_TEACHER"
-                    ? "bg-tertiary-1 text-primary-dark01 outline-1 outline outline-tertiary-3"
-                    : "bg-primary-foreground text-primary-normal03"
-                )}
-              >
-                <img
-                  src={SVG_PATHS.CHARACTER.chick}
-                  alt="병아리 캐릭터"
-                  width={56}
-                  height={56}
-                  className="ml-auto"
-                />
-                <div className="flex flex-col">
-                  <strong className="text-sm font-semibold">
-                    예비교사예요.
-                  </strong>
-                  <span className="text-xxs">
-                    교사를 꿈꾸는, 아직 경력이 <br />
-                    없는 사람이에요!
-                  </span>
-                </div>
-              </button>
+                character={SVG_PATHS.CHARACTER.chick}
+                title="예비교사예요."
+                description="교사를 꿈꾸는, 아직 경력이 <br />
+                    없는 사람이에요!"
+              />
             </div>
             {form.formState.errors.role && (
               <FormMessage>{form.formState.errors.role.message}</FormMessage>
