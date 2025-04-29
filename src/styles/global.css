@@ -114,6 +114,13 @@
     overflow-x: hidden;
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
+    touch-action: pan-x pan-y; /* 핀치 줌과 더블 탭 줌 비활성화 */
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version */
   }
 
   html::-webkit-scrollbar,
@@ -121,6 +128,21 @@
     width: 0;
     display: none; /* Chrome, Safari, Opera */
   }
+}
+
+/* iOS에서 모든 요소에 touch-action 적용 */
+* {
+  touch-action: pan-x pan-y;
+}
+
+/* iOS에서 텍스트 입력 필드에만 적절한 선택 기능 허용 */
+input, textarea {
+  -webkit-user-select: text; /* Safari */
+  -khtml-user-select: text; /* Konqueror HTML */
+  -moz-user-select: text; /* Firefox */
+  -ms-user-select: text; /* Internet Explorer/Edge */
+  user-select: text; /* Non-prefixed version */
+  touch-action: manipulation; /* 기본 확대/축소 방지하면서 탭 클릭 허용 */
 }
 
 /* 스크롤바 스타일 */
