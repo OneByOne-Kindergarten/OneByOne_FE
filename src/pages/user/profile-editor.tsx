@@ -8,7 +8,7 @@ import ProfileImage from "@/components/user/ProfileImage";
 import ToolTip from "@/components/@shared/tool-tip";
 import { URL_PATHS } from "@/constants/url-path";
 import { IMAGE_PATHS } from "@/constants/assets-path";
-import { Switch } from "@/components/switch";
+import { Switch } from "@/components/@shared/switch";
 
 export default function ProfileEditorPage() {
   const [user] = useAtom(userAtom);
