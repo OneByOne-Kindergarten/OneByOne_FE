@@ -173,7 +173,7 @@ export const useSignOut = () => {
         description: "안녕히가세요!",
         variant: "default",
       });
-      navigate(URL_PATHS.HOME);
+      navigate(URL_PATHS.ROOT);
     },
     onError: (error) => {
       let errorMessage = "로그아웃에 실패했습니다. 다시 시도해주세요.";

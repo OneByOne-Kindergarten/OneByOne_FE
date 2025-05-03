@@ -4,7 +4,7 @@ import { URL_PATHS } from "@/constants/url-path";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 
 const TestPage = lazy(() => import("../pages/test"));
-const HomePage = lazy(() => import("../pages"));
+const RootPage = lazy(() => import("../pages"));
 const SchoolPage = lazy(() => import("../pages/school"));
 const SignInPage = lazy(() => import("../pages/auth/sign-in"));
 const SignUpPage = lazy(() => import("../pages/auth/sign-up"));
@@ -20,6 +20,9 @@ const ProfileEditorPage = lazy(() => import("../pages/user/profile-editor"));
 const NicknameEditorPage = lazy(() => import("../pages/user/nickname-editor"));
 const PasswordEditorPage = lazy(() => import("../pages/user/password-editor"));
 const AccountSettingPage = lazy(() => import("../pages/user/account-setting"));
+const InquiryPage = lazy(() => import("../pages/inquiry"));
+const NoticePage = lazy(() => import("../pages/notice"));
+const NoticeDetailPage = lazy(() => import("../pages/notice/notice-detail"));
 // 테스트 페이지
 const PermissionTestPage = lazy(
   () => import("../components/example/PermissionExample")
@@ -28,7 +31,7 @@ const PermissionTestPage = lazy(
 const routes = {
   direct: [
     { path: URL_PATHS.TEST, element: <TestPage /> },
-    { path: URL_PATHS.HOME, element: <HomePage /> },
+    { path: URL_PATHS.ROOT, element: <RootPage /> },
     { path: URL_PATHS.BOOKMARKS, element: <BookmarksPage /> },
     { path: URL_PATHS.USER, element: <UserPage /> },
     { path: URL_PATHS.SIGNIN, element: <SignInPage /> },
@@ -48,12 +51,15 @@ const routes = {
     { path: URL_PATHS.USER_NICKNAME_EDITOR, element: <NicknameEditorPage /> },
     { path: URL_PATHS.USER_PASSWORD_EDITOR, element: <PasswordEditorPage /> },
     { path: URL_PATHS.USER_ACCOUNT_SETTING, element: <AccountSettingPage /> },
-    // 테스트 페이지
+    { path: URL_PATHS.INQUIRY, element: <InquiryPage /> },
+    { path: URL_PATHS.NOTICE, element: <NoticePage /> },
+    { path: URL_PATHS.NOTICE_DETAIL, element: <NoticeDetailPage /> },
+    // 테스트
     { path: URL_PATHS.PERMISSION_TEST, element: <PermissionTestPage /> },
   ],
 
   redirect: [
-    { path: "*", to: URL_PATHS.HOME },
+    { path: "*", to: URL_PATHS.ROOT },
     { path: URL_PATHS.COMMUNITY_TEACHER, to: "/community?type=teacher" },
     { path: URL_PATHS.COMMUNITY_STUDENT, to: "/community?type=pre-teacher" },
     { path: URL_PATHS.REVIEW_WORK, to: "/school/:id/review?type=work" },

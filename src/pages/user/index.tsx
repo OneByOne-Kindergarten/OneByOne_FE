@@ -74,13 +74,13 @@ export default function User() {
             <MenuItem
               iconPath={SVG_PATHS.DOCUMENT}
               iconAlt="문서 아이콘"
-              to="?notice"
+              to={URL_PATHS.NOTICE}
               label="공지사항"
             />
             <MenuItem
               iconPath={SVG_PATHS.INQUIRY}
               iconAlt="설정 아이콘"
-              to="?inquiry"
+              to={URL_PATHS.INQUIRY}
               label="문의"
             />
             <MenuItem

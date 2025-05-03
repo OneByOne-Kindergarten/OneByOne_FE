@@ -20,6 +20,11 @@ export const API_PATHS = {
     BASE: "/favorite-kindergartens",
     STATUS: "/favorite-kindergartens/status",
   },
+  NOTICE: {
+    BASE: "/notice",
+    ADMIN: "/admin/notice",
+    STATUS: (noticeId: number) => `/admin/notice/${noticeId}/status`,
+  },
   USER: {
     BASE: "/users",
     REISSUE: "/users/reissue",

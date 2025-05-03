@@ -1,7 +1,6 @@
 import {
   useMutation,
   useQuery,
-  useSuspenseQuery,
   useSuspenseInfiniteQuery,
   useInfiniteQuery,
   useQueryClient,

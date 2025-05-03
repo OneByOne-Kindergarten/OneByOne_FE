@@ -13,7 +13,6 @@ import {
  * @param id
  * @returns 유치원 상세 정보
  */
-
 export const getKindergartenDetail = async (
   id: number
 ): Promise<KindergartenDetailResponse> => {
@@ -35,7 +34,6 @@ export const getKindergartenDetail = async (
  * @param params latitude, longitude, radiusKm
  * @returns 주변 유치원 목록
  */
-
 export const getNearbyKindergartens = async (
   params: NearbyKindergartensParams
 ): Promise<NearbyKindergartensResponse> => {
@@ -67,7 +65,6 @@ export const getNearbyKindergartens = async (
  * @param params search options, page, size, sort
  * @returns 페이지네이션된 유치원 목록
  */
-
 export const searchKindergartens = async (
   params: KindergartenSearchParams
 ): Promise<KindergartenSearchResponse> => {

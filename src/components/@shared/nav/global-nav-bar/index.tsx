@@ -17,7 +17,7 @@ const LAST_VISITED_PATHS_KEY = "lastVisitedPaths";
 
 // 상위 UrlKey 목록
 const ROOT_URL_KEYS: UrlKeys[] = [
-  "HOME",
+  "ROOT",
   "SCHOOL",
   "COMMUNITY",
   "BOOKMARKS",
@@ -26,7 +26,7 @@ const ROOT_URL_KEYS: UrlKeys[] = [
 
 // 상위 UrlKey 및 하위 UrlKey 그룹화
 const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
-  HOME: ["HOME"],
+  ROOT: ["ROOT"],
   SCHOOL: [
     "SCHOOL",
     "SCHOOL_DETAIL",
@@ -43,7 +43,15 @@ const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
     "COMMUNITY_POST_EDITOR",
   ],
   BOOKMARKS: ["BOOKMARKS"],
-  USER: ["USER"],
+  USER: [
+    "USER",
+    "USER_PROFILE_EDITOR",
+    "USER_PASSWORD_EDITOR",
+    "USER_ACCOUNT_SETTING",
+    "INQUIRY",
+    "NOTICE",
+    "NOTICE_DETAIL",
+  ],
   COMMUNITY_TEACHER: [],
   COMMUNITY_STUDENT: [],
   COMMUNITY_POST: [],
@@ -55,6 +63,14 @@ const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
   REVIEW_EDITOR: [],
   SIGNIN: [],
   SIGNUP: [],
+  INQUIRY: [],
+  NOTICE: [],
+  NOTICE_DETAIL: [],
+  USER_PROFILE_EDITOR: [],
+  USER_NICKNAME_EDITOR: [],
+  USER_PASSWORD_EDITOR: [],
+  USER_ACCOUNT_SETTING: [],
+  PERMISSION_TEST: [],
   TEST: [],
 };
 
@@ -160,7 +176,7 @@ export default function GlobalNavBar({ currentPath }: GlobalNavBarProps) {
     const currentUrlKey = getCurrentUrlKey();
     const pathWithoutParams = getPathWithoutParams(currentPath);
 
-    if (urlKey === "HOME") {
+    if (urlKey === "ROOT") {
       return pathWithoutParams === "/";
     }
 

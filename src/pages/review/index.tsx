@@ -13,7 +13,6 @@ import { useSchoolNavigation } from "@/hooks/useSchoolNavigation";
 import { useFetchReviewData } from "@/hooks/useFetchReviewData";
 import { getFieldConfigsByType } from "@/utils/fieldConfigsUtils";
 import { REVIEW_TYPES, REVIEW_TYPE_LABELS } from "@/constants/review";
-import { URL_PATHS } from "@/constants/url-path";
 import { setReviewState } from "@/utils/lastVisitedPathUtils";
 
 type SortType = "recommended" | "latest";
