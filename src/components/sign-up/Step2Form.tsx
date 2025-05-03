@@ -98,7 +98,7 @@ export function Step2Form({
                   </Button>
                   {isRandomNickname && (
                     <img
-                      src={SVG_PATHS.CHECK}
+                      src={SVG_PATHS.CHECK.blue}
                       width={26}
                       height={26}
                       className="absolute top-10 right-3"

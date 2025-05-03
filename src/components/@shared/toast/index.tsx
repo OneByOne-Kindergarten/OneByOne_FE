@@ -100,7 +100,7 @@ const ToastTitle = React.forwardRef<
     {variant === "destructive" ? (
       <img src={SVG_PATHS.ERROR} width={20} height={20} />
     ) : (
-      <img src={SVG_PATHS.CHECK} width={20} height={20} />
+      <img src={SVG_PATHS.CHECK.green} width={20} height={20} />
     )}
     {children}
   </ToastPrimitives.Title>

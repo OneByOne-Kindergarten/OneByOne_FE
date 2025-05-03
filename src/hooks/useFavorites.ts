@@ -6,7 +6,6 @@ import { getFavorites } from "@/services/favoriteService";
  * 즐겨찾기 목록 조회
  * @returns 즐겨찾기 목록 데이터, 로딩/에러 상태
  */
-
 export const useFavorites = () => {
   const {
     data: response,

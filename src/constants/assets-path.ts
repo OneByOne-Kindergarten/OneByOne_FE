@@ -65,7 +65,13 @@ export const SVG_PATHS = {
     active: "/src/assets/icons/bookmarker-active.svg",
     inactive: "/src/assets/icons/bookmarker-inactive.svg",
   },
-  CHECK: "/src/assets/icons/check.svg",
+  CHECK: {
+    green: "/src/assets/icons/check-green.svg",
+    blue: "/src/assets/icons/check-blue.svg",
+  },
+  RESET: {
+    password: "/src/assets/icons/reset-password.svg",
+  },
   ERROR: "/src/assets/icons/error.svg",
   CANCEL: "/src/assets/icons/cancel.svg",
   INQUIRY: "/src/assets/icons/inquiry.svg",

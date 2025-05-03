@@ -4,7 +4,6 @@ import { useSignOut, useWithdrawUser } from "@/hooks/useAuth";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import LogOutAlertModal from "@/components/user/LogOutAlertModal";
 import WithdrawAlertModal from "@/components/user/WithdrawAlertModal";
-import Button from "@/components/@shared/buttons/base-button";
 import MenuItem from "@/components/user/MenuItem";
 import { URL_PATHS } from "@/constants/url-path";
 import { SVG_PATHS } from "@/constants/assets-path";
@@ -28,8 +27,8 @@ export default function AccountSettingPage() {
       <section className="flex flex-col gap-4 p-5 font-bold bg-white">
         <menu className="text-primary-dark01 flex flex-col gap-6">
           <MenuItem
-            iconPath={SVG_PATHS.LOGOUT}
-            iconAlt="유저 아이콘"
+            iconPath={SVG_PATHS.RESET.password}
+            iconAlt="비밀번호 변경 아이콘"
             to={URL_PATHS.USER_PASSWORD_EDITOR}
             label="비밀번호 변경"
           />
@@ -40,8 +39,8 @@ export default function AccountSettingPage() {
             onClick={() => setIsSignOutModalOpen(true)}
           />
           <MenuItem
-            iconPath={SVG_PATHS.LOGOUT}
-            iconAlt="유저 아이콘"
+            iconPath={SVG_PATHS.LEAVE}
+            iconAlt="회원탈퇴 아이콘"
             label="회원 탈퇴"
             onClick={() => setIsWithdrawModalOpen(true)}
           />
