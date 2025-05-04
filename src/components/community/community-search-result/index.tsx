@@ -69,7 +69,7 @@ export default function CommunitySearchResult({
     return typeof window !== "undefined" ? window.innerHeight - 120 : 680;
   });
 
-  const itemHeight = 104;
+  const itemHeight = 124;
   const listHeight = Math.min(results.length * itemHeight, maxListHeight);
 
   // 창 크기 변경 시 높이 업데이트

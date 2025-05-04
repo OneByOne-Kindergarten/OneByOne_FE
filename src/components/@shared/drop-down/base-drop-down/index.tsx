@@ -169,7 +169,7 @@ const Dropdown: React.FC<DropdownProps> = ({
           aria-label="드롭다운 열기"
           className="p-1"
         >
-          <img src={SVG_PATHS.KEBAB} alt="메뉴" className="w-6 h-6" />
+          <img src={SVG_PATHS.KEBAB} alt="메뉴" className="w-5 h-5" />
         </button>
       )}
 

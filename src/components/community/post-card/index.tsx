@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 import Badge from "@/components/@shared/badge";
+import PostDropDown from "@/components/@shared/drop-down/post-drop-down";
 import { SVG_PATHS } from "@/constants/assets-path";
 import { formatDate } from "@/utils/dateUtils";
 import type { CommunityPostItem } from "@/types/communityDTO";
@@ -10,6 +11,9 @@ interface PostCardProps {
   index: number;
   currentCategory: string;
   getCategoryLabel: (category: string) => string;
+  showDropdown?: boolean;
+  onEdit?: (post: CommunityPostItem) => void;
+  onDelete?: (post: CommunityPostItem) => void;
 }
 
 export default function PostCard({
@@ -17,18 +21,30 @@ export default function PostCard({
   index,
   currentCategory,
   getCategoryLabel,
+  showDropdown = false,
+  onEdit,
 }: PostCardProps) {
   return (
     <li className="flex items-center gap-3 flex-1 pb-4 border-b border-primary-light02">
       <div className="flex flex-col gap-1.5 flex-1">
-        <div className="flex gap-2">
-          {currentCategory === "top10" && (
-            <Badge variant="secondary">{index + 1}</Badge>
-          )}
-          <Badge variant="primary">{getCategoryLabel(post.categoryName)}</Badge>
+        <div className="flex gap-2 justify-between">
+          <div className="flex gap-2">
+            {currentCategory === "top10" && (
+              <Badge variant="secondary">{index + 1}</Badge>
+            )}
+            <Badge variant="primary">
+              {getCategoryLabel(post.categoryName)}
+            </Badge>
+          </div>
+          {showDropdown && <PostDropDown post={post} onEdit={onEdit} />}
         </div>
         <Link to={`/community/${post.id}`}>
-          <p className="font-semibold text-primary-dark01">{post.title}</p>
+          <p className="font-semibold text-primary-dark01 line-clamp-1">
+            {post.title}
+          </p>
+          <p className="text-sm text-primary-normal03 line-clamp-1">
+            {post.content}
+          </p>
         </Link>
         <div className="flex justify-between text-xs text-primary-normal03">
           <div className="flex gap-4">

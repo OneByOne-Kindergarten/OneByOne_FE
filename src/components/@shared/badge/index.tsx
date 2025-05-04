@@ -10,7 +10,7 @@ export default function Badge({
   ...props
 }: BadgeProps) {
   const baseClasses =
-    "w-fit items-center rounded-full  px-2 py-0.5 font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-xxs ";
+    "w-fit items-center rounded-full my-auto px-2 py-0.5 font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-xxs ";
 
   const variantClasses = {
     primary: "bg-primary-foreground text-primary-dark01",

@@ -134,7 +134,7 @@ export default function PostList({
     );
   }
 
-  const itemHeight = 104;
+  const itemHeight = 124;
   const listHeight = Math.min(uniquePosts.length * itemHeight, maxListHeight);
 
   return (
