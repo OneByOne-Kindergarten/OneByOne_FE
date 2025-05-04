@@ -1,7 +1,10 @@
 export const formatDate = (dateString: string): string => {
   const now = new Date();
   const date = new Date(dateString);
-  const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+
+  // UTC를 KST로 변환 (UTC+9)
+  const kstDate = new Date(date.getTime() + 9 * 60 * 60 * 1000);
+  const diffInSeconds = Math.floor((now.getTime() - kstDate.getTime()) / 1000);
 
   if (diffInSeconds < 60) {
     return `${diffInSeconds}초 전`;
@@ -15,7 +18,7 @@ export const formatDate = (dateString: string): string => {
     const days = Math.floor(diffInSeconds / 86400);
     return `${days}일 전`;
   } else {
-    return date.toLocaleDateString("ko-KR", {
+    return kstDate.toLocaleDateString("ko-KR", {
       year: "2-digit",
       month: "2-digit",
       day: "2-digit",
