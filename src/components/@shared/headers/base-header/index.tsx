@@ -1,11 +1,12 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/utils/cn";
-import { SVG_PATHS } from "@/constants/assets-path";
+import { SVG_PATHS, IMAGE_PATHS } from "@/constants/assets-path";
 import { useHeaderNavigation } from "@/hooks/useHeaderNavigation";
 
 interface HeaderProps extends VariantProps<typeof headerVariants> {
   children?: React.ReactNode;
   title?: string;
+  headerLogo?: boolean;
   hasBackButton?: boolean;
   onBackButtonClick?: () => void;
 }
@@ -28,6 +29,7 @@ const headerVariants = cva(
 export default function Header({
   children,
   title,
+  headerLogo,
   hasBorder = true,
   hasBackButton,
   onBackButtonClick,
@@ -50,7 +52,16 @@ export default function Header({
         </button>
       )}
       <div className="flex items-center justify-between w-full">
-        {title && <h1 className="truncate">{title}</h1>}
+        {title ? (
+          <h1 className="truncate line-clamp-1">{title}</h1>
+        ) : headerLogo ? (
+          <img
+            src={IMAGE_PATHS.LOGO.MAIN}
+            alt="원바원 로고"
+            width={51}
+            height={18}
+          />
+        ) : null}
         {children}
       </div>
     </header>

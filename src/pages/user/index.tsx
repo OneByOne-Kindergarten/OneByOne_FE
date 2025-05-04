@@ -18,7 +18,7 @@ export default function User() {
     <PageLayout
       title="원바원 | 프로필"
       description="사용자 프로필 및 설정"
-      headerTitle="프로필"
+      headerLogo={true}
       currentPath={URL_PATHS.USER}
       mainBg="gray"
       hasBackButton={false}

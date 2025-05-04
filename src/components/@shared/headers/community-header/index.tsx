@@ -12,6 +12,7 @@ import { SVG_PATHS } from "@/constants/assets-path";
 
 interface CommunityHeaderProps {
   title?: string;
+  headerLogo?: boolean;
   hasBackButton?: boolean;
   onBackButtonClick?: () => void;
   hasWriteButton?: boolean;
@@ -20,7 +21,8 @@ interface CommunityHeaderProps {
 }
 
 export default function CommunityHeader({
-  title = "커뮤니티",
+  title,
+  headerLogo,
   hasBackButton = false,
   onBackButtonClick,
   hasWriteButton = false,
@@ -105,6 +107,7 @@ export default function CommunityHeader({
       ) : (
         <Header
           title={title}
+          headerLogo={headerLogo}
           hasBackButton={hasBackButton}
           onBackButtonClick={onBackButtonClick}
           hasBorder={hasBorder}

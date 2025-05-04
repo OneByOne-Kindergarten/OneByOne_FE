@@ -16,6 +16,7 @@ import { useFavorites } from "@/hooks/useFavorites";
 
 interface SchoolHeaderProps {
   title?: string;
+  headerLogo?: boolean;
   hasBorder?: boolean;
   hasBackButton?: boolean;
   onBackButtonClick?: () => void;
@@ -24,7 +25,8 @@ interface SchoolHeaderProps {
 }
 
 export default function SchoolHeader({
-  title = "원바원",
+  title,
+  headerLogo,
   hasBorder,
   hasBackButton,
   onBackButtonClick,
@@ -150,6 +152,7 @@ export default function SchoolHeader({
       ) : (
         <Header
           title={title}
+          headerLogo={headerLogo}
           hasBorder={hasBorder}
           hasBackButton={hasBackButton}
           onBackButtonClick={onBackButtonClick}

@@ -74,7 +74,7 @@ export default function CommunityPost() {
       isGlobalNavBar={false}
       title={`원바원 | ${post?.title || "게시글"}`}
       description={`원바원 커뮤니티 게시글 - ${post?.title || ""}`}
-      headerTitle="커뮤니티"
+      headerTitle={post?.title || "게시글"}
       currentPath={`/community/${id}`}
       mainBg="gray"
       mainClassName="flex flex-1 flex-col gap-2 mb-16"

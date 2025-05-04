@@ -22,7 +22,7 @@ export default function Bookmarks() {
       title="원바원 | 즐겨찾기"
       description="즐겨찾기한 유치원 목록"
       currentPath={URL_PATHS.BOOKMARKS}
-      headerTitle="즐겨찾기"
+      headerLogo={true}
       mainBg="gray"
       hasBackButton={false}
       mainClassName={favorites.length === 0 ? "pb-0 mb-0" : ""}

@@ -31,6 +31,7 @@ import Metadata from "@/hooks/useMetadata";
 interface PageLayoutProps {
   children: ReactNode;
   title?: string;
+  headerLogo?: boolean;
   description?: string;
   headerTitle?: string;
   headerType?: "base" | "community" | "school" | "save" | "bookmark";
@@ -48,9 +49,10 @@ interface PageLayoutProps {
 
 export default function PageLayout({
   children,
-  title = "원바원",
+  title,
   description = "유치원 교사들을 위한 유치원 리뷰 및 커뮤니티 서비스",
   headerTitle,
+  headerLogo,
   headerType = "base",
   headerHasBorder,
   hasBackButton,
@@ -64,10 +66,11 @@ export default function PageLayout({
   showBookmark,
 }: PageLayoutProps) {
   const renderHeader = () => {
-    if (!headerTitle) return null;
+    if (!headerTitle && !headerLogo) return null;
 
     const headerProps = {
       title: headerTitle,
+      headerLogo: headerLogo,
       hasBorder: headerHasBorder,
       hasBackButton: hasBackButton,
       onBackButtonClick: onBackButtonClick,

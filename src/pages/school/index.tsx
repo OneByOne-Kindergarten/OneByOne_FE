@@ -64,8 +64,8 @@ export default function School() {
     <PageLayout
       title="원바원 | 기관 찾기"
       description="지도와 검색을 통해 기관 찾기"
-      headerTitle="기관 찾기"
       headerType="school"
+      headerLogo={true}
       currentPath={URL_PATHS.SCHOOL}
       mainBg="gray"
       hasBackButton={false}
