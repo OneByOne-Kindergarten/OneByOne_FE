@@ -1,13 +1,14 @@
 export const URL_PATHS = {
   TEST: "test",
   ROOT: "/",
+  HOME: "/home",
   // 회원가입
   SIGNIN: "/signin",
   SIGNUP: "/signup",
   // 기관
   SCHOOL: "/school",
   SCHOOL_DETAIL: "/school/:id",
-  // 기관 리뷰
+  // 리뷰
   REVIEW: "/school/:id/review",
   REVIEW_WORK: "/school/:id/review-work",
   REVIEW_LEARNING: "/school/:id/review-learning",

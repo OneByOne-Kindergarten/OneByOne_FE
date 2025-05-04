@@ -27,6 +27,7 @@ const ROOT_URL_KEYS: UrlKeys[] = [
 // 상위 UrlKey 및 하위 UrlKey 그룹화
 const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
   ROOT: ["ROOT"],
+  HOME: ["HOME"],
   SCHOOL: [
     "SCHOOL",
     "SCHOOL_DETAIL",
@@ -77,6 +78,13 @@ const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
 };
 
 const NAV_BAR_ITEMS = [
+  {
+    label: "홈",
+    urlKey: "HOME" as UrlKeys,
+    ariaLabel: "홈 페이지로 이동",
+    dataButtonName: "홈",
+    iconPaths: SVG_PATHS.HOME,
+  },
   {
     label: "유치원",
     urlKey: "SCHOOL" as UrlKeys,
