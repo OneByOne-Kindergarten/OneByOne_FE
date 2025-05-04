@@ -54,6 +54,10 @@ export const SVG_PATHS = {
     chick: "/src/assets/icons/character-chick.svg",
     user: "/src/assets/icons/character-user.svg",
   },
+  SHORTCUT: {
+    school: "/src/assets/icons/shortcut-search-school.svg",
+    community: "/src/assets/icons/shortcut-post-community.svg",
+  },
   CALL: "/src/assets/icons/call.svg",
   EMAIL: "/src/assets/icons/email.svg",
   KEBAB: "/src/assets/icons/kebab.svg",
@@ -101,6 +105,10 @@ export const IMAGE_PATHS = {
   LOGO: {
     MAIN: "/src/assets/images/logo-main.webp",
     INACTIVE: "/src/assets/images/logo-inactive.webp",
+  },
+  BANNER: {
+    SCHOOL: "/src/assets/images/banner-school.webp",
+    COMMUNITY: "/src/assets/images/banner-community.webp",
   },
   CERTIFICATION: "/src/assets/images/certification.webp",
   GUIDE: {
