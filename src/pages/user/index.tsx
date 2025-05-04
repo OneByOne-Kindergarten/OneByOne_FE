@@ -51,7 +51,7 @@ export default function User() {
               iconPath={SVG_PATHS.POST.edit}
               iconAlt="게시물 관리 아이콘"
               to={URL_PATHS.USER_POST}
-              label="작성한 게시물 관리"
+              label="작성한 리뷰 관리"
             />
             <MenuItem
               iconPath={SVG_PATHS.SETTING}

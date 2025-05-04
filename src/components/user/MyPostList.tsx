@@ -5,8 +5,8 @@ import { useMyPosts } from "@/hooks/useMyPosts";
 import PostCard from "@/components/community/post-card";
 import { getCategoryLabel } from "@/utils/categoryUtils";
 
-const ITEM_HEIGHT = 110;
-const LIST_HEIGHT = 600;
+const ITEM_HEIGHT = 130;
+const LIST_HEIGHT = 690;
 
 const mockData = {
   pages: [
