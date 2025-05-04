@@ -1,4 +1,5 @@
 export const formatDate = (dateString: string): string => {
+  // 현재 시간을 KST로 변환
   const now = new Date();
   const date = new Date(dateString);
 

@@ -21,6 +21,7 @@ export const URL_PATHS = {
   BOOKMARKS: "/bookmarks",
   // 프로필
   USER: "/user",
+  USER_POST: "/user/my-post",
   USER_PROFILE_EDITOR: "/user/profile",
   USER_NICKNAME_EDITOR: "/user/profile/nickname",
   USER_PASSWORD_EDITOR: "/user/account-setting/password",

@@ -27,6 +27,7 @@ export const API_PATHS = {
   },
   USER: {
     BASE: "/users",
+    MY_POST: "/users/user/community-comments",
     REISSUE: "/users/reissue",
     SIGN_IN: "/users/sign-in",
     SIGN_UP: "/users/sign-up",

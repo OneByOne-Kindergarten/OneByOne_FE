@@ -38,7 +38,6 @@ export const getPopularPosts = async (): Promise<PopularPostsResponse> => {
  * @param params.size 기본 값 10
  * @param params.sort 기본 값 최신순
  */
-
 export const getCommunityPosts = async (
   params: CommunityPostParams
 ): Promise<CommunityPostData> => {
@@ -74,7 +73,6 @@ export const getCommunityPosts = async (
  * 게시글 상세 조회
  * @param id
  */
-
 export const getCommunityPostDetail = async (
   id: number
 ): Promise<CommunityPostDetailResponse> => {
@@ -93,7 +91,6 @@ export const getCommunityPostDetail = async (
  * @param data.communityCategoryName 하위 카테고리
  * @param data.communityCategoryDescription 하위 카테고리 설명
  */
-
 export const createCommunityPost = async (
   data: CreateCommunityPostRequest
 ): Promise<CreateCommunityPostResponse> => {
