@@ -1,4 +1,8 @@
 export const SVG_PATHS = {
+  HOME: {
+    active: "/src/assets/icons/home-active.svg",
+    inactive: "/src/assets/icons/home-inactive.svg",
+  },
   SCHOOL: {
     active: "/src/assets/icons/school-active.svg",
     inactive: "/src/assets/icons/school-inactive.svg",
@@ -80,7 +84,7 @@ export const SVG_PATHS = {
   SEARCH: "/src/assets/icons/search.svg",
   SETTING: "/src/assets/icons/setting.svg",
   LOCATION: "/src/assets/icons/location.svg",
-  HOME: "/src/assets/icons/home.svg",
+  HOMEPAGE: "/src/assets/icons/homepage.svg",
   BUILDING: "/src/assets/icons/building.svg",
   CHILD: "/src/assets/icons/child.svg",
   CLASS: "/src/assets/icons/class.svg",

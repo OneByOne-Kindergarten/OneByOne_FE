@@ -200,7 +200,7 @@ export default function SchoolDetail() {
 
             {kindergarten.homepage && (
               <SchoolInfoItem
-                icon={SVG_PATHS.HOME}
+                icon={SVG_PATHS.HOMEPAGE}
                 title="홈페이지"
                 altText="홈 아이콘"
               >
