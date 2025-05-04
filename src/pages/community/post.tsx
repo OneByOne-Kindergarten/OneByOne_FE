@@ -77,7 +77,7 @@ export default function CommunityPost() {
       headerTitle={post?.title || "게시글"}
       currentPath={`/community/${id}`}
       mainBg="gray"
-      mainClassName="flex flex-1 flex-col gap-2 mb-16"
+      mainClassName="flex flex-1 flex-col gap-2 mb-16 mt-14"
       hasBackButton={true}
     >
       {postLoading ? (

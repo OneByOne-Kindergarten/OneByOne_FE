@@ -13,7 +13,7 @@ export default function MyPostPage() {
       headerTitle="작성한 리뷰 관리"
       currentPath={URL_PATHS.USER}
       wrapperBg="white"
-      mainClassName="p-5"
+      mainClassName="p-5 mt-14"
     >
       <Suspense fallback={<LoadingSpinner type="page" />}>
         <MyPostList />

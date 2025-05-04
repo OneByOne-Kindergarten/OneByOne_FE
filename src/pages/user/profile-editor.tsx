@@ -21,7 +21,7 @@ export default function ProfileEditorPage() {
       headerTitle="프로필 수정"
       currentPath={URL_PATHS.USER}
       wrapperBg="white"
-      mainClassName="flex flex-col gap-5 pb-5 mb-24 px-5"
+      mainClassName="flex flex-col gap-5 pb-5 mb-24 mt-14 px-5"
     >
       <section className="flex flex-col py-5 items-center gap-2.5 ">
         <div className="flex items-center justify-between w-full">

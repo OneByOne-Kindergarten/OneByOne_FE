@@ -230,7 +230,7 @@ export default function SchoolDetail() {
       wrapperBg="white"
       kindergartenId={safeId}
       showBookmark={true}
-      mainClassName="flex flex-col"
+      mainClassName="flex flex-col mt-14"
     >
       {renderContent()}
     </PageLayout>

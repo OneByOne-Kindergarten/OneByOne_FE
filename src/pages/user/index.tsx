@@ -22,7 +22,7 @@ export default function User() {
       currentPath={URL_PATHS.USER}
       mainBg="gray"
       hasBackButton={false}
-      mainClassName="flex flex-col gap-0 pb-5 mb-24"
+      mainClassName="flex flex-col gap-0 pb-5 mt-14 mb-24"
     >
       {/* 유저 프로필 */}
       <section className="flex flex-col">

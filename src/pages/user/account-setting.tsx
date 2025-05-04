@@ -22,7 +22,7 @@ export default function AccountSettingPage() {
       currentPath={URL_PATHS.USER}
       mainBg="gray"
       hasBackButton={true}
-      mainClassName="flex flex-col gap-0 pb-5 mb-24"
+      mainClassName="flex flex-col gap-0 pb-5 mt-14 mb-24"
     >
       <section className="flex flex-col gap-4 p-5 font-bold bg-white">
         <menu className="text-primary-dark01 flex flex-col gap-6">

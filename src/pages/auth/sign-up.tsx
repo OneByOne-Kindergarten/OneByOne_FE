@@ -55,7 +55,7 @@ export default function SignUp() {
       headerTitle=" "
       headerHasBorder={false}
       isGlobalNavBar={false}
-      mainClassName="my-16 flex flex-col gap-16"
+      mainClassName="my-16 flex flex-col gap-16 mt-14"
       wrapperBg="white"
       hasBackButton={true}
       onBackButtonClick={handleCustomBack}

@@ -63,7 +63,7 @@ export default function ReviewPage() {
       headerType="school"
       currentPath={currentPath}
       mainBg="gray"
-      mainClassName="gap-0 mb-28"
+      mainClassName="gap-0 mt-14 mb-28"
     >
       <NavBar id={safeId} options={schoolOptions} currentPath={currentPath} />
 

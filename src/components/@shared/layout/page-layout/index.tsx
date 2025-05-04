@@ -60,7 +60,7 @@ export default function PageLayout({
   currentPath,
   wrapperBg = "gray",
   mainBg = "white",
-  mainClassName = "flex flex-col gap-6 pb-5 mb-24",
+  mainClassName = "flex flex-col gap-6 pb-5 mt-14 mb-24",
   isGlobalNavBar = true,
   kindergartenId,
   showBookmark,

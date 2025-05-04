@@ -55,7 +55,7 @@ export default function PasswordEditorPage() {
       headerTitle="비밀번호 변경"
       currentPath={URL_PATHS.USER}
       wrapperBg="white"
-      mainClassName="flex flex-col px-5"
+      mainClassName="flex flex-col px-5 mt-14"
     >
       <Form {...form}>
         <form

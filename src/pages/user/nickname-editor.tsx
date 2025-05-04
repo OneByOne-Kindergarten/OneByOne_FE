@@ -56,7 +56,7 @@ export default function NicknameEditorPage() {
       headerTitle="닉네임 수정"
       currentPath={URL_PATHS.USER}
       wrapperBg="white"
-      mainClassName="flex flex-col px-5"
+      mainClassName="flex flex-col px-5 mt-14"
     >
       <Form {...form}>
         <form

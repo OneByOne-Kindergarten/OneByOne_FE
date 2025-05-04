@@ -100,7 +100,7 @@ export default function Community() {
       headerType="community"
       description="유치원 교사와 예비교사를 위한 커뮤니티"
       currentPath={`/community?type=${communityType}&category=${categoryName}`}
-      mainClassName="flex flex-col gap-6 pb-0 "
+      mainClassName="flex flex-col gap-6 pb-0 mt-14"
       hasBackButton={false}
     >
       <NavBar

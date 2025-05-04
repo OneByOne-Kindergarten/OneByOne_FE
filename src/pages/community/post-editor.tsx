@@ -177,7 +177,7 @@ export default function PostEditor() {
       headerType="save"
       description="커뮤니티 게시글 작성"
       currentPath={URL_PATHS.COMMUNITY_POST_EDITOR}
-      mainClassName="flex flex-col gap-6 pb-0 mb-28"
+      mainClassName="flex flex-col gap-6 pb-0 mt-14 mb-28"
       hasBackButton={true}
       wrapperBg="white"
     >

@@ -8,7 +8,7 @@ import { useEffect } from "react";
  */
 
 interface MetadataProps {
-  title: string;
+  title?: string;
   description: string;
 }
 
