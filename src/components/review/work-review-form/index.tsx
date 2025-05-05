@@ -44,11 +44,7 @@ interface WorkReviewFormProps {
   schoolId: string;
 }
 
-export default function WorkReviewForm({
-  form,
-  step,
-  schoolId,
-}: WorkReviewFormProps) {
+export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
   const Step1Form = useMemo(() => {
     return (
       <>

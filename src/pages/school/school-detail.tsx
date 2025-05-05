@@ -31,7 +31,6 @@ const SCHOOL_QUERY_CONFIG = {
 };
 
 type StatsType = keyof typeof SCHOOL_STATS_COLORS;
-type AgeType = (typeof SCHOOL_STATS_AGES)[number];
 
 export default function SchoolDetail() {
   const { id } = useParams<{ id: string }>();

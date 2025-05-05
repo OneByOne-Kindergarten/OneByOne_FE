@@ -3,13 +3,9 @@ import { Link } from "react-router-dom";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import NoticeCard from "@/components/home/NoticeCard";
 import ShortCutList from "@/components/home/ShortCutList";
-import PostCard from "@/components/community/post-card";
 import PopularPostsPreview from "@/components/home/PopularPostsPreview";
-import Button from "@/components/@shared/buttons/base-button";
 import { URL_PATHS } from "@/constants/url-path";
 import { IMAGE_PATHS } from "@/constants/assets-path";
-import { getCategoryLabel } from "@/utils/categoryUtils";
-import { mockPosts } from "@/constants/mockData";
 
 export default function HomePage() {
   return (

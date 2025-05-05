@@ -11,7 +11,7 @@ import { getUserInfo } from "@/services/userService";
  * - 세션 복원 시 유저 정보 확인 및 필요 시 로드
  */
 export default function AuthProvider({ children }: { children: ReactNode }) {
-  const [token, setToken] = useAtom(accessTokenAtom);
+  const [token] = useAtom(accessTokenAtom);
   const [isAuthenticated] = useAtom(isAuthenticatedAtom);
   const [user] = useAtom(userAtom);
 

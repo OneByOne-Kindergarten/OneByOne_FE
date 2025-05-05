@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { URL_PATHS } from "@/constants/url-path";
+
 import PageLayout from "@/components/@shared/layout/page-layout";
 import Toggle from "@/components/@shared/buttons/base-toggle";
-import { SVG_PATHS } from "@/constants/assets-path";
 import Button from "@/components/@shared/buttons/base-button";
 import BarRating from "@/components/@shared/rating/bar-rating";
-import ProgressBar from "@/components/@shared/progress-bar";
 import Badge from "@/components/@shared/badge";
 import PopupModal from "@/components/@shared/modal/pop-up";
 import BottomSheet from "@/components/@shared/modal/bottom-sheet";
-import Dropdown from "@/components/@shared/drop-down";
+import Dropdown from "@/components/@shared/drop-down/base-drop-down";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
+import { SVG_PATHS } from "@/constants/assets-path";
+import { URL_PATHS } from "@/constants/url-path";
 
 export default function TEST() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);

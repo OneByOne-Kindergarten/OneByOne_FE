@@ -31,7 +31,7 @@ export const useCreateNotice = () => {
         variant: "default",
       });
     },
-    onError: (error) => {
+    onError: () => {
       toast({
         title: "공지사항 작성 실패",
         description: "공지사항 작성에 실패했습니다. 다시 시도해주세요.",
@@ -54,7 +54,7 @@ export const useToggleNoticeStatus = () => {
         variant: "default",
       });
     },
-    onError: (error) => {
+    onError: () => {
       toast({
         title: "공지사항 상태 변경 실패",
         description: "공지사항 상태 변경에 실패했습니다. 다시 시도해주세요.",

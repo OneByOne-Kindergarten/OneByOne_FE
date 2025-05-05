@@ -66,7 +66,7 @@ export const useCommunityPosts = (
         category,
         ...options,
       }),
-    getNextPageParam: (lastPage, allPages) => {
+    getNextPageParam: (lastPage) => {
       if (!lastPage.content || lastPage.content.length === 0) return undefined;
 
       if (lastPage.last) return undefined;
@@ -101,7 +101,7 @@ export const useCreatePost = () => {
     CreateCommunityPostRequest
   >({
     mutationFn: createCommunityPost,
-    onSuccess: (data, variables) => {
+    onSuccess: () => {
       queryClient.refetchQueries({
         queryKey: ["communityPosts"],
         type: "active",
@@ -193,7 +193,7 @@ export const useCreateComment = () => {
 
   return useMutation<CreateCommentResponse, Error, CreateCommentRequest>({
     mutationFn: createComment,
-    onSuccess: (data, variables) => {
+    onSuccess: (_, variables) => {
       // 게시글 및 댓글 관련 모든 쿼리를 한 번에 무효화
       queryClient.invalidateQueries({
         predicate: (query) => {

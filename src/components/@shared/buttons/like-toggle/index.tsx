@@ -27,7 +27,6 @@ interface LikeToggleProps {
  * @param isLiked 좋아요 상태
  * @param disabled 비활성화 여부
  */
-
 export default function LikeToggle({
   children,
   variant = "primary",

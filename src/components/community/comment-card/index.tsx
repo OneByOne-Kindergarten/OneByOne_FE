@@ -27,7 +27,7 @@ export default function CommentCard({
   isReply = false,
   onReply,
 }: CommentCardProps) {
-  const { nickName, career, userRole, createdAt, content } = comment;
+  const { nickName, createdAt, content } = comment;
   const isAuthor = nickName === postAuthor;
 
   const handleReply = () => {

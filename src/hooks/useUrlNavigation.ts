@@ -6,7 +6,6 @@ import {
   getReviewState,
 } from "@/utils/lastVisitedPathUtils";
 import {
-  getPathWithoutParams,
   getUrlKeyFromPath,
   getPathSegments,
   getParentPath,
@@ -41,7 +40,8 @@ export const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
     "COMMUNITY_POST_EDITOR",
   ],
   BOOKMARKS: ["BOOKMARKS"],
-  USER: ["USER"],
+  USER: ["USER", "USER_POST", "INQUIRY", "NOTICE"],
+  USER_POST: [],
   COMMUNITY_TEACHER: [],
   COMMUNITY_STUDENT: [],
   COMMUNITY_POST: [],
@@ -54,6 +54,15 @@ export const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
   SIGNIN: [],
   SIGNUP: [],
   TEST: [],
+  ROOT: [],
+  USER_PROFILE_EDITOR: [],
+  USER_NICKNAME_EDITOR: [],
+  USER_PASSWORD_EDITOR: [],
+  USER_ACCOUNT_SETTING: [],
+  INQUIRY: [],
+  NOTICE: [],
+  NOTICE_DETAIL: [],
+  PERMISSION_TEST: [],
 };
 
 // 에디터 페이지 관련 키

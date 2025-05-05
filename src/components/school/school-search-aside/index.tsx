@@ -9,14 +9,12 @@ import { useSearchKindergartens } from "@/hooks/useSearchKindergartens";
 import type { KindergartenSearchParams } from "@/types/kindergartenDTO";
 
 interface SchoolSearchAsideProps {
-  isOpen: boolean;
   onClose: () => void;
   searchQuery: string;
   onSearchQuerySelect: (query: string) => void;
 }
 
 export default function SchoolSearchAside({
-  isOpen,
   onClose,
   searchQuery,
   onSearchQuerySelect,
