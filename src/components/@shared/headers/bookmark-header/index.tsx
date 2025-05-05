@@ -29,7 +29,8 @@ export default function BookmarkHeader({
         <img
           src={SVG_PATHS.BOOKMARKER.inactive}
           alt="북마크"
-          className="w-6 h-6"
+          width={24}
+          height={24}
         />
       </button>
     </Header>

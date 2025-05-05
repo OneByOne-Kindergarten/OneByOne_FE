@@ -15,7 +15,7 @@ interface HeaderProps extends VariantProps<typeof headerVariants> {
 }
 
 const headerVariants = cva(
-  "fixed top-0 z-50 w-full min-w-80 max-w-3xl bg-white flex h-14 items-center px-5 font-bold text-lg",
+  "fixed top-0 z-50 gap-3 w-full min-w-80 max-w-3xl bg-white flex h-14 items-center px-5 font-bold text-lg",
   {
     variants: {
       hasBorder: {
@@ -46,19 +46,15 @@ export default function Header({
   return (
     <header className={cn(headerVariants({ hasBorder }))}>
       {shouldShowBackButton && (
-        <button
-          className="mr-3"
-          onClick={handleBackNavigation}
-          aria-label="뒤로 가기"
-        >
+        <button onClick={handleBackNavigation} aria-label="뒤로 가기">
           <img src={SVG_PATHS.ARROW.left} alt="뒤로 가기" className="w-6 h-6" />
         </button>
       )}
       <div className="flex items-center justify-between w-full">
         {title ? (
-          <h1 className="truncate line-clamp-1">{title}</h1>
+          <h1 className="flex-1 min-w-0 pr-2 truncate">{title}</h1>
         ) : headerLogo ? (
-          <Link to={URL_PATHS.HOME}>
+          <Link to={URL_PATHS.HOME} className="flex-shrink-0">
             <img
               src={IMAGE_PATHS.LOGO.MAIN}
               alt="원바원 로고"

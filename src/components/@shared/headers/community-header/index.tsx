@@ -114,7 +114,7 @@ export default function CommunityHeader({
         >
           <div className="flex items-center gap-4">
             <button onClick={handleSearch} aria-label="검색">
-              <img src={SVG_PATHS.SEARCH} alt="검색" className="w-6 h-6" />
+              <img src={SVG_PATHS.SEARCH} alt="검색" width={24} height={24} />
             </button>
             {hasWriteButton && (
               <Link
@@ -125,7 +125,8 @@ export default function CommunityHeader({
                 <img
                   src={SVG_PATHS.POST.create}
                   alt="연필 아이콘"
-                  className="w-3 h-3"
+                  height={12}
+                  width={12}
                 />
               </Link>
             )}

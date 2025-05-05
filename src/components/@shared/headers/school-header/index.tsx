@@ -140,7 +140,6 @@ export default function SchoolHeader({
             >
               <Suspense fallback={<LoadingSpinner type="page" />}>
                 <SchoolSearchAside
-                  isOpen={isSearching}
                   onClose={handleCloseSearchResult}
                   searchQuery={searchQuery}
                   onSearchQuerySelect={handleSearchQuerySelect}
@@ -172,15 +171,16 @@ export default function SchoolHeader({
                       : SVG_PATHS.BOOKMARKER.inactive
                   }
                   alt="북마크"
-                  className="w-6 h-6"
+                  width={24}
+                  height={24}
                 />
               </button>
             )}
             <button onClick={handleMap} aria-label="지도">
-              <img src={SVG_PATHS.MAP} alt="지도" className="w-6 h-6" />
+              <img src={SVG_PATHS.MAP} alt="지도" width={24} height={24} />
             </button>
             <button onClick={handleSearch} aria-label="검색">
-              <img src={SVG_PATHS.SEARCH} alt="검색" className="w-6 h-6" />
+              <img src={SVG_PATHS.SEARCH} alt="검색" width={24} height={24} />
             </button>
           </div>
         </Header>
