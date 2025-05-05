@@ -40,7 +40,7 @@ export const useSignIn = () => {
         variant: "default",
       });
 
-      navigate(URL_PATHS.SCHOOL);
+      navigate(URL_PATHS.HOME);
     },
     onError: (error) => {
       let errorMessage = "이메일 또는 비밀번호를 다시 확인해주세요.";

@@ -1,23 +1,24 @@
-import { ReactNode } from "react";
 import { BrowserRouter } from "react-router-dom";
-import QueryProvider from "./QueryProvider";
 import { HelmetProvider } from "react-helmet-async";
+import QueryProvider from "@/components/@shared/providers/QueryProvider";
 import AuthProvider from "@/components/@shared/providers/AuthProvider";
 import { Toaster } from "@/components/@shared/toast/toaster";
 
 interface AppProviderProps {
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
 export default function AppProvider({ children }: AppProviderProps) {
   return (
-    <HelmetProvider>
+    <BrowserRouter>
       <QueryProvider>
-        <AuthProvider>
-          <BrowserRouter>{children}</BrowserRouter>
-          <Toaster />
-        </AuthProvider>
+        <HelmetProvider>
+          <AuthProvider>
+            {children}
+            <Toaster />
+          </AuthProvider>
+        </HelmetProvider>
       </QueryProvider>
-    </HelmetProvider>
+    </BrowserRouter>
   );
 }
