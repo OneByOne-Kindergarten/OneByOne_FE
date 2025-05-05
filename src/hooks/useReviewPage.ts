@@ -1,0 +1,52 @@
+import { useEffect } from "react";
+import { useAtomValue } from "jotai";
+import { userAtom } from "@/stores/userStore";
+
+import { useSchoolNavigation } from "@/hooks/useSchoolNavigation";
+import { useReview } from "@/hooks/useReview";
+import { getFieldConfigsByType } from "@/utils/fieldConfigsUtils";
+import { setReviewState } from "@/utils/lastVisitedPathUtils";
+import { REVIEW_TYPES, REVIEW_TYPE_LABELS } from "@/constants/review";
+
+type SortType = "recommended" | "latest";
+
+export function useReviewPage(id: string, type: string, sortType: SortType) {
+  const { schoolOptions } = useSchoolNavigation(id);
+  const fieldConfigs = getFieldConfigsByType(type);
+  const reviewData = useReview(id, type, sortType);
+  const user = useAtomValue(userAtom);
+
+  // 페이지 접근 시 최근 방문 경로 저장
+  useEffect(() => {
+    setReviewState({
+      path: `/school/${id}/review?type=${type}`,
+      type: type as "work" | "learning",
+    });
+  }, [id, type]);
+
+  // 리뷰 작성 버튼 비활성화 조건
+  const isDisabled = () => {
+    if (!user) return true;
+
+    if (type === REVIEW_TYPES.LEARNING) {
+      return !(
+        user.role === "TEACHER" ||
+        user.role === "PROSPECTIVE_TEACHER" ||
+        user.role === "ADMIN"
+      );
+    } else if (type === REVIEW_TYPES.WORK) {
+      return !(user.role === "TEACHER" || user.role === "ADMIN");
+    }
+
+    return true;
+  };
+
+  return {
+    schoolOptions,
+    fieldConfigs,
+    reviewData,
+    pageTitle: `원바원 | ${id} ${REVIEW_TYPE_LABELS[type as "work" | "learning"]}`,
+    currentPath: `/school/${id}/review?type=${type}`,
+    isDisabled: isDisabled(),
+  };
+}

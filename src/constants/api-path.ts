@@ -5,6 +5,16 @@ export const API_PATHS = {
     DETAIL: (id: number) => `/kindergarten/${id}`,
     NEARBY: "/kindergarten/nearby",
   },
+  INTERNSHIP: {
+    BASE: "/internship/review",
+    GET_ALL: "/internship/reviews",
+    LIKE: (id: number) => `/internship/review/${id}/like`,
+  },
+  WORK: {
+    BASE: "/work/review",
+    GET_ALL: "/work/reviews",
+    LIKE: (id: number) => `/work/review/${id}/like`,
+  },
   COMMUNITY: {
     BASE: "/community",
     POST: {

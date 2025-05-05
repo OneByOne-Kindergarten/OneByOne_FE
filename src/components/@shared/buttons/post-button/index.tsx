@@ -1,21 +1,30 @@
 import { SVG_PATHS } from "@/constants/assets-path";
 import FloatButton from "@/components/@shared/buttons/float-button";
 
+interface PostButtonProps {
+  onClick: () => void;
+  label: string;
+  isDisabled?: boolean;
+}
+
 export default function PostButton({
   onClick,
   label,
-}: {
-  onClick: () => void;
-  label: string;
-}) {
+  isDisabled = false,
+}: PostButtonProps) {
+  const handleClick = () => {
+    if (isDisabled) return;
+    onClick();
+  };
+
   return (
     <FloatButton
       position="bottomRight"
       buttonProps={{
-        variant: "secondary",
+        variant: isDisabled ? "default" : "secondary",
         shape: "full",
-        onClick,
-        border: "black",
+        onClick: handleClick,
+        border: isDisabled ? "gray" : "black",
         shadow: "lg",
       }}
     >

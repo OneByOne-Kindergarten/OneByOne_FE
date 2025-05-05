@@ -19,6 +19,18 @@ export interface Kindergarten {
   longitude: number;
   totalClassCount: number;
   totalPupilCount: number;
+  internshipReviewAggregate: {
+    workEnvironmentScoreAggregate: number;
+    learningSupportScoreAggregate: number;
+    instructionTeacherScoreAggregate: number;
+  };
+  workReviewAggregate: {
+    benefitAndSalaryScoreAggregate: number;
+    workLiftBalanceScoreAggregate: number;
+    workEnvironmentScoreAggregate: number;
+    managerScoreAggregate: number;
+    customerScoreAggregate: number;
+  };
 }
 
 export type KindergartenDetailResponse = Kindergarten;

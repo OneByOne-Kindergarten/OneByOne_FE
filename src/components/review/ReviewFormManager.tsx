@@ -7,10 +7,10 @@ import { Form } from "@/components/@shared/form";
 import Button from "@/components/@shared/buttons/base-button";
 import WorkReviewForm, {
   WorkReviewFormValues,
-} from "@/components/review/work-review-form";
+} from "@/components/review/WorkReviewForm";
 import LearningReviewForm, {
   LearningReviewFormValues,
-} from "@/components/review/learning-review-form";
+} from "@/components/review/LearningReviewForm";
 import ProgressBar from "@/components/@shared/progress-bar";
 import { REVIEW_TYPES } from "@/constants/review";
 import {

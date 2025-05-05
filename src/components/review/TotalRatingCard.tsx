@@ -20,7 +20,7 @@ export default function TotalRatingCard({
   return (
     <div className="px-2 w-full py-4 bg-primary-foreground mx-auto rounded-lg flex items-center gap-6 justify-center">
       <div className="flex flex-col items-center justify-center">
-        <p className="font-bold text-3xl">{total}</p>
+        <p className="font-bold text-3xl">{Number(total).toFixed(1)}</p>
         <StarRating value={total} />
       </div>
       <hr className="w-px h-20 bg-primary-normal01" />

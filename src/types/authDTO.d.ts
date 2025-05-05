@@ -1,20 +1,20 @@
 export interface SignUpRequest {
   email: string;
   password: string;
-  provider: "LOCAL" | "GOOGLE" | "APPLE";
+  provider: "LOCAL" | "GOOGLE" | "APPLE" | "KAKAO" | "NAVER";
   providerId: number;
   nickname: string;
-  role: "TEACHER" | "PROSPECTIVE_TEACHER" | "ADMIN";
+  role: "TEACHER" | "PROSPECTIVE_TEACHER" | "ADMIN" | "GENERAL";
   profileImageUrl: string;
 }
 
 export interface SignUpResponse {
   email: string;
   password: string;
-  provider: "LOCAL" | "GOOGLE" | "APPLE";
+  provider: "LOCAL" | "GOOGLE" | "APPLE" | "KAKAO" | "NAVER";
   providerId: number;
   nickname: string;
-  role: "TEACHER" | "PROSPECTIVE_TEACHER" | "ADMIN";
+  role: "TEACHER" | "PROSPECTIVE_TEACHER" | "ADMIN" | "GENERAL";
   profileImageUrl: string;
 }
 

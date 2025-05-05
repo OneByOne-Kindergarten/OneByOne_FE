@@ -1,6 +1,6 @@
 import { REVIEW_TYPES } from "@/constants/review";
-import { RatingFieldConfig } from "@/components/review/total-rating-card";
-import { ReviewFieldConfig } from "@/components/review/review-card";
+import { RatingFieldConfig } from "@/components/review/TotalRatingCard";
+import { ReviewFieldConfig } from "@/components/review/ReviewCard";
 
 // 근무 리뷰
 const workRatingConfigs: RatingFieldConfig[] = [

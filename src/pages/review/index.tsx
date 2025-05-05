@@ -1,19 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import clsx from "clsx";
 
 import PageLayout from "@/components/@shared/layout/page-layout";
 import NavBar from "@/components/@shared/nav/nav-bar";
 import PostButton from "@/components/@shared/buttons/post-button";
-import RatingFilter from "@/components/review/rating-filter";
+import RatingFilter from "@/components/review/RatingFilter";
 import Toggle from "@/components/@shared/buttons/base-toggle";
-import TotalRatingCard from "@/components/review/total-rating-card";
-import ReviewCard from "@/components/review/review-card";
-import { useSchoolNavigation } from "@/hooks/useSchoolNavigation";
-import { useFetchReviewData } from "@/hooks/useFetchReviewData";
-import { getFieldConfigsByType } from "@/utils/fieldConfigsUtils";
-import { REVIEW_TYPES, REVIEW_TYPE_LABELS } from "@/constants/review";
-import { setReviewState } from "@/utils/lastVisitedPathUtils";
+import TotalRatingCard from "@/components/review/TotalRatingCard";
+import ReviewCard from "@/components/review/ReviewCard";
+import { useReviewPage } from "@/hooks/useReviewPage";
+import { REVIEW_TYPES } from "@/constants/review";
 
 type SortType = "recommended" | "latest";
 
@@ -21,28 +18,6 @@ const SORT_OPTIONS: { type: SortType; label: string }[] = [
   { type: "recommended", label: "추천순" },
   { type: "latest", label: "최신순" },
 ];
-
-export function useReviewPage(id: string, type: string, sortType: SortType) {
-  const { schoolOptions } = useSchoolNavigation(id);
-  const fieldConfigs = getFieldConfigsByType(type);
-  const reviewData = useFetchReviewData(id, type, sortType);
-
-  // 세션 스토리지에 현재 경로 저장
-  useEffect(() => {
-    setReviewState({
-      path: `/school/${id}/review?type=${type}`,
-      type: type as "work" | "learning",
-    });
-  }, [id, type]);
-
-  return {
-    schoolOptions,
-    fieldConfigs,
-    reviewData,
-    pageTitle: `원바원 | ${id} ${REVIEW_TYPE_LABELS[type as "work" | "learning"]}`,
-    currentPath: `/school/${id}/review?type=${type}`,
-  };
-}
 
 export default function ReviewPage() {
   const { id } = useParams<{ id: string }>();
@@ -53,8 +28,14 @@ export default function ReviewPage() {
 
   const safeId = id || "unknown";
 
-  const { schoolOptions, fieldConfigs, reviewData, pageTitle, currentPath } =
-    useReviewPage(safeId, type, sortType);
+  const {
+    schoolOptions,
+    fieldConfigs,
+    reviewData,
+    pageTitle,
+    currentPath,
+    isDisabled,
+  } = useReviewPage(safeId, type, sortType);
 
   return (
     <PageLayout
@@ -116,6 +97,7 @@ export default function ReviewPage() {
       <PostButton
         onClick={() => navigate(`/school/${safeId}/review/new?type=${type}`)}
         label="리뷰쓰기"
+        isDisabled={isDisabled}
       />
     </PageLayout>
   );

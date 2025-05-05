@@ -1,6 +1,6 @@
 import React from "react";
-import { SVG_PATHS } from "@/constants/assets-path";
 import { cva, type VariantProps } from "class-variance-authority";
+import { SVG_PATHS } from "@/constants/assets-path";
 import { cn } from "@/utils/cn";
 
 const starRatingVariants = cva("flex items-center cursor-pointer", {
