@@ -25,16 +25,29 @@ export default function MenuItem({
     />
   );
 
-  return (
-    <li className="flex flex-1 items-center justify-between">
+  const content = (
+    <>
       <div className="flex items-center gap-5">
         <img src={iconPath} alt={iconAlt} width="20" height="20" />
         <span>{label}</span>
       </div>
+      {arrowIcon}
+    </>
+  );
+
+  return (
+    <li className="flex flex-1 items-center justify-between">
       {to ? (
-        <Link to={to}>{arrowIcon}</Link>
+        <Link to={to} className="flex flex-1 items-center justify-between">
+          {content}
+        </Link>
       ) : (
-        <button onClick={onClick}>{arrowIcon}</button>
+        <button
+          onClick={onClick}
+          className="flex flex-1 items-center justify-between"
+        >
+          {content}
+        </button>
       )}
     </li>
   );
