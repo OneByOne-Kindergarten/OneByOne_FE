@@ -53,7 +53,7 @@ function ReviewCardItem({
           </span>
         </div>
         <div className="flex flex-col gap-1">
-          <h2 className="font-semibold">{review.title}</h2>
+          <h2 className="font-semibold text-pretty">{review.title}</h2>
           <p className="text-xxs text-primary-normal03">
             <span>{review.type}</span> | <span>{review.createdAt}</span> |{" "}
             <span>{review.workYear}</span>

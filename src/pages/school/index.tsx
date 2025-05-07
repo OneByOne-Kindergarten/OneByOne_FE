@@ -10,9 +10,9 @@ import Error from "@/components/@shared/layout/error";
 import { getNearbyKindergartens } from "@/services/kindergartenService";
 import { URL_PATHS } from "@/constants/url-path";
 import { useGeolocation } from "@/hooks/useGeolocation";
-import { Kindergarten } from "@/types/kindergartenDTO";
+import type { Kindergarten } from "@/types/kindergartenDTO";
 
-export default function School() {
+export default function SchoolPage() {
   const {
     position: userLocation,
     loading: isLoadingLocation,
@@ -107,7 +107,7 @@ export default function School() {
                     schoolName={kindergarten.name}
                     location={kindergarten.address}
                     establishment={kindergarten.establishment}
-                    score={0}
+                    workReviewAggregate={kindergarten.workReviewAggregate}
                   />
                 ))}
               </ul>

@@ -3,9 +3,15 @@ export interface User {
   nickname: string;
 }
 
+export interface Kindergarten {
+  kindergartenId: number;
+  name: string;
+}
+
 export interface WorkReview {
   workReviewId: number;
   user: User;
+  kindergarten: Kindergarten;
   workYear: number;
   oneLineComment: string;
   benefitAndSalaryComment: string;
@@ -25,6 +31,7 @@ export interface WorkReview {
 export interface InternshipReview {
   internshipReviewId: number;
   user: User;
+  kindergarten: Kindergarten;
   oneLineComment: string;
   workEnvironmentComment: string;
   workEnvironmentScore: number;

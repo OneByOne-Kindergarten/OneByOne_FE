@@ -41,7 +41,7 @@ const postSchema = z.object({
 
 type PostFormData = z.infer<typeof postSchema>;
 
-export default function PostEditor() {
+export default function PostEditorPage() {
   const isSubmitting = useRef(false);
 
   const [selectedCategory, setSelectedCategory] = useState<

@@ -25,7 +25,7 @@ export default function Bookmarks() {
       headerLogo={true}
       mainBg="gray"
       hasBackButton={false}
-      mainClassName={favorites.length === 0 ? "pb-0 mb-0" : ""}
+      mainClassName={favorites.length === 0 ? "pb-0 mb-0" : "mt-14"}
     >
       {isLoading ? (
         <LoadingSpinner type="page" />
@@ -51,7 +51,7 @@ export default function Bookmarks() {
                 schoolName={favorite.name}
                 location={favorite.address}
                 establishment={favorite.establishment}
-                score={0}
+                workReviewAggregate={favorite.workReviewAggregate}
               />
             </li>
           ))}

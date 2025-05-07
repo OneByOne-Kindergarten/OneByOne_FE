@@ -32,7 +32,7 @@ const SCHOOL_QUERY_CONFIG = {
 
 type StatsType = keyof typeof SCHOOL_STATS_COLORS;
 
-export default function SchoolDetail() {
+export default function SchoolDetailPage() {
   const { id } = useParams<{ id: string }>();
   const safeId = id || "unknown";
 

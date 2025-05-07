@@ -36,7 +36,7 @@ const KindergartenItem = ({ index, style, data }: KindergartenItemProps) => {
           schoolName={kindergarten.name}
           location={kindergarten.address}
           establishment={kindergarten.establishment}
-          score={0}
+          workReviewAggregate={kindergarten.workReviewAggregate}
         />
       </div>
     </div>

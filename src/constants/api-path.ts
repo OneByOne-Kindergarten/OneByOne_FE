@@ -7,12 +7,13 @@ export const API_PATHS = {
   },
   INTERNSHIP: {
     BASE: "/internship/review",
-    GET_ALL: "/internship/reviews",
+    GET_ALL: (kindergartenId: number) =>
+      `/internship/reviews/${kindergartenId}`,
     LIKE: (id: number) => `/internship/review/${id}/like`,
   },
   WORK: {
     BASE: "/work/review",
-    GET_ALL: "/work/reviews",
+    GET_ALL: (kindergartenId: number) => `/work/reviews/${kindergartenId}`,
     LIKE: (id: number) => `/work/review/${id}/like`,
   },
   COMMUNITY: {

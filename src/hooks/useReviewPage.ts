@@ -10,19 +10,23 @@ import { REVIEW_TYPES, REVIEW_TYPE_LABELS } from "@/constants/review";
 
 type SortType = "recommended" | "latest";
 
-export function useReviewPage(id: string, type: string, sortType: SortType) {
-  const { schoolOptions } = useSchoolNavigation(id);
+export function useReviewPage(
+  kindergartenId: string,
+  type: string,
+  sortType: SortType
+) {
+  const { schoolOptions } = useSchoolNavigation(kindergartenId);
   const fieldConfigs = getFieldConfigsByType(type);
-  const reviewData = useReview(id, type, sortType);
+  const reviewData = useReview(kindergartenId, type, sortType);
   const user = useAtomValue(userAtom);
 
   // 페이지 접근 시 최근 방문 경로 저장
   useEffect(() => {
     setReviewState({
-      path: `/school/${id}/review?type=${type}`,
+      path: `/school/${kindergartenId}/review?type=${type}`,
       type: type as "work" | "learning",
     });
-  }, [id, type]);
+  }, [kindergartenId, type]);
 
   // 리뷰 작성 버튼 비활성화 조건
   const isDisabled = () => {
@@ -45,8 +49,8 @@ export function useReviewPage(id: string, type: string, sortType: SortType) {
     schoolOptions,
     fieldConfigs,
     reviewData,
-    pageTitle: `원바원 | ${id} ${REVIEW_TYPE_LABELS[type as "work" | "learning"]}`,
-    currentPath: `/school/${id}/review?type=${type}`,
+    pageTitle: `원바원 | ${kindergartenId} ${REVIEW_TYPE_LABELS[type as "work" | "learning"]}`,
+    currentPath: `/school/${kindergartenId}/review?type=${type}`,
     isDisabled: isDisabled(),
   };
 }

@@ -3,11 +3,12 @@ import { Link } from "react-router-dom";
 import { SVG_PATHS } from "@/constants/assets-path";
 import { URL_PATHS } from "@/constants/url-path";
 import Badge from "@/components/@shared/badge";
+import { Kindergarten } from "@/types/kindergartenDTO";
 
 interface SchoolCardProps {
   schoolName?: string;
   location?: string;
-  score?: number;
+  workReviewAggregate?: Kindergarten["workReviewAggregate"];
   establishment?: string;
   id: string;
 }
@@ -15,10 +16,29 @@ interface SchoolCardProps {
 export default function SchoolCard({
   schoolName = "기관 이름",
   location = "위치",
-  score = 0,
+  workReviewAggregate,
   establishment = "설립 유형",
   id,
 }: SchoolCardProps) {
+  const calculateAverageScore = (
+    aggregate: Kindergarten["workReviewAggregate"]
+  ) => {
+    if (!aggregate) return 0;
+    const scores = [
+      aggregate.benefitAndSalaryScoreAggregate,
+      aggregate.workLiftBalanceScoreAggregate,
+      aggregate.workEnvironmentScoreAggregate,
+      aggregate.managerScoreAggregate,
+      aggregate.customerScoreAggregate,
+    ];
+    const sum = scores.reduce((acc, score) => acc + score, 0);
+    return Math.round((sum / scores.length) * 10) / 10;
+  };
+
+  const score = workReviewAggregate
+    ? calculateAverageScore(workReviewAggregate)
+    : 0;
+
   return (
     <div className="px-5 py-4 bg-white">
       <Link

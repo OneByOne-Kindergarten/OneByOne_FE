@@ -3,6 +3,7 @@ import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import clsx from "clsx";
 
 import PageLayout from "@/components/@shared/layout/page-layout";
+import Empty from "@/components/@shared/layout/empty";
 import NavBar from "@/components/@shared/nav/nav-bar";
 import PostButton from "@/components/@shared/buttons/post-button";
 import RatingFilter from "@/components/review/RatingFilter";
@@ -11,8 +12,11 @@ import TotalRatingCard from "@/components/review/TotalRatingCard";
 import ReviewCard from "@/components/review/ReviewCard";
 import { useReviewPage } from "@/hooks/useReviewPage";
 import { REVIEW_TYPES } from "@/constants/review";
+import { URL_PATHS } from "@/constants/url-path";
 
 type SortType = "recommended" | "latest";
+
+const SCHOOL_DEFAULT_NAME = "유치원";
 
 const SORT_OPTIONS: { type: SortType; label: string }[] = [
   { type: "recommended", label: "추천순" },
@@ -20,13 +24,13 @@ const SORT_OPTIONS: { type: SortType; label: string }[] = [
 ];
 
 export default function ReviewPage() {
-  const { id } = useParams<{ id: string }>();
+  const { id: kindergartenId } = useParams<{ id: string }>();
   const [searchParams] = useSearchParams();
   const type = searchParams.get("type") || REVIEW_TYPES.WORK;
   const navigate = useNavigate();
   const [sortType, setSortType] = useState<SortType>("recommended");
 
-  const safeId = id || "unknown";
+  const safeKindergartenId = kindergartenId || "unknown";
 
   const {
     schoolOptions,
@@ -35,18 +39,27 @@ export default function ReviewPage() {
     pageTitle,
     currentPath,
     isDisabled,
-  } = useReviewPage(safeId, type, sortType);
+  } = useReviewPage(safeKindergartenId, type, sortType);
+
+  const kindergartenName =
+    reviewData.reviews[0]?.kindergarten?.name || SCHOOL_DEFAULT_NAME;
 
   return (
     <PageLayout
       title={pageTitle}
-      headerTitle={safeId}
+      headerTitle={kindergartenName}
       headerType="school"
       currentPath={currentPath}
+      kindergartenId={safeKindergartenId}
+      showBookmark={true}
       mainBg="gray"
       mainClassName="gap-0 mt-14 mb-28"
     >
-      <NavBar id={safeId} options={schoolOptions} currentPath={currentPath} />
+      <NavBar
+        id={safeKindergartenId}
+        options={schoolOptions}
+        currentPath={currentPath}
+      />
 
       {/* 리뷰 총점 */}
       <section className="pb-5 px-5 pt-6 flex flex-col bg-white gap-3">
@@ -88,14 +101,25 @@ export default function ReviewPage() {
           </div>
           <RatingFilter />
         </div>
-        <ReviewCard
-          review={reviewData.reviews}
-          fieldConfigs={fieldConfigs.review}
-        />
+        {reviewData.reviews.length > 0 ? (
+          <ReviewCard
+            review={reviewData.reviews}
+            fieldConfigs={fieldConfigs.review}
+          />
+        ) : (
+          <Empty>
+            <p className="text-sm">리뷰가 없습니다.</p>
+            <span className="text-xxs text-primary-normal02">
+              {kindergartenName}의 첫 리뷰를 작성해보세요!
+            </span>
+          </Empty>
+        )}
       </section>
 
       <PostButton
-        onClick={() => navigate(`/school/${safeId}/review/new?type=${type}`)}
+        onClick={() =>
+          navigate(`/school/${safeKindergartenId}/review/new?type=${type}`)
+        }
         label="리뷰쓰기"
         isDisabled={isDisabled}
       />

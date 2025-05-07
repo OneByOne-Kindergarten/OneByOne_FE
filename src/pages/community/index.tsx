@@ -39,7 +39,7 @@ const communityTypeOptions = [
   },
 ];
 
-export default function Community() {
+export default function CommunityPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const queryClient = useQueryClient();

@@ -7,7 +7,6 @@ import CommentList from "@/components/community/comment-list";
 import ChatBar from "@/components/community/chat-bar";
 import Error from "@/components/@shared/layout/error";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
-
 import {
   useLikeStatus,
   useCreateComment,
@@ -15,7 +14,7 @@ import {
   useToggleLike,
 } from "@/hooks/useCommunity";
 
-export default function CommunityPost() {
+export default function CommunityPostPage() {
   const { id } = useParams<{ id: string }>();
   const postId = id ? Number(id) : 0;
 

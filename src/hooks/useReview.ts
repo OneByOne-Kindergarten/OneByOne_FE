@@ -15,6 +15,10 @@ interface ReviewData {
   };
   scores: Record<string, number>;
   contents: Record<string, string>;
+  kindergarten: {
+    id: number;
+    name: string;
+  };
 }
 
 interface ReviewResponse {
@@ -25,11 +29,19 @@ interface ReviewResponse {
   scores: Record<string, number>;
 }
 
+const EMPTY_REVIEW_RESPONSE: ReviewResponse = {
+  reviews: [],
+  rating: {
+    total: 0,
+  },
+  scores: {},
+};
+
 const transformWorkReview = (data: WorkReview): ReviewData => ({
   id: data.workReviewId,
   title: data.oneLineComment,
   type: "담임",
-  createdAt: new Date().toISOString(), // TODO: API에서 createdAt 추가 필요
+  createdAt: new Date().toISOString(),
   likeCount: data.likeCount,
   workYear: `${data.workYear}년 전`,
   rating: {
@@ -54,6 +66,10 @@ const transformWorkReview = (data: WorkReview): ReviewData => ({
     atmosphere: data.workEnvironmentComment,
     manager: data.managerComment,
     customer: data.customerComment,
+  },
+  kindergarten: {
+    id: data.kindergarten.kindergartenId,
+    name: data.kindergarten.name,
   },
 });
 
@@ -81,6 +97,10 @@ const transformInternshipReview = (data: InternshipReview): ReviewData => ({
     studyHelp: data.learningSupportComment,
     teacherGuide: data.instructionTeacherComment,
   },
+  kindergarten: {
+    id: data.kindergarten.kindergartenId,
+    name: data.kindergarten.name,
+  },
 });
 
 /**
@@ -97,15 +117,19 @@ export function useReview(
 ): ReviewResponse {
   const { data: workReviews } = useQuery({
     queryKey: ["workReviews", id],
-    queryFn: () => getWorkReviews(id),
+    queryFn: () => getWorkReviews(Number(id)),
     enabled: type === REVIEW_TYPES.WORK,
   });
 
   const { data: internshipReviews } = useQuery({
     queryKey: ["internshipReviews", id],
-    queryFn: () => getInternshipReviews(id),
+    queryFn: () => getInternshipReviews(Number(id)),
     enabled: type === REVIEW_TYPES.LEARNING,
   });
+
+  if (!workReviews && !internshipReviews) {
+    return EMPTY_REVIEW_RESPONSE;
+  }
 
   const reviews =
     type === REVIEW_TYPES.WORK

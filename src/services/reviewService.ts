@@ -7,26 +7,26 @@ import type {
 
 /**
  * 근무 리뷰 목록 조회
- * @param id
+ * @param kindergartenId
  * @returns
  */
-export const getWorkReviews = async (id: string) => {
+export const getWorkReviews = async (kindergartenId: number) => {
   return apiCall<null, WorkReviewResponse>({
     method: "GET",
-    path: `${API_PATHS.WORK.GET_ALL}?kindergartenId=${id}`,
+    path: API_PATHS.WORK.GET_ALL(kindergartenId),
     withAuth: true,
   });
 };
 
 /**
  * 근무 리뷰 목록 조회
- * @param id
+ * @param kindergartenId
  * @returns
  */
-export const getInternshipReviews = async (id: string) => {
+export const getInternshipReviews = async (kindergartenId: number) => {
   return apiCall<null, InternshipReviewResponse>({
     method: "GET",
-    path: `${API_PATHS.INTERNSHIP.GET_ALL}?kindergartenId=${id}`,
+    path: API_PATHS.INTERNSHIP.GET_ALL(kindergartenId),
     withAuth: true,
   });
 };
