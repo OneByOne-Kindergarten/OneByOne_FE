@@ -80,6 +80,11 @@ export const SVG_PATHS = {
   RESET: {
     password: "/src/assets/icons/reset-password.svg",
   },
+  QUESTION: {
+    BASE: "/src/assets/icons/question.svg",
+    GLOBAL: "/src/assets/icons/question-global.svg",
+    BALLOON: "/src/assets/icons/question-balloon.svg",
+  },
   ERROR: "/src/assets/icons/error.svg",
   CANCEL: "/src/assets/icons/cancel.svg",
   INQUIRY: "/src/assets/icons/inquiry.svg",
@@ -95,7 +100,6 @@ export const SVG_PATHS = {
   BOSS: "/src/assets/icons/boss.svg",
   CLOCK: "/src/assets/icons/clock.svg",
   BROKEN_LINE: "/src/assets/icons/broken-line.svg",
-  QUESTION: "/src/assets/icons/question.svg",
   CERTIFICATION: "/src/assets/icons/certification-mark.svg",
   LOGOUT: "/src/assets/icons/logout.svg",
   LEAVE: "/src/assets/icons/leave.svg",
