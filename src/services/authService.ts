@@ -1,4 +1,3 @@
-import { getDefaultStore } from "jotai/vanilla";
 import {
   SignInRequest,
   SignInResponse,
@@ -7,25 +6,8 @@ import {
   TokenRefreshResponse,
 } from "@/types/authDTO";
 import { apiCall } from "@/utils/apiUtils";
-import { accessTokenAtom, isAuthenticatedAtom } from "@/stores/authStore";
 import { getUserInfo, clearUserInfo } from "@/services/userService";
 import { API_PATHS } from "@/constants/api-path";
-
-const jotaiStore = getDefaultStore();
-
-// 토큰 관련 함수
-export const getAccessToken = (): string | null => {
-  return jotaiStore.get(accessTokenAtom);
-};
-
-export const setAccessToken = (token: string | null): void => {
-  jotaiStore.set(accessTokenAtom, token);
-};
-
-export const getAuthHeaders = (): HeadersInit => {
-  const token = getAccessToken();
-  return token ? { Authorization: `Bearer ${token}` } : {};
-};
 
 // 쿠키 관련 함수
 export const setCookie = (name: string, value: string, days: number = 7) => {
@@ -46,9 +28,18 @@ export const deleteCookie = (name: string) => {
   document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 };
 
+export const getAccessToken = (): string | null => {
+  return getCookie("accessToken");
+};
+
+export const getAuthHeaders = (): HeadersInit => {
+  const token = getAccessToken();
+  return token ? { Authorization: `Bearer ${token}` } : {};
+};
+
 /**
  * 로그인
- * - 성공 시 accessToken 전역 상태에 저장, refreshToken 쿠키에 저장
+ * - 성공 시 accessToken과 refreshToken을 쿠키에 저장
  * - 성공 시 사용자 정보를 전역 상태에 저장
  * @throws {Error}
  */
@@ -61,7 +52,7 @@ export const signIn = async (data: SignInRequest): Promise<SignInResponse> => {
       withCredentials: true,
     });
 
-    setAccessToken(result.accessToken);
+    setCookie("accessToken", result.accessToken);
     setCookie("refreshToken", result.refreshToken);
 
     // 로그인 성공 후 사용자 정보 로드
@@ -102,19 +93,19 @@ export const signUp = async (data: SignUpRequest): Promise<SignUpResponse> => {
 
 /**
  * 로그아웃
+ * - 쿠키 삭제
  * - 로컬 상태 초기화
  */
 export const signOut = async (): Promise<void> => {
-  // 로컬 상태 초기화
-  jotaiStore.set(accessTokenAtom, null);
-  jotaiStore.set(isAuthenticatedAtom, false);
+  deleteCookie("accessToken");
+  deleteCookie("refreshToken");
   clearUserInfo();
 };
 
 /**
  * accessToken 갱신
  * - refreshToken을 활용한 새로운 토큰 발급 요청
- * - 성공 시 새 accessToken과 refreshToken을 저장
+ * - 성공 시 새 accessToken과 refreshToken을 쿠키에 저장
  * - 실패 시 로그아웃
  * @returns {Promise<boolean>} 토큰 갱신 성공 여부
  */
@@ -149,8 +140,8 @@ export const refreshAccessToken = async (): Promise<boolean> => {
 
     const result = (await response.json()) as TokenRefreshResponse;
 
-    // 새 토큰 저장
-    setAccessToken(result.accessToken);
+    // 새 토큰을 쿠키에 저장
+    setCookie("accessToken", result.accessToken);
     setCookie("refreshToken", result.refreshToken);
 
     return true;

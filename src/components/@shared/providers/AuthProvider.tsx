@@ -2,7 +2,7 @@ import { ReactNode, useEffect } from "react";
 import { useAtom } from "jotai";
 import { useNavigate, useLocation } from "react-router-dom";
 
-import { accessTokenAtom, isAuthenticatedAtom } from "@/stores/authStore";
+import { isAuthenticatedAtom } from "@/stores/authStore";
 import { getCookie, refreshAccessToken } from "@/services/authService";
 import { userAtom } from "@/stores/userStore";
 import { getUserInfo } from "@/services/userService";
@@ -15,7 +15,6 @@ import { URL_PATHS } from "@/constants/url-path";
  * - 토큰 기반 인증 상태에 따른 리다이렉트 처리
  */
 export default function AuthProvider({ children }: { children: ReactNode }) {
-  const [token] = useAtom(accessTokenAtom);
   const [isAuthenticated] = useAtom(isAuthenticatedAtom);
   const [user] = useAtom(userAtom);
   const navigate = useNavigate();
@@ -25,19 +24,20 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const initializeAuth = async () => {
       const refreshToken = getCookie("refreshToken");
+      const accessToken = getCookie("accessToken");
 
-      if (refreshToken && !token) {
+      if (refreshToken && !accessToken) {
         try {
           await refreshAccessToken();
         } catch (error) {
           console.error("토큰 갱신 실패:", error);
-          navigate(URL_PATHS.SIGNIN);
+          navigate(URL_PATHS.ROOT);
         }
       }
     };
 
     initializeAuth();
-  }, [token, navigate]);
+  }, [navigate]);
 
   // 인증된 상태에서만 유저 정보 로드
   useEffect(() => {
@@ -59,8 +59,6 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     if (location.pathname === URL_PATHS.ROOT) {
       if (isAuthenticated) {
         navigate(URL_PATHS.HOME);
-      } else {
-        navigate(URL_PATHS.SIGNIN);
       }
     }
   }, [isAuthenticated, location.pathname, navigate]);
