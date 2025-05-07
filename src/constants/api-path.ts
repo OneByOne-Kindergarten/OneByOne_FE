@@ -2,6 +2,7 @@
 export const API_PATHS = {
   KINDERGARTEN: {
     BASE: "/kindergarten",
+    SIMPLE: (id: number) => `/kindergarten/${id}/simple`,
     DETAIL: (id: number) => `/kindergarten/${id}`,
     NEARBY: "/kindergarten/nearby",
   },
@@ -9,12 +10,13 @@ export const API_PATHS = {
     BASE: "/internship/review",
     GET_ALL: (kindergartenId: number) =>
       `/internship/reviews/${kindergartenId}`,
-    LIKE: (id: number) => `/internship/review/${id}/like`,
+    LIKE: (internshipReviewId: number) =>
+      `/internship/review/${internshipReviewId}/like`,
   },
   WORK: {
     BASE: "/work/review",
     GET_ALL: (kindergartenId: number) => `/work/reviews/${kindergartenId}`,
-    LIKE: (id: number) => `/work/review/${id}/like`,
+    LIKE: (workReviewId: number) => `/work/review/${workReviewId}/like`,
   },
   COMMUNITY: {
     BASE: "/community",

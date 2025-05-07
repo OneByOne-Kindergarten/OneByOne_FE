@@ -1,3 +1,8 @@
+export interface KindergartenSimple {
+  kindergartenId: number;
+  name: string;
+}
+
 export interface Kindergarten {
   id: number;
   name: string;

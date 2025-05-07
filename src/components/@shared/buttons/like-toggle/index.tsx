@@ -10,7 +10,7 @@ interface LikeToggleProps {
   className?: string;
   isCount?: boolean;
   count?: number;
-  onToggle?: (newCount: number) => void;
+  onToggle?: () => void;
   isLiked?: boolean;
   disabled?: boolean;
 }
@@ -38,15 +38,10 @@ export default function LikeToggle({
   isLiked: initialLiked = false,
 }: LikeToggleProps) {
   const [liked, setLiked] = useState(initialLiked);
-  const [likeCount, setLikeCount] = useState(count);
 
   useEffect(() => {
     setLiked(initialLiked);
   }, [initialLiked]);
-
-  useEffect(() => {
-    setLikeCount(count);
-  }, [count]);
 
   const LikeToggleClass = clsx(
     "text-center group",
@@ -59,18 +54,12 @@ export default function LikeToggle({
     className
   );
 
-  const handleToggle = () => {
+  const handleToggle = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     if (disabled) return;
-
-    const newLiked = !liked;
-    setLiked(newLiked);
-
-    const newCount = newLiked ? likeCount + 1 : likeCount - 1;
-    setLikeCount(newCount);
-
-    if (onToggle) {
-      onToggle(newCount);
-    }
+    setLiked(!liked);
+    onToggle?.();
   };
 
   // data-state=on style
@@ -81,6 +70,7 @@ export default function LikeToggle({
 
   return (
     <Toggle
+      variant="default"
       font="xs_sb"
       border={variant === "secondary" ? "gray" : "none"}
       className={LikeToggleClass}
@@ -98,7 +88,7 @@ export default function LikeToggle({
       />
       <span className="text-xs">{children}</span>
       {count !== undefined && (
-        <span className={clsx("-ml-1", liked && "text-secondary-dark01")}>
+        <span className={clsx("-ml-1 text-secondary-dark01")}>
           {`(${count})`}
         </span>
       )}

@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { REVIEW_TYPES } from "@/constants/review";
 import { getWorkReviews, getInternshipReviews } from "@/services/reviewService";
 import type { WorkReview, InternshipReview } from "@/types/reviewDTO";
@@ -15,10 +15,6 @@ interface ReviewData {
   };
   scores: Record<string, number>;
   contents: Record<string, string>;
-  kindergarten: {
-    id: number;
-    name: string;
-  };
 }
 
 interface ReviewResponse {
@@ -67,10 +63,6 @@ const transformWorkReview = (data: WorkReview): ReviewData => ({
     manager: data.managerComment,
     customer: data.customerComment,
   },
-  kindergarten: {
-    id: data.kindergarten.kindergartenId,
-    name: data.kindergarten.name,
-  },
 });
 
 const transformInternshipReview = (data: InternshipReview): ReviewData => ({
@@ -97,10 +89,6 @@ const transformInternshipReview = (data: InternshipReview): ReviewData => ({
     studyHelp: data.learningSupportComment,
     teacherGuide: data.instructionTeacherComment,
   },
-  kindergarten: {
-    id: data.kindergarten.kindergartenId,
-    name: data.kindergarten.name,
-  },
 });
 
 /**
@@ -115,16 +103,14 @@ export function useReview(
   type: string,
   sortType: "recommended" | "latest"
 ): ReviewResponse {
-  const { data: workReviews } = useQuery({
-    queryKey: ["workReviews", id],
+  const { data: workReviews } = useSuspenseQuery({
+    queryKey: ["workReviews", id, type === REVIEW_TYPES.WORK],
     queryFn: () => getWorkReviews(Number(id)),
-    enabled: type === REVIEW_TYPES.WORK,
   });
 
-  const { data: internshipReviews } = useQuery({
-    queryKey: ["internshipReviews", id],
+  const { data: internshipReviews } = useSuspenseQuery({
+    queryKey: ["internshipReviews", id, type === REVIEW_TYPES.LEARNING],
     queryFn: () => getInternshipReviews(Number(id)),
-    enabled: type === REVIEW_TYPES.LEARNING,
   });
 
   if (!workReviews && !internshipReviews) {

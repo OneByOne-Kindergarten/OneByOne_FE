@@ -6,7 +6,29 @@ import {
   NearbyKindergartensResponse,
   KindergartenSearchParams,
   KindergartenSearchResponse,
+  KindergartenSimple,
 } from "@/types/kindergartenDTO";
+
+/**
+ * 유치원 이름 조회
+ * @param id 유치원 ID
+ * @returns 유치원 정보
+ */
+export const getKindergartenName = async (
+  id: number
+): Promise<KindergartenSimple> => {
+  try {
+    return await apiCall<void, KindergartenSimple>({
+      method: "GET",
+      path: API_PATHS.KINDERGARTEN.SIMPLE(id),
+      withAuth: true,
+      withCredentials: true,
+    });
+  } catch (error) {
+    console.error("유치원 이름 조회 에러:", error);
+    throw error;
+  }
+};
 
 /**
  * 유치원 상세 정보 조회
