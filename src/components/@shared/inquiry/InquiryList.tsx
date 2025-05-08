@@ -32,12 +32,14 @@ export default function InquiryList({
   return (
     <section className="flex flex-col gap-4">
       {inquiries.map((inquiry) => (
-        <div key={inquiry.id} className="flex flex-col gap-2.5">
+        <div key={inquiry.id} className="flex flex-col gap-2.5 max-w-full">
           <Badge className="text-sm">
             {getInquiryTitleLabel(inquiry.title)}
           </Badge>
-          <div className="flex flex-col gap-1">
-            <p className="text-sm text-primary-dark01">{inquiry.content}</p>
+          <div className="flex flex-col gap-1 max-w-full">
+            <p className="text-sm text-primary-dark01 whitespace-pre-wrap break-words">
+              {inquiry.content}
+            </p>
             <div className="flex justify-between items-center">
               <ul className="flex gap-2 items-center text-xs">
                 <li className="font-bold text-tertiary-3">
