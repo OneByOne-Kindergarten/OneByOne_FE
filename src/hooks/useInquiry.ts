@@ -19,7 +19,12 @@ import { useToast } from "./useToast";
 export function useAllInquiries() {
   return useQuery<InquiryResponse>({
     queryKey: ["inquiries"],
-    queryFn: getAllInquiries,
+    queryFn: () =>
+      getAllInquiries({
+        page: 0,
+        size: 1,
+        sort: "",
+      }),
   });
 }
 

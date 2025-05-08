@@ -15,10 +15,16 @@ interface PaginationParams {
 /**
  * 모든 문의 목록 조회
  */
-export const getAllInquiries = async () => {
+export const getAllInquiries = async (params: PaginationParams) => {
+  const queryString = new URLSearchParams({
+    page: params.page.toString(),
+    size: params.size.toString(),
+    sort: params.sort,
+  }).toString();
+
   return apiCall<null, InquiryResponse>({
     method: "GET",
-    path: API_PATHS.INQUIRY.ALL,
+    path: `${API_PATHS.INQUIRY.ALL}?${queryString}`,
     withAuth: true,
   });
 };

@@ -31,8 +31,6 @@ export default function InquiryMyPage() {
       : myInquiries.content.filter((inquiry) => inquiry.status === activeTab)
     : [];
 
-  console.log(myInquiries);
-
   return (
     <PageLayout
       title="원바원 | 문의 내역"

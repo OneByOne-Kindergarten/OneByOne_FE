@@ -1,9 +1,7 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import clsx from "clsx";
 
 import PageLayout from "@/components/@shared/layout/page-layout";
-import Button from "@/components/@shared/buttons/base-button";
 import Toggle from "@/components/@shared/buttons/base-toggle";
 import InquiryList from "@/components/@shared/inquiry/InquiryList";
 import { URL_PATHS } from "@/constants/url-path";
@@ -58,7 +56,7 @@ export default function InquiryAdminPage() {
         </section>
 
         <InquiryList
-          inquiries={inquiries?.data || []}
+          inquiries={inquiries?.content || []}
           onToggleExpand={handleToggleExpand}
           expandedInquiryId={expandedInquiryId}
         />
