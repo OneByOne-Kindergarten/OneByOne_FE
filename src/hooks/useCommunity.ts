@@ -6,7 +6,6 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { toast } from "@/hooks/useToast";
-
 import {
   getCommunityPostDetail,
   getPopularPosts,

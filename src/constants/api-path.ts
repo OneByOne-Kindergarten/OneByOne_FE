@@ -18,6 +18,15 @@ export const API_PATHS = {
     GET_ALL: (kindergartenId: number) => `/work/reviews/${kindergartenId}`,
     LIKE: (workReviewId: number) => `/work/review/${workReviewId}/like`,
   },
+  INQUIRY: {
+    BASE: "/inquiry",
+    MY: "/inquiry/my",
+    ALL: "/inquiry/all",
+    DETAIL: (id: number) => `/inquiry/${id}`,
+    STATUS: (status: string) => `/inquiry/status/${status}`,
+    CLOSE: (id: number) => `/inquiry/${id}/close`,
+    ANSWER: (id: number) => `/inquiry/${id}/answer`,
+  },
   COMMUNITY: {
     BASE: "/community",
     POST: {

@@ -22,7 +22,7 @@ export default function ToolTip({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative" ref={tooltipRef} onBlur={handleBlur} tabIndex={0}>
       <img
-        src={SVG_PATHS.QUESTION}
+        src={SVG_PATHS.QUESTION.BASE}
         alt="도움말 아이콘"
         width={17}
         height={17}

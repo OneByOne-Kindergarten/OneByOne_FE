@@ -10,7 +10,6 @@ import {
  * 유치원 즐겨찾기 상태 조회
  * @returns
  */
-
 export const checkFavoriteStatus = async (
   kindergartenId: number
 ): Promise<FavoriteStatusResponse> => {
@@ -30,7 +29,6 @@ export const checkFavoriteStatus = async (
  * @param id 유치원 ID
  * @returns 요청 성공 여부와 즐겨찾기 상태
  */
-
 export const toggleFavorite = async (
   kindergartenId: number
 ): Promise<FavoriteToggleResponse> => {
@@ -46,7 +44,6 @@ export const toggleFavorite = async (
  * 즐겨찾기한 유치원 목록 조회
  * @returns
  */
-
 export const getFavorites = async (): Promise<FavoritesResponse> => {
   return apiCall<void, FavoritesResponse>({
     method: "GET",

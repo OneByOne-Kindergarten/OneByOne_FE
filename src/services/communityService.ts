@@ -18,7 +18,6 @@ import {
 /**
  * 인기 게시글 조회
  */
-
 export const getPopularPosts = async (): Promise<PopularPostsResponse> => {
   return apiCall<void, PopularPostsResponse>({
     method: "GET",
@@ -106,7 +105,6 @@ export const createCommunityPost = async (
  * 게시글 좋아요 상태 조회
  * @param postId
  */
-
 export const getLikeStatus = async (
   postId: number
 ): Promise<LikeStatusResponse> => {
@@ -121,7 +119,6 @@ export const getLikeStatus = async (
  * 게시글 좋아요 토글
  * @param postId
  */
-
 export const toggleLike = async (
   postId: number
 ): Promise<LikeStatusResponse> => {
@@ -142,7 +139,6 @@ export const toggleLike = async (
  * @param params.size 기본 값 10
  * @param params.sort 기본 값 최신순
  */
-
 export const getComments = async (
   params: CommentListParams
 ): Promise<CommentListResponse> => {

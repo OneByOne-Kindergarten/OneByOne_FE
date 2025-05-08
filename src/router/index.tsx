@@ -23,6 +23,9 @@ const NicknameEditorPage = lazy(() => import("../pages/user/nickname-editor"));
 const PasswordEditorPage = lazy(() => import("../pages/user/password-editor"));
 const AccountSettingPage = lazy(() => import("../pages/user/account-setting"));
 const InquiryPage = lazy(() => import("../pages/inquiry"));
+const InquiryEditorPage = lazy(() => import("../pages/inquiry/inquiry-editor"));
+const InquiryPublicPage = lazy(() => import("../pages/inquiry/inquiry-public"));
+const InquiryMyPage = lazy(() => import("../pages/inquiry/inquiry-my"));
 const NoticePage = lazy(() => import("../pages/notice"));
 const NoticeDetailPage = lazy(() => import("../pages/notice/notice-detail"));
 // 테스트 페이지
@@ -56,6 +59,9 @@ const routes = {
     { path: URL_PATHS.USER_PASSWORD_EDITOR, element: <PasswordEditorPage /> },
     { path: URL_PATHS.USER_ACCOUNT_SETTING, element: <AccountSettingPage /> },
     { path: URL_PATHS.INQUIRY, element: <InquiryPage /> },
+    { path: URL_PATHS.INQUIRY_EDITOR, element: <InquiryEditorPage /> },
+    { path: URL_PATHS.INQUIRY_PUBLIC, element: <InquiryPublicPage /> },
+    { path: URL_PATHS.INQUIRY_MY, element: <InquiryMyPage /> },
     { path: URL_PATHS.NOTICE, element: <NoticePage /> },
     { path: URL_PATHS.NOTICE_DETAIL, element: <NoticeDetailPage /> },
     // 테스트

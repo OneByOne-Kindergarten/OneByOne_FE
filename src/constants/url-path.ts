@@ -27,9 +27,12 @@ export const URL_PATHS = {
   USER_NICKNAME_EDITOR: "/user/profile/nickname",
   USER_PASSWORD_EDITOR: "/user/account-setting/password",
   USER_ACCOUNT_SETTING: "/user/account-setting",
-  INQUIRY: "/user/inquiry",
   NOTICE: "/user/notice",
   NOTICE_DETAIL: "/user/notice/:id",
+  INQUIRY: "/user/inquiry",
+  INQUIRY_PUBLIC: "/user/inquiry/public",
+  INQUIRY_MY: "/user/inquiry/my",
+  INQUIRY_EDITOR: "/user/inquiry/new",
   // 테스트
   PERMISSION_TEST: "/permission-test",
 };
