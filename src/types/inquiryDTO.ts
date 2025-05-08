@@ -5,7 +5,7 @@ export enum InquiryStatus {
 }
 
 export interface CreateInquiryRequest {
-  title: string;
+  title: "GENERAL" | "REPORT" | "SERVICE" | "ETC";
   content: string;
 }
 

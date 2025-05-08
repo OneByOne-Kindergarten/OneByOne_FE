@@ -14,7 +14,7 @@ import { InquiryStatus } from "@/types/inquiryDTO";
 import {
   getInquiryStatusLabel,
   formatInquiryDate,
-} from "@/utils/getStatusLabel";
+} from "@/utils/getInquiryLabel";
 
 type InquiryTab = "ALL" | InquiryStatus.ANSWERED | InquiryStatus.PENDING;
 
