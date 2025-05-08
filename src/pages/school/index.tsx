@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
 
 import Button from "@/components/@shared/buttons/base-button";
 import SchoolCard from "@/components/school/school-card";
@@ -13,15 +14,17 @@ import { useGeolocation } from "@/hooks/useGeolocation";
 import type { Kindergarten } from "@/types/kindergartenDTO";
 
 export default function SchoolPage() {
+  const geolocationOptions = useMemo(() => ({
+    enableHighAccuracy: true,
+    timeout: 10000, // 10초
+    maximumAge: 600000, // 10분
+  }), []);
+
   const {
     position: userLocation,
     loading: isLoadingLocation,
     error: locationError,
-  } = useGeolocation({
-    enableHighAccuracy: true,
-    timeout: 10000, // 10초
-    maximumAge: 600000, // 10분
-  });
+  } = useGeolocation(geolocationOptions);
 
   const {
     data: nearbyKindergartensResponse,

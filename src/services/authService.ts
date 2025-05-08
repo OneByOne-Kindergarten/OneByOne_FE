@@ -14,7 +14,9 @@ export const setCookie = (name: string, value: string, days: number = 7) => {
   const date = new Date();
   date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
   const expires = `; expires=${date.toUTCString()}`;
-  document.cookie = `${name}=${value}${expires}; path=/; secure; samesite=strict`;
+
+  /// TODO : HTTPS 적용 이후 secure 추가 및 SameSite 조정 필요
+  document.cookie = `${name}=${value}${expires}; path=/; SameSite=Lax`;
 };
 
 export const getCookie = (name: string): string | null => {
@@ -25,7 +27,8 @@ export const getCookie = (name: string): string | null => {
 };
 
 export const deleteCookie = (name: string) => {
-  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  /// TODO : HTTPS 적용 이후 secure 추가 및 SameSite 조정 필요
+  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Lax`;
 };
 
 export const getAccessToken = (): string | null => {

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { sendToFlutter, MessageType } from "@/utils/webViewCommunication";
 
 /**
  * 위치 정보 조회
@@ -15,57 +16,14 @@ export interface GeolocationState {
   } | null;
 }
 
-export function useGeolocation(options?: PositionOptions): GeolocationState {
-  const [state, setState] = useState<GeolocationState>({
-    loading: true,
-    error: null,
-    position: null,
-  });
-
-  useEffect(() => {
-    if (!navigator.geolocation) {
-      setState({
-        loading: false,
-        error: "이 브라우저에서는 위치 정보를 지원하지 않습니다.",
-        position: null,
-      });
-      return;
-    }
-
-    let watchId: number;
-
-    const onSuccess = (position: GeolocationPosition) => {
-      setState({
-        loading: false,
-        error: null,
-        position: {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        },
-      });
-    };
-
-    const onError = (error: GeolocationPositionError) => {
-      setState({
-        loading: false,
-        error: getPositionErrorMessage(error),
-        position: null,
-      });
-    };
-
-    // 사용자가 이동할 때 자동 업데이트
-    watchId = navigator.geolocation.watchPosition(onSuccess, onError, options);
-
-    // 클린업 함수: 컴포넌트 언마운트 시 위치 감시 종료
-    return () => {
-      navigator.geolocation.clearWatch(watchId);
-    };
-  }, []);
-
-  return state;
+interface LocationResponse {
+  status: string;
+  lat: string;
+  long: string;
+  message?: string;
+  error?: string;
 }
 
-// 위치 에러 코드 포맷팅
 function getPositionErrorMessage(error: GeolocationPositionError): string {
   switch (error.code) {
     case error.PERMISSION_DENIED:
@@ -77,4 +35,95 @@ function getPositionErrorMessage(error: GeolocationPositionError): string {
     default:
       return "알 수 없는 오류가 발생했습니다.";
   }
+}
+
+export function useGeolocation(options?: PositionOptions): GeolocationState {
+  const [state, setState] = useState<GeolocationState>({
+    loading: true,
+    error: null,
+    position: null,
+  });
+
+  useEffect(() => {
+    const isFlutterWebView = /OneByOne/i.test(navigator.userAgent);
+
+    if (isFlutterWebView) {
+      // Flutter WebView 환경
+      let isMounted = true;
+      setState((prev) => ({ ...prev, loading: true }));
+
+      sendToFlutter<{}, LocationResponse>(MessageType.REQUEST_LAT_LONG, {})
+        .then((result) => {
+          if (!isMounted) return;
+          if (result.status === "true" && result.lat && result.long) {
+            setState({
+              loading: false,
+              error: null,
+              position: {
+                latitude: parseFloat(result.lat),
+                longitude: parseFloat(result.long),
+              },
+            });
+          } else {
+            setState({
+              loading: false,
+              error: result.error || result.message || "위치 정보를 가져오는데 실패했습니다.",
+              position: null,
+            });
+          }
+        })
+        .catch((error) => {
+          if (!isMounted) return;
+          setState({
+            loading: false,
+            error: error instanceof Error ? error.message : "위치 정보를 가져오는데 실패했습니다.",
+            position: null,
+          });
+        });
+
+      return () => {
+        isMounted = false;
+      };
+    } else {
+      // 일반 웹 브라우저 환경 (watchPosition 사용)
+      if (!navigator.geolocation) {
+        setState({
+          loading: false,
+          error: "이 브라우저에서는 위치 정보를 지원하지 않습니다.",
+          position: null,
+        });
+        return;
+      }
+
+      let watchId: number;
+
+      const onSuccess = (position: GeolocationPosition) => {
+        setState({
+          loading: false,
+          error: null,
+          position: {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          },
+        });
+      };
+
+      const onError = (error: GeolocationPositionError) => {
+        setState({
+          loading: false,
+          error: getPositionErrorMessage(error),
+          position: null,
+        });
+      };
+
+      watchId = navigator.geolocation.watchPosition(onSuccess, onError, options);
+
+      // 언마운트 시 위치 감시 해제
+      return () => {
+        navigator.geolocation.clearWatch(watchId);
+      };
+    }
+  }, [options]);
+
+  return state;
 }
