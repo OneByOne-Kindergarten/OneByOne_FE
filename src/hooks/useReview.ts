@@ -2,6 +2,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { REVIEW_TYPES } from "@/constants/review";
 import { getWorkReviews, getInternshipReviews } from "@/services/reviewService";
 import type { WorkReview, InternshipReview } from "@/types/reviewDTO";
+import { SortType } from "@/types/reviewDTO";
 
 interface ReviewData {
   id: number;
@@ -71,7 +72,7 @@ const transformInternshipReview = (data: InternshipReview): ReviewData => ({
   type: "실습생",
   createdAt: new Date().toISOString(),
   likeCount: data.likeCount,
-  workYear: "1년 전",
+  workYear: "",
   rating: {
     total:
       (data.workEnvironmentScore +
@@ -101,7 +102,7 @@ const transformInternshipReview = (data: InternshipReview): ReviewData => ({
 export function useReview(
   id: string,
   type: string,
-  sortType: "recommended" | "latest"
+  sortType: SortType
 ): ReviewResponse {
   const { data: workReviews } = useSuspenseQuery({
     queryKey: ["workReviews", id, type === REVIEW_TYPES.WORK],
@@ -123,7 +124,7 @@ export function useReview(
       : internshipReviews?.content.map(transformInternshipReview) || [];
 
   const sortedReviews = [...reviews].sort((a, b) => {
-    if (sortType === "recommended") {
+    if (sortType === SortType.POPULAR) {
       return b.likeCount - a.likeCount;
     } else {
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();

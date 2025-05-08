@@ -1,3 +1,8 @@
+export enum SortType {
+  LATEST = "LATEST",
+  POPULAR = "POPULAR",
+}
+
 export interface User {
   userId: number;
   nickname: string;

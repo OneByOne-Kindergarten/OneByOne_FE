@@ -26,3 +26,14 @@ export const formatDate = (dateString: string): string => {
     });
   }
 };
+
+export const formatYearMonth = (dateString: string): string => {
+  const date = new Date(dateString);
+  // UTC를 KST로 변환 (UTC+9)
+  const kstDate = new Date(date.getTime() + 9 * 60 * 60 * 1000);
+
+  const year = kstDate.getFullYear();
+  const month = String(kstDate.getMonth() + 1).padStart(2, "0");
+
+  return `${year}.${month}`;
+};

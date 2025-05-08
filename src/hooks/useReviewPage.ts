@@ -7,8 +7,7 @@ import { useReview } from "@/hooks/useReview";
 import { getFieldConfigsByType } from "@/utils/fieldConfigsUtils";
 import { setReviewState } from "@/utils/lastVisitedPathUtils";
 import { REVIEW_TYPES, REVIEW_TYPE_LABELS } from "@/constants/review";
-
-type SortType = "recommended" | "latest";
+import { SortType } from "@/types/reviewDTO";
 
 export function useReviewPage(
   kindergartenId: string,

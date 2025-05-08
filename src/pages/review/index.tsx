@@ -10,6 +10,7 @@ import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import { REVIEW_TYPES } from "@/constants/review";
 import { useReviewPage } from "@/hooks/useReviewPage";
 import { useKindergartenName } from "@/hooks/useKindergartenName";
+import { SortType } from "@/types/reviewDTO";
 
 const SCHOOL_DEFAULT_NAME = "유치원";
 
@@ -17,13 +18,15 @@ function ReviewContent() {
   const { id: kindergartenId } = useParams<{ id: string }>();
   const [searchParams] = useSearchParams();
   const type = searchParams.get("type") || REVIEW_TYPES.WORK;
+  const sortType =
+    (searchParams.get("sortType") as SortType) || SortType.LATEST;
   const navigate = useNavigate();
 
   const safeKindergartenId = kindergartenId || "unknown";
   const { data: kindergartenData } = useKindergartenName(safeKindergartenId);
 
   const { schoolOptions, fieldConfigs, reviewData, currentPath, isDisabled } =
-    useReviewPage(safeKindergartenId, type, "recommended");
+    useReviewPage(safeKindergartenId, type, sortType);
 
   const kindergartenName = kindergartenData?.name || SCHOOL_DEFAULT_NAME;
 
@@ -44,6 +47,7 @@ function ReviewContent() {
         reviews={reviewData.reviews}
         fieldConfigs={fieldConfigs.review}
         kindergartenName={kindergartenName}
+        initialSortType={sortType}
       />
       <PostButton
         onClick={() =>
