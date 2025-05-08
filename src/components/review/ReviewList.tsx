@@ -6,29 +6,30 @@ import ReviewCard from "@/components/review/ReviewCard";
 import Empty from "@/components/@shared/layout/empty";
 import { ReviewData } from "@/components/review/ReviewCard";
 import { ReviewFieldConfig } from "@/components/review/ReviewContent";
-
-type SortType = "recommended" | "latest";
+import { SortType } from "@/types/reviewDTO";
 
 const SORT_OPTIONS: { type: SortType; label: string }[] = [
-  { type: "recommended", label: "추천순" },
-  { type: "latest", label: "최신순" },
+  { type: SortType.POPULAR, label: "추천순" },
+  { type: SortType.LATEST, label: "최신순" },
 ];
 
 interface ReviewListProps {
   reviews: ReviewData[];
   fieldConfigs: ReviewFieldConfig[];
   kindergartenName: string;
+  initialSortType?: SortType;
 }
 
 export default function ReviewList({
   reviews,
   fieldConfigs,
   kindergartenName,
+  initialSortType = SortType.LATEST,
 }: ReviewListProps) {
-  const [sortType, setSortType] = useState<SortType>("recommended");
+  const [sortType, setSortType] = useState<SortType>(initialSortType);
 
   const sortedReviews = [...reviews].sort((a, b) => {
-    if (sortType === "recommended") {
+    if (sortType === SortType.POPULAR) {
       return b.likeCount - a.likeCount;
     } else {
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();

@@ -27,7 +27,6 @@ import Metadata from "@/hooks/useMetadata";
  * @param kindergartenId
  * @param showBookmark
  */
-
 interface PageLayoutProps {
   children: ReactNode;
   title?: string;

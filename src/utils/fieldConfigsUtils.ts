@@ -1,6 +1,6 @@
 import { REVIEW_TYPES } from "@/constants/review";
 import { RatingFieldConfig } from "@/components/review/TotalRatingCard";
-import { ReviewFieldConfig } from "@/components/review/ReviewCard";
+import { ReviewFieldConfig } from "@/components/review/ReviewContent";
 
 // 근무 리뷰
 const workRatingConfigs: RatingFieldConfig[] = [
@@ -42,7 +42,6 @@ interface FieldConfigs {
  * @param type 리뷰 타입 (work 또는 learning)
  * @returns 필드 설정 객체
  */
-
 export function getFieldConfigsByType(type: string): FieldConfigs {
   if (type === REVIEW_TYPES.WORK) {
     return {
