@@ -1,9 +1,14 @@
+import { useAtomValue } from "jotai";
+
 import PageLayout from "@/components/@shared/layout/page-layout";
 import MenuItem from "@/components/user/MenuItem";
 import { URL_PATHS } from "@/constants/url-path";
 import { SVG_PATHS } from "@/constants/assets-path";
+import { userAtom } from "@/stores/userStore";
 
 export default function InquiryPage() {
+  const user = useAtomValue(userAtom);
+
   return (
     <PageLayout
       title="원바원 | 문의"
@@ -15,12 +20,14 @@ export default function InquiryPage() {
     >
       <section className="flex flex-col gap-4 p-5 font-bold bg-white">
         <menu className="text-primary-dark01 flex flex-col gap-6">
-          <MenuItem
-            iconPath={SVG_PATHS.QUESTION.GLOBAL}
-            to={URL_PATHS.INQUIRY_PUBLIC}
-            iconAlt="글로벌 아이콘"
-            label="공개 문의보기"
-          />
+          {user?.role === "ADMIN" && (
+            <MenuItem
+              iconPath={SVG_PATHS.QUESTION.GLOBAL}
+              to={URL_PATHS.INQUIRY_PUBLIC}
+              iconAlt="글로벌 아이콘"
+              label="문의 내역 관리"
+            />
+          )}
           <MenuItem
             iconPath={SVG_PATHS.LOGOUT}
             to={URL_PATHS.INQUIRY_EDITOR}

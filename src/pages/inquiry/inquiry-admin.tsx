@@ -7,37 +7,34 @@ import Button from "@/components/@shared/buttons/base-button";
 import Toggle from "@/components/@shared/buttons/base-toggle";
 import InquiryList from "@/components/@shared/inquiry/InquiryList";
 import { URL_PATHS } from "@/constants/url-path";
-import { useMyInquiries } from "@/hooks/useInquiry";
+import { useAllInquiries, useInquiriesByStatus } from "@/hooks/useInquiry";
+import { InquiryStatus } from "@/types/inquiryDTO";
 import { INQUIRY_TAB_OPTIONS } from "@/constants/inquiry";
 
 type InquiryTab = (typeof INQUIRY_TAB_OPTIONS)[number]["type"];
 
-export default function InquiryMyPage() {
+export default function InquiryAdminPage() {
   const [activeTab, setActiveTab] = useState<InquiryTab>("ALL");
   const [expandedInquiryId, setExpandedInquiryId] = useState<number | null>(
     null
   );
 
-  const { data: myInquiries } = useMyInquiries();
+  const { data: allInquiries } = useAllInquiries();
+  const { data: statusInquiries } = useInquiriesByStatus(
+    activeTab !== "ALL" ? activeTab : InquiryStatus.PENDING
+  );
 
   const handleToggleExpand = (inquiryId: number) => {
     setExpandedInquiryId(expandedInquiryId === inquiryId ? null : inquiryId);
   };
 
-  // 프론트엔드에서 status에 따라 문의 내역 필터링
-  const filteredInquiries = myInquiries?.content
-    ? activeTab === "ALL"
-      ? myInquiries.content
-      : myInquiries.content.filter((inquiry) => inquiry.status === activeTab)
-    : [];
-
-  console.log(myInquiries);
+  const inquiries = activeTab === "ALL" ? allInquiries : statusInquiries;
 
   return (
     <PageLayout
-      title="원바원 | 문의 내역"
-      description="나의 문의 내역 보기"
-      headerTitle="문의 내역"
+      title="원바원 | 문의 내역 관리"
+      description="문의 내역 관리"
+      headerTitle="문의 내역 관리"
       currentPath={URL_PATHS.INQUIRY}
       wrapperBg="white"
       mainClassName="px-5 mt-14"
@@ -58,20 +55,10 @@ export default function InquiryMyPage() {
               </Toggle>
             ))}
           </menu>
-          <Link to={URL_PATHS.INQUIRY_EDITOR}>
-            <Button
-              size="sm"
-              font="sm_sb"
-              variant="transparent"
-              className="text-primary-normal02"
-            >
-              1:1 문의하기
-            </Button>
-          </Link>
         </section>
 
         <InquiryList
-          inquiries={filteredInquiries}
+          inquiries={inquiries?.data || []}
           onToggleExpand={handleToggleExpand}
           expandedInquiryId={expandedInquiryId}
         />

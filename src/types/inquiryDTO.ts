@@ -17,8 +17,8 @@ export interface Inquiry {
   id: number;
   title: string;
   content: string;
-  answer: string;
   status: InquiryStatus;
+  answer: string | null;
   createdAt: string;
   userId: number;
   userNickname: string;
@@ -26,7 +26,11 @@ export interface Inquiry {
 }
 
 export interface InquiryResponse {
-  success: boolean;
-  data: Inquiry[];
-  message: string;
+  content: Inquiry[];
+  pageNumber: number;
+  pageSize: number;
+  totalElements: number;
+  totalPages: number;
+  first: boolean;
+  last: boolean;
 }

@@ -26,7 +26,12 @@ export function useAllInquiries() {
 export function useMyInquiries() {
   return useQuery<InquiryResponse>({
     queryKey: ["myInquiries"],
-    queryFn: getMyInquiries,
+    queryFn: () =>
+      getMyInquiries({
+        page: 0,
+        size: 1,
+        sort: "",
+      }),
   });
 }
 

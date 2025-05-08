@@ -6,6 +6,12 @@ import type {
   AnswerInquiryRequest,
 } from "@/types/inquiryDTO";
 
+interface PaginationParams {
+  page: number;
+  size: number;
+  sort: string;
+}
+
 /**
  * 모든 문의 목록 조회
  */
@@ -20,10 +26,16 @@ export const getAllInquiries = async () => {
 /**
  * 내 문의 목록 조회
  */
-export const getMyInquiries = async () => {
+export const getMyInquiries = async (params: PaginationParams) => {
+  const queryString = new URLSearchParams({
+    page: params.page.toString(),
+    size: params.size.toString(),
+    sort: params.sort,
+  }).toString();
+
   return apiCall<null, InquiryResponse>({
     method: "GET",
-    path: API_PATHS.INQUIRY.MY,
+    path: `${API_PATHS.INQUIRY.MY}?${queryString}`,
     withAuth: true,
   });
 };

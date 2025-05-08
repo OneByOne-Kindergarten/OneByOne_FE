@@ -14,9 +14,9 @@ import {
   FormMessage,
 } from "@/components/@shared/form";
 import Textarea from "@/components/@shared/form/textarea";
+import { useCreateInquiry } from "@/hooks/useInquiry";
 import { URL_PATHS } from "@/constants/url-path";
 import { INQUIRY_TITLE_LABEL } from "@/constants/inquiry";
-import { useCreateInquiry } from "@/hooks/useInquiry";
 import type { CreateInquiryRequest } from "@/types/inquiryDTO";
 
 const inquirySchema = z.object({
