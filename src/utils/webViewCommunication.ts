@@ -5,6 +5,7 @@
 // 지원하는 메시지 타입 정의
 export enum MessageType {
   REQUEST_FCM_TOKEN = 'REQUEST_FCM_TOKEN',
+  REQUEST_LAT_LONG = 'REQUEST_LAT_LONG',
   REQUEST_PERMISSION = 'REQUEST_PERMISSION',
   // TODO : 테스트 메시지 추가
 }
