@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import PageLayout from "@/components/@shared/layout/page-layout";
@@ -19,6 +19,9 @@ export default function CommunityPostPage() {
   const postId = id ? Number(id) : 0;
 
   const [replyToUser, setReplyToUser] = useState<string | undefined>(undefined);
+  const [replyParentId, setReplyParentId] = useState<number | undefined>(
+    undefined
+  );
   const [isLiking, setIsLiking] = useState(false);
   const [commentInput, setCommentInput] = useState("");
 
@@ -45,26 +48,30 @@ export default function CommunityPostPage() {
     setIsLiking(false);
   };
 
-  const handleSubmitComment = async (content: string) => {
+  const handleSubmitComment = async (content: string, parentId?: number) => {
     if (!id || !content.trim()) return;
 
     await createCommentMutation.mutateAsync({
       postId,
       content,
+      parentId,
     });
 
     setCommentInput("");
     setReplyToUser(undefined);
+    setReplyParentId(undefined);
   };
 
   // 대댓글
-  const handleReply = (author: string) => {
+  const handleReply = (author: string, parentId: number) => {
     setReplyToUser(author);
+    setReplyParentId(parentId);
     setCommentInput("");
   };
 
   const handleCancelReply = () => {
     setReplyToUser(undefined);
+    setReplyParentId(undefined);
     setCommentInput("");
   };
 
@@ -91,9 +98,16 @@ export default function CommunityPostPage() {
             handleLikeToggle={handleLikeToggle}
           />
 
-          <CommentList postId={postId} post={post} handleReply={handleReply} />
+          <Suspense fallback={<LoadingSpinner />}>
+            <CommentList
+              postId={postId}
+              post={post}
+              handleReply={handleReply}
+            />
+          </Suspense>
 
           <ChatBar
+            replyParentId={replyParentId}
             replyUserName={replyToUser}
             onCancelReply={handleCancelReply}
             onSubmit={handleSubmitComment}

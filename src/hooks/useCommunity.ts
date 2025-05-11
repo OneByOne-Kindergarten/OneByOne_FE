@@ -156,7 +156,7 @@ export const useComments = (params: CommentListParams) => {
 
   const startPage = 0;
 
-  const result = useInfiniteQuery<CommentListResponse>({
+  const result = useSuspenseInfiniteQuery<CommentListResponse>({
     queryKey: ["comments", params.postId],
     queryFn: ({ pageParam = startPage }) =>
       getComments({
@@ -166,7 +166,6 @@ export const useComments = (params: CommentListParams) => {
     getNextPageParam: (lastPage): number | undefined =>
       lastPage.last ? undefined : lastPage.pageNumber + 1,
     initialPageParam: startPage,
-    enabled: !!params.postId,
     staleTime: 1000 * 60, // 1분
     gcTime: 1000 * 60 * 5, // 5분
   });
@@ -195,26 +194,7 @@ export const useCreateComment = () => {
     onSuccess: (_, variables) => {
       // 게시글 및 댓글 관련 모든 쿼리를 한 번에 무효화
       queryClient.invalidateQueries({
-        predicate: (query) => {
-          const queryKey = query.queryKey;
-          if (!Array.isArray(queryKey)) return false;
-
-          // 첫 번째 키가 post, comments, likeStatus인 모든 쿼리 무효화
-          const primaryKey = queryKey[0];
-          if (
-            primaryKey === "post" ||
-            primaryKey === "comments" ||
-            primaryKey === "likeStatus"
-          ) {
-            // 두 번째 키가 현재 postId인 경우에만 무효화
-            const secondaryKey = queryKey[1];
-            const postId = variables.postId;
-            return (
-              secondaryKey === postId || secondaryKey === postId.toString()
-            );
-          }
-          return false;
-        },
+        queryKey: ["comments", variables.postId],
       });
     },
     onError: (error) => {

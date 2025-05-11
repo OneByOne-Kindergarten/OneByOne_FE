@@ -2,14 +2,14 @@ import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import Empty from "@/components/@shared/layout/empty";
 import CommentCard from "@/components/community/comment-card";
-import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
+import ReplyCard from "@/components/community/reply-card";
 import { CommunityPostItem } from "@/types/communityDTO";
 import { useComments } from "@/hooks/useCommunity";
 
 interface CommentListProps {
   postId: number;
   post: CommunityPostItem;
-  handleReply: (author: string) => void;
+  handleReply: (author: string, parentId: number) => void;
 }
 
 export default function CommentList({
@@ -27,7 +27,6 @@ export default function CommentList({
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-    isLoading,
   } = useComments({
     postId,
     size: 10,
@@ -39,24 +38,36 @@ export default function CommentList({
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  // 모든 페이지의 댓글을 단일 배열로 변환
-  const allComments =
-    commentsData?.pages?.flatMap((page) => page.content) || [];
+  const hasComments = commentsData?.pages.some(
+    (page) => page.content.length > 0
+  );
 
   return (
     <section className="flex flex-col flex-1 bg-white">
-      {isLoading ? (
-        <LoadingSpinner />
-      ) : allComments && allComments.length > 0 ? (
+      {!hasComments ? (
+        <Empty className="my-auto">
+          <p className="text-sm">댓글이 없습니다.</p>
+          <span className="text-xxs text-primary-normal02">
+            게시물에 첫 댓글을 남겨보세요!
+          </span>
+        </Empty>
+      ) : (
         <>
-          {allComments.map((comment) => (
-            <CommentCard
-              key={comment.id}
-              comment={comment}
-              postAuthor={post.userNickname}
-              onReply={() => handleReply(comment.nickName)}
-            />
-          ))}
+          {commentsData.pages.map((page) =>
+            page.content.map((comment) => (
+              <div key={comment.id}>
+                {comment.reply ? (
+                  <ReplyCard reply={comment} postAuthor={post.userNickname} />
+                ) : (
+                  <CommentCard
+                    comment={comment}
+                    postAuthor={post.userNickname}
+                    onReply={() => handleReply(comment.nickName, comment.id)}
+                  />
+                )}
+              </div>
+            ))
+          )}
 
           {hasNextPage && (
             <div ref={loadMoreRef} className="w-full h-1 flex justify-center">
@@ -64,8 +75,6 @@ export default function CommentList({
             </div>
           )}
         </>
-      ) : (
-        <Empty className="my-auto">아직 댓글이 없습니다.</Empty>
       )}
     </section>
   );

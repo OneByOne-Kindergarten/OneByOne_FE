@@ -12,14 +12,16 @@ import Button from "@/components/@shared/buttons/base-button";
 import { SVG_PATHS } from "@/constants/assets-path";
 
 interface ChatBarProps {
+  replyParentId?: number;
   replyUserName?: string;
-  onCancelReply?: () => void;
-  onSubmit?: (content: string) => void;
-  value?: string;
-  onChange?: (value: string) => void;
+  onCancelReply: () => void;
+  onSubmit: (content: string, parentId?: number) => void;
+  value: string;
+  onChange: (value: string) => void;
 }
 
 export default function ChatBar({
+  replyParentId,
   replyUserName,
   onCancelReply,
   onSubmit,
@@ -43,15 +45,9 @@ export default function ChatBar({
     }
   };
 
-  const handleSubmit = form.handleSubmit((data) => {
-    if (onSubmit && data.content.trim()) {
-      onSubmit(data.content);
-      form.reset();
-      if (onChange) {
-        onChange("");
-      }
-    }
-  });
+  const handleSubmit = () => {
+    onSubmit(value, replyParentId);
+  };
 
   const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (onChange) {

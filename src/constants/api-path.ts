@@ -36,6 +36,9 @@ export const API_PATHS = {
     },
     COMMENT: {
       BASE: (postId: number) => `/community/${postId}/comment`,
+      ALL: (postId: number) => `/community/${postId}/comment/all`,
+      RECOMMEND: (postId: number, commentId: number) =>
+        `/community/${postId}/comment/replies/${commentId}`,
     },
   },
   FAVORITE: {

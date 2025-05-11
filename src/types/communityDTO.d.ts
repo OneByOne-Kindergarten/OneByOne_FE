@@ -97,7 +97,6 @@ export interface PopularPostsResponse {
   message: string;
 }
 
-// 댓글
 export type UserRole = "TEACHER" | "PROSPECTIVE_TEACHER" | "ADMIN";
 export type CommentStatus = "PENDING" | "PROCESSED" | "REJECTED" | "YET";
 
@@ -111,13 +110,15 @@ export interface CommentListParams {
 
 // 개별 댓글 정보
 export interface CommentItem {
+  career: string | null;
   id: number;
   content: string;
   nickName: string;
-  career: string;
   userRole: UserRole;
   createdAt: string;
   status: CommentStatus;
+  parentId?: number | null;
+  reply: boolean;
 }
 
 export interface PageInfo {
@@ -137,6 +138,7 @@ export interface CommentListResponse extends PageInfo {
 export interface CreateCommentRequest {
   postId: number;
   content: string;
+  parentId?: number;
 }
 
 export interface CreateCommentResponse {
