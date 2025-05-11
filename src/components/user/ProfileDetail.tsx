@@ -1,4 +1,4 @@
-import { getCategoryLabel } from "@/utils/categoryUtils";
+import { getUserRoleLabel } from "@/utils/getUserRoleLabel";
 import type { User } from "@/types/userDTO";
 import { cn } from "@/utils/cn";
 
@@ -42,7 +42,7 @@ export default function ProfileDetail({
           </>
         )}
         <p className="font-semibold text-xs text-primary-normal03">
-          {getCategoryLabel(user?.role || "")}
+          {getUserRoleLabel(user?.role || "GENERAL")}
         </p>
       </div>
     </div>

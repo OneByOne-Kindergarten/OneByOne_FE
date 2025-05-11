@@ -6,5 +6,5 @@ import { USER_ROLE_LABEL, UserRole } from "@/constants/user";
  * @returns 한글 label
  */
 export const getUserRoleLabel = (role: UserRole): string => {
-  return USER_ROLE_LABEL[role] || "비공개";
+  return USER_ROLE_LABEL[role as UserRole];
 };
