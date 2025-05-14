@@ -4,6 +4,11 @@ import { User, UserResponse } from "@/types/userDTO";
 import { apiCall } from "@/utils/apiUtils";
 import { API_PATHS } from "@/constants/api-path";
 import { getAccessToken } from "@/services/authService";
+import {
+  Shortcut,
+  UpdateShortcutsRequest,
+  UpdateShortcutsResponse,
+} from "@/types/homeDTO";
 
 const jotaiStore = getDefaultStore();
 
@@ -148,4 +153,24 @@ export const setUserInfo = (user: User | null): void => {
 
 export const clearUserInfo = (): void => {
   jotaiStore.set(userAtom, null);
+};
+
+/**
+ * 유저 단축키 업데이트
+ * @requestBody shortcuts 배열
+ * @returns 업데이트 성공 여부
+ */
+export const updateUserShortcuts = async (
+  shortcuts: Shortcut[]
+): Promise<UpdateShortcutsResponse> => {
+  const token = getAccessToken();
+  if (!token) throw new Error("인증 정보 없음");
+
+  return apiCall<UpdateShortcutsRequest, UpdateShortcutsResponse>({
+    method: "PUT",
+    path: API_PATHS.USER.SHORTCUTS,
+    data: { shortcuts },
+    withAuth: true,
+    withCredentials: true,
+  });
 };

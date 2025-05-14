@@ -6,6 +6,9 @@ import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 const TestPage = lazy(() => import("../pages/test"));
 const RootPage = lazy(() => import("../pages"));
 const HomePage = lazy(() => import("../pages/home"));
+const ShortcutsEditorPage = lazy(
+  () => import("../pages/home/shortcuts-editor")
+);
 const SchoolPage = lazy(() => import("../pages/school"));
 const SignInPage = lazy(() => import("../pages/auth/sign-in"));
 const SignUpPage = lazy(() => import("../pages/auth/sign-up"));
@@ -38,6 +41,7 @@ const routes = {
     { path: URL_PATHS.TEST, element: <TestPage /> },
     { path: URL_PATHS.ROOT, element: <RootPage /> },
     { path: URL_PATHS.HOME, element: <HomePage /> },
+    { path: URL_PATHS.SHORTCUTS_EDITOR, element: <ShortcutsEditorPage /> },
     { path: URL_PATHS.BOOKMARKS, element: <BookmarksPage /> },
     { path: URL_PATHS.USER, element: <UserPage /> },
     { path: URL_PATHS.SIGNIN, element: <SignInPage /> },

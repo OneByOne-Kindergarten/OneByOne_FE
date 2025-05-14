@@ -6,6 +6,7 @@ interface SaveHeaderProps {
   hasBorder?: boolean;
   hasBackButton?: boolean;
   onBackButtonClick?: () => void;
+  onSave?: () => void;
 }
 
 export default function SaveHeader({
@@ -13,6 +14,7 @@ export default function SaveHeader({
   hasBorder,
   hasBackButton,
   onBackButtonClick,
+  onSave,
 }: SaveHeaderProps) {
   return (
     <Header
@@ -27,9 +29,10 @@ export default function SaveHeader({
         border="blue"
         size="sm"
         font="sm"
-        aria-label="임시 저장"
+        aria-label="저장"
+        onClick={onSave}
       >
-        임시저장
+        저장하기
       </Button>
     </Header>
   );

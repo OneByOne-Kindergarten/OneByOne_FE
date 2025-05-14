@@ -59,5 +59,6 @@ export const API_PATHS = {
     WITHDRAW: "/users/withdraw",
     PASSWORD: "/users/password",
     NICKNAME: "/users/nickname",
+    SHORTCUTS: "/users/shortcuts",
   },
 };

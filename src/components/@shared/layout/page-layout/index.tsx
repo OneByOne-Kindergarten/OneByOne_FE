@@ -26,6 +26,7 @@ import Metadata from "@/hooks/useMetadata";
  * @param isGlobalNavBar 기본 값 true
  * @param kindergartenId
  * @param showBookmark
+ * @param onSave 저장 버튼 클릭 시 실행할 함수 (headerType이 save인 경우)
  */
 interface PageLayoutProps {
   children: ReactNode;
@@ -44,6 +45,7 @@ interface PageLayoutProps {
   isGlobalNavBar?: boolean;
   kindergartenId?: string;
   showBookmark?: boolean;
+  onSave?: () => void;
 }
 
 export default function PageLayout({
@@ -63,6 +65,7 @@ export default function PageLayout({
   isGlobalNavBar = true,
   kindergartenId,
   showBookmark,
+  onSave,
 }: PageLayoutProps) {
   const renderHeader = () => {
     if (!headerTitle && !headerLogo) return null;
@@ -87,7 +90,7 @@ export default function PageLayout({
           />
         );
       case "save":
-        return <SaveHeader {...headerProps} />;
+        return <SaveHeader {...headerProps} onSave={onSave} />;
       case "bookmark":
         return <BookmarkHeader {...headerProps} />;
       default:

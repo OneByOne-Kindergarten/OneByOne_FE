@@ -1,8 +1,10 @@
 export const URL_PATHS = {
   TEST: "test",
   ROOT: "/",
+  // 홈
   HOME: "/home",
-  // 회원가입
+  SHORTCUTS_EDITOR: "/home/shortcuts",
+  // 로그인 및 회원가입
   SIGNIN: "/signin",
   SIGNUP: "/signup",
   // 기관

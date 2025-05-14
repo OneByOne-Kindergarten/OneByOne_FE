@@ -8,6 +8,7 @@ export interface User {
   profileImageUrl: string | null;
   role: "GENERAL" | "TEACHER" | "PROSPECTIVE_TEACHER" | "ADMIN";
   career: string;
+  homeShortcut?: HomeShortcut;
   kindergarten?: {
     name: string;
     establishment: string;
@@ -27,4 +28,12 @@ export interface User {
     latitude: number;
     longitude: number;
   };
+}
+
+export interface HomeShortcut {
+  shortcuts: {
+    name: string;
+    iconName: string;
+    link: string;
+  }[];
 }
