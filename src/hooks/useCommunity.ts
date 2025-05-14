@@ -2,7 +2,6 @@ import {
   useMutation,
   useQuery,
   useSuspenseInfiniteQuery,
-  useInfiniteQuery,
   useQueryClient,
 } from "@tanstack/react-query";
 import { toast } from "@/hooks/useToast";
