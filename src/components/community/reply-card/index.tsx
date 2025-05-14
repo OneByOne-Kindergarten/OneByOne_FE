@@ -1,5 +1,4 @@
 import CommentUserInfo from "@/components/community/CommentUserInfo";
-import ProfileImage from "@/components/user/ProfileImage";
 import { formatDate } from "@/utils/dateUtils";
 import { SVG_PATHS } from "@/constants/assets-path";
 import type { CommentItem } from "@/types/communityDTO";
