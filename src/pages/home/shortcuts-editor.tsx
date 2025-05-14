@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
 import PageLayout from "@/components/@shared/layout/page-layout";
+import ShortCutOption from "@/components/home/ShortCutOption";
 import { useShortcuts } from "@/hooks/useShortcuts";
 import { useToast } from "@/hooks/useToast";
 import { URL_PATHS } from "@/constants/url-path";
-import { SVG_PATHS } from "@/constants/assets-path";
 import { shortcutOptions } from "@/constants/shortcutOptions";
 import type { Shortcut } from "@/types/homeDTO";
 
@@ -62,10 +63,18 @@ export default function ShortcutsEditorPage() {
     );
 
     if (existingIndex !== -1) {
-      // 이미 추가된 바로가기 삭제
+      // 이미 추가된 바로가기 취소
       const newShortcuts = [...shortcuts];
       newShortcuts.splice(existingIndex, 1);
       setShortcuts(newShortcuts);
+      return;
+    }
+
+    if (shortcuts.length >= 4) {
+      toast({
+        title: "바로가기는 최대 4개까지 추가할 수 있습니다",
+        variant: "destructive",
+      });
       return;
     }
 
@@ -100,33 +109,19 @@ export default function ShortcutsEditorPage() {
           자주 쓰는 기능을 직접 골라 홈화면에 설정할 수 있어요.
         </p>
       </section>
-
       <section className="flex flex-col gap-3 mt-2">
         {shortcutOptions.map((option, index) => {
           const isAdded = isShortcutAdded(option.link);
           const isDisabled = isMaxShortcuts && !isAdded;
 
           return (
-            <button
+            <ShortCutOption
               key={index}
+              option={option}
+              isAdded={isAdded}
+              isDisabled={isDisabled}
               onClick={() => handleSelectPreset(option)}
-              disabled={isDisabled}
-              className={`px-6 py-3 rounded-md text-left flex justify-between items-center ${
-                isAdded
-                  ? "bg-primary-light01 outline outline-1 outline-primary-dark01 text-primary-dark02"
-                  : isDisabled
-                    ? "opacity-60"
-                    : "bg-primary-light01 hover:opacity-80"
-              }`}
-            >
-              <div className="flex items-center gap-5">
-                <img src={option.iconName} height={19} width={19} />
-                <span className="text-sm">{option.name}</span>
-              </div>
-              {isAdded && (
-                <img src={SVG_PATHS.CHECK.green} height={19} width={19} />
-              )}
-            </button>
+            />
           );
         })}
       </section>
