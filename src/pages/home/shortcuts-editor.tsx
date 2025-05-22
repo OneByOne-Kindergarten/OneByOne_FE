@@ -18,7 +18,7 @@ export default function ShortcutsEditorPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (initialShortcuts.length > 0) {
+    if (initialShortcuts && initialShortcuts.length > 0) {
       setShortcuts([...initialShortcuts]);
     }
   }, [initialShortcuts]);

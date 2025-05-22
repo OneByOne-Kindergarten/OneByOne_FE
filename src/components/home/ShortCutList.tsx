@@ -20,10 +20,10 @@ export default function ShortCutList() {
         </button>
       </div>
       <menu className="flex gap-6">
-        {shortcuts.map((shortcut: Shortcut) => (
+        {shortcuts && shortcuts.map((shortcut: Shortcut) => (
           <ShortCutButton key={shortcut.name} shortcut={shortcut} />
         ))}
-        {shortcuts.length < 4 && (
+        {(shortcuts?.length < 4 || shortcuts === null) && (
           <ShortCutAddButton navigateToEdit={navigateToEdit} />
         )}
       </menu>
