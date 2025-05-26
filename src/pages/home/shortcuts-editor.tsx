@@ -18,13 +18,13 @@ export default function ShortcutsEditorPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (initialShortcuts.length > 0) {
+    if (initialShortcuts?.length > 0) {
       setShortcuts([...initialShortcuts]);
     }
   }, [initialShortcuts]);
 
   const handleSave = async () => {
-    if (shortcuts.length === 0) {
+    if (!shortcuts || shortcuts.length === 0) {
       toast({
         title: "최소 1개 이상의 바로가기를 선택해주세요",
         variant: "destructive",
