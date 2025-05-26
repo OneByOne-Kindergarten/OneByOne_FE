@@ -15,6 +15,8 @@ export const URL_PATHS = {
   REVIEW_WORK: "/school/:id/review-work",
   REVIEW_LEARNING: "/school/:id/review-learning",
   REVIEW_EDITOR: "/school/:id/review/new",
+  // 신고
+  REPORT: "/report",
   // 커뮤니티
   COMMUNITY: "/community",
   COMMUNITY_TEACHER: "/community-teacher",

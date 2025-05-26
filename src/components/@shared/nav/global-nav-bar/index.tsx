@@ -55,29 +55,32 @@ const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
     "USER_POST",
   ],
   INQUIRY: ["INQUIRY_PUBLIC", "INQUIRY_MY", "INQUIRY_EDITOR"],
-  USER_POST: [],
-  COMMUNITY_TEACHER: [],
-  COMMUNITY_STUDENT: [],
-  COMMUNITY_POST: [],
-  COMMUNITY_POST_EDITOR: [],
-  SCHOOL_DETAIL: [],
-  REVIEW: [],
-  REVIEW_WORK: [],
-  REVIEW_LEARNING: [],
-  REVIEW_EDITOR: [],
-  SIGNIN: [],
-  SIGNUP: [],
-  INQUIRY_PUBLIC: [],
-  INQUIRY_MY: [],
-  INQUIRY_EDITOR: [],
-  NOTICE: [],
-  NOTICE_DETAIL: [],
-  USER_PROFILE_EDITOR: [],
-  USER_NICKNAME_EDITOR: [],
-  USER_PASSWORD_EDITOR: [],
-  USER_ACCOUNT_SETTING: [],
-  PERMISSION_TEST: [],
-  TEST: [],
+  // 단일 페이지들은 각자만 포함
+  COMMUNITY_TEACHER: ["COMMUNITY_TEACHER"],
+  COMMUNITY_STUDENT: ["COMMUNITY_STUDENT"],
+  COMMUNITY_POST: ["COMMUNITY_POST"],
+  COMMUNITY_POST_EDITOR: ["COMMUNITY_POST_EDITOR"],
+  SCHOOL_DETAIL: ["SCHOOL_DETAIL"],
+  REVIEW: ["REVIEW"],
+  REVIEW_WORK: ["REVIEW_WORK"],
+  REVIEW_LEARNING: ["REVIEW_LEARNING"],
+  REVIEW_EDITOR: ["REVIEW_EDITOR"],
+  SIGNIN: ["SIGNIN"],
+  SIGNUP: ["SIGNUP"],
+  INQUIRY_PUBLIC: ["INQUIRY_PUBLIC"],
+  INQUIRY_MY: ["INQUIRY_MY"],
+  INQUIRY_EDITOR: ["INQUIRY_EDITOR"],
+  NOTICE: ["NOTICE"],
+  NOTICE_DETAIL: ["NOTICE_DETAIL"],
+  USER_PROFILE_EDITOR: ["USER_PROFILE_EDITOR"],
+  USER_NICKNAME_EDITOR: ["USER_NICKNAME_EDITOR"],
+  USER_PASSWORD_EDITOR: ["USER_PASSWORD_EDITOR"],
+  USER_ACCOUNT_SETTING: ["USER_ACCOUNT_SETTING"],
+  PERMISSION_TEST: ["PERMISSION_TEST"],
+  REPORT: ["REPORT"],
+  SHORTCUTS_EDITOR: ["SHORTCUTS_EDITOR"],
+  TEST: ["TEST"],
+  USER_POST: ["USER_POST"],
 };
 
 const NAV_BAR_ITEMS = [
@@ -118,8 +121,13 @@ const NAV_BAR_ITEMS = [
   },
 ];
 
+// 윈도우 뒤로가기가 적용될 페이지들
+const BACK_NAVIGATION_PAGES: UrlKeys[] = [
+  "REVIEW_EDITOR",
+  "COMMUNITY_POST_EDITOR",
+];
+
 export default function GlobalNavBar({ currentPath }: GlobalNavBarProps) {
-  // 경로 UrlKey로 변환 - 공통 유틸 함수 사용
   const getCurrentUrlKey = (): UrlKeys | undefined => {
     return getUrlKeyFromPath(currentPath);
   };
@@ -147,14 +155,12 @@ export default function GlobalNavBar({ currentPath }: GlobalNavBarProps) {
   useEffect(() => {
     const currentUrlKey = getCurrentUrlKey();
     if (!currentUrlKey) {
-      // 게시글 작성 페이지일 경우 커뮤니티로 처리
       if (isCommunityPost()) {
         saveLastVisitedPath("COMMUNITY", currentPath);
       }
       return;
     }
 
-    // 현재 경로가 속한 상위 페이지 검색
     const parentUrlKey = ROOT_URL_KEYS.find((rootKey) =>
       URL_GROUPS[rootKey]?.includes(currentUrlKey)
     );
@@ -165,7 +171,6 @@ export default function GlobalNavBar({ currentPath }: GlobalNavBarProps) {
   }, [currentPath]);
 
   const getUrlForKey = (urlKey: UrlKeys): string => {
-    // URL_PATHS 객체에 해당 키가 없는 경우 대비
     if (!(urlKey in URL_PATHS)) {
       console.warn(`URL key ${urlKey} not found in URL_PATHS`);
       return "/";
@@ -175,16 +180,15 @@ export default function GlobalNavBar({ currentPath }: GlobalNavBarProps) {
       return URL_PATHS[urlKey];
     }
 
+    const lastVisitedPaths = getLastVisitedPaths();
+
     if (urlKey === "COMMUNITY") {
-      const lastVisitedPaths = getLastVisitedPaths();
       return lastVisitedPaths[urlKey] || `${URL_PATHS[urlKey]}?type=teacher`;
     }
 
-    const lastVisitedPaths = getLastVisitedPaths();
     return lastVisitedPaths[urlKey] || URL_PATHS[urlKey];
   };
 
-  // 현재 경로가 urlKey 그룹에 속하는지 확인
   const isPathActive = (urlKey: UrlKeys): boolean => {
     const currentUrlKey = getCurrentUrlKey();
     const pathWithoutParams = getPathWithoutParams(currentPath);
@@ -193,13 +197,11 @@ export default function GlobalNavBar({ currentPath }: GlobalNavBarProps) {
       return pathWithoutParams === "/";
     }
 
-    // URL_GROUPS에 해당 키가 없는 경우 대비
     if (!(urlKey in URL_GROUPS)) {
       console.warn(`URL key ${urlKey} not found in URL_GROUPS`);
       return false;
     }
 
-    // 커뮤니티 게시글 페이지인 경우
     if (urlKey === "COMMUNITY" && isCommunityPost()) {
       return true;
     }
@@ -209,11 +211,11 @@ export default function GlobalNavBar({ currentPath }: GlobalNavBarProps) {
     );
   };
 
-  const isEditingPage = (): boolean => {
+  const shouldUseBackNavigation = (): boolean => {
     const currentUrlKey = getCurrentUrlKey();
     return (
-      currentUrlKey === "REVIEW_EDITOR" ||
-      currentUrlKey === "COMMUNITY_POST_EDITOR"
+      currentUrlKey !== undefined &&
+      BACK_NAVIGATION_PAGES.includes(currentUrlKey)
     );
   };
 
@@ -228,12 +230,11 @@ export default function GlobalNavBar({ currentPath }: GlobalNavBarProps) {
 
           const isActive = isPathActive(urlKey);
           const linkPath = getUrlForKey(urlKey);
-          const editing = isEditingPage();
+          const useBackNavigation = shouldUseBackNavigation();
 
-          // 현재 활성화된 네비게이션만 뒤로가기 처리
-          const shouldGoBack = editing && isActive;
+          // 편집 페이지에서만 활성화된 네비게이션 탭에 뒤로가기 적용
+          const shouldGoBack = useBackNavigation && isActive;
 
-          // 뒤로가기 적용 페이지
           const handleClick = (e: React.MouseEvent) => {
             if (shouldGoBack) {
               e.preventDefault();

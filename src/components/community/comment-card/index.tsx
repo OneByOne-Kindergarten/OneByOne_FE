@@ -1,7 +1,8 @@
 import CommentUserInfo from "@/components/community/CommentUserInfo";
 import ReplyButton from "@/components/community/reply-button";
+import ReportDropDown from "@/components/@shared/drop-down/report-drop-down";
+
 import { formatDate } from "@/utils/dateUtils";
-import { SVG_PATHS } from "@/constants/assets-path";
 import type { CommentItem } from "@/types/communityDTO";
 
 interface CommentCardProps {
@@ -33,13 +34,7 @@ export default function CommentCard({
       <div className="border-b py-5 px-4">
         <div className="flex flex-1 justify-between">
           <CommentUserInfo reply={comment} postAuthor={postAuthor} />
-          <img
-            src={SVG_PATHS.KEBAB}
-            alt="커뮤니티 게시글 옵션 메뉴"
-            width="20"
-            height="20"
-            className="mb-auto"
-          />
+          <ReportDropDown targetId={comment.id} />
         </div>
         <p className="text-primary-dark01 text-sm mt-2 mb-3">{content}</p>
         <div className="flex justify-between gap-2 ">

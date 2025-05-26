@@ -3,6 +3,7 @@ import AlertCard from "@/components/@shared/alert/alert-card";
 import LikeToggle from "@/components/@shared/buttons/like-toggle";
 import ChatCount from "@/components/community/chat-count";
 import ShareButton from "@/components/@shared/buttons/share-button";
+import ReportDropDown from "@/components/@shared/drop-down/report-drop-down";
 
 import { SVG_PATHS } from "@/constants/assets-path";
 import { CATEGORY_LABELS } from "@/constants/community";
@@ -57,13 +58,7 @@ export default function Post({
               </ul>
             </div>
           </div>
-          <img
-            src={SVG_PATHS.KEBAB}
-            alt="커뮤니티 게시글 옵션 메뉴"
-            width="20"
-            height="20"
-            className="mb-auto"
-          />
+          <ReportDropDown targetId={post.id} />
         </div>
       </section>
       <section className="text-primary-dark01 flex flex-col gap-4">

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 import Badge from "@/components/@shared/badge";
-import PostDropDown from "@/components/@shared/drop-down/post-drop-down";
+import ReportDropDown from "@/components/@shared/drop-down/report-drop-down";
 import { SVG_PATHS } from "@/constants/assets-path";
 import { formatDate } from "@/utils/dateUtils";
 import type { CommunityPostItem } from "@/types/communityDTO";
@@ -22,7 +22,6 @@ export default function PostCard({
   currentCategory,
   getCategoryLabel,
   showDropdown = false,
-  onEdit,
 }: PostCardProps) {
   return (
     <li className="flex items-center gap-3 flex-1 pb-4 border-b border-primary-light02">
@@ -36,7 +35,7 @@ export default function PostCard({
               {getCategoryLabel(post.categoryName)}
             </Badge>
           </div>
-          {showDropdown && <PostDropDown post={post} onEdit={onEdit} />}
+          {showDropdown && <ReportDropDown />}
         </div>
         <Link to={`/community/${post.id}`}>
           <p className="font-semibold text-primary-dark01 line-clamp-1">
