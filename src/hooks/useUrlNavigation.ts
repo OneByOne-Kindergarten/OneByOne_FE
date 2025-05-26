@@ -63,6 +63,11 @@ export const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
   NOTICE: [],
   NOTICE_DETAIL: [],
   PERMISSION_TEST: [],
+  SHORTCUTS_EDITOR: [],
+  REPORT: [],
+  INQUIRY_PUBLIC: [],
+  INQUIRY_MY: [],
+  INQUIRY_EDITOR: [],
 };
 
 // 에디터 페이지 관련 키

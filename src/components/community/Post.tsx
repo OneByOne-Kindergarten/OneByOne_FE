@@ -1,7 +1,7 @@
 import Badge from "@/components/@shared/badge";
 import AlertCard from "@/components/@shared/alert/alert-card";
 import LikeToggle from "@/components/@shared/buttons/like-toggle";
-import ChatCount from "@/components/community/chat-count";
+import ChatCount from "@/components/community/ChatCount";
 import ShareButton from "@/components/@shared/buttons/share-button";
 import ReportDropDown from "@/components/@shared/drop-down/report-drop-down";
 

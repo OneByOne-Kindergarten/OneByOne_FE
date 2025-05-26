@@ -52,7 +52,10 @@ export function useGeolocation(options?: PositionOptions): GeolocationState {
       let isMounted = true;
       setState((prev) => ({ ...prev, loading: true }));
 
-      sendToFlutter<{}, LocationResponse>(MessageType.REQUEST_LAT_LONG, {})
+      sendToFlutter<Record<string, never>, LocationResponse>(
+        MessageType.REQUEST_LAT_LONG,
+        {}
+      )
         .then((result) => {
           if (!isMounted) return;
           if (result.status === "true" && result.lat && result.long) {
@@ -67,7 +70,10 @@ export function useGeolocation(options?: PositionOptions): GeolocationState {
           } else {
             setState({
               loading: false,
-              error: result.error || result.message || "위치 정보를 가져오는데 실패했습니다.",
+              error:
+                result.error ||
+                result.message ||
+                "위치 정보를 가져오는데 실패했습니다.",
               position: null,
             });
           }
@@ -76,7 +82,10 @@ export function useGeolocation(options?: PositionOptions): GeolocationState {
           if (!isMounted) return;
           setState({
             loading: false,
-            error: error instanceof Error ? error.message : "위치 정보를 가져오는데 실패했습니다.",
+            error:
+              error instanceof Error
+                ? error.message
+                : "위치 정보를 가져오는데 실패했습니다.",
             position: null,
           });
         });
@@ -94,8 +103,6 @@ export function useGeolocation(options?: PositionOptions): GeolocationState {
         });
         return;
       }
-
-      let watchId: number;
 
       const onSuccess = (position: GeolocationPosition) => {
         setState({
@@ -116,7 +123,11 @@ export function useGeolocation(options?: PositionOptions): GeolocationState {
         });
       };
 
-      watchId = navigator.geolocation.watchPosition(onSuccess, onError, options);
+      const watchId = navigator.geolocation.watchPosition(
+        onSuccess,
+        onError,
+        options
+      );
 
       // 언마운트 시 위치 감시 해제
       return () => {

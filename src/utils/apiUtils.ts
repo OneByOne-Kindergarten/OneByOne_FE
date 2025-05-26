@@ -52,88 +52,84 @@ export async function apiCall<TRequest, TResponse>({
   withCredentials = false,
   isRetry = false,
 }: ApiCallOptions<TRequest>): Promise<TResponse> {
-  try {
-    const url = `${BASE_URL}${path}`;
+  const url = `${BASE_URL}${path}`;
 
-    const headers: HeadersInit = {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      ...(withAuth ? getAuthHeaders() : {}),
-    };
+  const headers: HeadersInit = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    ...(withAuth ? getAuthHeaders() : {}),
+  };
 
-    const options: RequestInit = {
-      method,
-      headers,
-      ...(data ? { body: JSON.stringify(data) } : {}),
-      ...(withCredentials ? { credentials: "include" } : {}),
-    };
+  const options: RequestInit = {
+    method,
+    headers,
+    ...(data ? { body: JSON.stringify(data) } : {}),
+    ...(withCredentials ? { credentials: "include" } : {}),
+  };
 
-    const response = await fetch(url, options);
+  const response = await fetch(url, options);
 
-    // 401 에러 발생 시 토큰 갱신
-    if (response.status === 401 && withAuth && !isRetry) {
-      try {
-        const refreshSuccess = await refreshAccessToken();
+  // 401 에러 발생 시 토큰 갱신
+  if (response.status === 401 && withAuth && !isRetry) {
+    try {
+      const refreshSuccess = await refreshAccessToken();
 
-        // 토큰 갱신 성공 시 원래 요청 재시도
-        if (refreshSuccess) {
-          return await apiCall<TRequest, TResponse>({
-            method,
-            path,
-            data,
-            withAuth,
-            withCredentials,
-            isRetry: true,
-          });
-        }
-      } catch (refreshError) {
-        throw new Error("인증이 만료되었습니다. 다시 로그인해주세요.");
+      // 토큰 갱신 성공 시 원래 요청 재시도
+      if (refreshSuccess) {
+        return await apiCall<TRequest, TResponse>({
+          method,
+          path,
+          data,
+          withAuth,
+          withCredentials,
+          isRetry: true,
+        });
       }
+    } catch (refreshError) {
+      throw new Error("인증이 만료되었습니다. 다시 로그인해주세요.");
     }
+  }
 
-    if (!response.ok) {
-      let errorMessage = `${response.status} ${response.statusText}`;
-
-      try {
-        // 응답에 JSON 본문이 있는 경우 파싱
-        const contentType = response.headers.get("content-type");
-        if (contentType && contentType.includes("application/json")) {
-          const errorData = await response.json();
-          errorMessage = JSON.stringify({
-            status: response.status,
-            statusText: response.statusText,
-            data: errorData,
-          });
-        }
-      } catch (jsonError) {
-        // console.warn("Error response is not valid JSON:", jsonError);
-      }
-
-      throw new Error(errorMessage);
-    }
-
-    // 204
-    if (
-      response.status === 204 ||
-      response.headers.get("content-length") === "0"
-    ) {
-      return {} as TResponse;
-    }
+  if (!response.ok) {
+    let errorMessage = `${response.status} ${response.statusText}`;
 
     try {
-      // JSON 응답 파싱 시도
+      // 응답에 JSON 본문이 있는 경우 파싱
       const contentType = response.headers.get("content-type");
       if (contentType && contentType.includes("application/json")) {
-        return await response.json();
-      } else {
-        // console.warn(`Response is not JSON: ${contentType}`);
-        return {} as TResponse;
+        const errorData = await response.json();
+        errorMessage = JSON.stringify({
+          status: response.status,
+          statusText: response.statusText,
+          data: errorData,
+        });
       }
-    } catch (jsonError) {
-      // console.error("Failed to parse JSON response:", jsonError);
+    } catch {
+      // console.warn("Error response is not valid JSON:", jsonError);
+    }
+
+    throw new Error(errorMessage);
+  }
+
+  // 204
+  if (
+    response.status === 204 ||
+    response.headers.get("content-length") === "0"
+  ) {
+    return {} as TResponse;
+  }
+
+  try {
+    // JSON 응답 파싱 시도
+    const contentType = response.headers.get("content-type");
+    if (contentType && contentType.includes("application/json")) {
+      return await response.json();
+    } else {
+      // console.warn(`Response is not JSON: ${contentType}`);
       return {} as TResponse;
     }
-  } catch (error) {
-    throw error;
+  } catch {
+    // console.error("Failed to parse JSON response:", jsonError);
+    return {} as TResponse;
   }
 }

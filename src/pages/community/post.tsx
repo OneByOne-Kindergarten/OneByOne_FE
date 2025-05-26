@@ -2,9 +2,9 @@ import { Suspense, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import PageLayout from "@/components/@shared/layout/page-layout";
-import Post from "@/components/community/post";
-import CommentList from "@/components/community/comment-list";
-import ChatBar from "@/components/community/chat-bar";
+import Post from "@/components/community/Post";
+import CommentList from "@/components/community/CommentList";
+import ChatBar from "@/components/community/ChatBar";
 import Error from "@/components/@shared/layout/error";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import {

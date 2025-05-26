@@ -35,7 +35,7 @@ export default function PostCard({
               {getCategoryLabel(post.categoryName)}
             </Badge>
           </div>
-          {showDropdown && <ReportDropDown />}
+          {showDropdown && <ReportDropDown targetId={post.id} />}
         </div>
         <Link to={`/community/${post.id}`}>
           <p className="font-semibold text-primary-dark01 line-clamp-1">

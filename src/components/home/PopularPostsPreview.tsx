@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 import Button from "@/components/@shared/buttons/base-button";
-import PostCard from "@/components/community/post-card";
+import PostCard from "@/components/community/PostCard";
 import { getCategoryLabel } from "@/utils/categoryUtils";
 import { URL_PATHS } from "@/constants/url-path";
 import { usePopularPosts } from "@/hooks/useCommunity";

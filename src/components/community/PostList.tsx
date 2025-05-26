@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import { FixedSizeList as List } from "react-window";
 
-import PostCard from "@/components/community/post-card";
+import PostCard from "@/components/community/PostCard";
 import Empty from "@/components/@shared/layout/empty";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import { useCommunityPosts } from "@/hooks/useCommunity";

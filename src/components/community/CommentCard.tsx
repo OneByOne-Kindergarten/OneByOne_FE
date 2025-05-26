@@ -1,5 +1,5 @@
 import CommentUserInfo from "@/components/community/CommentUserInfo";
-import ReplyButton from "@/components/community/reply-button";
+import ReplyButton from "@/components/community/ReplyButton";
 import ReportDropDown from "@/components/@shared/drop-down/report-drop-down";
 
 import { formatDate } from "@/utils/dateUtils";

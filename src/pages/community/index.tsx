@@ -4,9 +4,9 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 
 import NavBar from "@/components/@shared/nav/nav-bar";
 import PageLayout from "@/components/@shared/layout/page-layout";
-import CategorySelector from "@/components/community/category-selector";
-import PopularPostsList from "@/components/community/popular-posts-list";
-import CommunityPostsList from "@/components/community/post-list";
+import CategorySelector from "@/components/community/CategorySelector";
+import PopularPostsList from "@/components/community/PopularPostsList";
+import CommunityPostsList from "@/components/community/PostList";
 import PostButton from "@/components/@shared/buttons/post-button";
 
 import {

@@ -2,7 +2,7 @@ import { useRef, useCallback } from "react";
 import { FixedSizeList as List } from "react-window";
 
 import { useMyPosts } from "@/hooks/useMyPosts";
-import PostCard from "@/components/community/post-card";
+import PostCard from "@/components/community/PostCard";
 import { getCategoryLabel } from "@/utils/categoryUtils";
 
 const ITEM_HEIGHT = 130;
@@ -78,7 +78,7 @@ function ListItem({ data, index, style }: ListItemProps) {
 }
 
 export default function MyPostList() {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useMyPosts();
+  const { fetchNextPage, hasNextPage, isFetchingNextPage } = useMyPosts();
   const listRef = useRef<List>(null);
 
   // mockData 사용

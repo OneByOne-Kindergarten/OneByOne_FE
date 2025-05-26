@@ -1,6 +1,6 @@
 import React from "react";
 import { CommunityPostItem } from "@/types/communityDTO";
-import PostCard from "@/components/community/post-card";
+import PostCard from "@/components/community/PostCard";
 import { getCategoryLabel } from "@/utils/categoryUtils";
 
 interface PostCardRendererProps {

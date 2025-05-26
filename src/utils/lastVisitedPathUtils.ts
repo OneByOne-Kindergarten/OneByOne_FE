@@ -108,7 +108,7 @@ export function setPath<K extends PathKey>(key: K, path: string): void {
 }
 
 export function getPath<K extends PathKey>(key: K): string {
-  const state = getState(key) as any;
+  const state = getState(key) as { path?: string };
   return state?.path || "";
 }
 

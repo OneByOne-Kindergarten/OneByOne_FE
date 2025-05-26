@@ -1,4 +1,4 @@
-import PostCard from "@/components/community/post-card";
+import PostCard from "@/components/community/PostCard";
 import Empty from "@/components/@shared/layout/empty";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import { SVG_PATHS } from "@/constants/assets-path";

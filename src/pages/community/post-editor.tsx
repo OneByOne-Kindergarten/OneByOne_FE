@@ -44,7 +44,7 @@ type PostFormData = z.infer<typeof postSchema>;
 export default function PostEditorPage() {
   const isSubmitting = useRef(false);
 
-  const [selectedCategory, setSelectedCategory] = useState<
+  const [selectedCategory, _setSelectedCategory] = useState<
     "TEACHER" | "PROSPECTIVE_TEACHER"
   >(() => {
     const category = getCommunityCategory();

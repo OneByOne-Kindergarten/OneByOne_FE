@@ -3,7 +3,7 @@ import { FixedSizeList as List } from "react-window";
 import { useInView } from "react-intersection-observer";
 
 import { CommunityPostItem } from "@/types/communityDTO";
-import PostCardRenderer from "@/components/community/post-card-renderer";
+import PostCardRenderer from "@/components/community/PostCardRenderer";
 import styles from "@/styles/scroll.module.css";
 
 // 가상 스크롤 항목

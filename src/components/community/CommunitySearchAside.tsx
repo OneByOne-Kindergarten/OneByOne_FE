@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import RecentSearches, {
   addToRecentSearches,
 } from "@/components/@shared/search/recent-searches";
-import CommunitySearchResult from "@/components/community/community-search-result";
+import CommunitySearchResult from "@/components/community/CommunitySearchResult";
 import { useSearch } from "@/hooks/useSearch";
 import { CommunityPostItem } from "@/types/communityDTO";
 

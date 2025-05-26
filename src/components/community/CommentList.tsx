@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import Empty from "@/components/@shared/layout/empty";
-import CommentCard from "@/components/community/comment-card";
-import ReplyCard from "@/components/community/reply-card";
+import ReplyCard from "@/components/community/ReplyCard";
+import CommentCard from "@/components/community/CommentCard";
 import { CommunityPostItem } from "@/types/communityDTO";
 import { useComments } from "@/hooks/useCommunity";
 

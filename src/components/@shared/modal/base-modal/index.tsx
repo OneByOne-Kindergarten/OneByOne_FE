@@ -196,7 +196,9 @@ const ModalHeader = React.forwardRef<HTMLDivElement, ModalHeaderProps>(
 );
 
 // 모달의 중간 영역
-interface ModalContentProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface ModalContentProps extends React.HTMLAttributes<HTMLDivElement> {
+  children?: React.ReactNode;
+}
 
 const ModalContent = React.forwardRef<HTMLDivElement, ModalContentProps>(
   ({ className, children, ...props }, ref) => {

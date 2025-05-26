@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import Header from "@/components/@shared/headers/base-header";
 import SearchInput from "@/components/@shared/form/search-input";
-import CommunitySearchAside from "@/components/community/community-search-aside";
+import CommunitySearchAside from "@/components/community/CommunitySearchAside";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import Error from "@/components/@shared/layout/error";
 
