@@ -34,7 +34,7 @@ export default function CommentCard({
       <div className="border-b py-5 px-4">
         <div className="flex flex-1 justify-between">
           <CommentUserInfo reply={comment} postAuthor={postAuthor} />
-          <ReportDropDown targetId={comment.id} />
+          <ReportDropDown targetId={comment.id} targetType="COMMENT" />
         </div>
         <p className="text-primary-dark01 text-sm mt-2 mb-3">{content}</p>
         <div className="flex justify-between gap-2 ">

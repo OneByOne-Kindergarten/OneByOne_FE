@@ -61,4 +61,8 @@ export const API_PATHS = {
     NICKNAME: "/users/nickname",
     SHORTCUTS: "/users/shortcuts",
   },
+  REPORT: {
+    BASE: "/report",
+    MY_REPORT: "/report/my",
+  },
 };

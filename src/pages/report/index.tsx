@@ -1,12 +1,12 @@
-import PageLayout from "@/components/@shared/layout/page-layout";
-import Button from "@/components/@shared/buttons/base-button";
-import { RadioGroup, RadioGroupItem } from "@/components/@shared/radio-group";
-import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import { useToast } from "@/hooks/useToast";
-
-import { URL_PATHS } from "@/constants/url-path";
-import type { ReportRequest, ReportTargetType } from "@/types/reportDTO";
+import { useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import type { ReportRequest, ReportTargetType } from '@/types/reportDTO';
+import { reportService } from '@/services/reportService';
+import PageLayout from '@/components/@shared/layout/page-layout';
+import Button from '@/components/@shared/buttons/base-button';
+import { RadioGroup, RadioGroupItem } from '@/components/@shared/radio-group';
+import { useToast } from '@/hooks/useToast';
+import { URL_PATHS } from '@/constants/url-path';
 
 const REPORT_REASONS = [
   {
@@ -26,49 +26,78 @@ const REPORT_REASONS = [
   { value: "OTHER", label: "기타" },
 ];
 
+const TARGET_TYPE_LABELS: Record<ReportTargetType, string> = {
+  POST: "게시글을",
+  COMMENT: "댓글을",
+  REVIEW: "리뷰를",
+};
+
+const isValidReportTargetType = (type: string | null): type is ReportTargetType => {
+  return type !== null && Object.keys(TARGET_TYPE_LABELS).includes(type);
+};
+
 export default function ReportPage() {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const [selectedReason, setSelectedReason] = useState<string>("");
   const { toast } = useToast();
 
-  const targetId = searchParams.get("targetId");
-  const targetType = searchParams.get("targetType") as ReportTargetType;
+  const rawTargetId = searchParams.get('targetId');
+  const rawTargetType = searchParams.get('type');
+  const [selectedReason, setSelectedReason] = useState<string>('');
+  const [otherReason, setOtherReason] = useState<string>('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const targetId = rawTargetId ? Number(rawTargetId) : null;
+  const targetType = isValidReportTargetType(rawTargetType) ? rawTargetType : null;
 
   const handleBackButtonClick = () => {
-    window.history.back();
+    navigate(-1);
   };
 
   const handleSubmit = async () => {
-    if (!targetId || !targetType || !selectedReason) {
+    if (!targetId || !targetType || !selectedReason || Number.isNaN(targetId)) {
       toast({
-        title: "신고 처리 중 오류가 발생했습니다",
-        variant: "destructive",
+        title: '신고 처리 중 오류가 발생했습니다',
+        variant: 'destructive',
       });
       return;
     }
 
     try {
+      setIsSubmitting(true);
+      const selectedReasonData = REPORT_REASONS.find(reason => reason.value === selectedReason);
+      
       const reportData: ReportRequest = {
-        targetId: parseInt(targetId),
+        targetId,
         targetType,
-        reason: selectedReason,
+        reason: selectedReason === 'OTHER' ? otherReason : (selectedReasonData?.label || ''),
       };
 
-      // TODO: API 호출
-      console.log("신고 데이터:", reportData);
-
+      await reportService.createReport(reportData);
       toast({
-        title: "신고가 접수되었습니다",
+        title: '신고가 접수되었습니다',
       });
-      window.history.back();
+      navigate(-1);
     } catch (error) {
       toast({
-        title: "신고 처리 중 오류가 발생했습니다",
-        variant: "destructive",
+        title: '신고 처리 중 오류가 발생했습니다',
+        variant: 'destructive',
       });
-      console.error("신고 처리 실패:", error);
+      console.error('신고 처리 실패:', error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
+
+  // 유효하지 않은 파라미터로 접근 시 이전 페이지로 리다이렉트
+  if (!targetId || !targetType || Number.isNaN(targetId)) {
+    toast({
+      title: '잘못된 접근입니다',
+      variant: 'destructive',
+    });
+    navigate(-1);
+    return null;
+  }
 
   return (
     <PageLayout
@@ -81,7 +110,9 @@ export default function ReportPage() {
       onBackButtonClick={handleBackButtonClick}
       mainClassName="flex flex-col gap-8 py-8 px-5 mt-14 mb-24"
     >
-      <h2 className="text-center font-semibold">게시글을 신고하시겠어요?</h2>
+      <h2 className="text-center font-semibold">
+        {targetType && `${TARGET_TYPE_LABELS[targetType]} 신고하시겠어요?`}
+      </h2>
       <RadioGroup value={selectedReason} onValueChange={setSelectedReason}>
         {REPORT_REASONS.map((reason) => (
           <li key={reason.value} className="flex items-center gap-3">
@@ -95,8 +126,21 @@ export default function ReportPage() {
           </li>
         ))}
       </RadioGroup>
+      {selectedReason === 'OTHER' && (
+        <textarea
+          value={otherReason}
+          onChange={(e) => setOtherReason(e.target.value)}
+          className="w-full p-3 border rounded-md h-32 text-sm"
+          placeholder="신고 사유를 자세히 설명해주세요."
+        />
+      )}
       <div className="flex flex-1 gap-3">
-        <Button font="sm_sb" onClick={handleBackButtonClick} className="w-full">
+        <Button
+          font="sm_sb"
+          onClick={handleBackButtonClick}
+          className="w-full"
+          disabled={isSubmitting}
+        >
           취소
         </Button>
         <Button
@@ -104,10 +148,10 @@ export default function ReportPage() {
           font="sm_sb"
           variant="primary"
           className="w-full"
-          disabled={!selectedReason}
+          disabled={isSubmitting || !selectedReason || (selectedReason === 'OTHER' && !otherReason)}
           onClick={handleSubmit}
         >
-          확인
+          {isSubmitting ? '처리중...' : '확인'}
         </Button>
       </div>
     </PageLayout>

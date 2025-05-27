@@ -7,6 +7,7 @@ import ReviewContent, {
   ReviewFieldConfig,
 } from "@/components/review/ReviewContent";
 import ReviewActions from "@/components/review/ReviewActions";
+import ReportDropDown from "../@shared/drop-down/report-drop-down";
 
 export interface ReviewData {
   id: number;
@@ -41,13 +42,16 @@ function ReviewCardItem({
 
   return (
     <div className="flex flex-col gap-7">
-      <ReviewRating
-        rating={review.rating.total}
-        title={review.title}
-        type={review.type}
-        createdAt={review.createdAt}
-        workYear={review.workYear}
-      />
+      <div className="flex justify-between items-start">
+        <ReviewRating
+          rating={review.rating.total}
+          title={review.title}
+          type={review.type}
+          createdAt={review.createdAt}
+          workYear={review.workYear}
+        />
+        <ReportDropDown targetId={review.id} targetType="REVIEW" />
+      </div>
       <ReviewContent
         scores={review.scores}
         contents={review.contents}

@@ -58,7 +58,7 @@ export default function Post({
               </ul>
             </div>
           </div>
-          <ReportDropDown targetId={post.id} />
+          <ReportDropDown targetId={post.id} targetType="POST" />
         </div>
       </section>
       <section className="text-primary-dark01 flex flex-col gap-4">
