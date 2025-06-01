@@ -62,14 +62,14 @@ export default function LearningReviewForm({
   const Step2Form = useMemo(() => {
     return (
       <>
-        <div className="flex flex-col gap-1.5">
+        <div className="flex flex-col gap-2">
           <FormField
             control={form.control}
             name="workEnvironmentComment"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-base text-primary-dark01 font-semibold">
-                  근무 환경에 대해서 알려주세요
+                  분위기에 대해서 알려주세요
                 </FormLabel>
                 <FormControl>
                   <Textarea
@@ -90,7 +90,7 @@ export default function LearningReviewForm({
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-base text-primary-dark01 font-semibold">
-                  근무 환경 점수
+                  분위기 점수
                 </FormLabel>
                 <FormControl>
                   <div className="flex justify-center">
@@ -105,6 +105,8 @@ export default function LearningReviewForm({
               </FormItem>
             )}
           />
+        </div>
+        <div className="flex flex-col gap-2">
           <FormField
             control={form.control}
             name="learningSupportComment"
@@ -147,6 +149,8 @@ export default function LearningReviewForm({
               </FormItem>
             )}
           />
+        </div>
+        <div className="flex flex-col gap-2">
           <FormField
             control={form.control}
             name="instructionTeacherComment"

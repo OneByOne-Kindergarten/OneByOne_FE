@@ -1,22 +1,26 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
+import {
+  useSuspenseQuery,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { REVIEW_TYPES } from "@/constants/review";
-import { getWorkReviews, getInternshipReviews } from "@/services/reviewService";
-import type { WorkReview, InternshipReview } from "@/types/reviewDTO";
+import {
+  getWorkReviews,
+  getInternshipReviews,
+  createInternshipReview,
+  createWorkReview,
+} from "@/services/reviewService";
+import type {
+  WorkReview,
+  InternshipReview,
+  LikeResponse,
+} from "@/types/reviewDTO";
+import type { WorkReviewFormValues } from "@/components/review/WorkReviewForm";
+import type { LearningReviewFormValues } from "@/components/review/LearningReviewForm";
 import { SortType } from "@/types/reviewDTO";
+import { useToast } from "@/hooks/useToast";
 
-interface ReviewData {
-  id: number;
-  title: string;
-  type: string;
-  createdAt: string;
-  likeCount: number;
-  workYear: string;
-  rating: {
-    total: number;
-  };
-  scores: Record<string, number>;
-  contents: Record<string, string>;
-}
+type ReviewData = InternshipReview | WorkReview;
 
 interface ReviewResponse {
   reviews: ReviewData[];
@@ -34,69 +38,40 @@ const EMPTY_REVIEW_RESPONSE: ReviewResponse = {
   scores: {},
 };
 
-const transformWorkReview = (data: WorkReview): ReviewData => ({
-  id: data.workReviewId,
-  title: data.oneLineComment,
-  type: "담임",
-  createdAt: new Date().toISOString(),
-  likeCount: data.likeCount,
-  workYear: `${data.workYear}년 전`,
-  rating: {
-    total:
-      (data.benefitAndSalaryScore +
-        data.workLifeBalanceScore +
-        data.workEnvironmentScore +
-        data.managerScore +
-        data.customerScore) /
-      5,
-  },
-  scores: {
-    welfare: data.benefitAndSalaryScore,
-    workLabel: data.workLifeBalanceScore,
-    atmosphere: data.workEnvironmentScore,
-    manager: data.managerScore,
-    customer: data.customerScore,
-  },
-  contents: {
-    welfare: data.benefitAndSalaryComment,
-    workLabel: data.workLifeBalanceComment,
-    atmosphere: data.workEnvironmentComment,
-    manager: data.managerComment,
-    customer: data.customerComment,
-  },
-});
+/**
+ * 근무 리뷰 데이터를 가져오는 훅
+ * @param kindergartenId 유치원 ID
+ * @param sortType 정렬 타입
+ * @returns 근무 리뷰 데이터
+ */
+export const useWorkReviews = (kindergartenId: string, sortType?: SortType) => {
+  return useSuspenseQuery({
+    queryKey: ["workReviews", kindergartenId, sortType],
+    queryFn: () => getWorkReviews(Number(kindergartenId), sortType),
+  });
+};
 
-const transformInternshipReview = (data: InternshipReview): ReviewData => ({
-  id: data.internshipReviewId,
-  title: data.oneLineComment,
-  type: "실습생",
-  createdAt: new Date().toISOString(),
-  likeCount: data.likeCount,
-  workYear: "",
-  rating: {
-    total:
-      (data.workEnvironmentScore +
-        data.learningSupportScore +
-        data.instructionTeacherScore) /
-      3,
-  },
-  scores: {
-    atmosphere: data.workEnvironmentScore,
-    studyHelp: data.learningSupportScore,
-    teacherGuide: data.instructionTeacherScore,
-  },
-  contents: {
-    atmosphere: data.workEnvironmentComment,
-    studyHelp: data.learningSupportComment,
-    teacherGuide: data.instructionTeacherComment,
-  },
-});
+/**
+ * 실습 리뷰 데이터를 가져오는 훅
+ * @param kindergartenId 유치원 ID
+ * @param sortType 정렬 타입  (popular/latest)
+ * @returns 실습 리뷰 데이터
+ */
+export const useInternshipReviews = (
+  kindergartenId: string,
+  sortType?: SortType
+) => {
+  return useSuspenseQuery({
+    queryKey: ["internshipReviews", kindergartenId, sortType],
+    queryFn: () => getInternshipReviews(Number(kindergartenId), sortType),
+  });
+};
 
 /**
  * 리뷰 데이터를 가져오는 훅
  * @param id 유치원 ID
  * @param type 리뷰 타입 (work/learning)
- * @param sortType 정렬 타입 (recommended/latest)
+ * @param sortType 정렬 타입 (popular/latest)
  * @returns 리뷰 데이터
  */
 export function useReview(
@@ -105,57 +80,152 @@ export function useReview(
   sortType: SortType
 ): ReviewResponse {
   const { data: workReviews } = useSuspenseQuery({
-    queryKey: ["workReviews", id, type === REVIEW_TYPES.WORK],
-    queryFn: () => getWorkReviews(Number(id)),
+    queryKey: ["workReviews", id, sortType],
+    queryFn: () => getWorkReviews(Number(id), sortType),
   });
 
   const { data: internshipReviews } = useSuspenseQuery({
-    queryKey: ["internshipReviews", id, type === REVIEW_TYPES.LEARNING],
-    queryFn: () => getInternshipReviews(Number(id)),
+    queryKey: ["internshipReviews", id, sortType],
+    queryFn: () => getInternshipReviews(Number(id), sortType),
   });
 
   if (!workReviews && !internshipReviews) {
     return EMPTY_REVIEW_RESPONSE;
   }
 
+  // 서버에서 이미 정렬된 데이터를 그대로 사용
   const reviews =
     type === REVIEW_TYPES.WORK
-      ? workReviews?.content.map(transformWorkReview) || []
-      : internshipReviews?.content.map(transformInternshipReview) || [];
+      ? workReviews?.content || []
+      : internshipReviews?.content || [];
 
-  const sortedReviews = [...reviews].sort((a, b) => {
-    if (sortType === SortType.POPULAR) {
-      return b.likeCount - a.likeCount;
-    } else {
-      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-    }
-  });
-
+  // 총점 계산
   const totalRating =
-    reviews.reduce(
-      (acc: number, review: ReviewData) => acc + review.rating.total,
-      0
-    ) / reviews.length || 0;
+    reviews.reduce((acc: number, review: ReviewData) => {
+      if (type === REVIEW_TYPES.WORK && "workReviewId" in review) {
+        return (
+          acc +
+          (review.benefitAndSalaryScore +
+            review.workLifeBalanceScore +
+            review.workEnvironmentScore +
+            review.managerScore +
+            review.customerScore) /
+            5
+        );
+      } else if ("internshipReviewId" in review) {
+        return (
+          acc +
+          (review.workEnvironmentScore +
+            review.learningSupportScore +
+            review.instructionTeacherScore) /
+            3
+        );
+      }
+      return acc;
+    }, 0) / reviews.length || 0;
 
+  // 평균 점수 계산
   const scores = reviews.reduce(
     (acc: Record<string, number>, review: ReviewData) => {
-      Object.entries(review.scores).forEach(([key, value]) => {
-        acc[key] = (acc[key] || 0) + value;
-      });
+      if (type === REVIEW_TYPES.WORK && "workReviewId" in review) {
+        acc.welfare = (acc.welfare || 0) + review.benefitAndSalaryScore;
+        acc.workLabel = (acc.workLabel || 0) + review.workLifeBalanceScore;
+        acc.atmosphere = (acc.atmosphere || 0) + review.workEnvironmentScore;
+        acc.manager = (acc.manager || 0) + review.managerScore;
+        acc.customer = (acc.customer || 0) + review.customerScore;
+      } else if ("internshipReviewId" in review) {
+        acc.atmosphere = (acc.atmosphere || 0) + review.workEnvironmentScore;
+        acc.studyHelp = (acc.studyHelp || 0) + review.learningSupportScore;
+        acc.teacherGuide =
+          (acc.teacherGuide || 0) + review.instructionTeacherScore;
+      }
       return acc;
     },
     {} as Record<string, number>
   );
 
+  // 평균 계산
   Object.keys(scores).forEach((key) => {
     scores[key] = scores[key] / reviews.length || 0;
   });
 
   return {
-    reviews: sortedReviews,
+    reviews, // 서버에서 이미 정렬된 데이터를 그대로 반환
     rating: {
       total: totalRating,
     },
     scores,
   };
 }
+
+/**
+ * 실습 리뷰 생성 훅
+ * @returns mutation 객체
+ */
+export const useCreateInternshipReview = () => {
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  return useMutation<
+    LikeResponse,
+    Error,
+    LearningReviewFormValues & { kindergartenId: number; workType: string }
+  >({
+    mutationFn: createInternshipReview,
+    onSuccess: (_, variables) => {
+      // 해당 유치원의 실습 리뷰 목록을 다시 불러오기
+      queryClient.invalidateQueries({
+        queryKey: ["internshipReviews", variables.kindergartenId.toString()],
+      });
+
+      toast({
+        title: "실습 리뷰가 등록되었습니다.",
+        variant: "default",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "실습 리뷰 등록에 실패했습니다.",
+        description: error.message,
+        variant: "destructive",
+      });
+      console.error("실습 리뷰 생성 에러:", error);
+    },
+  });
+};
+
+/**
+ * 근무 리뷰 생성 훅
+ * @returns mutation 객체
+ */
+export const useCreateWorkReview = () => {
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  return useMutation<
+    LikeResponse,
+    Error,
+    WorkReviewFormValues & { kindergartenId: number }
+  >({
+    mutationFn: createWorkReview,
+    onSuccess: (_, variables) => {
+      // 해당 유치원의 근무 리뷰 목록을 다시 불러오기
+      queryClient.invalidateQueries({
+        queryKey: ["workReviews", variables.kindergartenId.toString()],
+      });
+
+      toast({
+        title: "근무 리뷰가 등록되었습니다.",
+        variant: "default",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "근무 리뷰 등록에 실패했습니다.",
+        description: error.message,
+        variant: "destructive",
+      });
+      console.error("근무 리뷰 생성 에러:", error);
+    },
+  });
+};

@@ -39,10 +39,26 @@ export interface InternshipReview {
   learningSupportScore: number;
   workEnvironmentComment: string;
   workEnvironmentScore: number;
+  workType?: string;
   likeCount?: number;
   shareCount?: number;
   createdAt?: string;
 }
+
+export type CreateInternshipReviewRequest = Omit<
+  InternshipReview,
+  "internshipReviewId" | "user" | "likeCount" | "shareCount" | "createdAt"
+> & {
+  kindergartenId: number;
+  workType: string;
+};
+
+export type CreateWorkReviewRequest = Omit<
+  WorkReview,
+  "workReviewId" | "user" | "likeCount" | "shareCount" | "createdAt"
+> & {
+  kindergartenId: number;
+};
 
 export interface ReviewResponse<T> {
   content: T[];

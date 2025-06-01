@@ -17,6 +17,10 @@ import {
   workReviewFormSchema,
   learningReviewFormSchema,
 } from "@/utils/validationSchemas";
+import {
+  useCreateWorkReview,
+  useCreateInternshipReview,
+} from "@/hooks/useReview";
 
 interface ReviewFormManagerProps {
   schoolId: string;
@@ -38,6 +42,9 @@ export default function ReviewFormManager({
 }: ReviewFormManagerProps) {
   const [step, setStep] = useState(1);
   const navigate = useNavigate();
+
+  const createWorkReviewMutation = useCreateWorkReview();
+  const createInternshipReviewMutation = useCreateInternshipReview();
 
   const workReviewForm = useForm<WorkReviewFormValues>({
     resolver: zodResolver(workReviewFormSchema),
@@ -133,12 +140,19 @@ export default function ReviewFormManager({
     try {
       if (type === REVIEW_TYPES.WORK) {
         const values = workReviewForm.getValues();
-        console.log("Work review submitted:", values);
-        // TODO: API 호출
+
+        await createWorkReviewMutation.mutateAsync({
+          ...values,
+          kindergartenId: Number(schoolId),
+        });
       } else {
         const values = learningReviewForm.getValues();
-        console.log("Learning review submitted:", values);
-        // TODO: API 호출
+
+        await createInternshipReviewMutation.mutateAsync({
+          ...values,
+          kindergartenId: Number(schoolId),
+          workType: "실습생", // 실습생은 고정값
+        });
       }
 
       if (onSubmitSuccess) {
@@ -152,24 +166,32 @@ export default function ReviewFormManager({
   };
 
   // 하단 영역: 이전 및 다음 버튼
-  const renderButtons = () => (
-    <div
-      className={step > 1 ? "flex mt-6 justify-between" : "flex ml-auto mt-6"}
-    >
-      {step > 1 && (
-        <Button size="lg" onClick={handleBack}>
-          이전
-        </Button>
-      )}
-      <Button
-        variant={step === totalSteps ? "secondary" : "primary"}
-        size="lg"
-        onClick={handleNext}
+  const renderButtons = () => {
+    const isSubmitting =
+      type === REVIEW_TYPES.WORK
+        ? createWorkReviewMutation.isPending
+        : createInternshipReviewMutation.isPending;
+
+    return (
+      <div
+        className={step > 1 ? "flex mt-6 justify-between" : "flex ml-auto mt-6"}
       >
-        {step === totalSteps ? "등록" : "다음"}
-      </Button>
-    </div>
-  );
+        {step > 1 && (
+          <Button size="lg" onClick={handleBack} disabled={isSubmitting}>
+            이전
+          </Button>
+        )}
+        <Button
+          variant={step === totalSteps ? "secondary" : "primary"}
+          size="lg"
+          onClick={handleNext}
+          disabled={isSubmitting}
+        >
+          {step === totalSteps ? "등록" : "다음"}
+        </Button>
+      </div>
+    );
+  };
 
   return (
     <div className="flex flex-col gap-6 p-5 bg-white rounded-lg">
@@ -177,7 +199,7 @@ export default function ReviewFormManager({
 
       {type === REVIEW_TYPES.WORK ? (
         <Form {...workReviewForm}>
-          <form className="flex flex-col gap-6">
+          <form className="flex flex-col gap-10">
             <WorkReviewForm
               key={`work-review-step-${step}`}
               form={workReviewForm}
@@ -188,7 +210,7 @@ export default function ReviewFormManager({
         </Form>
       ) : (
         <Form {...learningReviewForm}>
-          <form className="flex flex-col gap-6">
+          <form className="flex flex-col gap-10">
             <LearningReviewForm
               key={`learning-review-step-${step}`}
               form={learningReviewForm}

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import { useReviewLike } from "@/hooks/useReviewLike";
 import { REVIEW_TYPES } from "@/constants/review";
+import type { InternshipReview, WorkReview } from "@/types/reviewDTO";
 import ReviewRating from "@/components/review/ReviewRating";
 import ReviewContent, {
   ReviewFieldConfig,
@@ -9,59 +9,103 @@ import ReviewContent, {
 import ReviewActions from "@/components/review/ReviewActions";
 import ReportDropDown from "../@shared/drop-down/report-drop-down";
 
-export interface ReviewData {
-  id: number;
-  title: string;
-  type: string;
-  createdAt: string;
-  likeCount: number;
-  workYear: string;
-  rating: {
-    total: number;
-  };
-  scores: Record<string, number>;
-  contents: Record<string, string>;
-}
+export type ReviewData = InternshipReview | WorkReview;
 
 export interface ReviewCardProps {
   review: ReviewData | ReviewData[];
   fieldConfigs: ReviewFieldConfig[];
+  type: string;
 }
 
 function ReviewCardItem({
   review,
   fieldConfigs,
+  type,
 }: {
   review: ReviewData;
   fieldConfigs: ReviewFieldConfig[];
+  type: string;
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [searchParams] = useSearchParams();
-  const type = searchParams.get("type") || REVIEW_TYPES.WORK;
-  const { handleLike, isPending, isLiked } = useReviewLike(type, review.id);
+  const { handleLike, isPending, isLiked } = useReviewLike(
+    type,
+    "workReviewId" in review ? review.workReviewId : review.internshipReviewId
+  );
+
+  // 타입에 따른 총점 계산
+  const getTotalRating = (review: ReviewData, type: string): number => {
+    if (type === REVIEW_TYPES.WORK && "workReviewId" in review) {
+      return (
+        (review.benefitAndSalaryScore +
+          review.workLifeBalanceScore +
+          review.workEnvironmentScore +
+          review.managerScore +
+          review.customerScore) /
+        5
+      );
+    } else if ("internshipReviewId" in review) {
+      return (
+        (review.workEnvironmentScore +
+          review.learningSupportScore +
+          review.instructionTeacherScore) /
+        3
+      );
+    }
+    return 0;
+  };
+
+  const getWorkYear = (review: ReviewData, type: string): string => {
+    if (type === REVIEW_TYPES.WORK && "workReviewId" in review) {
+      switch (review.workYear) {
+        case 1:
+          return "2년 이내 근무";
+        case 2:
+          return "2-5년 전 근무";
+        case 3:
+          return "근무한지 오래됨";
+        default:
+          return "";
+      }
+    }
+    return "";
+  };
+
+  const getReviewType = (review: ReviewData, type: string): string => {
+    if (type === REVIEW_TYPES.WORK && "workReviewId" in review) {
+      return review.wrokType || "담임";
+    }
+    return "실습생";
+  };
 
   return (
     <div className="flex flex-col gap-7">
       <div className="flex justify-between items-start">
         <ReviewRating
-          rating={review.rating.total}
-          title={review.title}
-          type={review.type}
-          createdAt={review.createdAt}
-          workYear={review.workYear}
+          rating={getTotalRating(review, type)}
+          title={review.oneLineComment}
+          type={getReviewType(review, type)}
+          createdAt={review.createdAt || new Date().toISOString()}
+          workYear={getWorkYear(review, type)}
         />
-        <ReportDropDown targetId={review.id} targetType="REVIEW" />
+        <ReportDropDown
+          targetId={
+            "workReviewId" in review
+              ? review.workReviewId
+              : review.internshipReviewId
+          }
+          targetType="REVIEW"
+        />
       </div>
       <ReviewContent
-        scores={review.scores}
-        contents={review.contents}
+        review={review}
+        type={type}
         fieldConfigs={fieldConfigs}
         isExpanded={isExpanded}
         onToggleExpand={() => setIsExpanded(!isExpanded)}
       />
       <div className="flex justify-end">
         <ReviewActions
-          likeCount={review.likeCount}
+          likeCount={review.likeCount || 0}
           onLike={handleLike}
           isPending={isPending}
           isLiked={isLiked}
@@ -71,19 +115,32 @@ function ReviewCardItem({
   );
 }
 
-export default function ReviewCard({ review, fieldConfigs }: ReviewCardProps) {
+export default function ReviewCard({
+  review,
+  fieldConfigs,
+  type,
+}: ReviewCardProps) {
   return (
     <div className="flex flex-col gap-8">
       {Array.isArray(review) ? (
         review.map((item) => (
           <ReviewCardItem
-            key={item.id}
+            key={
+              "workReviewId" in item
+                ? item.workReviewId
+                : item.internshipReviewId
+            }
             review={item}
             fieldConfigs={fieldConfigs}
+            type={type}
           />
         ))
       ) : (
-        <ReviewCardItem review={review} fieldConfigs={fieldConfigs} />
+        <ReviewCardItem
+          review={review}
+          fieldConfigs={fieldConfigs}
+          type={type}
+        />
       )}
     </div>
   );

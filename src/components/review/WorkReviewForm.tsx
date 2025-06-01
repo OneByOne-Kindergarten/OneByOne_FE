@@ -176,236 +176,246 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
   const Step2Form = useMemo(() => {
     return (
       <>
-        <FormField
-          key="benefitAndSalaryComment"
-          control={form.control}
-          name="benefitAndSalaryComment"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-base text-primary-dark01 font-semibold">
-                복지/급여에 대해서 알려주세요
-              </FormLabel>
-              <FormControl>
-                <Textarea
-                  padding="sm"
-                  font="md"
-                  size="auto"
-                  placeholder="점수만 입력하고 내용은 생략 가능해요"
-                  value={field.value || ""}
-                  onChange={field.onChange}
-                  name="benefitAndSalaryComment"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          key="benefitAndSalaryScore"
-          control={form.control}
-          name="benefitAndSalaryScore"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-base text-primary-dark01 font-semibold">
-                복지/급여 점수
-              </FormLabel>
-              <FormControl>
-                <div className="flex justify-center">
-                  <BoxRatingGroup
-                    value={field.value}
-                    onChange={(value) => field.onChange(value)}
-                    size="md"
+        <div className="flex flex-col gap-2">
+          <FormField
+            key="benefitAndSalaryComment"
+            control={form.control}
+            name="benefitAndSalaryComment"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-base text-primary-dark01 font-semibold">
+                  복지/급여에 대해서 알려주세요
+                </FormLabel>
+                <FormControl>
+                  <Textarea
+                    padding="sm"
+                    font="md"
+                    size="auto"
+                    placeholder="점수만 입력하고 내용은 생략 가능해요"
+                    value={field.value || ""}
+                    onChange={field.onChange}
+                    name="benefitAndSalaryComment"
                   />
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          key="workLifeBalanceComment"
-          control={form.control}
-          name="workLifeBalanceComment"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-base text-primary-dark01 font-semibold">
-                워라벨에 대해서 알려주세요
-              </FormLabel>
-              <FormControl>
-                <Textarea
-                  padding="sm"
-                  font="md"
-                  size="auto"
-                  placeholder="점수만 입력하고 내용은 생략 가능해요"
-                  value={field.value || ""}
-                  onChange={field.onChange}
-                  name="workLifeBalanceComment"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          key="workLifeBalanceScore"
-          control={form.control}
-          name="workLifeBalanceScore"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-base text-primary-dark01 font-semibold">
-                워라벨 점수
-              </FormLabel>
-              <FormControl>
-                <div className="flex justify-center">
-                  <BoxRatingGroup
-                    value={field.value}
-                    onChange={(value) => field.onChange(value)}
-                    size="md"
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            key="benefitAndSalaryScore"
+            control={form.control}
+            name="benefitAndSalaryScore"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-base text-primary-dark01 font-semibold">
+                  복지/급여 점수
+                </FormLabel>
+                <FormControl>
+                  <div className="flex justify-center">
+                    <BoxRatingGroup
+                      value={field.value}
+                      onChange={(value) => field.onChange(value)}
+                      size="md"
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <FormField
+            key="workLifeBalanceComment"
+            control={form.control}
+            name="workLifeBalanceComment"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-base text-primary-dark01 font-semibold">
+                  워라벨에 대해서 알려주세요
+                </FormLabel>
+                <FormControl>
+                  <Textarea
+                    padding="sm"
+                    font="md"
+                    size="auto"
+                    placeholder="점수만 입력하고 내용은 생략 가능해요"
+                    value={field.value || ""}
+                    onChange={field.onChange}
+                    name="workLifeBalanceComment"
                   />
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          key="workEnvironmentComment"
-          control={form.control}
-          name="workEnvironmentComment"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-base text-primary-dark01 font-semibold">
-                근무 환경에 대해서 알려주세요
-              </FormLabel>
-              <FormControl>
-                <Textarea
-                  padding="sm"
-                  font="md"
-                  size="auto"
-                  placeholder="점수만 입력하고 내용은 생략 가능해요"
-                  value={field.value || ""}
-                  onChange={field.onChange}
-                  name="workEnvironmentComment"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          key="workEnvironmentScore"
-          control={form.control}
-          name="workEnvironmentScore"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-base text-primary-dark01 font-semibold">
-                근무 환경 점수
-              </FormLabel>
-              <FormControl>
-                <div className="flex justify-center">
-                  <BoxRatingGroup
-                    value={field.value}
-                    onChange={(value) => field.onChange(value)}
-                    size="md"
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            key="workLifeBalanceScore"
+            control={form.control}
+            name="workLifeBalanceScore"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-base text-primary-dark01 font-semibold">
+                  워라벨 점수
+                </FormLabel>
+                <FormControl>
+                  <div className="flex justify-center">
+                    <BoxRatingGroup
+                      value={field.value}
+                      onChange={(value) => field.onChange(value)}
+                      size="md"
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <FormField
+            key="workEnvironmentComment"
+            control={form.control}
+            name="workEnvironmentComment"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-base text-primary-dark01 font-semibold">
+                  분위기에 대해서 알려주세요
+                </FormLabel>
+                <FormControl>
+                  <Textarea
+                    padding="sm"
+                    font="md"
+                    size="auto"
+                    placeholder="점수만 입력하고 내용은 생략 가능해요"
+                    value={field.value || ""}
+                    onChange={field.onChange}
+                    name="workEnvironmentComment"
                   />
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          key="managerComment"
-          control={form.control}
-          name="managerComment"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-base text-primary-dark01 font-semibold">
-                관리자에 대해서 알려주세요
-              </FormLabel>
-              <FormControl>
-                <Textarea
-                  padding="sm"
-                  font="md"
-                  size="auto"
-                  placeholder="점수만 입력하고 내용은 생략 가능해요"
-                  value={field.value || ""}
-                  onChange={field.onChange}
-                  name="managerComment"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          key="managerScore"
-          control={form.control}
-          name="managerScore"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-base text-primary-dark01 font-semibold">
-                관리자 점수
-              </FormLabel>
-              <FormControl>
-                <div className="flex justify-center">
-                  <BoxRatingGroup
-                    value={field.value}
-                    onChange={(value) => field.onChange(value)}
-                    size="md"
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            key="workEnvironmentScore"
+            control={form.control}
+            name="workEnvironmentScore"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-base text-primary-dark01 font-semibold">
+                  분위기 점수
+                </FormLabel>
+                <FormControl>
+                  <div className="flex justify-center">
+                    <BoxRatingGroup
+                      value={field.value}
+                      onChange={(value) => field.onChange(value)}
+                      size="md"
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <FormField
+            key="managerComment"
+            control={form.control}
+            name="managerComment"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-base text-primary-dark01 font-semibold">
+                  관리자에 대해서 알려주세요
+                </FormLabel>
+                <FormControl>
+                  <Textarea
+                    padding="sm"
+                    font="md"
+                    size="auto"
+                    placeholder="점수만 입력하고 내용은 생략 가능해요"
+                    value={field.value || ""}
+                    onChange={field.onChange}
+                    name="managerComment"
                   />
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          key="customerComment"
-          control={form.control}
-          name="customerComment"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-base text-primary-dark01 font-semibold">
-                고객에 대해서 알려주세요
-              </FormLabel>
-              <FormControl>
-                <Textarea
-                  padding="sm"
-                  font="md"
-                  size="auto"
-                  placeholder="점수만 입력하고 내용은 생략 가능해요"
-                  value={field.value || ""}
-                  onChange={field.onChange}
-                  name="customerComment"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          key="customerScore"
-          control={form.control}
-          name="customerScore"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-base text-primary-dark01 font-semibold">
-                고객 점수
-              </FormLabel>
-              <FormControl>
-                <div className="flex justify-center">
-                  <BoxRatingGroup
-                    value={field.value}
-                    onChange={(value) => field.onChange(value)}
-                    size="md"
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            key="managerScore"
+            control={form.control}
+            name="managerScore"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-base text-primary-dark01 font-semibold">
+                  관리자 점수
+                </FormLabel>
+                <FormControl>
+                  <div className="flex justify-center">
+                    <BoxRatingGroup
+                      value={field.value}
+                      onChange={(value) => field.onChange(value)}
+                      size="md"
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <FormField
+            key="customerComment"
+            control={form.control}
+            name="customerComment"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-base text-primary-dark01 font-semibold">
+                  고객에 대해서 알려주세요
+                </FormLabel>
+                <FormControl>
+                  <Textarea
+                    padding="sm"
+                    font="md"
+                    size="auto"
+                    placeholder="점수만 입력하고 내용은 생략 가능해요"
+                    value={field.value || ""}
+                    onChange={field.onChange}
+                    name="customerComment"
                   />
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            key="customerScore"
+            control={form.control}
+            name="customerScore"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-base text-primary-dark01 font-semibold">
+                  고객 점수
+                </FormLabel>
+                <FormControl>
+                  <div className="flex justify-center">
+                    <BoxRatingGroup
+                      value={field.value}
+                      onChange={(value) => field.onChange(value)}
+                      size="md"
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
         <AlertCard>
           <strong>익명성 보장을 위한 안내</strong> <br /> 확실한 익명 보장을
           위해 리뷰가 등록되면 리뷰에 익명 닉네임, 프로필 등 작성자에 대한
