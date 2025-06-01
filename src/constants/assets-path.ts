@@ -1,121 +1,199 @@
+// Import statements for all SVG assets
+import homeActive from "@/assets/icons/home-active.svg";
+import homeInactive from "@/assets/icons/home-inactive.svg";
+import schoolActive from "@/assets/icons/school-active.svg";
+import schoolInactive from "@/assets/icons/school-inactive.svg";
+import communityActive from "@/assets/icons/community-active.svg";
+import communityInactive from "@/assets/icons/community-inactive.svg";
+import bookmarksActive from "@/assets/icons/bookmarks-active.svg";
+import bookmarksInactive from "@/assets/icons/bookmarks-inactive.svg";
+import userActive from "@/assets/icons/user-active.svg";
+import userInactive from "@/assets/icons/user-inactive.svg";
+import post from "@/assets/icons/post.svg";
+import postEdit from "@/assets/icons/post-edit.svg";
+import radioOff from "@/assets/icons/radio-off.svg";
+import radioOn from "@/assets/icons/radio-on.svg";
+import arrowLeft from "@/assets/icons/arrow-left.svg";
+import arrowRight from "@/assets/icons/arrow-right.svg";
+import starGray from "@/assets/icons/star-gray.svg";
+import starDarkgray from "@/assets/icons/star-darkgray.svg";
+import starYellow from "@/assets/icons/star-yellow.svg";
+import eyeOff from "@/assets/icons/eye-off.svg";
+import eyeOn from "@/assets/icons/eye-on.svg";
+import chatColor from "@/assets/icons/chat-color.svg";
+import chatLine from "@/assets/icons/chat-line.svg";
+import kakao from "@/assets/icons/kakao.svg";
+import naver from "@/assets/icons/naver.svg";
+import apple from "@/assets/icons/apple.svg";
+import characterChicken from "@/assets/icons/character-chicken.svg";
+import characterChick from "@/assets/icons/character-chick.svg";
+import characterUser from "@/assets/icons/character-user.svg";
+import shortcutSchool from "@/assets/icons/shortcut-search-school.svg";
+import shortcutCommunity from "@/assets/icons/shortcut-post-community.svg";
+import call from "@/assets/icons/call.svg";
+import email from "@/assets/icons/email.svg";
+import kebab from "@/assets/icons/kebab.svg";
+import notice from "@/assets/icons/notice.svg";
+import document from "@/assets/icons/document.svg";
+import chart from "@/assets/icons/chart.svg";
+import thumbUp from "@/assets/icons/thumb-up.svg";
+import reply from "@/assets/icons/reply.svg";
+import share from "@/assets/icons/share.svg";
+import alarm from "@/assets/icons/alarm.svg";
+import alert from "@/assets/icons/alert.svg";
+import bookmarkerActive from "@/assets/icons/bookmarker-active.svg";
+import bookmarkerInactive from "@/assets/icons/bookmarker-inactive.svg";
+import checkGreen from "@/assets/icons/check-green.svg";
+import checkBlue from "@/assets/icons/check-blue.svg";
+import resetPassword from "@/assets/icons/reset-password.svg";
+import question from "@/assets/icons/question.svg";
+import questionGlobal from "@/assets/icons/question-global.svg";
+import questionBalloon from "@/assets/icons/question-balloon.svg";
+import error from "@/assets/icons/error.svg";
+import cancel from "@/assets/icons/cancel.svg";
+import inquiry from "@/assets/icons/inquiry.svg";
+import map from "@/assets/icons/map.svg";
+import policy from "@/assets/icons/policy.svg";
+import search from "@/assets/icons/search.svg";
+import setting from "@/assets/icons/setting.svg";
+import location from "@/assets/icons/location.svg";
+import homepage from "@/assets/icons/homepage.svg";
+import building from "@/assets/icons/building.svg";
+import child from "@/assets/icons/child.svg";
+import classIcon from "@/assets/icons/class.svg";
+import boss from "@/assets/icons/boss.svg";
+import clock from "@/assets/icons/clock.svg";
+import brokenLine from "@/assets/icons/broken-line.svg";
+import certification from "@/assets/icons/certification-mark.svg";
+import logout from "@/assets/icons/logout.svg";
+import leave from "@/assets/icons/leave.svg";
+
+// Import statements for images
+import logoMain from "@/assets/images/logo-main.webp";
+import logoInactive from "@/assets/images/logo-inactive.webp";
+import bannerSchool from "@/assets/images/banner-school.webp";
+import bannerCommunity from "@/assets/images/banner-community.webp";
+import certificationImg from "@/assets/images/certification.webp";
+import guideProfile from "@/assets/images/guide-profile.webp";
+
 export const SVG_PATHS = {
   HOME: {
-    active: "/src/assets/icons/home-active.svg",
-    inactive: "/src/assets/icons/home-inactive.svg",
+    active: homeActive,
+    inactive: homeInactive,
   },
   SCHOOL: {
-    active: "/src/assets/icons/school-active.svg",
-    inactive: "/src/assets/icons/school-inactive.svg",
+    active: schoolActive,
+    inactive: schoolInactive,
   },
   COMMUNITY: {
-    active: "/src/assets/icons/community-active.svg",
-    inactive: "/src/assets/icons/community-inactive.svg",
+    active: communityActive,
+    inactive: communityInactive,
   },
   BOOKMARKS: {
-    active: "/src/assets/icons/bookmarks-active.svg",
-    inactive: "/src/assets/icons/bookmarks-inactive.svg",
+    active: bookmarksActive,
+    inactive: bookmarksInactive,
   },
   USER: {
-    active: "/src/assets/icons/user-active.svg",
-    inactive: "/src/assets/icons/user-inactive.svg",
+    active: userActive,
+    inactive: userInactive,
   },
   POST: {
-    create: "/src/assets/icons/post.svg",
-    edit: "/src/assets/icons/post-edit.svg",
+    create: post,
+    edit: postEdit,
   },
   RADIO: {
-    off: "/src/assets/icons/radio-off.svg",
-    on: "/src/assets/icons/radio-on.svg",
+    off: radioOff,
+    on: radioOn,
   },
   ARROW: {
-    left: "/src/assets/icons/arrow-left.svg",
-    right: "/src/assets/icons/arrow-right.svg",
+    left: arrowLeft,
+    right: arrowRight,
   },
   STAR: {
-    gray: "/src/assets/icons/star-gray.svg",
-    darkgray: "/src/assets/icons/star-darkgray.svg",
-    yellow: "/src/assets/icons/star-yellow.svg",
+    gray: starGray,
+    darkgray: starDarkgray,
+    yellow: starYellow,
   },
   EYE: {
-    off: "/src/assets/icons/eye-off.svg",
-    on: "/src/assets/icons/eye-on.svg",
+    off: eyeOff,
+    on: eyeOn,
   },
   CHAT: {
-    color: "/src/assets/icons/chat-color.svg",
-    line: "/src/assets/icons/chat-line.svg",
+    color: chatColor,
+    line: chatLine,
   },
   OAUTH: {
-    kakao: "/src/assets/icons/kakao.svg",
-    naver: "/src/assets/icons/naver.svg",
-    apple: "/src/assets/icons/apple.svg",
+    kakao: kakao,
+    naver: naver,
+    apple: apple,
   },
   CHARACTER: {
-    chicken: "/src/assets/icons/character-chicken.svg",
-    chick: "/src/assets/icons/character-chick.svg",
-    user: "/src/assets/icons/character-user.svg",
+    chicken: characterChicken,
+    chick: characterChick,
+    user: characterUser,
   },
   SHORTCUT: {
-    school: "/src/assets/icons/shortcut-search-school.svg",
-    community: "/src/assets/icons/shortcut-post-community.svg",
+    school: shortcutSchool,
+    community: shortcutCommunity,
   },
-  CALL: "/src/assets/icons/call.svg",
-  EMAIL: "/src/assets/icons/email.svg",
-  KEBAB: "/src/assets/icons/kebab.svg",
-  NOTICE: "/src/assets/icons/notice.svg",
-  DOCUMENT: "/src/assets/icons/document.svg",
-  CHART: "/src/assets/icons/chart.svg",
-  THUMB_UP: "/src/assets/icons/thumb-up.svg",
-  REPLY: "/src/assets/icons/reply.svg",
-  SHARE: "/src/assets/icons/share.svg",
-  ALARM: "/src/assets/icons/alarm.svg",
-  ALERT: "/src/assets/icons/alert.svg",
+  CALL: call,
+  EMAIL: email,
+  KEBAB: kebab,
+  NOTICE: notice,
+  DOCUMENT: document,
+  CHART: chart,
+  THUMB_UP: thumbUp,
+  REPLY: reply,
+  SHARE: share,
+  ALARM: alarm,
+  ALERT: alert,
   BOOKMARKER: {
-    active: "/src/assets/icons/bookmarker-active.svg",
-    inactive: "/src/assets/icons/bookmarker-inactive.svg",
+    active: bookmarkerActive,
+    inactive: bookmarkerInactive,
   },
   CHECK: {
-    green: "/src/assets/icons/check-green.svg",
-    blue: "/src/assets/icons/check-blue.svg",
+    green: checkGreen,
+    blue: checkBlue,
   },
   RESET: {
-    password: "/src/assets/icons/reset-password.svg",
+    password: resetPassword,
   },
   QUESTION: {
-    BASE: "/src/assets/icons/question.svg",
-    GLOBAL: "/src/assets/icons/question-global.svg",
-    BALLOON: "/src/assets/icons/question-balloon.svg",
+    BASE: question,
+    GLOBAL: questionGlobal,
+    BALLOON: questionBalloon,
   },
-  ERROR: "/src/assets/icons/error.svg",
-  CANCEL: "/src/assets/icons/cancel.svg",
-  INQUIRY: "/src/assets/icons/inquiry.svg",
-  MAP: "/src/assets/icons/map.svg",
-  POLICY: "/src/assets/icons/policy.svg",
-  SEARCH: "/src/assets/icons/search.svg",
-  SETTING: "/src/assets/icons/setting.svg",
-  LOCATION: "/src/assets/icons/location.svg",
-  HOMEPAGE: "/src/assets/icons/homepage.svg",
-  BUILDING: "/src/assets/icons/building.svg",
-  CHILD: "/src/assets/icons/child.svg",
-  CLASS: "/src/assets/icons/class.svg",
-  BOSS: "/src/assets/icons/boss.svg",
-  CLOCK: "/src/assets/icons/clock.svg",
-  BROKEN_LINE: "/src/assets/icons/broken-line.svg",
-  CERTIFICATION: "/src/assets/icons/certification-mark.svg",
-  LOGOUT: "/src/assets/icons/logout.svg",
-  LEAVE: "/src/assets/icons/leave.svg",
+  ERROR: error,
+  CANCEL: cancel,
+  INQUIRY: inquiry,
+  MAP: map,
+  POLICY: policy,
+  SEARCH: search,
+  SETTING: setting,
+  LOCATION: location,
+  HOMEPAGE: homepage,
+  BUILDING: building,
+  CHILD: child,
+  CLASS: classIcon,
+  BOSS: boss,
+  CLOCK: clock,
+  BROKEN_LINE: brokenLine,
+  CERTIFICATION: certification,
+  LOGOUT: logout,
+  LEAVE: leave,
 };
 
 export const IMAGE_PATHS = {
   LOGO: {
-    MAIN: "/src/assets/images/logo-main.webp",
-    INACTIVE: "/src/assets/images/logo-inactive.webp",
+    MAIN: logoMain,
+    INACTIVE: logoInactive,
   },
   BANNER: {
-    SCHOOL: "/src/assets/images/banner-school.webp",
-    COMMUNITY: "/src/assets/images/banner-community.webp",
+    SCHOOL: bannerSchool,
+    COMMUNITY: bannerCommunity,
   },
-  CERTIFICATION: "/src/assets/images/certification.webp",
+  CERTIFICATION: certificationImg,
   GUIDE: {
-    PROFILE: "/src/assets/images/guide-profile.webp",
+    PROFILE: guideProfile,
   },
 };
