@@ -12,23 +12,15 @@ import {
 import Input from "@/components/@shared/form/input";
 import Textarea from "@/components/@shared/form/textarea";
 import { BoxRatingGroup } from "@/components/@shared/rating/box-rating";
-import { StarRating } from "@/components/@shared/rating/star-rating";
 
-// 실습 리뷰 폼 필드 인터페이스
 export interface LearningReviewFormValues {
-  title: string;
-  content: string;
-
-  // 1 step: 분위기, 학습도움, 지도교사
-  atmosphereContent: string;
-  atmosphereRating: number;
-  educationEnvContent: string;
-  educationEnvRating: number;
-  teacherSupportContent: string;
-  teacherSupportRating: number;
-
-  // 2 step: 총점
-  overallRating: number;
+  oneLineComment: string;
+  workEnvironmentComment?: string;
+  workEnvironmentScore: number;
+  learningSupportComment?: string;
+  learningSupportScore: number;
+  instructionTeacherComment?: string;
+  instructionTeacherScore: number;
 }
 
 interface LearningReviewFormProps {
@@ -45,7 +37,7 @@ export default function LearningReviewForm({
       <>
         <FormField
           control={form.control}
-          name="title"
+          name="oneLineComment"
           render={({ field }) => (
             <FormItem>
               <div className="flex justify-between">
@@ -63,14 +55,21 @@ export default function LearningReviewForm({
             </FormItem>
           )}
         />
+      </>
+    );
+  }, [form]);
+
+  const Step2Form = useMemo(() => {
+    return (
+      <>
         <div className="flex flex-col gap-1.5">
           <FormField
             control={form.control}
-            name="atmosphereContent"
+            name="workEnvironmentComment"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-base text-primary-dark01 font-semibold">
-                  분위기에 대해서 알려주세요
+                  근무 환경에 대해서 알려주세요
                 </FormLabel>
                 <FormControl>
                   <Textarea
@@ -87,11 +86,11 @@ export default function LearningReviewForm({
           />
           <FormField
             control={form.control}
-            name="atmosphereRating"
+            name="workEnvironmentScore"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-base text-primary-dark01 font-semibold">
-                  분위기 점수
+                  근무 환경 점수
                 </FormLabel>
                 <FormControl>
                   <div className="flex justify-center">
@@ -108,7 +107,7 @@ export default function LearningReviewForm({
           />
           <FormField
             control={form.control}
-            name="educationEnvContent"
+            name="learningSupportComment"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-base text-primary-dark01 font-semibold">
@@ -129,7 +128,7 @@ export default function LearningReviewForm({
           />
           <FormField
             control={form.control}
-            name="educationEnvRating"
+            name="learningSupportScore"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-base text-primary-dark01 font-semibold">
@@ -150,7 +149,7 @@ export default function LearningReviewForm({
           />
           <FormField
             control={form.control}
-            name="teacherSupportContent"
+            name="instructionTeacherComment"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-base text-primary-dark01 font-semibold">
@@ -171,7 +170,7 @@ export default function LearningReviewForm({
           />
           <FormField
             control={form.control}
-            name="teacherSupportRating"
+            name="instructionTeacherScore"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-base text-primary-dark01 font-semibold">
@@ -191,40 +190,12 @@ export default function LearningReviewForm({
             )}
           />
         </div>
-      </>
-    );
-  }, [form]);
-
-  const Step2Form = useMemo(() => {
-    return (
-      <section className="flex flex-col gap-10">
-        <FormField
-          control={form.control}
-          name="overallRating"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-primary-dark01 font-semibold mb-3">
-                총점을 평가해주세요
-              </FormLabel>
-              <FormControl>
-                <div className="flex justify-center my-10">
-                  <StarRating
-                    value={field.value}
-                    onChange={(value) => field.onChange(value)}
-                    size="lg"
-                  />
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <AlertCard>
           <strong>익명성 보장을 위한 안내</strong> <br /> 확실한 익명 보장을
           위해 리뷰가 등록되면 리뷰에 익명 닉네임, 프로필 등 작성자에 대한
           정보가 표기되지 않습니다.
         </AlertCard>
-      </section>
+      </>
     );
   }, [form]);
 

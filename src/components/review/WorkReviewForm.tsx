@@ -12,30 +12,24 @@ import {
 import Input from "@/components/@shared/form/input";
 import Textarea from "@/components/@shared/form/textarea";
 import { BoxRatingGroup } from "@/components/@shared/rating/box-rating";
-import { StarRating } from "@/components/@shared/rating/star-rating";
 
-// 근무 리뷰 폼 필드 인터페이스
 export interface WorkReviewFormValues {
-  title: string;
-  content: string;
-  workYear: "less_than_2_years" | "between_2_and_5_years" | "more_than_5_years";
+  // 1 step: 근무 기간, 근무 유형, 한 줄 평가
+  workYear: number;
+  workType?: string;
+  oneLineComment: string;
 
-  // 1 step: 복지/급여, 워라벨
-  salaryContent: string;
-  salaryRating: number;
-  workLifeBalanceContent: string;
-  workLifeBalanceRating: number;
-
-  // 2 step: 분위기, 관리자, 고객
-  atmosphereContent: string;
-  atmosphereRating: number;
-  managerContent: string;
-  managerRating: number;
-  clientContent: string;
-  clientRating: number;
-
-  // 3 step: 총점
-  overallRating: number;
+  // 2 step: 복지/급여, 워라벨, 관리자, 고객
+  benefitAndSalaryComment?: string;
+  benefitAndSalaryScore: number;
+  workLifeBalanceComment?: string;
+  workLifeBalanceScore: number;
+  workEnvironmentComment?: string;
+  workEnvironmentScore: number;
+  managerComment?: string;
+  managerScore: number;
+  customerComment?: string;
+  customerScore: number;
 }
 
 interface WorkReviewFormProps {
@@ -49,8 +43,9 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
     return (
       <>
         <FormField
+          key="oneLineComment"
           control={form.control}
-          name="title"
+          name="oneLineComment"
           render={({ field }) => (
             <FormItem>
               <div className="flex justify-between">
@@ -62,13 +57,20 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
                 </span>
               </div>
               <FormControl>
-                <Input font="md" placeholder="내용을 입력해주세요" {...field} />
+                <Input
+                  font="md"
+                  placeholder="내용을 입력해주세요"
+                  value={field.value}
+                  onChange={field.onChange}
+                  name="oneLineComment"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
         <FormField
+          key="workYear"
           control={form.control}
           name="workYear"
           render={({ field }) => (
@@ -83,9 +85,9 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
                     font="md"
                     size="lg"
                     shape="full"
-                    value="less_than_2_years"
-                    pressed={field.value === "less_than_2_years"}
-                    onPressedChange={() => field.onChange("less_than_2_years")}
+                    value={1}
+                    pressed={field.value === 1}
+                    onPressedChange={() => field.onChange(1)}
                   >
                     2년 이내 근무
                   </Toggle>
@@ -94,11 +96,9 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
                     font="md"
                     size="lg"
                     shape="full"
-                    value="between_2_and_5_years"
-                    pressed={field.value === "between_2_and_5_years"}
-                    onPressedChange={() =>
-                      field.onChange("between_2_and_5_years")
-                    }
+                    value={2}
+                    pressed={field.value === 2}
+                    onPressedChange={() => field.onChange(2)}
                   >
                     2-5년 전 근무
                   </Toggle>
@@ -107,9 +107,9 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
                     font="md"
                     size="lg"
                     shape="full"
-                    value="more_than_5_years"
-                    pressed={field.value === "more_than_5_years"}
-                    onPressedChange={() => field.onChange("more_than_5_years")}
+                    value={3}
+                    pressed={field.value === 3}
+                    onPressedChange={() => field.onChange(3)}
                   >
                     근무한지 오래됨
                   </Toggle>
@@ -119,53 +119,113 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
             </FormItem>
           )}
         />
-        <div className="flex flex-col gap-1.5">
-          <FormField
-            control={form.control}
-            name="salaryContent"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-base text-primary-dark01 font-semibold">
-                  복지/급여에 대해서 알려주세요
-                </FormLabel>
-                <FormControl>
-                  <Textarea
-                    padding="sm"
-                    font="md"
-                    size="auto"
-                    placeholder="점수만 입력하고 내용은 생략 가능해요"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="salaryRating"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-base text-primary-dark01 font-semibold">
-                  복지/급여 점수
-                </FormLabel>
-                <FormControl>
-                  <div className="flex justify-center">
-                    <BoxRatingGroup
-                      value={field.value}
-                      onChange={(value) => field.onChange(value)}
-                      size="md"
-                    />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
         <FormField
+          key="workType"
           control={form.control}
-          name="workLifeBalanceContent"
+          name="workType"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-base text-primary-dark01 font-semibold">
+                근무 유형을 입력해주세요
+              </FormLabel>
+              <FormControl>
+                <div className="flex flex-wrap gap-2">
+                  <Toggle
+                    variant="primary"
+                    font="md"
+                    size="lg"
+                    shape="full"
+                    value="담임"
+                    pressed={field.value === "담임"}
+                    onPressedChange={() => field.onChange("담임")}
+                  >
+                    담임
+                  </Toggle>
+                  <Toggle
+                    variant="primary"
+                    font="md"
+                    size="lg"
+                    shape="full"
+                    value="부담임"
+                    pressed={field.value === "부담임"}
+                    onPressedChange={() => field.onChange("부담임")}
+                  >
+                    부담임
+                  </Toggle>
+                  <Toggle
+                    variant="primary"
+                    font="md"
+                    size="lg"
+                    shape="full"
+                    value="비공개"
+                    pressed={field.value === "비공개"}
+                    onPressedChange={() => field.onChange("비공개")}
+                  >
+                    비공개
+                  </Toggle>
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </>
+    );
+  }, [form]);
+
+  const Step2Form = useMemo(() => {
+    return (
+      <>
+        <FormField
+          key="benefitAndSalaryComment"
+          control={form.control}
+          name="benefitAndSalaryComment"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-base text-primary-dark01 font-semibold">
+                복지/급여에 대해서 알려주세요
+              </FormLabel>
+              <FormControl>
+                <Textarea
+                  padding="sm"
+                  font="md"
+                  size="auto"
+                  placeholder="점수만 입력하고 내용은 생략 가능해요"
+                  value={field.value || ""}
+                  onChange={field.onChange}
+                  name="benefitAndSalaryComment"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          key="benefitAndSalaryScore"
+          control={form.control}
+          name="benefitAndSalaryScore"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-base text-primary-dark01 font-semibold">
+                복지/급여 점수
+              </FormLabel>
+              <FormControl>
+                <div className="flex justify-center">
+                  <BoxRatingGroup
+                    value={field.value}
+                    onChange={(value) => field.onChange(value)}
+                    size="md"
+                  />
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          key="workLifeBalanceComment"
+          control={form.control}
+          name="workLifeBalanceComment"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-base text-primary-dark01 font-semibold">
@@ -177,7 +237,9 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
                   font="md"
                   size="auto"
                   placeholder="점수만 입력하고 내용은 생략 가능해요"
-                  {...field}
+                  value={field.value || ""}
+                  onChange={field.onChange}
+                  name="workLifeBalanceComment"
                 />
               </FormControl>
               <FormMessage />
@@ -185,8 +247,9 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
           )}
         />
         <FormField
+          key="workLifeBalanceScore"
           control={form.control}
-          name="workLifeBalanceRating"
+          name="workLifeBalanceScore"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-base text-primary-dark01 font-semibold">
@@ -205,20 +268,14 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
             </FormItem>
           )}
         />
-      </>
-    );
-  }, [form]);
-
-  const Step2Form = useMemo(() => {
-    return (
-      <>
         <FormField
+          key="workEnvironmentComment"
           control={form.control}
-          name="atmosphereContent"
+          name="workEnvironmentComment"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-base text-primary-dark01 font-semibold">
-                분위기에 대해서 알려주세요
+                근무 환경에 대해서 알려주세요
               </FormLabel>
               <FormControl>
                 <Textarea
@@ -226,7 +283,9 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
                   font="md"
                   size="auto"
                   placeholder="점수만 입력하고 내용은 생략 가능해요"
-                  {...field}
+                  value={field.value || ""}
+                  onChange={field.onChange}
+                  name="workEnvironmentComment"
                 />
               </FormControl>
               <FormMessage />
@@ -234,12 +293,13 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
           )}
         />
         <FormField
+          key="workEnvironmentScore"
           control={form.control}
-          name="atmosphereRating"
+          name="workEnvironmentScore"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-base text-primary-dark01 font-semibold">
-                분위기 점수
+                근무 환경 점수
               </FormLabel>
               <FormControl>
                 <div className="flex justify-center">
@@ -255,8 +315,9 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
           )}
         />
         <FormField
+          key="managerComment"
           control={form.control}
-          name="managerContent"
+          name="managerComment"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-base text-primary-dark01 font-semibold">
@@ -268,7 +329,9 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
                   font="md"
                   size="auto"
                   placeholder="점수만 입력하고 내용은 생략 가능해요"
-                  {...field}
+                  value={field.value || ""}
+                  onChange={field.onChange}
+                  name="managerComment"
                 />
               </FormControl>
               <FormMessage />
@@ -276,8 +339,9 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
           )}
         />
         <FormField
+          key="managerScore"
           control={form.control}
-          name="managerRating"
+          name="managerScore"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-base text-primary-dark01 font-semibold">
@@ -297,8 +361,9 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
           )}
         />
         <FormField
+          key="customerComment"
           control={form.control}
-          name="clientContent"
+          name="customerComment"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-base text-primary-dark01 font-semibold">
@@ -310,7 +375,9 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
                   font="md"
                   size="auto"
                   placeholder="점수만 입력하고 내용은 생략 가능해요"
-                  {...field}
+                  value={field.value || ""}
+                  onChange={field.onChange}
+                  name="customerComment"
                 />
               </FormControl>
               <FormMessage />
@@ -318,8 +385,9 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
           )}
         />
         <FormField
+          key="customerScore"
           control={form.control}
-          name="clientRating"
+          name="customerScore"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-base text-primary-dark01 font-semibold">
@@ -338,56 +406,22 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
             </FormItem>
           )}
         />
-      </>
-    );
-  }, [form]);
-
-  const Step3Form = useMemo(() => {
-    return (
-      <section className="flex flex-col gap-10">
-        <FormField
-          control={form.control}
-          name="overallRating"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-primary-dark01 font-semibold mb-3">
-                총점을 평가해주세요
-              </FormLabel>
-              <FormControl>
-                <div className="flex justify-center my-10">
-                  <StarRating
-                    value={field.value}
-                    onChange={(value) => field.onChange(value)}
-                    size="lg"
-                  />
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <AlertCard>
           <strong>익명성 보장을 위한 안내</strong> <br /> 확실한 익명 보장을
           위해 리뷰가 등록되면 리뷰에 익명 닉네임, 프로필 등 작성자에 대한
           정보가 표기되지 않습니다.
         </AlertCard>
-      </section>
+      </>
     );
   }, [form]);
 
   // 현재 단계에 따라 렌더링할 폼 선택
   const currentStepForm = useMemo(() => {
-    switch (step) {
-      case 1:
-        return Step1Form;
-      case 2:
-        return Step2Form;
-      case 3:
-        return Step3Form;
-      default:
-        return Step1Form;
+    if (step === 2) {
+      return Step2Form;
     }
-  }, [step, Step1Form, Step2Form, Step3Form]);
+    return Step1Form;
+  }, [step, Step1Form, Step2Form]);
 
   return currentStepForm;
 }

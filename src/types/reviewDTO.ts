@@ -10,8 +10,9 @@ export interface User {
 
 export interface WorkReview {
   workReviewId: number;
-  user: User;
+  user?: User;
   workYear: number;
+  wrokType: string;
   oneLineComment: string;
   benefitAndSalaryComment: string;
   benefitAndSalaryScore: number;
@@ -23,22 +24,24 @@ export interface WorkReview {
   managerScore: number;
   customerComment: string;
   customerScore: number;
-  likeCount: number;
-  shareCount: number;
+  likeCount?: number;
+  shareCount?: number;
+  createdAt?: string;
 }
 
 export interface InternshipReview {
   internshipReviewId: number;
-  user: User;
+  user?: User;
   oneLineComment: string;
-  workEnvironmentComment: string;
-  workEnvironmentScore: number;
-  learningSupportComment: string;
-  learningSupportScore: number;
   instructionTeacherComment: string;
   instructionTeacherScore: number;
-  likeCount: number;
-  shareCount: number;
+  learningSupportComment: string;
+  learningSupportScore: number;
+  workEnvironmentComment: string;
+  workEnvironmentScore: number;
+  likeCount?: number;
+  shareCount?: number;
+  createdAt?: string;
 }
 
 export interface ReviewResponse<T> {

@@ -18,6 +18,12 @@ import {
   learningReviewFormSchema,
 } from "@/utils/validationSchemas";
 
+interface ReviewFormManagerProps {
+  schoolId: string;
+  type: string;
+  onSubmitSuccess?: () => void;
+}
+
 /**
  * 리뷰 타입에 따른 폼 렌더링 및 폼 유효성 검증
  *
@@ -25,13 +31,6 @@ import {
  * @param type 리뷰 타입 (work, learning)
  * @param onSubmitSuccess 리뷰 제출 성공 시 콜백
  */
-
-interface ReviewFormManagerProps {
-  schoolId: string;
-  type: string;
-  onSubmitSuccess?: () => void;
-}
-
 export default function ReviewFormManager({
   schoolId,
   type,
@@ -40,95 +39,77 @@ export default function ReviewFormManager({
   const [step, setStep] = useState(1);
   const navigate = useNavigate();
 
+  const workReviewForm = useForm<WorkReviewFormValues>({
+    resolver: zodResolver(workReviewFormSchema),
+    defaultValues: {
+      workYear: 1,
+      workType: "비공개",
+      oneLineComment: "",
+      benefitAndSalaryComment: "",
+      benefitAndSalaryScore: 0,
+      workLifeBalanceComment: "",
+      workLifeBalanceScore: 0,
+      workEnvironmentComment: "",
+      workEnvironmentScore: 0,
+      managerComment: "",
+      managerScore: 0,
+      customerComment: "",
+      customerScore: 0,
+    },
+  });
+
+  const learningReviewForm = useForm<LearningReviewFormValues>({
+    resolver: zodResolver(learningReviewFormSchema),
+    defaultValues: {
+      oneLineComment: "",
+      workEnvironmentComment: "",
+      workEnvironmentScore: 0,
+      learningSupportComment: "",
+      learningSupportScore: 0,
+      instructionTeacherComment: "",
+      instructionTeacherScore: 0,
+    },
+  });
+
   // type이 유효하지 않은 경우 리다이렉트
-  if (!Object.values(REVIEW_TYPES).includes(type as any)) {
+  if (!Object.values(REVIEW_TYPES).includes(type as "work" | "learning")) {
     navigate(`/school/${schoolId}/review?type=work`);
     return null;
   }
 
-  const totalSteps = type === REVIEW_TYPES.WORK ? 3 : 2;
-
-  // 근무 리뷰 폼
-  const workReviewForm = useForm<WorkReviewFormValues>({
-    resolver: zodResolver(workReviewFormSchema) as any,
-    defaultValues: {
-      title: "",
-      content: "",
-      workYear: "less_than_2_years",
-      salaryContent: "",
-      salaryRating: 0,
-      workLifeBalanceContent: "",
-      workLifeBalanceRating: 0,
-      atmosphereContent: "",
-      atmosphereRating: 0,
-      managerContent: "",
-      managerRating: 0,
-      clientContent: "",
-      clientRating: 0,
-      overallRating: 0,
-    },
-  });
-
-  // 실습 리뷰 폼
-  const learningReviewForm = useForm<LearningReviewFormValues>({
-    resolver: zodResolver(learningReviewFormSchema) as any,
-    defaultValues: {
-      title: "",
-      content: "",
-      atmosphereContent: "",
-      atmosphereRating: 0,
-      educationEnvContent: "",
-      educationEnvRating: 0,
-      teacherSupportContent: "",
-      teacherSupportRating: 0,
-      overallRating: 0,
-    },
-  });
-
-  // 단계별 필드 매핑 및 타입 지정
-  const workStepFields: Record<number, Array<keyof WorkReviewFormValues>> = {
-    1: [
-      "title",
-      "workYear",
-      "salaryContent",
-      "salaryRating",
-      "workLifeBalanceContent",
-      "workLifeBalanceRating",
-    ],
-    2: [
-      "atmosphereContent",
-      "atmosphereRating",
-      "managerContent",
-      "managerRating",
-      "clientContent",
-      "clientRating",
-    ],
-    3: ["overallRating"],
-  };
-
-  const learningStepFields: Record<
-    number,
-    Array<keyof LearningReviewFormValues>
-  > = {
-    1: [
-      "title",
-      "atmosphereContent",
-      "atmosphereRating",
-      "educationEnvContent",
-      "educationEnvRating",
-      "teacherSupportContent",
-      "teacherSupportRating",
-    ],
-    2: ["overallRating"],
-  };
+  const totalSteps = type === REVIEW_TYPES.WORK ? 2 : 2;
 
   const handleNext = async () => {
     let isValid = false;
 
     if (type === REVIEW_TYPES.WORK) {
-      isValid = await workReviewForm.trigger(workStepFields[step]);
+      const step1Fields: (keyof WorkReviewFormValues)[] = [
+        "workYear",
+        "workType",
+        "oneLineComment",
+      ];
+      const step2Fields: (keyof WorkReviewFormValues)[] = [
+        "benefitAndSalaryScore",
+        "workLifeBalanceScore",
+        "workEnvironmentScore",
+        "managerScore",
+        "customerScore",
+      ];
+
+      const fieldsToValidate = step === 1 ? step1Fields : step2Fields;
+      isValid = await workReviewForm.trigger(fieldsToValidate);
     } else {
-      isValid = await learningReviewForm.trigger(learningStepFields[step]);
+      const step1Fields: (keyof LearningReviewFormValues)[] = [
+        "oneLineComment",
+      ];
+      const step2Fields: (keyof LearningReviewFormValues)[] = [
+        "workEnvironmentScore",
+        "learningSupportScore",
+        "instructionTeacherScore",
+      ];
+
+      const fieldsToValidate = step === 1 ? step1Fields : step2Fields;
+      isValid = await learningReviewForm.trigger(fieldsToValidate);
     }
 
     if (!isValid) return;
@@ -198,6 +179,7 @@ export default function ReviewFormManager({
         <Form {...workReviewForm}>
           <form className="flex flex-col gap-6">
             <WorkReviewForm
+              key={`work-review-step-${step}`}
               form={workReviewForm}
               step={step}
               schoolId={schoolId}
@@ -207,7 +189,11 @@ export default function ReviewFormManager({
       ) : (
         <Form {...learningReviewForm}>
           <form className="flex flex-col gap-6">
-            <LearningReviewForm form={learningReviewForm} step={step} />
+            <LearningReviewForm
+              key={`learning-review-step-${step}`}
+              form={learningReviewForm}
+              step={step}
+            />
           </form>
         </Form>
       )}
