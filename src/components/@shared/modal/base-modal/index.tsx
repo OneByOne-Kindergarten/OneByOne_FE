@@ -36,7 +36,7 @@ const modalVariants = cva("bg-white shadow-lg overflow-hidden transition-all", {
 });
 
 const overlayVariants = cva(
-  "fixed inset-0 bg-black/50 flex items-center justify-center",
+  "fixed inset-0 bg-black/50 flex items-center justify-center z-[9999]",
   {
     variants: {
       blur: {
