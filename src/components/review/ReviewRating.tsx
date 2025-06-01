@@ -3,7 +3,7 @@ import { StarRating } from "@/components/@shared/rating/star-rating";
 interface ReviewRatingProps {
   rating: number;
   title: string;
-  type: string;
+  workType: string;
   createdAt: string;
   workYear: string;
 }
@@ -11,7 +11,7 @@ interface ReviewRatingProps {
 export default function ReviewRating({
   rating,
   title,
-  type,
+  workType,
   createdAt,
   workYear,
 }: ReviewRatingProps) {
@@ -26,8 +26,8 @@ export default function ReviewRating({
       <div className="flex flex-col gap-1">
         <h2 className="font-semibold text-pretty">{title}</h2>
         <p className="text-xxs text-primary-normal03">
-          <span>{type}</span> | <span>{createdAt}</span> |{" "}
-          <span>{workYear}</span>
+          {workType} <span aria-hidden="true">│</span> {createdAt} 작성
+          <span aria-hidden="true">│</span> {workYear}
         </p>
       </div>
     </div>

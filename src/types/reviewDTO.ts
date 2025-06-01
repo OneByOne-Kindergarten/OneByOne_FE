@@ -12,7 +12,7 @@ export interface WorkReview {
   workReviewId: number;
   user?: User;
   workYear: number;
-  wrokType: string;
+  workType: string;
   oneLineComment: string;
   benefitAndSalaryComment: string;
   benefitAndSalaryScore: number;
@@ -39,7 +39,7 @@ export interface InternshipReview {
   learningSupportScore: number;
   workEnvironmentComment: string;
   workEnvironmentScore: number;
-  workType?: string;
+  workType: string;
   likeCount?: number;
   shareCount?: number;
   createdAt?: string;

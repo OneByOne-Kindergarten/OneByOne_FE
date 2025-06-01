@@ -8,6 +8,7 @@ import ReviewContent, {
 } from "@/components/review/ReviewContent";
 import ReviewActions from "@/components/review/ReviewActions";
 import ReportDropDown from "../@shared/drop-down/report-drop-down";
+import { formatDate } from "@/utils/dateUtils";
 
 export type ReviewData = InternshipReview | WorkReview;
 
@@ -70,21 +71,14 @@ function ReviewCardItem({
     return "";
   };
 
-  const getReviewType = (review: ReviewData, type: string): string => {
-    if (type === REVIEW_TYPES.WORK && "workReviewId" in review) {
-      return review.wrokType || "담임";
-    }
-    return "실습생";
-  };
-
   return (
     <div className="flex flex-col gap-7">
       <div className="flex justify-between items-start">
         <ReviewRating
           rating={getTotalRating(review, type)}
           title={review.oneLineComment}
-          type={getReviewType(review, type)}
-          createdAt={review.createdAt || new Date().toISOString()}
+          workType={review.workType}
+          createdAt={formatDate(review.createdAt || new Date().toISOString())}
           workYear={getWorkYear(review, type)}
         />
         <ReportDropDown

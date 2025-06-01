@@ -12,7 +12,7 @@ export default function ReviewEditorPage() {
   return (
     <PageLayout
       title={`원바원 | ${safeId} ${REVIEW_TYPE_LABELS[type as "work" | "learning"]} 작성`}
-      headerTitle={`${safeId}`}
+      headerTitle=" "
       headerType="school"
       description={`${safeId} ${REVIEW_TYPE_LABELS[type as "work" | "learning"]} 작성 페이지`}
       currentPath={`/school/${safeId}/review/new?type=${type}`}
