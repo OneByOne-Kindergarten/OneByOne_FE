@@ -1,10 +1,9 @@
 import { useEffect, useCallback, useState } from "react";
 import { FixedSizeList as List } from "react-window";
-import { useInView } from "react-intersection-observer";
+import styles from "@/styles/scroll.module.css";
 
 import { CommunityPostItem } from "@/types/communityDTO";
 import PostCardRenderer from "@/components/community/PostCardRenderer";
-import styles from "@/styles/scroll.module.css";
 
 // 가상 스크롤 항목
 interface PostItemProps {
@@ -13,16 +12,11 @@ interface PostItemProps {
   data: {
     items: CommunityPostItem[];
     onItemClick: (id: string) => void;
-    lastItemRef:
-      | React.RefObject<HTMLDivElement>
-      | ((node?: Element | null) => void);
   };
 }
 
 const PostItem = ({ index, style, data }: PostItemProps) => {
   const post = data.items[index];
-
-  const isLastItem = index === data.items.length - 1;
 
   if (!post) return null;
 
@@ -31,7 +25,6 @@ const PostItem = ({ index, style, data }: PostItemProps) => {
       <div
         onClick={() => data.onItemClick(post.id.toString())}
         className="cursor-pointer py-1"
-        ref={isLastItem ? data.lastItemRef : null}
       >
         <PostCardRenderer
           item={post}
@@ -71,6 +64,7 @@ export default function CommunitySearchResult({
 
   const itemHeight = 124;
   const listHeight = Math.min(results.length * itemHeight, maxListHeight);
+  const loadMoreThreshold = Math.floor(results.length * 0.8);
 
   // 창 크기 변경 시 높이 업데이트
   useEffect(() => {
@@ -84,23 +78,39 @@ export default function CommunitySearchResult({
     };
   }, []);
 
-  const { ref, inView } = useInView({
-    threshold: 0.1,
-    rootMargin: "0px 0px 200px 0px",
-  });
-
-  // 다음 페이지 로드
-  useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
-  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
-
   const handleItemClick = useCallback(
     (id: string) => {
       onPostClick(id);
     },
     [onPostClick]
+  );
+
+  // 스크롤 위치 -> 다음 페이지 로드 처리
+  const loadMoreItems = useCallback(() => {
+    if (!isFetchingNextPage && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [isFetchingNextPage, hasNextPage, fetchNextPage]);
+
+  // 가상 스크롤 아이템 범위 변경 감지
+  const handleItemsRendered = useCallback(
+    ({
+      overscanStopIndex,
+      visibleStopIndex,
+    }: {
+      overscanStartIndex: number;
+      overscanStopIndex: number;
+      visibleStartIndex: number;
+      visibleStopIndex: number;
+    }) => {
+      if (
+        visibleStopIndex > loadMoreThreshold &&
+        overscanStopIndex >= results.length - 5
+      ) {
+        loadMoreItems();
+      }
+    },
+    [results.length, loadMoreThreshold, loadMoreItems]
   );
 
   if (!searchQuery) return null;
@@ -118,10 +128,11 @@ export default function CommunitySearchResult({
           width="100%"
           itemCount={results.length}
           itemSize={itemHeight}
+          onItemsRendered={handleItemsRendered}
+          overscanCount={5}
           itemData={{
             items: results,
             onItemClick: handleItemClick,
-            lastItemRef: ref,
           }}
           className={styles["scrollbar-hide"]}
         >

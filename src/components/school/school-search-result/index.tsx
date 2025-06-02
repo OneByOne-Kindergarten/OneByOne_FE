@@ -1,6 +1,5 @@
 import { useEffect, useCallback, useState } from "react";
 import { FixedSizeList as List } from "react-window";
-import { useInView } from "react-intersection-observer";
 import styles from "@/styles/scroll.module.css";
 
 import SchoolCard from "@/components/school/school-card";
@@ -13,23 +12,17 @@ type KindergartenItemProps = {
   data: {
     items: Kindergarten[];
     onItemClick: (id: string) => void;
-    lastItemRef:
-      | React.RefObject<HTMLDivElement>
-      | ((node?: Element | null) => void);
   };
 };
 
 const KindergartenItem = ({ index, style, data }: KindergartenItemProps) => {
   const kindergarten = data.items[index];
 
-  const isLastItem = index === data.items.length - 1;
-
   return (
     <div style={style}>
       <div
         onClick={() => data.onItemClick(kindergarten.id.toString())}
         className="cursor-pointer py-1"
-        ref={isLastItem ? data.lastItemRef : null}
       >
         <SchoolCard
           id={kindergarten.id.toString()}
@@ -68,6 +61,7 @@ export default function SchoolSearchResult({
 
   const itemHeight = 110;
   const listHeight = Math.min(results.length * itemHeight, maxListHeight);
+  const loadMoreThreshold = Math.floor(results.length * 0.8);
 
   // 창 크기 변경 시 높이 업데이트
   useEffect(() => {
@@ -81,23 +75,37 @@ export default function SchoolSearchResult({
     };
   }, []);
 
-  const { ref, inView } = useInView({
-    threshold: 0.1,
-    rootMargin: "0px 0px 200px 0px",
-  });
+  const handleItemClick = useCallback(
+    (id: string) => onKindergartenClick(id),
+    [onKindergartenClick]
+  );
 
-  // 다음 페이지 로드
-  useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage) {
+  // 스크롤 위치 -> 다음 페이지 로드 처리
+  const loadMoreItems = useCallback(() => {
+    if (!isFetchingNextPage && hasNextPage) {
       fetchNextPage();
     }
-  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+  }, [isFetchingNextPage, hasNextPage, fetchNextPage]);
 
-  const handleItemClick = useCallback(
-    (id: string) => {
-      onKindergartenClick(id);
+  // 가상 스크롤 아이템 범위 변경 감지
+  const handleItemsRendered = useCallback(
+    ({
+      overscanStopIndex,
+      visibleStopIndex,
+    }: {
+      overscanStartIndex: number;
+      overscanStopIndex: number;
+      visibleStartIndex: number;
+      visibleStopIndex: number;
+    }) => {
+      if (
+        visibleStopIndex > loadMoreThreshold &&
+        overscanStopIndex >= results.length - 5
+      ) {
+        loadMoreItems();
+      }
     },
-    [onKindergartenClick]
+    [results.length, loadMoreThreshold, loadMoreItems]
   );
 
   if (!searchQuery) return null;
@@ -112,10 +120,11 @@ export default function SchoolSearchResult({
         width="100%"
         itemCount={results.length}
         itemSize={itemHeight}
+        onItemsRendered={handleItemsRendered}
+        overscanCount={5}
         itemData={{
           items: results,
           onItemClick: handleItemClick,
-          lastItemRef: ref,
         }}
         className={styles["scrollbar-hide"]}
       >
