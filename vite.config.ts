@@ -24,7 +24,7 @@ export default defineConfig(({ mode }) => {
       host: true, // 로컬 테스트를 위해 호스트 설정
       proxy: {
         "/api": {
-          target: env.VITE_PUBLIC_API_URL,
+          target: env.REACT_APP_API_URL,
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ""),
           secure: false,
