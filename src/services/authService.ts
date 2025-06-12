@@ -124,7 +124,7 @@ export const refreshAccessToken = async (): Promise<boolean> => {
 
     const BASE_URL = import.meta.env.DEV
       ? "/api"
-      : import.meta.env.REACT_APP_API_URL || "";
+      : import.meta.env.VITE_API_URL || "";
 
     const response = await fetch(`${BASE_URL}${API_PATHS.USER.REISSUE}`, {
       method: "POST",
