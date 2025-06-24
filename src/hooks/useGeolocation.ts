@@ -1,12 +1,5 @@
 import { useState, useEffect } from "react";
 import { sendToFlutter, MessageType } from "@/utils/webViewCommunication";
-
-/**
- * 위치 정보 조회
- * @param options 위치 옵션
- * @returns 위치 정보 상태
- */
-
 export interface GeolocationState {
   loading: boolean;
   error: string | null;
@@ -37,6 +30,11 @@ function getPositionErrorMessage(error: GeolocationPositionError): string {
   }
 }
 
+/**
+ * 위치 정보 조회
+ * @param options 위치 옵션
+ * @returns 위치 정보 상태
+ */
 export function useGeolocation(options?: PositionOptions): GeolocationState {
   const [state, setState] = useState<GeolocationState>({
     loading: true,

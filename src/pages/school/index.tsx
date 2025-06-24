@@ -7,6 +7,7 @@ import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import Empty from "@/components/@shared/layout/empty";
 import Error from "@/components/@shared/layout/error";
+import KakaoMap from "@/components/school/KakaoMap";
 
 import { getNearbyKindergartens } from "@/services/kindergartenService";
 import { URL_PATHS } from "@/constants/url-path";
@@ -14,11 +15,14 @@ import { useGeolocation } from "@/hooks/useGeolocation";
 import type { Kindergarten } from "@/types/kindergartenDTO";
 
 export default function SchoolPage() {
-  const geolocationOptions = useMemo(() => ({
-    enableHighAccuracy: true,
-    timeout: 10000, // 10초
-    maximumAge: 600000, // 10분
-  }), []);
+  const geolocationOptions = useMemo(
+    () => ({
+      enableHighAccuracy: true,
+      timeout: 10000, // 10초
+      maximumAge: 600000, // 10분
+    }),
+    []
+  );
 
   const {
     position: userLocation,
@@ -80,12 +84,10 @@ export default function SchoolPage() {
       ) : (
         <>
           <section className="p-5 flex flex-col gap-3">
-            <div className="bg-primary-normal01 h-52 rounded-md text-primary-normal02 flex items-center justify-center">
-              <span>
-                현재 위치: 위도 {userLocation!.latitude.toFixed(6)}, 경도{" "}
-                {userLocation!.longitude.toFixed(6)}
-              </span>
-            </div>
+            <KakaoMap
+              latitude={userLocation!.latitude}
+              longitude={userLocation!.longitude}
+            />
             <Button variant="primary" size="lg">
               지도에서 유치원 찾기
             </Button>
