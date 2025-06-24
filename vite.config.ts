@@ -21,7 +21,7 @@ export default defineConfig(({ mode }) => {
       alias: [{ find: "@", replacement: path.resolve(__dirname, "src") }],
     },
     server: {
-      host: true, // 로컬 테스트를 위해 호스트 설정
+      host: true,
       proxy: {
         "/api": {
           target: env.VITE_API_URL,
