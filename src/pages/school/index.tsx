@@ -87,10 +87,17 @@ export default function SchoolPage() {
             <KakaoMap
               latitude={userLocation!.latitude}
               longitude={userLocation!.longitude}
+              kindergartens={kindergartens.map((k) => ({
+                id: k.id,
+                name: k.name,
+                latitude: k.latitude,
+                longitude: k.longitude,
+                establishment: k.establishment,
+              }))}
             />
-            <Button variant="primary" size="lg">
+            {/* <Button variant="primary" size="lg">
               지도에서 유치원 찾기
-            </Button>
+            </Button> */}
           </section>
           <section className="flex flex-col gap-3">
             <div className="flex font-bold items-center gap-1 px-5">

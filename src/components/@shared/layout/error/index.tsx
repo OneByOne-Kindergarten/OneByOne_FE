@@ -27,7 +27,7 @@ export default function Error({
       <div className="flex flex-col gap-1.5">
         <p className="text-primary-dark02 font-semibold">서비스 오류</p>
         <span className="text-primary-dark01 text-sm">
-          {children} <br /> 새로고침 해주세요
+          {children} <br /> 잠시 후 다시 시도해보세요.
         </span>
       </div>
     </section>
