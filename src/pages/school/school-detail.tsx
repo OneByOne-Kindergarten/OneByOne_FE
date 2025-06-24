@@ -3,11 +3,11 @@ import { useQuery } from "@tanstack/react-query";
 
 import PageLayout from "@/components/@shared/layout/page-layout";
 import NavBar from "@/components/@shared/nav/nav-bar";
-import Button from "@/components/@shared/buttons/base-button";
 import Error from "@/components/@shared/layout/error";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import SchoolInfoItem from "@/components/school/school-info-item";
 import SchoolInfoChart from "@/components/school/school-info-chart";
+import SchoolMap from "@/components/school/SchoolMap";
 
 import { URL_PATHS } from "@/constants/url-path";
 import { SVG_PATHS } from "@/constants/assets-path";
@@ -133,23 +133,12 @@ export default function SchoolDetailPage() {
                   {kindergarten.address}
                 </address>
               </SchoolInfoItem>
-              <div className="relative bg-primary-normal01 h-40 rounded-md flex items-center justify-center">
-                <p>지도</p>
-                <Button
-                  variant="secondary"
-                  shape="full"
-                  size="xs"
-                  className="absolute px-1.5 gap-1 text-xxs right-3 top-3"
-                >
-                  <img
-                    src={SVG_PATHS.MAP}
-                    alt="지도 아이콘"
-                    width={14}
-                    height={14}
-                  />
-                  지도보기
-                </Button>
-              </div>
+              <SchoolMap
+                latitude={kindergarten.latitude}
+                longitude={kindergarten.longitude}
+                schoolName={kindergarten.name}
+                establishment={kindergarten.establishment}
+              />
             </div>
 
             <SchoolInfoItem

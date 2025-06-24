@@ -1,13 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 
-import Button from "@/components/@shared/buttons/base-button";
 import SchoolCard from "@/components/school/school-card";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import Empty from "@/components/@shared/layout/empty";
 import Error from "@/components/@shared/layout/error";
-import KakaoMap from "@/components/school/KakaoMap";
+import NearbySchoolMap from "@/components/school/NearbySchoolMap";
 
 import { getNearbyKindergartens } from "@/services/kindergartenService";
 import { URL_PATHS } from "@/constants/url-path";
@@ -84,7 +83,7 @@ export default function SchoolPage() {
       ) : (
         <>
           <section className="p-5 flex flex-col gap-3">
-            <KakaoMap
+            <NearbySchoolMap
               latitude={userLocation!.latitude}
               longitude={userLocation!.longitude}
               kindergartens={kindergartens.map((k) => ({
@@ -95,9 +94,6 @@ export default function SchoolPage() {
                 establishment: k.establishment,
               }))}
             />
-            {/* <Button variant="primary" size="lg">
-              지도에서 유치원 찾기
-            </Button> */}
           </section>
           <section className="flex flex-col gap-3">
             <div className="flex font-bold items-center gap-1 px-5">
