@@ -17,8 +17,7 @@ export const useNaverAuth = () => {
     mutationFn: naverCallback,
     onSuccess: () => {
       toast({
-        title: "네이버 로그인 성공",
-        description: "어서오세요. 선생님!",
+        title: "선생님, 어서오세요!",
       });
       navigate(URL_PATHS.HOME);
     },
@@ -41,8 +40,7 @@ export const useKakaoAuth = () => {
     mutationFn: kakaoCallback,
     onSuccess: () => {
       toast({
-        title: "카카오 로그인 성공",
-        description: "어서오세요. 선생님!",
+        title: "선생님, 어서오세요!",
       });
       navigate(URL_PATHS.HOME);
     },
