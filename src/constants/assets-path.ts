@@ -1,4 +1,5 @@
 // Import statements for all SVG assets
+import favicon from "@/assets/icons/favicon.svg";
 import homeActive from "@/assets/icons/home-active.svg";
 import homeInactive from "@/assets/icons/home-inactive.svg";
 import schoolActive from "@/assets/icons/school-active.svg";
@@ -77,6 +78,7 @@ import certificationImg from "@/assets/images/certification.webp";
 import guideProfile from "@/assets/images/guide-profile.webp";
 
 export const SVG_PATHS = {
+  FAVICON: favicon,
   HOME: {
     active: homeActive,
     inactive: homeInactive,
