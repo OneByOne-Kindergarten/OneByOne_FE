@@ -33,3 +33,12 @@ export interface TokenRefreshResponse {
   accessToken: string;
   refreshToken: string;
 }
+
+export interface NaverCallbackRequest {
+  code: string;
+  state: string;
+}
+
+export interface KakaoCallbackRequest {
+  code: string;
+}

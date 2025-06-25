@@ -4,12 +4,13 @@ import {
   SignUpRequest,
   SignUpResponse,
   TokenRefreshResponse,
+  NaverCallbackRequest,
+  KakaoCallbackRequest,
 } from "@/types/authDTO";
 import { apiCall } from "@/utils/apiUtils";
 import { getUserInfo, clearUserInfo } from "@/services/userService";
 import { API_PATHS } from "@/constants/api-path";
 
-// 쿠키 관련 함수
 export const setCookie = (name: string, value: string, days: number = 7) => {
   const date = new Date();
   date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
@@ -58,7 +59,6 @@ export const signIn = async (data: SignInRequest): Promise<SignInResponse> => {
     setCookie("accessToken", result.accessToken);
     setCookie("refreshToken", result.refreshToken);
 
-    // 로그인 성공 후 사용자 정보 로드
     await getUserInfo();
 
     return result;
@@ -94,11 +94,6 @@ export const signUp = async (data: SignUpRequest): Promise<SignUpResponse> => {
   }
 };
 
-/**
- * 로그아웃
- * - 쿠키 삭제
- * - 로컬 상태 초기화
- */
 export const signOut = async (): Promise<void> => {
   deleteCookie("accessToken");
   deleteCookie("refreshToken");
@@ -152,5 +147,61 @@ export const refreshAccessToken = async (): Promise<boolean> => {
     console.error("토큰 갱신 중 오류:", error);
     signOut();
     return false;
+  }
+};
+
+/**
+ * 네이버 소셜 로그인
+ * @param data - 인증 코드, 상태값
+ * @returns {Promise<SignInResponse>}
+ */
+export const naverCallback = async (
+  data: NaverCallbackRequest
+): Promise<SignInResponse> => {
+  try {
+    const result = await apiCall<NaverCallbackRequest, SignInResponse>({
+      method: "POST",
+      path: "/users/naver/callback",
+      data,
+      withCredentials: true,
+    });
+
+    setCookie("accessToken", result.accessToken);
+    setCookie("refreshToken", result.refreshToken);
+
+    await getUserInfo();
+
+    return result;
+  } catch (error) {
+    console.error("네이버 로그인 에러:", error);
+    throw error;
+  }
+};
+
+/**
+ * 카카오 소셜 로그인
+ * @param data - 인증 코드
+ * @returns {Promise<SignInResponse>}
+ */
+export const kakaoCallback = async (
+  data: KakaoCallbackRequest
+): Promise<SignInResponse> => {
+  try {
+    const result = await apiCall<KakaoCallbackRequest, SignInResponse>({
+      method: "POST",
+      path: "/users/kakao/callback",
+      data,
+      withCredentials: true,
+    });
+
+    setCookie("accessToken", result.accessToken);
+    setCookie("refreshToken", result.refreshToken);
+
+    await getUserInfo();
+
+    return result;
+  } catch (error) {
+    console.error("카카오 로그인 에러:", error);
+    throw error;
   }
 };

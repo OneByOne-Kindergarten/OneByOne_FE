@@ -2,7 +2,7 @@ import { CustomOverlayMap } from "react-kakao-maps-sdk";
 import { getMarkerStyles } from "@/utils/mapUtils";
 import { SVG_PATHS } from "@/constants/assets-path";
 
-interface CustomKindergartenMarkerProps {
+interface KindergartenMarkerProps {
   latitude: number;
   longitude: number;
   name: string;
@@ -12,7 +12,7 @@ interface CustomKindergartenMarkerProps {
   showLabel?: boolean;
 }
 
-export default function CustomKindergartenMarker({
+export default function KindergartenMarker({
   latitude,
   longitude,
   name,
@@ -20,7 +20,7 @@ export default function CustomKindergartenMarker({
   onClick,
   size = "md",
   showLabel = true,
-}: CustomKindergartenMarkerProps) {
+}: KindergartenMarkerProps) {
   const styles = getMarkerStyles(establishment);
 
   const sizeConfig = {
