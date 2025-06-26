@@ -6,6 +6,9 @@ import {
   PermissionResult,
 } from "@/utils/webViewCommunication";
 
+/// Flutter Webivew인지 userAgent를 통해 확인
+export const isFlutterWebView = /OneByOne/i.test(navigator.userAgent);
+
 /**
  * FCM 토큰을 직접 요청하는 훅
  * @returns [requestFcmToken, fcmToken, isLoading, error]

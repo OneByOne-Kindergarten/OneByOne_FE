@@ -4,8 +4,28 @@ import { Link } from "react-router-dom";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import Button from "@/components/@shared/buttons/base-button";
 import OauthButton from "@/components/sign-in/OauthButton";
+import { isFlutterWebView, useRequestFcmToken } from "@/hooks/useFlutterCommunication";
+import { useEffect } from "react";
+import { setCookie } from "@/services/authService";
 
 export default function RootPage() {
+  const [requestFcmToken] = useRequestFcmToken();
+
+  /// 플러터 웹뷰인 경우 토큰 요청
+  useEffect(() => {
+    const getToken = async () => {
+      const token = await requestFcmToken();
+      if (token) {
+        setCookie("fcmToken", token);
+        console.log("FCM 토큰 저장  >> ", token);
+      }
+    };
+
+    if (isFlutterWebView) {
+      getToken();
+    }
+  }, []);
+
   return (
     <PageLayout
       currentPath={URL_PATHS.ROOT}

@@ -18,6 +18,7 @@ import Button from "@/components/@shared/buttons/base-button";
 import { URL_PATHS } from "@/constants/url-path";
 import { SignInRequest } from "@/types/authDTO";
 import { useSignIn } from "@/hooks/useAuth";
+import { getCookie } from "@/services/authService";
 
 const signInSchema = z.object({
   email: z
@@ -47,7 +48,7 @@ export default function SignIn() {
   const onSubmit = (values: SignInFormValues) => {
     const signInData: SignInRequest = {
       ...values,
-      fcmToken: "",
+      fcmToken: getCookie("fcmToken") || "",
     };
 
     signInMutate(signInData);
