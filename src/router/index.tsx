@@ -12,8 +12,7 @@ const ShortcutsEditorPage = lazy(
 const SchoolPage = lazy(() => import("../pages/school"));
 const SignInPage = lazy(() => import("../pages/auth/sign-in"));
 const SignUpPage = lazy(() => import("../pages/auth/sign-up"));
-const NaverCallbackPage = lazy(() => import("../pages/auth/naver-callback"));
-const KakaoCallbackPage = lazy(() => import("../pages/auth/kakao-callback"));
+const OAuthCallbackPage = lazy(() => import("../pages/auth/oauth-callback"));
 const SchoolDetailPage = lazy(() => import("../pages/school/school-detail"));
 const ReviewPage = lazy(() => import("../pages/review/index"));
 const ReviewEditorPage = lazy(() => import("../pages/review/review-editor"));
@@ -49,9 +48,10 @@ const routes = {
     { path: URL_PATHS.USER, element: <UserPage /> },
     { path: URL_PATHS.SIGNIN, element: <SignInPage /> },
     { path: URL_PATHS.SIGNUP, element: <SignUpPage /> },
-    // Oauth
-    { path: URL_PATHS.NAVER_CALLBACK, element: <NaverCallbackPage /> },
-    { path: URL_PATHS.KAKAO_CALLBACK, element: <KakaoCallbackPage /> },
+    // OAuth
+    { path: URL_PATHS.OAUTH_CALLBACK, element: <OAuthCallbackPage /> },
+    { path: "/users/kakao/callback", element: <OAuthCallbackPage /> },
+    { path: "/users/naver/callback", element: <OAuthCallbackPage /> },
     // 기관
     { path: URL_PATHS.SCHOOL, element: <SchoolPage /> },
     { path: URL_PATHS.SCHOOL_DETAIL, element: <SchoolDetailPage /> },

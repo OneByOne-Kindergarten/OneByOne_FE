@@ -61,6 +61,10 @@ export const API_PATHS = {
     NICKNAME: "/users/nickname",
     SHORTCUTS: "/users/shortcuts",
   },
+  OAUTH: {
+    NAVER_CALLBACK: "/users/naver/callback",
+    KAKAO_CALLBACK: "/users/kakao/callback",
+  },
   REPORT: {
     BASE: "/report",
     MY_REPORT: "/report/my",

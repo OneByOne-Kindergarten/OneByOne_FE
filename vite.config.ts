@@ -29,6 +29,26 @@ export default defineConfig(({ mode }) => {
           rewrite: (path) => path.replace(/^\/api/, ""),
           secure: false,
         },
+        // OAuth 콜백을 프론트엔드로 라우팅
+        "^/users/(kakao|naver)/callback": {
+          target: "http://localhost:5173",
+          changeOrigin: true,
+          secure: false,
+          bypass(req) {
+            const isKakao = req.url?.includes("kakao");
+            const provider = isKakao ? "kakao" : "naver";
+            const queryString = req.url?.split("?")[1] || "";
+            const newUrl = `/auth/oauth-callback?provider=${provider}&${queryString}`;
+
+            console.log(
+              `🔄 ${provider} OAuth 콜백 라우팅:`,
+              req.url,
+              "→",
+              newUrl
+            );
+            return newUrl;
+          },
+        },
       },
     },
   };

@@ -81,6 +81,7 @@ const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
   SHORTCUTS_EDITOR: ["SHORTCUTS_EDITOR"],
   TEST: ["TEST"],
   USER_POST: ["USER_POST"],
+  OAUTH_CALLBACK: ["OAUTH_CALLBACK"],
 };
 
 const NAV_BAR_ITEMS = [

@@ -15,11 +15,15 @@ export const useNaverAuth = () => {
 
   return useMutation<SignInResponse, Error, NaverCallbackRequest>({
     mutationFn: naverCallback,
-    onSuccess: () => {
-      toast({
-        title: "선생님, 어서오세요!",
-      });
-      navigate(URL_PATHS.HOME);
+    onSuccess: (data) => {
+      console.log("네이버 로그인 성공, onSuccess 콜백 실행:", data);
+
+      setTimeout(() => {
+        toast({
+          title: "선생님, 어서오세요!",
+        });
+        navigate(URL_PATHS.HOME, { replace: true });
+      }, 100);
     },
     onError: (error) => {
       console.error("네이버 로그인 실패:", error);
@@ -28,6 +32,7 @@ export const useNaverAuth = () => {
         description: "잠시 후 다시 시도해주세요.",
         variant: "destructive",
       });
+      navigate(URL_PATHS.ROOT, { replace: true });
     },
   });
 };
@@ -38,11 +43,15 @@ export const useKakaoAuth = () => {
 
   return useMutation<SignInResponse, Error, KakaoCallbackRequest>({
     mutationFn: kakaoCallback,
-    onSuccess: () => {
-      toast({
-        title: "선생님, 어서오세요!",
-      });
-      navigate(URL_PATHS.HOME);
+    onSuccess: (data) => {
+      console.log("카카오 로그인 성공, onSuccess 콜백 실행:", data);
+
+      setTimeout(() => {
+        toast({
+          title: "선생님, 어서오세요!",
+        });
+        navigate(URL_PATHS.HOME, { replace: true });
+      }, 100);
     },
     onError: (error) => {
       console.error("카카오 로그인 실패:", error);
@@ -51,6 +60,7 @@ export const useKakaoAuth = () => {
         description: "잠시 후 다시 시도해주세요.",
         variant: "destructive",
       });
+      navigate(URL_PATHS.ROOT, { replace: true });
     },
   });
 };
@@ -71,22 +81,28 @@ export const extractAuthParams = () => {
 export const getSocialLoginUrl = {
   naver: (state: string) => {
     const clientId = import.meta.env.VITE_NAVER_CLIENT_ID;
-    const baseUrl =
-      import.meta.env.VITE_REDIRECT_BASE_URL || window.location.origin;
     const redirectUri = encodeURIComponent(
-      `${baseUrl}${URL_PATHS.NAVER_CALLBACK}`
+      import.meta.env.VITE_PUBLIC_NAVER_REDIRECT_URI
     );
+
+    console.log("🔗 네이버 로그인 URL 생성:", {
+      clientId,
+      redirectUri: decodeURIComponent(redirectUri),
+    });
 
     return `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&state=${state}`;
   },
 
   kakao: () => {
     const clientId = import.meta.env.VITE_KAKAO_CLIENT_ID;
-    const baseUrl =
-      import.meta.env.VITE_REDIRECT_BASE_URL || window.location.origin;
     const redirectUri = encodeURIComponent(
-      `${baseUrl}${URL_PATHS.KAKAO_CALLBACK}`
+      import.meta.env.VITE_PUBLIC_KAKAO_REDIRECT_URI
     );
+
+    console.log("🔗 카카오 로그인 URL 생성:", {
+      clientId,
+      redirectUri: decodeURIComponent(redirectUri),
+    });
 
     return `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`;
   },
