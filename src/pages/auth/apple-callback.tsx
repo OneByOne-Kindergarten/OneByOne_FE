@@ -26,6 +26,16 @@ export default function AppleCallbackPage() {
       return;
     }
 
+    // 중복 실행 방지 체크
+    const sessionKey = `apple_auth_${id_token}`;
+    if (sessionStorage.getItem(sessionKey)) {
+      console.log("애플 로그인 중복 실행 방지");
+      return;
+    }
+
+    // 실행 표시
+    sessionStorage.setItem(sessionKey, "true");
+
     console.log("애플 로그인 시도:", { id_token });
 
     // 애플 로그인 실행

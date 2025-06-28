@@ -22,6 +22,16 @@ export default function KakaoCallbackPage() {
         return;
       }
 
+      // 중복 실행 방지 체크
+      const sessionKey = `kakao_auth_${code}`;
+      if (sessionStorage.getItem(sessionKey)) {
+        console.log("카카오 로그인 중복 실행 방지");
+        return;
+      }
+
+      // 실행 표시
+      sessionStorage.setItem(sessionKey, "true");
+
       // 카카오 로그인 실행
       kakaoAuthMutation.mutate({ code });
     };
