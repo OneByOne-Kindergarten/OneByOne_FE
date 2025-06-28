@@ -189,9 +189,8 @@ export const kakaoCallback = async (
 ): Promise<SignInResponse> => {
   try {
     const result = await apiCall<KakaoCallbackRequest, SignInResponse>({
-      method: "POST",
-      path: "/users/kakao/callback",
-      data,
+      method: "GET",
+      path: `${API_PATHS.USER.KAKAO_CALLBACK}?code=${encodeURIComponent(data.code)}`,
       withCredentials: true,
     });
 
