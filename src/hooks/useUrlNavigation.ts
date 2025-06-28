@@ -68,7 +68,9 @@ export const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
   INQUIRY_PUBLIC: [],
   INQUIRY_MY: [],
   INQUIRY_EDITOR: [],
-  OAUTH_CALLBACK: [],
+  NAVER_CALLBACK: [],
+  KAKAO_CALLBACK: [],
+  APPLE_CALLBACK: [],
 };
 
 // 에디터 페이지 관련 키

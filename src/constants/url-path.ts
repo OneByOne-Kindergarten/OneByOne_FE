@@ -7,8 +7,10 @@ export const URL_PATHS = {
   // 로그인 및 회원가입
   SIGNIN: "/signin",
   SIGNUP: "/signup",
-  // OAuth
-  OAUTH_CALLBACK: "/auth/oauth-callback",
+  // Oauth
+  NAVER_CALLBACK: "/users/naver/callback",
+  KAKAO_CALLBACK: "/users/kakao/callback",
+  APPLE_CALLBACK: "/users/apple/callback",
   // 기관
   SCHOOL: "/school",
   SCHOOL_DETAIL: "/school/:id",

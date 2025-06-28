@@ -60,6 +60,9 @@ export const API_PATHS = {
     PASSWORD: "/users/password",
     NICKNAME: "/users/nickname",
     SHORTCUTS: "/users/shortcuts",
+    KAKAO_CALLBACK: "/users/kakao/callback",
+    NAVER_CALLBACK: "/users/naver/callback",
+    APPLE_CALLBACK: "/users/apple/callback",
   },
   OAUTH: {
     NAVER_CALLBACK: "/users/naver/callback",
