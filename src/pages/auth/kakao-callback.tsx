@@ -27,7 +27,7 @@ export default function KakaoCallbackPage() {
     };
 
     handleKakaoCallback();
-  }, [kakaoAuthMutation]);
+  }, []);
 
   if (kakaoAuthMutation.isError) {
     return (

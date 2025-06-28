@@ -161,7 +161,7 @@ export const naverCallback = async (
   try {
     const result = await apiCall<NaverCallbackRequest, SignInResponse>({
       method: "POST",
-      path: "/users/naver/callback",
+      path: API_PATHS.USER.NAVER_CALLBACK,
       data,
       withCredentials: true,
     });
@@ -188,9 +188,8 @@ export const kakaoCallback = async (
 ): Promise<SignInResponse> => {
   try {
     const result = await apiCall<KakaoCallbackRequest, SignInResponse>({
-      method: "POST",
-      path: "/users/kakao/callback",
-      data,
+      method: "GET",
+      path: `${API_PATHS.USER.KAKAO_CALLBACK}?code=${encodeURIComponent(data.code)}`,
       withCredentials: true,
     });
 
