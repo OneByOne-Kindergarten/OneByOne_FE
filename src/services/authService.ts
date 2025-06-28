@@ -6,6 +6,7 @@ import {
   TokenRefreshResponse,
   NaverCallbackRequest,
   KakaoCallbackRequest,
+  AppleCallbackRequest,
 } from "@/types/authDTO";
 import { apiCall } from "@/utils/apiUtils";
 import { getUserInfo, clearUserInfo } from "@/services/userService";
@@ -201,6 +202,33 @@ export const kakaoCallback = async (
     return result;
   } catch (error) {
     console.error("카카오 로그인 에러:", error);
+    throw error;
+  }
+};
+
+/**
+ * 애플 소셜 로그인
+ * @param data - id_token
+ * @returns {Promise<SignInResponse>}
+ */
+export const appleCallback = async (
+  data: AppleCallbackRequest
+): Promise<SignInResponse> => {
+  try {
+    const result = await apiCall<AppleCallbackRequest, SignInResponse>({
+      method: "POST",
+      path: `${API_PATHS.USER.APPLE_CALLBACK}?id_token=${encodeURIComponent(data.id_token)}`,
+      withCredentials: true,
+    });
+
+    setCookie("accessToken", result.accessToken);
+    setCookie("refreshToken", result.refreshToken);
+
+    await getUserInfo();
+
+    return result;
+  } catch (error) {
+    console.error("애플 로그인 에러:", error);
     throw error;
   }
 };

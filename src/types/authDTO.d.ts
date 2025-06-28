@@ -42,3 +42,7 @@ export interface NaverCallbackRequest {
 export interface KakaoCallbackRequest {
   code: string;
 }
+
+export interface AppleCallbackRequest {
+  id_token: string;
+}

@@ -1,9 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { naverCallback, kakaoCallback } from "@/services/authService";
+import { naverCallback, kakaoCallback, appleCallback } from "@/services/authService";
 import {
   NaverCallbackRequest,
   KakaoCallbackRequest,
+  AppleCallbackRequest,
   SignInResponse,
 } from "@/types/authDTO";
 import { URL_PATHS } from "@/constants/url-path";
@@ -57,6 +58,30 @@ export const useKakaoAuth = () => {
   });
 };
 
+export const useAppleAuth = () => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  return useMutation<SignInResponse, Error, AppleCallbackRequest>({
+    mutationFn: appleCallback,
+    onSuccess: () => {
+      toast({
+        title: "애플 로그인 성공",
+        description: "어서오세요. 선생님!",
+      });
+      navigate(URL_PATHS.HOME);
+    },
+    onError: (error) => {
+      console.error("애플 로그인 실패:", error);
+      toast({
+        title: "애플 로그인 실패",
+        description: "잠시 후 다시 시도해주세요.",
+        variant: "destructive",
+      });
+    },
+  });
+};
+
 export const extractAuthParams = () => {
   const urlParams = new URLSearchParams(window.location.search);
 
@@ -91,5 +116,16 @@ export const getSocialLoginUrl = {
     );
 
     return `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`;
+  },
+
+  apple: () => {
+    const clientId = import.meta.env.VITE_APPLE_CLIENT_ID;
+    const baseUrl =
+      import.meta.env.VITE_REDIRECT_BASE_URL || window.location.origin;
+    const redirectUri = encodeURIComponent(
+      `${baseUrl}${URL_PATHS.APPLE_CALLBACK}`
+    );
+
+    return `https://appleid.apple.com/auth/authorize?response_type=code%20id_token&response_mode=form_post&client_id=${clientId}&redirect_uri=${redirectUri}&scope=name%20email`;
   },
 };

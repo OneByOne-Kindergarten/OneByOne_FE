@@ -62,6 +62,7 @@ export const API_PATHS = {
     SHORTCUTS: "/users/shortcuts",
     KAKAO_CALLBACK: "/users/kakao/callback",
     NAVER_CALLBACK: "/users/naver/callback",
+    APPLE_CALLBACK: "/users/apple/callback",
   },
   REPORT: {
     BASE: "/report",

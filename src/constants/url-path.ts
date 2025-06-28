@@ -10,6 +10,7 @@ export const URL_PATHS = {
   // Oauth
   NAVER_CALLBACK: "/users/naver/callback",
   KAKAO_CALLBACK: "/users/kakao/callback",
+  APPLE_CALLBACK: "/users/apple/callback",
   // 기관
   SCHOOL: "/school",
   SCHOOL_DETAIL: "/school/:id",
