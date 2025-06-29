@@ -121,7 +121,7 @@ export default function SchoolDetailPage() {
           options={CATEGORY_OPTIONS}
           currentPath={URL_PATHS.SCHOOL_DETAIL.replace(":id", safeId)}
         />
-        <section className="px-5 py-5 pb-20">
+        <section className="px-5 py-5 pb-28">
           <ul className="flex flex-col flex-1 gap-7">
             <div className="flex flex-col gap-1.5">
               <SchoolInfoItem

@@ -60,7 +60,7 @@ export default function KindergartenMarker({
       >
         {/* 마커 아이콘 */}
         <div
-          className={`${config.markerSize} rounded-full flex items-center justify-center shadow-lg border-2`}
+          className={`${config.markerSize} rounded-full flex items-center justify-center shadow-xl border-2`}
           style={{
             backgroundColor: styles.bgColor,
             borderColor: styles.borderColor,

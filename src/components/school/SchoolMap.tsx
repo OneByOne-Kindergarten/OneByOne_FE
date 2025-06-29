@@ -21,7 +21,7 @@ export default function SchoolDetailMap({
       latitude={latitude}
       longitude={longitude}
       level={4}
-      height="h-52"
+      height="h-64"
       className={className}
       showUserLocation={false}
     >

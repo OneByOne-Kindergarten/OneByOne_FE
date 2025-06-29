@@ -33,7 +33,7 @@ export default function NearbySchoolMap({
       latitude={latitude}
       longitude={longitude}
       level={mapLevel}
-      height="h-72"
+      height="h-80"
       className={className}
       showUserLocation={true}
     >

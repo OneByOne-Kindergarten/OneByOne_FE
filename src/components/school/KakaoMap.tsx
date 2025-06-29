@@ -36,6 +36,7 @@ export default function KakaoMap({
   if (!apiKey) {
     return (
       <MapError
+        height={height}
         latitude={latitude}
         longitude={longitude}
         mapError="카카오맵 키가 설정되지 않았습니다"
@@ -46,6 +47,7 @@ export default function KakaoMap({
   if (error) {
     return (
       <MapError
+        height={height}
         latitude={latitude}
         longitude={longitude}
         mapError={`${error.message}`}
@@ -59,12 +61,19 @@ export default function KakaoMap({
 
   if (mapError) {
     return (
-      <MapError latitude={latitude} longitude={longitude} mapError={mapError} />
+      <MapError
+        height={height}
+        latitude={latitude}
+        longitude={longitude}
+        mapError={mapError}
+      />
     );
   }
 
   return (
-    <div className={`${height} rounded-md shadow-md overflow-hidden`}>
+    <div
+      className={`${height} rounded-md border border-primary-normal01 overflow-hidden`}
+    >
       <div className={`w-full h-full ${className}`}>
         {isMapLoading && <MapSkeleton />}
         <Map

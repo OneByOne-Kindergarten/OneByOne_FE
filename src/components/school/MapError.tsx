@@ -2,25 +2,29 @@ import Button from "@/components/@shared/buttons/base-button";
 import { SVG_PATHS } from "@/constants/assets-path";
 
 interface MapErrorProps {
+  height: string;
   latitude: number;
   longitude: number;
   mapError: string;
 }
 
 export default function MapError({
+  height,
   latitude,
   longitude,
   mapError,
 }: MapErrorProps) {
   return (
-    <div className="w-full h-full bg-gradient-to-br flex flex-col gap-3 from-blue-100 to-green-100 rounded-lg items-center justify-center px-4 py-6">
+    <div
+      className={`${height} w-full bg-gradient-to-br flex flex-col gap-6 from-blue-100 to-green-100 rounded-lg items-center justify-center p-4 border border-primary-normal01`}
+    >
       <div className="text-center">
         <img
           src={SVG_PATHS.LOCATION}
           alt="위치"
           className="w-6 h-6 mx-auto mb-2"
         />
-        <p className="text-sm font-medium text-primary-dark02 mb-1">
+        <p className="text-sm font-medium text-primary-dark02 mb-2">
           현재 위치
         </p>
         <p className="text-xs text-primary-normal03">
