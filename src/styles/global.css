@@ -47,9 +47,9 @@
     --secondary-dark-02: 51, 29%, 46%;
     --secondary-dark-03: 52, 30%, 35%;
     --secondary-foreground: 51, 30%, 27%;
-    --tertiary-01: 210, 100%, 96%;
-    --tertiary-02: 210, 100%, 80%;
-    --tertiary-03: 210, 100%, 60%;
+    --tertiary-01: 214, 100%, 97%;
+    --tertiary-02: 213, 100%, 85%;
+    --tertiary-03: 213, 78%, 68%;
     --muted: 0 0% 96.1%;
     --muted-foreground: 0 0% 45.1%;
     --accent: 0 0% 96.1%;
@@ -136,7 +136,8 @@
 }
 
 /* iOS에서 텍스트 입력 필드에만 적절한 선택 기능 허용 */
-input, textarea {
+input,
+textarea {
   -webkit-user-select: text; /* Safari */
   -khtml-user-select: text; /* Konqueror HTML */
   -moz-user-select: text; /* Firefox */

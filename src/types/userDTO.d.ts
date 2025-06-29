@@ -2,11 +2,13 @@ export interface UserResponse {
   user: User;
 }
 
+export type UserRole = "GENERAL" | "TEACHER" | "PROSPECTIVE_TEACHER" | "ADMIN";
+
 export interface User {
   userId: number;
   nickname: string;
   profileImageUrl: string | null;
-  role: "GENERAL" | "TEACHER" | "PROSPECTIVE_TEACHER" | "ADMIN";
+  role: UserRole;
   career: string;
   homeShortcut?: HomeShortcut;
   kindergarten?: {

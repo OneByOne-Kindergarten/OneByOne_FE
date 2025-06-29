@@ -61,7 +61,7 @@ export default function SignIn() {
       headerHasBorder={false}
       currentPath={URL_PATHS.HOME}
       isGlobalNavBar={false}
-      mainClassName="mt-16 flex flex-col gap-16 mt-14"
+      mainClassName="flex flex-col gap-16 my-auto"
       wrapperBg="white"
     >
       <h1 className="text-center text-lg">이메일로 로그인</h1>

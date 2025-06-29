@@ -4,7 +4,10 @@ import { Link } from "react-router-dom";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import Button from "@/components/@shared/buttons/base-button";
 import OauthButton from "@/components/sign-in/OauthButton";
-import { isFlutterWebView, useRequestFcmToken } from "@/hooks/useFlutterCommunication";
+import {
+  isFlutterWebView,
+  useRequestFcmToken,
+} from "@/hooks/useFlutterCommunication";
 import { useEffect } from "react";
 import { setCookie } from "@/services/authService";
 
@@ -33,7 +36,7 @@ export default function RootPage() {
       mainClassName="my-auto flex flex-col gap-[10vh]"
       wrapperBg="white"
     >
-      <section className="pt-[20vh] flex flex-col text-center gap-4 justify-center mx-auto">
+      <section className="pt-[10vh] flex flex-col text-center gap-4 justify-center mx-auto">
         <h1>
           <strong>선생님</strong>들의 <strong>진짜 유치원 이야기</strong>
         </h1>
