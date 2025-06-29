@@ -31,7 +31,7 @@ export default function User() {
             <ProfileImage role={user?.role} />
             <ProfileDetail user={user} />
           </div>
-          <Link to={URL_PATHS.USER_PROFILE_EDITOR}>
+          <Link to={URL_PATHS.USER_PROFILE}>
             <img
               src={SVG_PATHS.ARROW.right}
               alt="오른쪽 방향 화살표 아이콘"

@@ -1,26 +1,15 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { clsx } from "clsx";
 import * as z from "zod";
 
-import {
-  Form,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormMessage,
-  FormField,
-} from "@/components/@shared/form";
-import { useRandomNickname } from "@/hooks/useRandomNickname";
-import Input from "@/components/@shared/form/input";
+import { Form } from "@/components/@shared/form";
 import ErrorMessage from "@/components/@shared/form/error-message";
 import Button from "@/components/@shared/buttons/base-button";
-import RoleButton from "@/components/sign-up/RoleButton";
-import { SVG_PATHS } from "@/constants/assets-path";
+import { NicknameField } from "@/components/sign-up/NicknameField";
+import { RoleField } from "@/components/sign-up/RoleField";
 import { CommunityCategoryType } from "@/constants/community";
 
-// 닉네임, 회원 유형 검증
 const step2Schema = z.object({
   nickname: z
     .string()
@@ -33,15 +22,13 @@ const step2Schema = z.object({
 
 export type Step2FormValues = z.infer<typeof step2Schema>;
 
-export function Step2Form({
-  onSubmit,
-  isLoading,
-  error,
-}: {
+interface Step2FormProps {
   onSubmit: (data: Step2FormValues) => void;
   isLoading: boolean;
   error: string | null;
-}) {
+}
+
+export function Step2Form({ onSubmit, isLoading, error }: Step2FormProps) {
   const form = useForm<Step2FormValues>({
     resolver: zodResolver(step2Schema),
     defaultValues: {
@@ -50,13 +37,9 @@ export function Step2Form({
     },
     mode: "onChange",
   });
+
   const [selectedRole, setSelectedRole] =
     useState<CommunityCategoryType>("TEACHER");
-
-  const { isRandomNickname, handleRandomNickname, handleManualNickname } =
-    useRandomNickname({
-      setValue: form.setValue,
-    });
 
   const handleRoleChange = (role: CommunityCategoryType) => {
     setSelectedRole(role);
@@ -74,84 +57,17 @@ export function Step2Form({
     <Form {...form}>
       <form onSubmit={handleFormSubmit} className="flex flex-col gap-6">
         <div className="flex flex-col gap-7">
-          <FormField
+          <NicknameField
             control={form.control}
             name="nickname"
-            render={({ field, fieldState }) => (
-              <FormItem>
-                <div className="relative flex justify-between items-center">
-                  <FormLabel className="font-semibold text-primary-dark01">
-                    선생님이 사용하실 닉네임이에요!
-                  </FormLabel>
-                  <Button
-                    type="button"
-                    variant="transparent_gray"
-                    font="sm"
-                    size="sm"
-                    onClick={
-                      isRandomNickname
-                        ? handleManualNickname
-                        : handleRandomNickname
-                    }
-                  >
-                    <p>{isRandomNickname ? "직접 설정" : "랜덤 설정"}</p>
-                  </Button>
-                  {isRandomNickname && (
-                    <img
-                      src={SVG_PATHS.CHECK.blue}
-                      width={26}
-                      height={26}
-                      className="absolute top-10 right-3"
-                    />
-                  )}
-                </div>
-                <FormControl>
-                  <Input
-                    className={clsx(isRandomNickname && "border-tertiary-3")}
-                    placeholder="닉네임을 입력해주세요."
-                    error={!!fieldState.error}
-                    {...field}
-                  />
-                </FormControl>
-                {isRandomNickname && (
-                  <p className="text-xs text-tertiary-3 mt-1">
-                    안전한 커뮤니티 운영을 위한 닉네임이 자동으로 만들어졌어요
-                  </p>
-                )}
-                <FormMessage />
-              </FormItem>
-            )}
+            setValue={form.setValue}
           />
-
-          <FormItem>
-            <FormLabel className="font-semibold text-primary-dark01">
-              해당되는 역할을 선택해주세요.
-            </FormLabel>
-            <div className="flex w-full gap-3">
-              <RoleButton
-                role="TEACHER"
-                isSelected={selectedRole === "TEACHER"}
-                onClick={() => handleRoleChange("TEACHER")}
-                character={SVG_PATHS.CHARACTER.chicken}
-                title="교사예요."
-                description="교사 경력을 인증할 수 있어요!"
-              />
-              <RoleButton
-                role="PROSPECTIVE_TEACHER"
-                isSelected={selectedRole === "PROSPECTIVE_TEACHER"}
-                onClick={() => handleRoleChange("PROSPECTIVE_TEACHER")}
-                character={SVG_PATHS.CHARACTER.chick}
-                title="예비교사예요."
-                description="교사를 꿈꾸는, 아직 경력이 <br />
-                    없는 사람이에요!"
-              />
-            </div>
-            {form.formState.errors.role && (
-              <FormMessage>{form.formState.errors.role.message}</FormMessage>
-            )}
-          </FormItem>
+          <RoleField
+            selectedRole={selectedRole}
+            onRoleChange={handleRoleChange}
+            error={form.formState.errors.role?.message}
+          />
         </div>
-
         <div className="flex gap-2">
           <Button
             variant="secondary"

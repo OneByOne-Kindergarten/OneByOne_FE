@@ -22,10 +22,10 @@ const CommunityPostPage = lazy(() => import("../pages/community/post"));
 const PostEditorPage = lazy(() => import("../pages/community/post-editor"));
 const BookmarksPage = lazy(() => import("../pages/bookmarks"));
 const UserPage = lazy(() => import("../pages/user"));
-const MyPostPage = lazy(() => import("../pages/user/my-post"));
+const ProfilePage = lazy(() => import("../pages/user/profile"));
 const ProfileEditorPage = lazy(() => import("../pages/user/profile-editor"));
-const NicknameEditorPage = lazy(() => import("../pages/user/nickname-editor"));
 const PasswordEditorPage = lazy(() => import("../pages/user/password-editor"));
+const MyPostPage = lazy(() => import("../pages/user/my-post"));
 const AccountSettingPage = lazy(() => import("../pages/user/account-setting"));
 const InquiryPage = lazy(() => import("../pages/inquiry"));
 const InquiryEditorPage = lazy(() => import("../pages/inquiry/inquiry-editor"));
@@ -63,10 +63,10 @@ const routes = {
     { path: URL_PATHS.COMMUNITY_POST_EDITOR, element: <PostEditorPage /> },
     { path: URL_PATHS.COMMUNITY_POST, element: <CommunityPostPage /> },
     // 프로필
-    { path: URL_PATHS.USER_POST, element: <MyPostPage /> },
+    { path: URL_PATHS.USER_PROFILE, element: <ProfilePage /> },
     { path: URL_PATHS.USER_PROFILE_EDITOR, element: <ProfileEditorPage /> },
-    { path: URL_PATHS.USER_NICKNAME_EDITOR, element: <NicknameEditorPage /> },
     { path: URL_PATHS.USER_PASSWORD_EDITOR, element: <PasswordEditorPage /> },
+    { path: URL_PATHS.USER_POST, element: <MyPostPage /> },
     { path: URL_PATHS.USER_ACCOUNT_SETTING, element: <AccountSettingPage /> },
     { path: URL_PATHS.INQUIRY, element: <InquiryPage /> },
     { path: URL_PATHS.INQUIRY_EDITOR, element: <InquiryEditorPage /> },

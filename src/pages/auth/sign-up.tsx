@@ -44,7 +44,6 @@ export default function SignUp() {
       profileImageUrl: "",
     };
 
-    // 회원가입 요청 - 에러 처리는 모두 훅에서 진행
     signUpMutate(signUpData);
   };
 
@@ -55,7 +54,7 @@ export default function SignUp() {
       headerTitle=" "
       headerHasBorder={false}
       isGlobalNavBar={false}
-      mainClassName="my-16 flex flex-col gap-16 mt-14"
+      mainClassName="my-auto flex flex-col gap-16"
       wrapperBg="white"
       hasBackButton={true}
       onBackButtonClick={handleCustomBack}
@@ -80,14 +79,14 @@ export default function SignUp() {
           />
         )}
       </section>
-      <section className="flex flex-col gap-2 items-center text-xs">
-        <div className="flex gap-2">
+      {step === 1 && (
+        <section className="flex justify-center gap-2 text-xs">
           <p className="text-primary-dark03">이미 회원이신가요?</p>
           <Link to={URL_PATHS.SIGNIN} className="text-tertiary-3 font-semibold">
             로그인
           </Link>
-        </div>
-      </section>
+        </section>
+      )}
     </PageLayout>
   );
 }

@@ -137,8 +137,7 @@ export const withdrawUser = async (): Promise<boolean> => {
       withCredentials: true,
     });
 
-    // 탈퇴 성공 시 유저 정보 초기화
-    clearUserInfo();
+    clearUserInfo(); // 탈퇴 성공 시 유저 정보 초기화
 
     return true;
   } catch (error) {
@@ -173,4 +172,37 @@ export const updateUserShortcuts = async (
     withAuth: true,
     withCredentials: true,
   });
+};
+
+/**
+ * 사용자 역할 변경
+ * @param role 변경할 새 역할
+ * @returns 변경 성공 여부
+ */
+export const updateUserRole = async (
+  role: "TEACHER" | "PROSPECTIVE_TEACHER" | "ADMIN" | "GENERAL"
+): Promise<boolean> => {
+  try {
+    const token = getAccessToken();
+
+    if (!token) {
+      console.error("역할 변경 실패: 인증 정보 없음");
+      return false;
+    }
+
+    await apiCall<{ role: string }, void>({
+      method: "POST",
+      path: API_PATHS.USER.ROLE,
+      data: { role },
+      withAuth: true,
+      withCredentials: true,
+    });
+
+    await getUserInfo(); // 역할 변경 후 유저 정보 다시 불러오기
+
+    return true;
+  } catch (error) {
+    console.error("역할 변경 실패:", error);
+    return false;
+  }
 };

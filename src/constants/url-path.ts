@@ -31,8 +31,8 @@ export const URL_PATHS = {
   // 프로필
   USER: "/user",
   USER_POST: "/user/my-post",
-  USER_PROFILE_EDITOR: "/user/profile",
-  USER_NICKNAME_EDITOR: "/user/profile/nickname",
+  USER_PROFILE: "/user/profile",
+  USER_PROFILE_EDITOR: "/user/profile/editor",
   USER_PASSWORD_EDITOR: "/user/account-setting/password",
   USER_ACCOUNT_SETTING: "/user/account-setting",
   NOTICE: "/user/notice",

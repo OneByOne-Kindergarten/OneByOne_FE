@@ -10,6 +10,7 @@ import {
   updateNickname,
   updatePassword,
   withdrawUser,
+  updateUserRole,
 } from "@/services/userService";
 import { toast } from "@/hooks/useToast";
 import { useNavigate } from "react-router-dom";
@@ -297,6 +298,49 @@ export const useSignUp = (callbacks?: SignupCallbacks) => {
 
       toast({
         title: "회원가입 실패",
+        description: errorMessage,
+        variant: "destructive",
+      });
+    },
+  });
+};
+
+/**
+ * 사용자 역할 변경 API 호출
+ * - 에러 처리
+ * - 토스트 관리
+ */
+export const useUpdateUserRole = () => {
+  return useMutation<
+    boolean,
+    Error,
+    "TEACHER" | "PROSPECTIVE_TEACHER" | "ADMIN" | "GENERAL"
+  >({
+    mutationFn: (role) => updateUserRole(role),
+    onSuccess: () => {
+      toast({
+        title: "역할 변경 성공",
+        variant: "default",
+      });
+    },
+    onError: (error) => {
+      let errorMessage = "역할 변경에 실패했습니다. 다시 시도해주세요.";
+
+      if (error instanceof Error) {
+        try {
+          const errorObj = JSON.parse(error.message);
+          if (errorObj.data?.message) {
+            errorMessage = errorObj.data.message;
+          }
+        } catch (e) {
+          if (error.message && error.message !== "Failed to fetch") {
+            errorMessage = error.message;
+          }
+        }
+      }
+
+      toast({
+        title: "역할 변경 실패",
         description: errorMessage,
         variant: "destructive",
       });
