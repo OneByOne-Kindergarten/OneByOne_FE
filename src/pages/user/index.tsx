@@ -28,7 +28,7 @@ export default function User() {
       <section className="flex flex-col">
         <div className="flex items-center justify-between bg-white px-5 w-full py-4">
           <div className="flex items-center gap-7">
-            <ProfileImage profileImageUrl={user?.profileImageUrl} />
+            <ProfileImage role={user?.role} />
             <ProfileDetail user={user} />
           </div>
           <Link to={URL_PATHS.USER_PROFILE_EDITOR}>

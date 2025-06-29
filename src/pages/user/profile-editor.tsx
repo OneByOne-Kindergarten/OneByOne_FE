@@ -33,7 +33,7 @@ export default function ProfileEditorPage() {
             편집
           </button>
         </div>
-        <ProfileImage profileImageUrl={user?.profileImageUrl} />
+        <ProfileImage role={user?.role} />
         <ProfileDetail user={user} className="items-center" />
       </section>
       <section className="flex flex-col gap-6">

@@ -13,7 +13,7 @@ export default function CommentUserInfo({ reply, postAuthor }: ReplyCardProps) {
 
   return (
     <div className="flex gap-2.5 items-center ">
-      <ProfileImage size="sm" />
+      <ProfileImage role={reply.userRole} size="sm" />
       <div className="flex flex-col">
         <div className="flex items-center gap-1.5">
           <div className="flex items-center gap-1.5">
