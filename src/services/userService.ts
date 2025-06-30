@@ -206,3 +206,51 @@ export const updateUserRole = async (
     return false;
   }
 };
+
+/**
+ * 이메일 인증 번호 발송
+ * @param email 인증 번호를 받을 이메일
+ * @returns 발송 성공 여부
+ */
+export const sendEmailCertification = async (
+  email: string
+): Promise<boolean> => {
+  try {
+    await apiCall<{ email: string }, void>({
+      method: "POST",
+      path: API_PATHS.USER.FIND_PASSWORD,
+      data: { email },
+      withCredentials: true,
+    });
+
+    return true;
+  } catch (error) {
+    console.error("이메일 인증 번호 발송 실패:", error);
+    return false;
+  }
+};
+
+/**
+ * 이메일 인증 번호 검증
+ * @param email
+ * @param certification 인증 번호
+ * @returns 인증 성공 여부
+ */
+export const checkEmailCertification = async (
+  email: string,
+  certification: string
+): Promise<boolean> => {
+  try {
+    await apiCall<{ email: string; certification: string }, void>({
+      method: "POST",
+      path: API_PATHS.USER.FIND_PASSWORD_CHECK,
+      data: { email, certification },
+      withCredentials: true,
+    });
+
+    return true;
+  } catch (error) {
+    console.error("이메일 인증 번호 검증 실패:", error);
+    return false;
+  }
+};

@@ -10,14 +10,11 @@ import {
   FormMessage,
   FormField,
 } from "@/components/@shared/form";
-import Input from "@/components/@shared/form/input";
 import ToggleInput from "@/components/@shared/form/toggle-input";
 import Button from "@/components/@shared/buttons/base-button";
 
-// 이메일, 비밀번호
-const step1Schema = z
+const step3Schema = z
   .object({
-    email: z.string().email("유효한 이메일 주소를 입력해주세요."),
     password: z
       .string()
       .min(6, "비밀번호는 최소 6자 이상이어야 합니다.")
@@ -29,69 +26,32 @@ const step1Schema = z
     path: ["confirmPassword"],
   });
 
-export type Step1FormValues = z.infer<typeof step1Schema>;
+export type PasswordFormValues = z.infer<typeof step3Schema>;
 
-export function Step1Form({
+export function PasswordForm({
   onNext,
+  isLoading = false,
 }: {
-  onNext: (data: Step1FormValues) => void;
+  onNext: (data: PasswordFormValues) => void;
+  isLoading?: boolean;
 }) {
-  const form = useForm<Step1FormValues>({
-    resolver: zodResolver(step1Schema),
-    defaultValues: {
-      email: "",
-      password: "",
-      confirmPassword: "",
-    },
+  const form = useForm<PasswordFormValues>({
+    resolver: zodResolver(step3Schema),
+    defaultValues: { password: "", confirmPassword: "" },
     mode: "onChange",
   });
 
-  const isFormValid = () => {
-    const { email, password, confirmPassword } = form.getValues();
-    const emailError = form.formState.errors.email;
-    const passwordError = form.formState.errors.password;
-    const confirmPasswordError = form.formState.errors.confirmPassword;
-
-    return (
-      email &&
-      password &&
-      confirmPassword &&
-      !emailError &&
-      !passwordError &&
-      !confirmPasswordError &&
-      password === confirmPassword
-    );
-  };
-
-  const handleNext = () => {
-    if (isFormValid()) {
-      onNext(form.getValues());
-    } else {
-      form.trigger(["email", "password", "confirmPassword"]);
-    }
+  const onSubmit = (data: PasswordFormValues) => {
+    onNext(data);
   };
 
   return (
     <Form {...form}>
-      <form className="flex flex-col gap-6">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-6"
+      >
         <div className="flex flex-col gap-3.5">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field, fieldState }) => (
-              <FormItem>
-                <FormLabel>이메일</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="이메일을 입력해주세요."
-                    error={!!fieldState.error}
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
           <FormField
             control={form.control}
             name="password"
@@ -127,16 +87,14 @@ export function Step1Form({
             )}
           />
         </div>
-
         <Button
           variant="secondary"
-          type="button"
+          type="submit"
           size="lg"
           font="md"
-          onClick={handleNext}
-          disabled={!isFormValid()}
+          disabled={!form.formState.isValid || isLoading}
         >
-          가입하기
+          확인
         </Button>
       </form>
     </Form>

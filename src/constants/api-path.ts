@@ -56,8 +56,8 @@ export const API_PATHS = {
     REISSUE: "/users/reissue",
     SIGN_IN: "/users/sign-in",
     SIGN_UP: "/users/sign-up",
-    EMAIL: "/users/email-certification",
-    EMAIL_CHECK: "/users/check-email-certification",
+    FIND_PASSWORD: "/users/email-certification",
+    FIND_PASSWORD_CHECK: "/users/check-email-certification",
     WITHDRAW: "/users/withdraw",
     PASSWORD: "/users/password",
     NICKNAME: "/users/nickname",
@@ -66,10 +66,6 @@ export const API_PATHS = {
     KAKAO_CALLBACK: "/users/kakao/callback",
     NAVER_CALLBACK: "/users/naver/callback",
     APPLE_CALLBACK: "/users/apple/callback",
-  },
-  OAUTH: {
-    NAVER_CALLBACK: "/users/naver/callback",
-    KAKAO_CALLBACK: "/users/kakao/callback",
   },
   REPORT: {
     BASE: "/report",

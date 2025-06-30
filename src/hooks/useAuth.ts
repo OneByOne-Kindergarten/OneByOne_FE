@@ -11,6 +11,8 @@ import {
   updatePassword,
   withdrawUser,
   updateUserRole,
+  sendEmailCertification,
+  checkEmailCertification,
 } from "@/services/userService";
 import { toast } from "@/hooks/useToast";
 import { useNavigate } from "react-router-dom";
@@ -37,7 +39,7 @@ export const useSignIn = () => {
     mutationFn: signIn,
     onSuccess: () => {
       toast({
-        title: `선생님, 어서오세요!`,
+        title: `선생님, 어서오세요! 🤗`,
         variant: "default",
       });
 
@@ -171,7 +173,7 @@ export const useSignOut = () => {
     onSuccess: () => {
       toast({
         title: "로그아웃 완료",
-        description: "안녕히가세요!",
+        description: "다음에 또 만나요! 🤗",
         variant: "default",
       });
       navigate(URL_PATHS.ROOT);
@@ -215,7 +217,7 @@ export const useWithdrawUser = () => {
     onSuccess: () => {
       toast({
         title: "회원 탈퇴 완료",
-        description: "그동안 이용해주셔서 감사합니다.",
+        description: "그동안 이용해주셔서 감사합니다. 🥰",
         variant: "default",
       });
       navigate(URL_PATHS.SIGNIN);
@@ -258,7 +260,7 @@ export const useSignUp = (callbacks?: SignupCallbacks) => {
     onSuccess: () => {
       toast({
         title: "회원가입 완료",
-        description: "지금 바로 로그인해보세요!",
+        description: "지금 바로 로그인해보세요! 🎉",
         variant: "default",
       });
 
@@ -283,8 +285,8 @@ export const useSignUp = (callbacks?: SignupCallbacks) => {
             // 응답 형식 오류지만 회원가입은 성공
             if (error.message.includes("Failed to parse JSON response")) {
               toast({
-                title: "회원가입 성공",
-                description: "회원가입이 완료되었습니다. 로그인해주세요.",
+                title: "회원가입 완료",
+                description: "지금 바로 로그인해보세요! 🎉",
                 variant: "default",
               });
               navigate(URL_PATHS.SIGNIN);
@@ -317,33 +319,80 @@ export const useUpdateUserRole = () => {
     "TEACHER" | "PROSPECTIVE_TEACHER" | "ADMIN" | "GENERAL"
   >({
     mutationFn: (role) => updateUserRole(role),
-    onSuccess: () => {
-      toast({
-        title: "역할 변경 성공",
-        variant: "default",
-      });
+    onSuccess: (success) => {
+      if (success) {
+        toast({
+          title: "역할 변경 성공",
+          variant: "default",
+        });
+      } else {
+        toast({
+          title: "역할 변경 실패",
+          description: "잠시 후 다시 시도해주세요.",
+          variant: "destructive",
+        });
+      }
     },
     onError: (error) => {
-      let errorMessage = "역할 변경에 실패했습니다. 다시 시도해주세요.";
+      console.error("역할 변경 오류:", error);
+      toast({
+        title: "역할 변경 오류",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+};
 
-      if (error instanceof Error) {
-        try {
-          const errorObj = JSON.parse(error.message);
-          if (errorObj.data?.message) {
-            errorMessage = errorObj.data.message;
+/**
+ * 이메일 인증 번호 발송 API 호출
+ */
+export const useSendEmailCertification = () => {
+  return useMutation<boolean, Error, string>({
+    mutationFn: (email) => sendEmailCertification(email),
+    onError: (error) => {
+      const errorMessage =
+        (() => {
+          try {
+            return JSON.parse(error.message).data?.message;
+          } catch {
+            return error.message;
           }
-        } catch (e) {
-          if (error.message && error.message !== "Failed to fetch") {
-            errorMessage = error.message;
-          }
-        }
-      }
+        })() || "잠시 후 다시 시도해주세요.";
 
       toast({
-        title: "역할 변경 실패",
+        title: "인증번호 발송 오류",
         description: errorMessage,
         variant: "destructive",
       });
+      console.error("이메일 인증번호 발송 실패:", error);
+    },
+  });
+};
+
+/**
+ * 이메일 인증 번호 검증 API 호출
+ */
+export const useCheckEmailCertification = () => {
+  return useMutation<boolean, Error, { email: string; certification: string }>({
+    mutationFn: ({ email, certification }) =>
+      checkEmailCertification(email, certification),
+    onError: (error) => {
+      const errorMessage =
+        (() => {
+          try {
+            return JSON.parse(error.message).data?.message;
+          } catch {
+            return error.message;
+          }
+        })() || "잠시 후 다시 시도해주세요.";
+
+      toast({
+        title: "인증번호 검증 오류",
+        description: errorMessage,
+        variant: "destructive",
+      });
+      console.error("인증번호 검증 실패:", error);
     },
   });
 };
