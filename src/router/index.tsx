@@ -35,6 +35,7 @@ const InquiryAdminPage = lazy(() => import("../pages/inquiry/inquiry-admin"));
 const InquiryMyPage = lazy(() => import("../pages/inquiry/inquiry-my"));
 const NoticePage = lazy(() => import("../pages/notice"));
 const NoticeDetailPage = lazy(() => import("../pages/notice/notice-detail"));
+const AlarmPage = lazy(() => import("../pages/alarm"));
 const ReportPage = lazy(() => import("../pages/report"));
 // 테스트 페이지
 const PermissionTestPage = lazy(
@@ -78,6 +79,7 @@ const routes = {
     { path: URL_PATHS.INQUIRY_MY, element: <InquiryMyPage /> },
     { path: URL_PATHS.NOTICE, element: <NoticePage /> },
     { path: URL_PATHS.NOTICE_DETAIL, element: <NoticeDetailPage /> },
+    { path: URL_PATHS.ALARM, element: <AlarmPage /> },
     // 신고
     { path: URL_PATHS.REPORT, element: <ReportPage /> },
     // 테스트

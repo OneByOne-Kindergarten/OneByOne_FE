@@ -41,6 +41,8 @@ import thumbUp from "@/assets/icons/thumb-up.svg";
 import reply from "@/assets/icons/reply.svg";
 import share from "@/assets/icons/share.svg";
 import alarm from "@/assets/icons/alarm.svg";
+import notificationsOn from "@/assets/icons/notifications_on.svg";
+import notificationsOff from "@/assets/icons/notifications_off.svg";
 import alert from "@/assets/icons/alert.svg";
 import bookmarkerActive from "@/assets/icons/bookmarker-active.svg";
 import bookmarkerInactive from "@/assets/icons/bookmarker-inactive.svg";
@@ -148,6 +150,10 @@ export const SVG_PATHS = {
   REPLY: reply,
   SHARE: share,
   ALARM: alarm,
+  NOTIFICATIONS: {
+    on: notificationsOn,
+    off: notificationsOff,
+  },
   ALERT: alert,
   BOOKMARKER: {
     active: bookmarkerActive,

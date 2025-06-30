@@ -40,7 +40,7 @@ export const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
     "COMMUNITY_POST_EDITOR",
   ],
   BOOKMARKS: ["BOOKMARKS"],
-  USER: ["USER", "USER_POST", "INQUIRY", "NOTICE"],
+  USER: ["USER", "USER_POST", "INQUIRY", "NOTICE", "ALARM"],
   USER_POST: [],
   FIND_PASSWORD: [],
   COMMUNITY_TEACHER: [],
@@ -63,6 +63,7 @@ export const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
   INQUIRY: [],
   NOTICE: [],
   NOTICE_DETAIL: [],
+  ALARM: [],
   PERMISSION_TEST: [],
   SHORTCUTS_EDITOR: [],
   REPORT: [],
@@ -86,6 +87,7 @@ export const EDITOR_URL_KEYS: UrlKeys[] = [
 export const SESSION_STORAGE_BASED_URL_KEYS: UrlKeys[] = [
   ...EDITOR_URL_KEYS,
   "COMMUNITY_POST",
+  "ALARM",
 ];
 
 /**
@@ -160,7 +162,7 @@ export function useUrlNavigation(
       }
 
       // 직전으로 이동하는 페이지
-      if (currentUrlKey === "COMMUNITY_POST") {
+      if (currentUrlKey === "COMMUNITY_POST" || currentUrlKey === "ALARM") {
         navigate(-1);
         return;
       }
