@@ -134,12 +134,8 @@ export const getSocialLoginUrl = {
 
   apple: () => {
     const clientId = import.meta.env.VITE_APPLE_CLIENT_ID;
-    const baseUrl =
-      import.meta.env.VITE_REDIRECT_BASE_URL || window.location.origin;
-    const redirectUri = encodeURIComponent(
-      `${baseUrl}${URL_PATHS.APPLE_CALLBACK}`
-    );
-
+    // 애플 로그인 리다이렉트 == 서버 주소
+    const redirectUri = encodeURIComponent(`${import.meta.env.VITE_API_URL}/users/apple/callback`);
     return `https://appleid.apple.com/auth/authorize?response_type=code%20id_token&response_mode=form_post&client_id=${clientId}&redirect_uri=${redirectUri}&scope=name%20email`;
   },
 };

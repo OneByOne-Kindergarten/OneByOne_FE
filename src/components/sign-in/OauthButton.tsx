@@ -37,7 +37,8 @@ export default function OauthButton({ type }: OauthButtonProps) {
         const loginUrl = getSocialLoginUrl.kakao();
         window.location.href = loginUrl;
       } else if (type === "apple") {
-        console.log("Apple 로그인은 준비 중입니다.");
+        const loginUrl = getSocialLoginUrl.apple();
+        window.location.href = loginUrl;
       }
     } catch (error) {
       console.error(`${type} 로그인 URL 생성 실패:`, error);

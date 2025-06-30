@@ -1,58 +1,90 @@
-import { useEffect } from "react";
-import { useAppleAuth } from "@/hooks/useSocialAuth";
+import { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/useToast";
+import { setCookie } from "@/services/authService";
+import { getUserInfo } from "@/services/userService";
+import { URL_PATHS } from "@/constants/url-path";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
-import Error from "@/components/@shared/layout/error";
 
 export default function AppleCallbackPage() {
-  const appleAuthMutation = useAppleAuth();
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  const hasProcessed = useRef(false);
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const id_token = urlParams.get("id_token");
-    const error = urlParams.get("error");
-    const error_description = urlParams.get("error_description");
+    // 중복 실행 방지
+    if (hasProcessed.current) return;
+    hasProcessed.current = true;
 
-    console.log("애플 콜백 파라미터:", { id_token, error, error_description });
+    const handleAppleCallback = async () => {
+      try {
+        // URL 파라미터에서 토큰 정보 확인 - 백엔드에서 리다이렉트됨
+        const urlParams = new URLSearchParams(window.location.search);
+        const accessToken = urlParams.get("access_token");
+        const refreshToken = urlParams.get("refresh_token");
+        const error = urlParams.get("error");
+        const errorMessage = urlParams.get("message");
 
-    // 에러가 있는 경우
-    if (error) {
-      console.error("애플 로그인 에러:", error, error_description);
-      return;
-    }
+        // 토큰 정보 콘솔 로깅
+        console.log("애플 콜백 파라미터:", { 
+          accessToken: accessToken ? accessToken.substring(0, 20) + "..." : null,
+          refreshToken: refreshToken ? refreshToken.substring(0, 20) + "..." : null,
+          error,
+          errorMessage
+        });
 
-    // 필수 파라미터 확인
-    if (!id_token) {
-      console.error("애플 콜백 파라미터 누락:", { id_token });
-      return;
-    }
+        // 에러가 있는 경우
+        if (error) {
+          console.error("애플 로그인 에러:", error, errorMessage);
+          toast({
+            title: "애플 로그인 실패",
+            description: errorMessage ? decodeURIComponent(errorMessage) : "로그인 중 오류가 발생했습니다.",
+            variant: "destructive",
+          });
+          navigate(URL_PATHS.ROOT, { replace: true });
+          return;
+        }
 
-    // 중복 실행 방지 체크
-    const sessionKey = `apple_auth_${id_token}`;
-    if (sessionStorage.getItem(sessionKey)) {
-      console.log("애플 로그인 중복 실행 방지");
-      return;
-    }
+        // 토큰이 있는 경우
+        if (accessToken && refreshToken) {
+          setCookie("accessToken", accessToken);
+          setCookie("refreshToken", refreshToken);
+          await getUserInfo();
+          toast({
+            title: "선생님, 어서오세요!",
+          });
+          navigate(URL_PATHS.HOME, { replace: true });
 
-    // 실행 표시
-    sessionStorage.setItem(sessionKey, "true");
+        // 토큰이 없는 경우
+        } else {
+          console.error("애플 콜백 파라미터 누락:", { accessToken, refreshToken });
+          toast({
+            title: "애플 로그인 실패",
+            description: "인증 정보를 받을 수 없습니다.",
+            variant: "destructive",
+          });
+          navigate(URL_PATHS.ROOT, { replace: true });
+        }
 
-    console.log("애플 로그인 시도:", { id_token });
+      // 에러 처리
+      } catch (error) {
+        console.error("애플 로그인 처리 중 오류:", error);
+        toast({
+          title: "애플 로그인 실패",
+          description: "로그인 처리 중 오류가 발생했습니다.",
+          variant: "destructive",
+        });
+        navigate(URL_PATHS.ROOT, { replace: true });
+      }
+    };
 
-    // 애플 로그인 실행
-    appleAuthMutation.mutate({ id_token });
+    handleAppleCallback();
   }, []);
-
-  if (appleAuthMutation.isError) {
-    console.error("애플 로그인 mutation 에러:", appleAuthMutation.error);
-    return (
-      <Error type="page">애플 로그인 처리 중 오류가 발생했습니다.</Error>
-    );
-  }
 
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div className="text-center">
-        <LoadingSpinner type="page" />
+        <LoadingSpinner />
         <p className="mt-4 text-gray-600">애플 로그인 처리 중...</p>
       </div>
     </div>
