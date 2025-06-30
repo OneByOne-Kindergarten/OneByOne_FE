@@ -1,10 +1,10 @@
-import { useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
+import { URL_PATHS } from "@/constants/url-path";
 import { useToast } from "@/hooks/useToast";
 import { setCookie } from "@/services/authService";
 import { getUserInfo } from "@/services/userService";
-import { URL_PATHS } from "@/constants/url-path";
-import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
+import { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function AppleCallbackPage() {
   const navigate = useNavigate();
@@ -37,7 +37,6 @@ export default function AppleCallbackPage() {
           errorMessage,
         });
 
-        // 에러가 있는 경우
         if (error) {
           console.error("애플 로그인 에러:", error, errorMessage);
           toast({
@@ -51,7 +50,6 @@ export default function AppleCallbackPage() {
           return;
         }
 
-        // 토큰이 있는 경우
         if (accessToken && refreshToken) {
           setCookie("accessToken", accessToken);
           setCookie("refreshToken", refreshToken);
@@ -60,8 +58,6 @@ export default function AppleCallbackPage() {
             title: "선생님, 어서오세요!",
           });
           navigate(URL_PATHS.HOME, { replace: true });
-
-          // 토큰이 없는 경우
         } else {
           console.error("애플 콜백 파라미터 누락:", {
             accessToken,
@@ -74,8 +70,6 @@ export default function AppleCallbackPage() {
           });
           navigate(URL_PATHS.ROOT, { replace: true });
         }
-
-        // 에러 처리
       } catch (error) {
         console.error("애플 로그인 처리 중 오류:", error);
         toast({

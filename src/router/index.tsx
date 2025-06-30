@@ -1,7 +1,7 @@
-import { Suspense, lazy } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
-import { URL_PATHS } from "@/constants/url-path";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
+import { URL_PATHS } from "@/constants/url-path";
+import { Suspense, lazy } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 const TestPage = lazy(() => import("../pages/test"));
 const RootPage = lazy(() => import("../pages"));
@@ -14,6 +14,7 @@ const SignInPage = lazy(() => import("../pages/auth/sign-in"));
 const SignUpPage = lazy(() => import("../pages/auth/sign-up"));
 const FindPasswordPage = lazy(() => import("../pages/auth/find-password"));
 const KakaoCallbackPage = lazy(() => import("../pages/auth/kakao-callback"));
+const NaverCallbackPage = lazy(() => import("../pages/auth/naver-callback"));
 const AppleCallbackPage = lazy(() => import("../pages/auth/apple-callback"));
 const SchoolDetailPage = lazy(() => import("../pages/school/school-detail"));
 const ReviewPage = lazy(() => import("../pages/review/index"));
@@ -53,6 +54,7 @@ const routes = {
     { path: URL_PATHS.FIND_PASSWORD, element: <FindPasswordPage /> },
     // Oauth
     { path: URL_PATHS.KAKAO_CALLBACK, element: <KakaoCallbackPage /> },
+    { path: URL_PATHS.NAVER_CALLBACK, element: <NaverCallbackPage /> },
     { path: URL_PATHS.APPLE_CALLBACK, element: <AppleCallbackPage /> },
     // 기관
     { path: URL_PATHS.SCHOOL, element: <SchoolPage /> },

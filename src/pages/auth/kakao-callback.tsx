@@ -1,7 +1,7 @@
-import { useEffect } from "react";
-import { useKakaoAuth, extractAuthParams } from "@/hooks/useSocialAuth";
-import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import Error from "@/components/@shared/layout/error";
+import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
+import { extractAuthParams, useKakaoAuth } from "@/hooks/useSocialAuth";
+import { useEffect } from "react";
 
 export default function KakaoCallbackPage() {
   const kakaoAuthMutation = useKakaoAuth();
@@ -10,13 +10,11 @@ export default function KakaoCallbackPage() {
     const handleKakaoCallback = () => {
       const { code, error, error_description } = extractAuthParams();
 
-      // 에러가 있는 경우
       if (error) {
         console.error("카카오 로그인 에러:", error, error_description);
         return;
       }
 
-      // 필수 파라미터 확인
       if (!code) {
         console.error("카카오 콜백 파라미터 누락:", { code });
         return;
@@ -29,10 +27,8 @@ export default function KakaoCallbackPage() {
         return;
       }
 
-      // 실행 표시
       sessionStorage.setItem(sessionKey, "true");
 
-      // 카카오 로그인 실행
       kakaoAuthMutation.mutate({ code });
     };
 
