@@ -23,7 +23,7 @@ export const useNaverAuth = () => {
     onSuccess: () => {
       setTimeout(() => {
         toast({
-          title: "선생님, 어서오세요!",
+          title: `선생님, 어서오세요! 🤗`,
         });
         navigate(URL_PATHS.HOME, { replace: true });
       }, 100);
@@ -48,7 +48,7 @@ export const useKakaoAuth = () => {
     onSuccess: () => {
       setTimeout(() => {
         toast({
-          title: "선생님, 어서오세요!",
+          title: `선생님, 어서오세요! 🤗`,
         });
         navigate(URL_PATHS.HOME, { replace: true });
       }, 100);
@@ -73,7 +73,7 @@ export const useAppleAuth = () => {
     onSuccess: () => {
       setTimeout(() => {
         toast({
-          title: "선생님, 어서오세요!",
+          title: `선생님, 어서오세요! 🤗`,
         });
         navigate(URL_PATHS.HOME, { replace: true });
       }, 100);

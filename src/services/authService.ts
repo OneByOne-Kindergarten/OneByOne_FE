@@ -1,16 +1,16 @@
+import { API_PATHS } from "@/constants/api-path";
+import { clearUserInfo, getUserInfo } from "@/services/userService";
 import {
+  AppleCallbackRequest,
+  KakaoCallbackRequest,
+  NaverCallbackRequest,
   SignInRequest,
   SignInResponse,
   SignUpRequest,
   SignUpResponse,
   TokenRefreshResponse,
-  NaverCallbackRequest,
-  KakaoCallbackRequest,
-  AppleCallbackRequest,
 } from "@/types/authDTO";
 import { apiCall } from "@/utils/apiUtils";
-import { getUserInfo, clearUserInfo } from "@/services/userService";
-import { API_PATHS } from "@/constants/api-path";
 
 export const setCookie = (name: string, value: string, days: number = 7) => {
   const date = new Date();
@@ -153,7 +153,7 @@ export const refreshAccessToken = async (): Promise<boolean> => {
 
 /**
  * 네이버 소셜 로그인
- * @param data - 인증 코드, 상태값
+ * @param data - code, state
  * @returns {Promise<SignInResponse>}
  */
 export const naverCallback = async (
@@ -161,9 +161,8 @@ export const naverCallback = async (
 ): Promise<SignInResponse> => {
   try {
     const result = await apiCall<NaverCallbackRequest, SignInResponse>({
-      method: "POST",
-      path: API_PATHS.USER.NAVER_CALLBACK,
-      data,
+      method: "GET",
+      path: `${API_PATHS.USER.NAVER_CALLBACK}?code=${encodeURIComponent(data.code)}&state=${encodeURIComponent(data.state)}`,
       withCredentials: true,
     });
 
@@ -181,7 +180,7 @@ export const naverCallback = async (
 
 /**
  * 카카오 소셜 로그인
- * @param data - 인증 코드
+ * @param data - code
  * @returns {Promise<SignInResponse>}
  */
 export const kakaoCallback = async (

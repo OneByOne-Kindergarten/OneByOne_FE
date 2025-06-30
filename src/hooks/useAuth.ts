@@ -1,22 +1,22 @@
-import { useMutation } from "@tanstack/react-query";
+import { URL_PATHS } from "@/constants/url-path";
+import { toast } from "@/hooks/useToast";
+import { signIn, signOut, signUp } from "@/services/authService";
+import {
+  checkEmailCertification,
+  sendEmailCertification,
+  updateNickname,
+  updatePassword,
+  updateUserRole,
+  withdrawUser,
+} from "@/services/userService";
 import {
   SignInRequest,
   SignInResponse,
   SignUpRequest,
   SignUpResponse,
 } from "@/types/authDTO";
-import { signIn, signUp, signOut } from "@/services/authService";
-import {
-  updateNickname,
-  updatePassword,
-  withdrawUser,
-  updateUserRole,
-  sendEmailCertification,
-  checkEmailCertification,
-} from "@/services/userService";
-import { toast } from "@/hooks/useToast";
+import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { URL_PATHS } from "@/constants/url-path";
 
 interface SignupCallbacks {
   onComplete?: () => void; // 완료 시 추가 동작
@@ -86,7 +86,7 @@ export const useUpdateNickname = () => {
       });
     },
     onError: (error) => {
-      let errorMessage = "닉네임 변경에 실패했습니다. 다시 시도해주세요.";
+      let errorMessage = "잠시 후 다시 시도해주세요.";
 
       if (error instanceof Error) {
         try {
@@ -217,10 +217,10 @@ export const useWithdrawUser = () => {
     onSuccess: () => {
       toast({
         title: "회원 탈퇴 완료",
-        description: "그동안 이용해주셔서 감사합니다. 🥰",
+        description: "그동안 이용해주셔서 감사합니다. 🥲",
         variant: "default",
       });
-      navigate(URL_PATHS.SIGNIN);
+      navigate(URL_PATHS.ROOT);
     },
     onError: (error) => {
       let errorMessage = "회원 탈퇴에 실패했습니다. 다시 시도해주세요.";
@@ -308,7 +308,7 @@ export const useSignUp = (callbacks?: SignupCallbacks) => {
 };
 
 /**
- * 사용자 역할 변경 API 호출
+ * 사용자 권한 변경 API 호출
  * - 에러 처리
  * - 토스트 관리
  */
@@ -319,25 +319,19 @@ export const useUpdateUserRole = () => {
     "TEACHER" | "PROSPECTIVE_TEACHER" | "ADMIN" | "GENERAL"
   >({
     mutationFn: (role) => updateUserRole(role),
-    onSuccess: (success) => {
-      if (success) {
-        toast({
-          title: "역할 변경 성공",
-          variant: "default",
-        });
-      } else {
-        toast({
-          title: "역할 변경 실패",
-          description: "잠시 후 다시 시도해주세요.",
-          variant: "destructive",
-        });
-      }
-    },
     onError: (error) => {
-      console.error("역할 변경 오류:", error);
+      const errorMessage =
+        (() => {
+          try {
+            return JSON.parse(error.message).data?.message;
+          } catch {
+            return error.message;
+          }
+        })() || "잠시 후 다시 시도해주세요.";
+
       toast({
-        title: "역할 변경 오류",
-        description: error.message,
+        title: "변경 실패",
+        description: errorMessage,
         variant: "destructive",
       });
     },
