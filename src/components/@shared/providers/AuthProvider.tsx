@@ -1,15 +1,25 @@
-import { ReactNode, useEffect } from "react";
 import { useAtom } from "jotai";
-import { useNavigate, useLocation } from "react-router-dom";
+import { ReactNode, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
-import { getCookie, refreshAccessToken } from "@/services/authService";
-import { userAtom } from "@/stores/userStore";
-import { getUserInfo } from "@/services/userService";
 import { URL_PATHS } from "@/constants/url-path";
+import { getCookie, refreshAccessToken } from "@/services/authService";
+import { getUserInfo } from "@/services/userService";
+import { userAtom } from "@/stores/userStore";
 
 const isIncompleteProfile = (role?: string | null) => {
   return !role || role === "GENERAL" || role === "";
 };
+
+const publicPages = [
+  URL_PATHS.ROOT,
+  URL_PATHS.SIGNIN,
+  URL_PATHS.SIGNUP,
+  URL_PATHS.FIND_PASSWORD,
+  URL_PATHS.KAKAO_CALLBACK,
+  URL_PATHS.NAVER_CALLBACK,
+  URL_PATHS.APPLE_CALLBACK,
+];
 
 /**
  * 인증 상태 관리 Provider
@@ -61,8 +71,10 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   // 프로필 완성도 및 인증 상태에 따른 리다이렉트 제어
   useEffect(() => {
     const accessToken = getCookie("accessToken");
+    const refreshToken = getCookie("refreshToken");
+    const isPublicPage = publicPages.includes(location.pathname);
 
-    // 루트 경로 접근 제어
+    // 루트 페이지 접근 제어
     if (location.pathname === URL_PATHS.ROOT) {
       if (accessToken && user) {
         if (isIncompleteProfile(user.role)) {
@@ -71,6 +83,16 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
           navigate(URL_PATHS.HOME);
         }
       }
+      return;
+    }
+
+    // 미인증 사용자의 페이지 접근 제어
+    if (!accessToken) {
+      if (!refreshToken && !isPublicPage) {
+        navigate(URL_PATHS.ROOT);
+        return;
+      }
+
       return;
     }
 
