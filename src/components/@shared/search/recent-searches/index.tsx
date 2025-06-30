@@ -58,8 +58,8 @@ export default function RecentSearches({ onSelectQuery }: RecentSearchesProps) {
   };
 
   return (
-    <section className="overflow-y-auto h-full flex flex-col px-6 py-1.5 gap-5 mb-6">
-      <div className="flex text-sm justify-between items-center">
+    <section className="mb-6 flex h-full flex-col gap-5 overflow-y-auto px-6 py-1.5">
+      <div className="flex items-center justify-between text-sm">
         <h1 className="font-semibold text-primary-dark01">최근 검색어</h1>
         {recentSearches.length > 0 && (
           <button
@@ -73,7 +73,7 @@ export default function RecentSearches({ onSelectQuery }: RecentSearchesProps) {
       </div>
 
       {recentSearches.length === 0 ? (
-        <p className="text-primary-normal03 text-center text-sm py-20">
+        <p className="py-20 text-center text-sm text-primary-normal03">
           최근 검색어가 없습니다.
         </p>
       ) : (
@@ -81,7 +81,7 @@ export default function RecentSearches({ onSelectQuery }: RecentSearchesProps) {
           {recentSearches.map((query, index) => (
             <li
               key={`${query}-${index}`}
-              className="flex justify-between items-center"
+              className="flex items-center justify-between"
             >
               <button
                 onClick={() => handleRecentSearchClick(query)}
@@ -92,7 +92,7 @@ export default function RecentSearches({ onSelectQuery }: RecentSearchesProps) {
               </button>
               <button
                 onClick={(e) => removeRecentSearch(query, e)}
-                className="ml-1 text-gray-400 hover:text-gray-600 text-xs"
+                className="ml-1 text-xs text-gray-400 hover:text-gray-600"
                 aria-label="검색어 삭제"
               >
                 <img

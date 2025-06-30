@@ -49,10 +49,10 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
           render={({ field }) => (
             <FormItem>
               <div className="flex justify-between">
-                <FormLabel className="text-base text-primary-dark01 font-semibold">
+                <FormLabel className="text-base font-semibold text-primary-dark01">
                   한 줄 평가를 작성해주세요
                 </FormLabel>
-                <span className="font-semibold text-primary-normal02 text-xs">
+                <span className="text-xs font-semibold text-primary-normal02">
                   *200자 이내
                 </span>
               </div>
@@ -75,7 +75,7 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
           name="workYear"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-base text-primary-dark01 font-semibold">
+              <FormLabel className="text-base font-semibold text-primary-dark01">
                 근무 기간을 체크해주세요
               </FormLabel>
               <FormControl>
@@ -125,7 +125,7 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
           name="workType"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-base text-primary-dark01 font-semibold">
+              <FormLabel className="text-base font-semibold text-primary-dark01">
                 근무 유형을 입력해주세요
               </FormLabel>
               <FormControl>
@@ -183,7 +183,7 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
             name="benefitAndSalaryComment"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-base text-primary-dark01 font-semibold">
+                <FormLabel className="text-base font-semibold text-primary-dark01">
                   복지/급여에 대해서 알려주세요
                 </FormLabel>
                 <FormControl>
@@ -207,7 +207,7 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
             name="benefitAndSalaryScore"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-base text-primary-dark01 font-semibold">
+                <FormLabel className="text-base font-semibold text-primary-dark01">
                   복지/급여 점수
                 </FormLabel>
                 <FormControl>
@@ -231,7 +231,7 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
             name="workLifeBalanceComment"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-base text-primary-dark01 font-semibold">
+                <FormLabel className="text-base font-semibold text-primary-dark01">
                   워라벨에 대해서 알려주세요
                 </FormLabel>
                 <FormControl>
@@ -255,7 +255,7 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
             name="workLifeBalanceScore"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-base text-primary-dark01 font-semibold">
+                <FormLabel className="text-base font-semibold text-primary-dark01">
                   워라벨 점수
                 </FormLabel>
                 <FormControl>
@@ -279,7 +279,7 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
             name="workEnvironmentComment"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-base text-primary-dark01 font-semibold">
+                <FormLabel className="text-base font-semibold text-primary-dark01">
                   분위기에 대해서 알려주세요
                 </FormLabel>
                 <FormControl>
@@ -303,7 +303,7 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
             name="workEnvironmentScore"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-base text-primary-dark01 font-semibold">
+                <FormLabel className="text-base font-semibold text-primary-dark01">
                   분위기 점수
                 </FormLabel>
                 <FormControl>
@@ -327,7 +327,7 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
             name="managerComment"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-base text-primary-dark01 font-semibold">
+                <FormLabel className="text-base font-semibold text-primary-dark01">
                   관리자에 대해서 알려주세요
                 </FormLabel>
                 <FormControl>
@@ -351,7 +351,7 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
             name="managerScore"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-base text-primary-dark01 font-semibold">
+                <FormLabel className="text-base font-semibold text-primary-dark01">
                   관리자 점수
                 </FormLabel>
                 <FormControl>
@@ -375,7 +375,7 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
             name="customerComment"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-base text-primary-dark01 font-semibold">
+                <FormLabel className="text-base font-semibold text-primary-dark01">
                   고객에 대해서 알려주세요
                 </FormLabel>
                 <FormControl>
@@ -399,7 +399,7 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
             name="customerScore"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-base text-primary-dark01 font-semibold">
+                <FormLabel className="text-base font-semibold text-primary-dark01">
                   고객 점수
                 </FormLabel>
                 <FormControl>

@@ -8,7 +8,10 @@ interface ReportDropDownProps {
   targetType: ReportTargetType;
 }
 
-export default function ReportDropDown({ targetId, targetType }: ReportDropDownProps) {
+export default function ReportDropDown({
+  targetId,
+  targetType,
+}: ReportDropDownProps) {
   const navigate = useNavigate();
 
   return (
@@ -17,7 +20,9 @@ export default function ReportDropDown({ targetId, targetType }: ReportDropDownP
         {
           label: "신고하기",
           onClick: () =>
-            navigate(`${URL_PATHS.REPORT}?targetId=${targetId}&type=${targetType}`),
+            navigate(
+              `${URL_PATHS.REPORT}?targetId=${targetId}&type=${targetType}`
+            ),
         },
       ]}
       position="bottom"

@@ -184,8 +184,8 @@ export default function PostEditorPage() {
       {isPending ? (
         <LoadingSpinner />
       ) : (
-        <section className="p-5 flex flex-col gap-5">
-          <h2 className="text-base text-primary-dark01 font-semibold">
+        <section className="flex flex-col gap-5 p-5">
+          <h2 className="text-base font-semibold text-primary-dark01">
             카테고리
           </h2>
           <Form {...form}>
@@ -217,10 +217,10 @@ export default function PostEditorPage() {
                 render={({ field, fieldState }) => (
                   <FormItem>
                     <div className="flex justify-between">
-                      <FormLabel className="text-base text-primary-dark01 font-semibold">
+                      <FormLabel className="text-base font-semibold text-primary-dark01">
                         제목
                       </FormLabel>
-                      <span className="font-semibold text-primary-normal02 text-xs">
+                      <span className="text-xs font-semibold text-primary-normal02">
                         *200자 이내
                       </span>
                     </div>
@@ -246,10 +246,10 @@ export default function PostEditorPage() {
                 render={({ field, fieldState }) => (
                   <FormItem>
                     <div className="flex justify-between">
-                      <FormLabel className="text-base text-primary-dark01 font-semibold">
+                      <FormLabel className="text-base font-semibold text-primary-dark01">
                         내용
                       </FormLabel>
-                      <span className="font-semibold text-primary-normal02 text-xs">
+                      <span className="text-xs font-semibold text-primary-normal02">
                         *200자 이내
                       </span>
                     </div>

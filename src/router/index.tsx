@@ -12,6 +12,7 @@ const ShortcutsEditorPage = lazy(
 const SchoolPage = lazy(() => import("../pages/school"));
 const SignInPage = lazy(() => import("../pages/auth/sign-in"));
 const SignUpPage = lazy(() => import("../pages/auth/sign-up"));
+const FindPasswordPage = lazy(() => import("../pages/auth/find-password"));
 const KakaoCallbackPage = lazy(() => import("../pages/auth/kakao-callback"));
 const AppleCallbackPage = lazy(() => import("../pages/auth/apple-callback"));
 const SchoolDetailPage = lazy(() => import("../pages/school/school-detail"));
@@ -49,6 +50,7 @@ const routes = {
     { path: URL_PATHS.USER, element: <UserPage /> },
     { path: URL_PATHS.SIGNIN, element: <SignInPage /> },
     { path: URL_PATHS.SIGNUP, element: <SignUpPage /> },
+    { path: URL_PATHS.FIND_PASSWORD, element: <FindPasswordPage /> },
     // Oauth
     { path: URL_PATHS.KAKAO_CALLBACK, element: <KakaoCallbackPage /> },
     { path: URL_PATHS.APPLE_CALLBACK, element: <AppleCallbackPage /> },

@@ -11,7 +11,7 @@ export default function NoticeDetail({ id }: { id: number }) {
   return (
     <div className="flex flex-col gap-5">
       <NoticeItem notice={notice} fontSize="md" />
-      <div className="py-5 whitespace-pre-wrap text-xs text-primary-dark01">
+      <div className="whitespace-pre-wrap py-5 text-xs text-primary-dark01">
         {notice.content}
       </div>
       <div className="flex flex-col gap-1 text-xs text-primary-dark01">

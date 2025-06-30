@@ -23,7 +23,7 @@ const ToggleInput = React.forwardRef<HTMLInputElement, ToggleInputProps>(
         <input
           type={showPassword ? "text" : "password"}
           className={cn(
-            "flex h-11 w-full rounded-md bg-primary-foreground text-primary p-5 pr-12 text-sm transition-colors border border-transparent focus-visible:outline-none",
+            "flex h-11 w-full rounded-lg border border-transparent bg-primary-foreground p-5 pr-12 text-sm text-primary transition-colors focus-visible:outline-none",
             error && "border-destructive",
             className
           )}

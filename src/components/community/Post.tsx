@@ -25,25 +25,25 @@ export default function Post({
   handleLikeToggle: () => void;
 }) {
   return (
-    <article className="px-5 pt-7 pb-4 bg-white flex flex-col gap-7">
+    <article className="flex flex-col gap-7 bg-white px-5 pb-4 pt-7">
       <section className="flex flex-col gap-2.5">
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Badge>{getCategoryLabel(post.categoryName)}</Badge>
         </div>
         <div className="flex justify-between">
-          <div className="flex gap-2.5 items-center">
-            <div className="relative w-7 h-7 bg-primary-normal03 rounded-full">
+          <div className="flex items-center gap-2.5">
+            <div className="relative h-7 w-7 rounded-full bg-primary-normal03">
               <img
                 src={SVG_PATHS.CHARACTER.user}
                 alt="병아리 사용자 캐릭터"
-                className="absolute w-2/3 h-3/5 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+                className="absolute left-1/2 top-1/2 h-3/5 w-2/3 -translate-x-1/2 -translate-y-1/2"
               />
             </div>
             <div>
-              <span className="text-primary-dark02 font-semibold text-sm">
+              <span className="text-sm font-semibold text-primary-dark02">
                 {post.userNickname}
               </span>
-              <ul className="text-primary-normal03 text-xxs flex gap-1">
+              <ul className="flex gap-1 text-xxs text-primary-normal03">
                 {post.userRole === "PROSPECTIVE_TEACHER" ? null : (
                   <>
                     <li>
@@ -61,15 +61,15 @@ export default function Post({
           <ReportDropDown targetId={post.id} targetType="POST" />
         </div>
       </section>
-      <section className="text-primary-dark01 flex flex-col gap-4">
+      <section className="flex flex-col gap-4 text-primary-dark01">
         <div className="flex flex-col gap-2.5">
           <h2 className="font-semibold">{post.title}</h2>
           <p className="text-sm">{post.content}</p>
         </div>
-        <ul className="text-primary-normal03 text-xxs flex justify-end gap-1">
+        <ul className="flex justify-end gap-1 text-xxs text-primary-normal03">
           <li>{formatDate(post.createdAt)}</li>
           <li aria-hidden="true"> · </li>
-          <li className="flex gap-1 items-center">
+          <li className="flex items-center gap-1">
             <img
               src={SVG_PATHS.EYE.on}
               alt="눈 아이콘"

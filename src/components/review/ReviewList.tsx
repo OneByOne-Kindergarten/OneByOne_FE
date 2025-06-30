@@ -44,9 +44,9 @@ export default function ReviewList({
   const displayReviews = reviews;
 
   return (
-    <section className="bg-white flex flex-col gap-5 px-5 py-4 mb-16 mt-2 border-b border-b-primary-normal01">
+    <section className="mb-16 mt-2 flex flex-col gap-5 border-b border-b-primary-normal01 bg-white px-5 py-4">
       <div className="flex justify-between border-b border-b-primary-normal01 pb-4">
-        <div className="flex gap-2.5 items-center">
+        <div className="flex items-center gap-2.5">
           {SORT_OPTIONS.map(({ type: sortOptionType, label }) => (
             <Toggle
               key={sortOptionType}
@@ -54,13 +54,13 @@ export default function ReviewList({
               onClick={() => handleSortChange(sortOptionType)}
             >
               <div
-                className={clsx("w-2 h-2 rounded-full", {
+                className={clsx("h-2 w-2 rounded-full", {
                   "bg-star text-primary": currentSortType === sortOptionType,
                   "bg-primary-normal03": currentSortType !== sortOptionType,
                 })}
               />
               <span
-                className={clsx("font-semibold text-xs", {
+                className={clsx("text-xs font-semibold", {
                   "text-primary": currentSortType === sortOptionType,
                   "text-primary-normal03": currentSortType !== sortOptionType,
                 })}

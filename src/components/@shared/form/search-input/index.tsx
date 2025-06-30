@@ -69,7 +69,7 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
                   <FormControl>
                     <Input
                       placeholder={placeholder}
-                      className="py-1.5 pr-9 text-sm font-normal text-primary-dark01 w-full pl-9"
+                      className="w-full py-1.5 pl-9 pr-9 text-sm font-normal text-primary-dark01"
                       {...field}
                       ref={(e) => {
                         inputRef.current = e;
@@ -92,13 +92,13 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
               alt="돋보기"
               width={17}
               height={17}
-              className="absolute top-2 left-3 opacity-30 z-10"
+              className="absolute left-3 top-2 z-10 opacity-30"
             />
             {form.watch("search") && (
               <button
                 type="button"
                 onClick={handleClearSearch}
-                className="flex items-center justify-center w-4 h-4 bg-primary-normal01 rounded-full absolute top-2 right-3 z-10"
+                className="absolute right-3 top-2 z-10 flex h-4 w-4 items-center justify-center rounded-full bg-primary-normal01"
                 aria-label="검색어 초기화"
               >
                 <img

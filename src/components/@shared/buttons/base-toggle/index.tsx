@@ -23,8 +23,8 @@ const toggleVariants = cva(
         lg: "px-3.5 py-2.5",
       },
       shape: {
-        default: "rounded-md",
-        rounded: "rounded-lg",
+        default: "rounded-lg",
+        rounded: "rounded-xl",
         full: "rounded-full",
       },
       font: {

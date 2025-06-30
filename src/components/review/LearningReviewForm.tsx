@@ -41,10 +41,10 @@ export default function LearningReviewForm({
           render={({ field }) => (
             <FormItem>
               <div className="flex justify-between">
-                <FormLabel className="text-base text-primary-dark01 font-semibold">
+                <FormLabel className="text-base font-semibold text-primary-dark01">
                   한 줄 평가를 작성해주세요
                 </FormLabel>
-                <span className="font-semibold text-primary-normal02 text-xs">
+                <span className="text-xs font-semibold text-primary-normal02">
                   *200자 이내
                 </span>
               </div>
@@ -68,7 +68,7 @@ export default function LearningReviewForm({
             name="workEnvironmentComment"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-base text-primary-dark01 font-semibold">
+                <FormLabel className="text-base font-semibold text-primary-dark01">
                   분위기에 대해서 알려주세요
                 </FormLabel>
                 <FormControl>
@@ -89,7 +89,7 @@ export default function LearningReviewForm({
             name="workEnvironmentScore"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-base text-primary-dark01 font-semibold">
+                <FormLabel className="text-base font-semibold text-primary-dark01">
                   분위기 점수
                 </FormLabel>
                 <FormControl>
@@ -112,7 +112,7 @@ export default function LearningReviewForm({
             name="learningSupportComment"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-base text-primary-dark01 font-semibold">
+                <FormLabel className="text-base font-semibold text-primary-dark01">
                   학습 도움에 대해서 알려주세요
                 </FormLabel>
                 <FormControl>
@@ -133,7 +133,7 @@ export default function LearningReviewForm({
             name="learningSupportScore"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-base text-primary-dark01 font-semibold">
+                <FormLabel className="text-base font-semibold text-primary-dark01">
                   학습 도움 점수
                 </FormLabel>
                 <FormControl>
@@ -156,7 +156,7 @@ export default function LearningReviewForm({
             name="instructionTeacherComment"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-base text-primary-dark01 font-semibold">
+                <FormLabel className="text-base font-semibold text-primary-dark01">
                   지도 교사에 대해서 알려주세요
                 </FormLabel>
                 <FormControl>
@@ -177,7 +177,7 @@ export default function LearningReviewForm({
             name="instructionTeacherScore"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-base text-primary-dark01 font-semibold">
+                <FormLabel className="text-base font-semibold text-primary-dark01">
                   지도 교사 점수
                 </FormLabel>
                 <FormControl>

@@ -219,9 +219,9 @@ export default function OAuthCallbackPage() {
   if (isProcessingDirectToken) {
     const providerName = provider === "naver" ? "네이버" : "카카오";
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen gap-4">
+      <div className="flex min-h-screen flex-col items-center justify-center gap-4">
         <div className="text-center">
-          <h2 className="text-xl font-bold mb-4">
+          <h2 className="mb-4 text-xl font-bold">
             {providerName} 로그인 성공!
           </h2>
           <p className="text-sm text-gray-600">토큰 처리 중...</p>
@@ -230,8 +230,8 @@ export default function OAuthCallbackPage() {
           </div>
         </div>
         {import.meta.env.DEV && (
-          <div className="text-xs bg-green-100 p-4 rounded max-w-md">
-            <h3 className="font-bold mb-2">직접 토큰 처리:</h3>
+          <div className="bg-green-100 max-w-md rounded p-4 text-xs">
+            <h3 className="mb-2 font-bold">직접 토큰 처리:</h3>
             <p>✅ 백엔드에서 직접 받은 토큰을 처리 중입니다.</p>
           </div>
         )}
@@ -269,9 +269,9 @@ export default function OAuthCallbackPage() {
     const providerName = provider === "naver" ? "네이버" : "카카오";
 
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen gap-4">
+      <div className="flex min-h-screen flex-col items-center justify-center gap-4">
         <div className="text-center">
-          <h2 className="text-xl font-bold mb-4">
+          <h2 className="mb-4 text-xl font-bold">
             {providerName} 로그인 성공!
           </h2>
           <p className="text-sm text-gray-600">홈으로 이동 중...</p>
@@ -280,7 +280,7 @@ export default function OAuthCallbackPage() {
           </div>
           {/* 쿠키 저장 실패 경고 */}
           {!cookieStatus.hasAccessToken || !cookieStatus.hasRefreshToken ? (
-            <div className="mt-4 p-3 bg-yellow-100 border border-yellow-400 rounded text-sm">
+            <div className="mt-4 rounded border border-yellow-400 bg-yellow-100 p-3 text-sm">
               <p className="text-yellow-800">
                 ⚠️ 쿠키 저장에 문제가 있을 수 있습니다.
               </p>
@@ -290,15 +290,15 @@ export default function OAuthCallbackPage() {
               </p>
             </div>
           ) : (
-            <p className="text-xs text-green-600 mt-2">
+            <p className="text-green-600 mt-2 text-xs">
               ✅ 토큰이 정상적으로 저장되었습니다.
             </p>
           )}
         </div>
         {/* 디버깅 정보는 개발 환경에서만 표시 */}
         {import.meta.env.DEV && (
-          <div className="text-xs bg-gray-100 p-4 rounded max-w-md">
-            <h3 className="font-bold mb-2">디버그 정보:</h3>
+          <div className="max-w-md rounded bg-gray-100 p-4 text-xs">
+            <h3 className="mb-2 font-bold">디버그 정보:</h3>
             <p>현재 URL: {window.location.href}</p>
             <p>토큰 수신: ✅</p>
             <p>
@@ -311,7 +311,7 @@ export default function OAuthCallbackPage() {
               <summary className="cursor-pointer text-gray-600">
                 토큰 미리보기
               </summary>
-              <pre className="mt-2 text-xs overflow-hidden">
+              <pre className="mt-2 overflow-hidden text-xs">
                 {JSON.stringify(
                   {
                     accessToken: data.accessToken.substring(0, 30) + "...",
@@ -337,17 +337,12 @@ export default function OAuthCallbackPage() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen gap-4">
-      <div className="text-center">
-        <h2 className="text-lg font-bold mb-2">
-          {provider === "naver" ? "네이버" : "카카오"} 로그인 처리 중...
-        </h2>
-        <LoadingSpinner type="page" />
-      </div>
+    <div className="flex min-h-screen flex-col items-center justify-center gap-4">
+      <LoadingSpinner type="page" />
       {/* 디버깅 정보 */}
       {import.meta.env.DEV && (
-        <div className="text-xs bg-gray-100 p-4 rounded max-w-md">
-          <h3 className="font-bold mb-2">현재 상태:</h3>
+        <div className="max-w-md rounded bg-gray-100 p-4 text-xs">
+          <h3 className="mb-2 font-bold">현재 상태:</h3>
           <p>URL: {window.location.href}</p>
           <p>Provider: {provider}</p>
           <p>Loading: {currentMutation.isPending ? "✅" : "❌"}</p>

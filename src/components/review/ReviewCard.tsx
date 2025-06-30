@@ -73,7 +73,7 @@ function ReviewCardItem({
 
   return (
     <div className="flex flex-col gap-7">
-      <div className="flex justify-between items-start">
+      <div className="flex items-start justify-between">
         <ReviewRating
           rating={getTotalRating(review, type)}
           title={review.oneLineComment}

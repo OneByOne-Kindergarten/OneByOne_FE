@@ -18,7 +18,7 @@ export default function Empty({
     <div
       className={clsx(
         className,
-        "flex justify-center flex-col gap-3 items-center text-center",
+        "flex flex-col items-center justify-center gap-3 text-center",
         { "py-14": type === "element" }
       )}
       style={type === "page" ? { height: "calc(100vh - 112px)" } : undefined}
@@ -26,7 +26,7 @@ export default function Empty({
       <img
         src={IMAGE_PATHS.LOGO.INACTIVE}
         alt="비활성화된 원바원 로고"
-        className="w-24 h-16"
+        className="h-16 w-24"
       />
       <div className="flex flex-col gap-1.5 text-primary-normal03">
         <p className="text-sm">{title}</p>

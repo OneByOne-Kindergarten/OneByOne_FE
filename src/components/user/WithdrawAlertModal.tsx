@@ -20,8 +20,8 @@ export default function WithdrawAlertModal({
       isOpen={isOpen}
       onClose={onClose}
       title={
-        <div className="flex flex-col gap-3 items-center">
-          <div className="w-11 h-11 rounded-full bg-secondary-light03 flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3">
+          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-secondary-light03">
             <img
               src={SVG_PATHS.ALERT}
               alt="경고 아이콘"

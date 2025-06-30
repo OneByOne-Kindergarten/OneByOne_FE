@@ -94,7 +94,7 @@ export default function ReviewContent({
           return (
             <li key={config.key} className="flex flex-col gap-1.5 text-xs">
               <div className="flex items-center">
-                <h3 className="font-semibold w-14">{config.label}</h3>
+                <h3 className="w-14 font-semibold">{config.label}</h3>
                 <BoxRatingGroup value={score} size="xs" className="gap-0.5" />
               </div>
               <p className={isExpanded ? "" : "line-clamp-1"}>
@@ -106,7 +106,7 @@ export default function ReviewContent({
       </ul>
       <button
         onClick={onToggleExpand}
-        className="text-primary-normal03 text-xs text-left underline font-semibold"
+        className="text-left text-xs font-semibold text-primary-normal03 underline"
       >
         {isExpanded ? "접기" : "더보기"}
       </button>

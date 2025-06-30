@@ -70,7 +70,7 @@ function Option({
         className={isActive ? activeStyle : inactiveStyle}
       >
         {isActive ? (
-          <div className="pb-1 border-b-2 border-primary">
+          <div className="border-b-2 border-primary pb-1">
             {renderContent()}
           </div>
         ) : (
@@ -83,7 +83,7 @@ function Option({
   return (
     <Link to={resolvedHref} className={isActive ? activeStyle : inactiveStyle}>
       {isActive ? (
-        <div className="pb-1 border-b-2 border-primary">{renderContent()}</div>
+        <div className="border-b-2 border-primary pb-1">{renderContent()}</div>
       ) : (
         renderContent()
       )}

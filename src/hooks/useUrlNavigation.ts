@@ -42,6 +42,7 @@ export const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
   BOOKMARKS: ["BOOKMARKS"],
   USER: ["USER", "USER_POST", "INQUIRY", "NOTICE"],
   USER_POST: [],
+  FIND_PASSWORD: [],
   COMMUNITY_TEACHER: [],
   COMMUNITY_STUDENT: [],
   COMMUNITY_POST: [],

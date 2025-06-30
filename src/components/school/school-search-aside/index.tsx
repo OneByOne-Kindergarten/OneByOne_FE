@@ -74,7 +74,7 @@ export default function SchoolSearchAside({
         />
       ) : (
         searchQuery && (
-          <p className="text-sm text-center text-primary-normal03 py-8">
+          <p className="py-8 text-center text-sm text-primary-normal03">
             검색 결과가 없습니다.
           </p>
         )

@@ -10,8 +10,8 @@ interface ReplyCardProps {
 
 export default function ReplyCard({ reply, postAuthor }: ReplyCardProps) {
   return (
-    <div className="border-b py-5 px-4">
-      <div className="flex flex-1 gap-2.5 items-start">
+    <div className="border-b px-4 py-5">
+      <div className="flex flex-1 items-start gap-2.5">
         <img
           src={SVG_PATHS.BROKEN_LINE}
           alt="꺾은 선 아이콘"
@@ -29,7 +29,7 @@ export default function ReplyCard({ reply, postAuthor }: ReplyCardProps) {
               className="mb-auto"
             />
           </div>
-          <p className="text-sm text-primary-dark01 whitespace-pre-wrap">
+          <p className="whitespace-pre-wrap text-sm text-primary-dark01">
             {reply.content}
           </p>
           <p className="text-xxs text-primary-normal03">

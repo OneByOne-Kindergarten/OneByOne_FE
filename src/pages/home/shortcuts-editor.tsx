@@ -120,7 +120,7 @@ export default function ShortcutsEditorPage() {
             </p>
           </section>
 
-          <section className="flex flex-col gap-3 mt-2">
+          <section className="mt-2 flex flex-col gap-3">
             {shortcutOptions.map((option, index) => {
               const isAdded = isShortcutAdded(option.link);
               const isDisabled = isMaxShortcuts && !isAdded;

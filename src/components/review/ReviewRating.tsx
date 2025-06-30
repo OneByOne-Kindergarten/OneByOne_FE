@@ -17,14 +17,14 @@ export default function ReviewRating({
 }: ReviewRatingProps) {
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex gap-2 items-center">
+      <div className="flex items-center gap-2">
         <StarRating value={rating} />
         <span className="text-sm font-semibold">
           {Number(rating).toFixed(1)}
         </span>
       </div>
       <div className="flex flex-col gap-1">
-        <h2 className="font-semibold text-pretty">{title}</h2>
+        <h2 className="text-pretty font-semibold">{title}</h2>
         <p className="text-xxs text-primary-normal03">
           {workType} <span aria-hidden="true">│</span> {createdAt} 작성
           <span aria-hidden="true">│</span> {workYear}

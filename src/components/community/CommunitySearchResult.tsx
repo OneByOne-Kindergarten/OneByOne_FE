@@ -118,11 +118,11 @@ export default function CommunitySearchResult({
   return (
     <div className="flex flex-col gap-2 pt-4">
       <div className="px-5">
-        <h3 className="font-semibold text-sm text-primary-dark01 ">
+        <h3 className="text-sm font-semibold text-primary-dark01">
           총 {totalItems > 0 && `${totalItems}`}개의 검색 결과
         </h3>
       </div>
-      <section className="px-5 pt-4 bg-white">
+      <section className="bg-white px-5 pt-4">
         <List
           height={listHeight}
           width="100%"
@@ -140,7 +140,7 @@ export default function CommunitySearchResult({
         </List>
 
         {isFetchingNextPage && (
-          <div className="w-full flex justify-center py-2">
+          <div className="flex w-full justify-center py-2">
             <div className="text-sm text-gray-500">더 불러오는 중...</div>
           </div>
         )}

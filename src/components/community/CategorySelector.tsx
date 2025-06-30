@@ -52,7 +52,7 @@ export default function CategorySelector({
   };
 
   return (
-    <section className="flex gap-2 w-full overflow-x-auto scrollbar-x-hidden whitespace-nowrap">
+    <section className="scrollbar-x-hidden flex w-full gap-2 overflow-x-auto whitespace-nowrap">
       {categoryOptions.map((option: CategoryOption) => (
         <Button
           key={option.value}

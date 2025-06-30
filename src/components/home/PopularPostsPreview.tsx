@@ -12,7 +12,7 @@ export default function PopularPostsPreview() {
   return (
     <section className="flex flex-col gap-2.5">
       <h1 className="text-lg font-bold text-primary-dark02">인기 게시글</h1>
-      <div className="flex flex-col gap-5 rounded-md border border-primary-light02 py-4 px-5">
+      <div className="flex flex-col gap-5 rounded-lg border border-primary-light02 px-5 py-4">
         {[0, 1, 2].map((i) =>
           posts?.data[i] ? (
             <PostCard

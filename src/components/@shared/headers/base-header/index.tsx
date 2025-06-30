@@ -47,12 +47,12 @@ export default function Header({
     <header className={cn(headerVariants({ hasBorder }))}>
       {shouldShowBackButton && (
         <button onClick={handleBackNavigation} aria-label="뒤로 가기">
-          <img src={SVG_PATHS.ARROW.left} alt="뒤로 가기" className="w-6 h-6" />
+          <img src={SVG_PATHS.ARROW.left} alt="뒤로 가기" className="h-6 w-6" />
         </button>
       )}
-      <div className="flex items-center justify-between w-full">
+      <div className="flex w-full items-center justify-between">
         {title ? (
-          <h1 className="flex-1 min-w-0 pr-2 truncate">{title}</h1>
+          <h1 className="min-w-0 flex-1 truncate pr-2">{title}</h1>
         ) : headerLogo ? (
           <Link to={URL_PATHS.HOME} className="flex-shrink-0">
             <img

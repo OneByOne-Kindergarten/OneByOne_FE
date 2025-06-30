@@ -108,7 +108,7 @@ export default function CommunityPage() {
         currentPath={`/community?type=${communityType}`}
       />
 
-      <div className="px-5 flex flex-col w-full gap-9">
+      <div className="flex w-full flex-col gap-9 px-5">
         <CategorySelector
           type={communityType as "teacher" | "pre-teacher"}
           categoryOptions={categoryOptions}

@@ -19,8 +19,8 @@ function StatItem({ colorIndex, age, count, percent, unit }: StatItemProps) {
   };
 
   return (
-    <div className="flex gap-4 items-center">
-      <div style={colorStyle} className="w-2 h-2 rounded-full" />
+    <div className="flex items-center gap-4">
+      <div style={colorStyle} className="h-2 w-2 rounded-full" />
       <p className="text-xs text-primary-dark02">
         만 {age}세 {count}
         {unit} {percent}
@@ -68,7 +68,7 @@ export default function SchoolInfoChart({
         title={title}
         altText={`${title} 아이콘`}
       />
-      <div className="flex gap-7 py-4 px-4 justify-around bg-primary-foreground rounded-lg">
+      <div className="flex justify-around gap-7 rounded-lg bg-primary-foreground px-4 py-4">
         <div className="flex flex-col gap-4 text-primary-dark02">
           <p className="text-base font-semibold">
             {title === "학급" ? "" : "유아 "}

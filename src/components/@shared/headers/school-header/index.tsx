@@ -117,7 +117,7 @@ export default function SchoolHeader({
     <>
       {/* 검색 패널 */}
       {isSearching ? (
-        <aside className="fixed inset-0 z-50 flex bg-white flex-col w-full min-w-80 max-w-3xl mx-auto h-full">
+        <aside className="fixed inset-0 z-50 mx-auto flex h-full w-full min-w-80 max-w-3xl flex-col bg-white">
           <Header
             hasBackButton={true}
             hasBorder={false}
@@ -134,7 +134,7 @@ export default function SchoolHeader({
           </Header>
 
           {/* 검색 결과 */}
-          <div className="flex-1 flex flex-col h-[calc(100vh-56px)]">
+          <div className="flex h-[calc(100vh-56px)] flex-1 flex-col">
             <ErrorBoundary
               fallback={<Error type="page">잠시 후 다시 시도해주세요.</Error>}
             >

@@ -25,7 +25,7 @@ export default function HomePage() {
             alt="유치원 찾기 배너"
             width={335}
             height={190}
-            className="rounded-md w-full h-full object-cover"
+            className="h-full w-full rounded-lg object-cover"
           />
         </Link>
       </section>
@@ -36,7 +36,7 @@ export default function HomePage() {
           alt="리뷰 배너"
           width={335}
           height={104}
-          className="rounded-md w-full h-full object-cover"
+          className="h-full w-full rounded-lg object-cover"
         />
       </section>
       <PopularPostsPreview />

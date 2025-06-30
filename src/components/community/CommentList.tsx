@@ -43,7 +43,7 @@ export default function CommentList({
   );
 
   return (
-    <section className="flex flex-col flex-1 bg-white">
+    <section className="flex flex-1 flex-col bg-white">
       {!hasComments ? (
         <Empty
           className="my-auto"
@@ -69,7 +69,7 @@ export default function CommentList({
           )}
 
           {hasNextPage && (
-            <div ref={loadMoreRef} className="w-full h-1 flex justify-center">
+            <div ref={loadMoreRef} className="flex h-1 w-full justify-center">
               {isFetchingNextPage && null}
             </div>
           )}

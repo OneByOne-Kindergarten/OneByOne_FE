@@ -57,9 +57,9 @@ export default function ChatBar({
   };
 
   return (
-    <div className="fixed bottom-0 items-center w-full text-xs min-w-80 max-w-3xl bg-white flex pt-2 pb-3 px-5 mx-auto justify-between border-t border-opacity-5 transition-all duration-200">
+    <div className="fixed bottom-0 mx-auto flex w-full min-w-80 max-w-3xl items-center justify-between border-t border-opacity-5 bg-white px-5 pb-3 pt-2 text-xs transition-all duration-200">
       <Form {...form}>
-        <form onSubmit={handleSubmit} className="w-full flex flex-col">
+        <form onSubmit={handleSubmit} className="flex w-full flex-col">
           <FormField
             control={form.control}
             name="content"
@@ -68,7 +68,7 @@ export default function ChatBar({
             }) => (
               <FormItem className="w-full">
                 {replyUserName && (
-                  <div className="flex justify-between items-center mb-2">
+                  <div className="mb-2 flex items-center justify-between">
                     <p className="text-xs text-primary-dark01">
                       <span className="text-tertiary-3">{replyUserName}</span>
                       님에게 답글 남기는 중
@@ -96,7 +96,7 @@ export default function ChatBar({
                       onChange={handleTextareaChange}
                       placeholder="댓글을 입력해주세요."
                       className={clsx(
-                        "flex flex-1 py-2.5 px-4 text-sm w-full bg-primary-foreground rounded-lg transition-all duration-200 resize-none outline-none",
+                        "flex w-full flex-1 resize-none rounded-lg bg-primary-foreground px-4 py-2.5 text-sm outline-none transition-all duration-200",
                         isFocused ? "h-24" : "h-10"
                       )}
                       onFocus={() => setIsFocused(true)}
@@ -106,7 +106,7 @@ export default function ChatBar({
                   <Button
                     type="submit"
                     variant="secondary"
-                    className="absolute py-1 px-2 right-7 self-end bottom-5"
+                    className="absolute bottom-5 right-7 self-end px-2 py-1"
                   >
                     등록
                   </Button>

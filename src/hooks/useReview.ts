@@ -93,13 +93,11 @@ export function useReview(
     return EMPTY_REVIEW_RESPONSE;
   }
 
-  // 서버에서 이미 정렬된 데이터를 그대로 사용
   const reviews =
     type === REVIEW_TYPES.WORK
       ? workReviews?.content || []
       : internshipReviews?.content || [];
 
-  // 총점 계산
   const totalRating =
     reviews.reduce((acc: number, review: ReviewData) => {
       if (type === REVIEW_TYPES.WORK && "workReviewId" in review) {
@@ -150,7 +148,7 @@ export function useReview(
   });
 
   return {
-    reviews, // 서버에서 이미 정렬된 데이터를 그대로 반환
+    reviews,
     rating: {
       total: totalRating,
     },
@@ -179,14 +177,23 @@ export const useCreateInternshipReview = () => {
       });
 
       toast({
-        title: "실습 리뷰가 등록되었습니다.",
+        title: "실습 리뷰 등록 완료",
         variant: "default",
       });
     },
     onError: (error) => {
+      const errorMessage =
+        (() => {
+          try {
+            return JSON.parse(error.message).data?.message;
+          } catch {
+            return error.message;
+          }
+        })() || "잠시 후 다시 시도해주세요.";
+
       toast({
-        title: "실습 리뷰 등록에 실패했습니다.",
-        description: error.message,
+        title: "실습 리뷰 등록 실패",
+        description: errorMessage,
         variant: "destructive",
       });
       console.error("실습 리뷰 생성 에러:", error);
@@ -215,14 +222,23 @@ export const useCreateWorkReview = () => {
       });
 
       toast({
-        title: "근무 리뷰가 등록되었습니다.",
+        title: "근무 리뷰 등록 완료",
         variant: "default",
       });
     },
     onError: (error) => {
+      const errorMessage =
+        (() => {
+          try {
+            return JSON.parse(error.message).data?.message;
+          } catch {
+            return error.message;
+          }
+        })() || "잠시 후 다시 시도해주세요.";
+
       toast({
-        title: "근무 리뷰 등록에 실패했습니다.",
-        description: error.message,
+        title: "근무 리뷰 등록 실패",
+        description: errorMessage,
         variant: "destructive",
       });
       console.error("근무 리뷰 생성 에러:", error);

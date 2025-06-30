@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -15,6 +14,7 @@ import {
 import Input from "@/components/@shared/form/input";
 import ToggleInput from "@/components/@shared/form/toggle-input";
 import Button from "@/components/@shared/buttons/base-button";
+import AuthTextLinks from "@/components/sign-in/AuthTextLinks";
 import { URL_PATHS } from "@/constants/url-path";
 import { SignInRequest } from "@/types/authDTO";
 import { useSignIn } from "@/hooks/useAuth";
@@ -59,13 +59,13 @@ export default function SignIn() {
       title="원바원 | 로그인"
       headerTitle=" "
       headerHasBorder={false}
-      currentPath={URL_PATHS.HOME}
+      currentPath={URL_PATHS.SIGNIN}
       isGlobalNavBar={false}
       mainClassName="flex flex-col gap-16 my-auto"
       wrapperBg="white"
     >
       <h1 className="text-center text-lg">이메일로 로그인</h1>
-      <section className="px-5 flex flex-col gap-9">
+      <section className="flex flex-col gap-9 px-5">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -123,20 +123,7 @@ export default function SignIn() {
           </form>
         </Form>
       </section>
-      <section className="flex flex-col gap-2 items-center text-xs">
-        <div className="flex gap-2">
-          <p className="text-primary-dark03">비밀번호를 잊으셨나요?</p>
-          <Link to="#" className="text-tertiary-3 font-semibold">
-            비밀번호 찾기
-          </Link>
-        </div>
-        <div className="flex gap-2">
-          <p className="text-primary-dark03">아직 회원이 아니신가요?</p>
-          <Link to={URL_PATHS.SIGNUP} className="text-tertiary-3 font-semibold">
-            회원가입
-          </Link>
-        </div>
-      </section>
+      <AuthTextLinks types={["비밀번호 찾기", "회원가입"]} />
     </PageLayout>
   );
 }

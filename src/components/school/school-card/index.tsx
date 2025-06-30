@@ -40,23 +40,23 @@ export default function SchoolCard({
     : 0;
 
   return (
-    <div className="px-5 py-4 bg-white">
+    <div className="bg-white px-5 py-4">
       <Link
         to={`${URL_PATHS.SCHOOL}/${id}`}
-        className="flex w-full justify-between items-center"
+        className="flex w-full items-center justify-between"
       >
         <div className="flex flex-col gap-2.5">
           <Badge variant="tertiary">{establishment}</Badge>
           <div className="gap-1">
-            <p className="text-base font-bold ">{schoolName}</p>
-            <div className="flex gap-1.5 ">
+            <p className="text-base font-bold">{schoolName}</p>
+            <div className="flex gap-1.5">
               <img
                 src={SVG_PATHS.LOCATION}
                 alt="위치 아이콘"
                 width="18"
                 height="18"
               />
-              <address className="not-italic text-primary-normal03 text-sm font-light">
+              <address className="text-sm font-light not-italic text-primary-normal03">
                 {location}
               </address>
             </div>

@@ -45,12 +45,5 @@ export default function KakaoCallbackPage() {
     );
   }
 
-  return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="text-center">
-        <LoadingSpinner type="page" />
-        <p className="mt-4 text-gray-600">카카오 로그인 처리 중...</p>
-      </div>
-    </div>
-  );
+  return <LoadingSpinner type="page" />;
 }

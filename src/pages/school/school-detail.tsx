@@ -122,14 +122,14 @@ export default function SchoolDetailPage() {
           currentPath={URL_PATHS.SCHOOL_DETAIL.replace(":id", safeId)}
         />
         <section className="px-5 py-5 pb-28">
-          <ul className="flex flex-col flex-1 gap-7">
+          <ul className="flex flex-1 flex-col gap-7">
             <div className="flex flex-col gap-1.5">
               <SchoolInfoItem
                 icon={SVG_PATHS.LOCATION}
                 title="위치정보"
                 altText="위치 아이콘"
               >
-                <address className="not-italic text-base font-semibold text-primary-dark02">
+                <address className="text-base font-semibold not-italic text-primary-dark02">
                   {kindergarten.address}
                 </address>
               </SchoolInfoItem>
@@ -194,7 +194,7 @@ export default function SchoolDetailPage() {
               >
                 <a
                   href={kindergarten.homepage}
-                  className="text-primary-dark02 font-semibold hover:underline"
+                  className="font-semibold text-primary-dark02 hover:underline"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

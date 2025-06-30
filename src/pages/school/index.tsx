@@ -82,7 +82,7 @@ export default function SchoolPage() {
         <Error type="page">{error}</Error>
       ) : (
         <>
-          <section className="p-5 flex flex-col gap-3">
+          <section className="flex flex-col gap-3 p-5">
             <NearbySchoolMap
               latitude={userLocation!.latitude}
               longitude={userLocation!.longitude}
@@ -96,7 +96,7 @@ export default function SchoolPage() {
             />
           </section>
           <section className="flex flex-col gap-3">
-            <div className="flex font-bold items-center gap-1 px-5">
+            <div className="flex items-center gap-1 px-5 font-bold">
               <h2 className="text-lg">주변 유치원</h2>
               <span className="text-xs">
                 {kindergartens.length > 0 && `(${kindergartens.length})`}

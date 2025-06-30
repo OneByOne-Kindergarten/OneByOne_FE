@@ -36,7 +36,7 @@ export default function RootPage() {
       mainClassName="my-auto flex flex-col gap-[10vh]"
       wrapperBg="white"
     >
-      <section className="pt-[10vh] flex flex-col text-center gap-4 justify-center mx-auto">
+      <section className="mx-auto flex flex-col justify-center gap-4 pt-[10vh] text-center">
         <h1>
           <strong>선생님</strong>들의 <strong>진짜 유치원 이야기</strong>
         </h1>
@@ -48,7 +48,7 @@ export default function RootPage() {
           className="mx-auto"
         />
       </section>
-      <section className="flex flex-col gap-9 w-3/4 justify-center mx-auto">
+      <section className="mx-auto flex w-3/4 flex-col justify-center gap-9">
         <div className="flex flex-col gap-3">
           <OauthButton type="kakao" />
           <OauthButton type="naver" />
@@ -69,17 +69,17 @@ export default function RootPage() {
           <Link to={URL_PATHS.PERMISSION_TEST}>
             <Button
               font="md"
-              className="relative w-full bg-blue-500 text-white mt-4"
+              className="relative mt-4 w-full bg-blue-500 text-white"
             >
               Flutter 권한 테스트 페이지
             </Button>
           </Link>
         </div>
-        <div className="flex gap-2 justify-center text-xs">
+        <div className="flex justify-center gap-2 text-xs">
           <p className="text-primary-dark01">아직 회원이 아니신가요?</p>
           <Link
             to={URL_PATHS.SIGNUP}
-            className="text-tertiary-3 font-semibold underline"
+            className="font-semibold text-tertiary-3 underline"
           >
             회원가입
           </Link>

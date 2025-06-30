@@ -36,7 +36,7 @@ const PopupModal = React.forwardRef<HTMLDivElement, PopupModalProps>(
             align="center"
             hasCloseButton={props.hasCloseButton}
             onClose={props.onClose}
-            className="text-lg font-medium pt-4 pb-2 text-primary-dark02"
+            className="pb-2 pt-4 text-lg font-medium text-primary-dark02"
           >
             {title}
           </ModalHeader>

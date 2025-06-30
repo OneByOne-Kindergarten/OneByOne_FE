@@ -38,7 +38,7 @@ export default function Bookmarks() {
           subTitle="유치원 상세 페이지에서 상단바의 북마크 아이콘을 클릭해보세요."
         ></Empty>
       ) : (
-        <ul className="flex flex-col gap-2 my-3 ">
+        <ul className="my-3 flex flex-col gap-2">
           {favorites.map((favorite) => (
             <li
               key={favorite.id}

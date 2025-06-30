@@ -134,7 +134,7 @@ export default function ProfileEditorPage() {
     >
       {isNewUser && (
         <section className="flex flex-col">
-          <h1 className="text-lg text-center pb-16">
+          <h1 className="pb-16 text-center text-lg">
             반가워요! <br /> 선생님에 대해 알려주세요!
           </h1>
         </section>

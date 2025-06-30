@@ -114,7 +114,7 @@ export default function SignUp() {
       onBackButtonClick={goToPreviousStep}
     >
       <h1 className="text-center text-lg">{getStepTitle(step, formData)}</h1>
-      <section className="px-5 flex flex-col gap-9">
+      <section className="flex flex-col gap-9 px-5">
         {renderStep(step, stepComponents)}
       </section>
       {shouldShowSignInLink(step) && <AuthTextLinks types={["로그인"]} />}

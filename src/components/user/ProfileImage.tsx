@@ -49,8 +49,8 @@ export default function ProfileImage({
         "flex items-center justify-center overflow-hidden rounded-full",
         profileData.className,
         clsx({
-          "w-20 h-20": size === "md",
-          "w-7 h-7": size === "sm",
+          "h-20 w-20": size === "md",
+          "h-7 w-7": size === "sm",
         })
       )}
     >

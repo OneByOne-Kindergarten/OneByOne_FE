@@ -24,9 +24,9 @@ export default function PostCard({
   showDropdown = false,
 }: PostCardProps) {
   return (
-    <li className="flex items-center gap-3 flex-1 pb-4 border-b border-primary-light02">
-      <div className="flex flex-col gap-1.5 flex-1">
-        <div className="flex gap-2 justify-between">
+    <li className="flex flex-1 items-center gap-3 border-b border-primary-light02 pb-4">
+      <div className="flex flex-1 flex-col gap-1.5">
+        <div className="flex justify-between gap-2">
           <div className="flex gap-2">
             {currentCategory === "top10" && (
               <Badge variant="secondary">{index + 1}</Badge>
@@ -35,19 +35,21 @@ export default function PostCard({
               {getCategoryLabel(post.categoryName)}
             </Badge>
           </div>
-          {showDropdown && <ReportDropDown targetId={post.id} targetType="POST" />}
+          {showDropdown && (
+            <ReportDropDown targetId={post.id} targetType="POST" />
+          )}
         </div>
         <Link to={`/community/${post.id}`}>
-          <p className="font-semibold text-primary-dark01 line-clamp-1">
+          <p className="line-clamp-1 font-semibold text-primary-dark01">
             {post.title}
           </p>
-          <p className="text-sm text-primary-normal03 line-clamp-1">
+          <p className="line-clamp-1 text-sm text-primary-normal03">
             {post.content}
           </p>
         </Link>
         <div className="flex justify-between text-xs text-primary-normal03">
           <div className="flex gap-4">
-            <div className="flex gap-1 items-center">
+            <div className="flex items-center gap-1">
               <img
                 src={SVG_PATHS.THUMB_UP}
                 alt="좋아요 아이콘"
@@ -56,7 +58,7 @@ export default function PostCard({
               />
               <span>{post.likeCount}</span>
             </div>
-            <div className="flex gap-1 items-center">
+            <div className="flex items-center gap-1">
               <img
                 src={SVG_PATHS.CHAT.line}
                 alt="말풍선 아이콘"
@@ -65,7 +67,7 @@ export default function PostCard({
               />
               <span>{post.commentCount}</span>
             </div>
-            <div className="flex gap-1 items-center">
+            <div className="flex items-center gap-1">
               <img
                 src={SVG_PATHS.EYE.on}
                 alt="눈 아이콘"

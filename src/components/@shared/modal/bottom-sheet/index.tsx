@@ -40,7 +40,7 @@ const BottomSheet = React.forwardRef<HTMLDivElement, BottomSheetProps>(
         position="bottom"
         rounded="bottom"
         size="full"
-        className={cn("overflow-hidden max-h-[80vh]", className)}
+        className={cn("max-h-[80vh] overflow-hidden", className)}
         ref={ref}
         hasCloseButton={showCloseButton}
         {...props}
@@ -50,10 +50,10 @@ const BottomSheet = React.forwardRef<HTMLDivElement, BottomSheetProps>(
             align="center"
             hasCloseButton={showCloseButton}
             onClose={props.onClose}
-            className="pt-11 pb-3 relative"
+            className="relative pb-3 pt-11"
           >
             {/* 바텀 시트 드래그 핸들 */}
-            <div className="absolute top-1 left-1/2 -translate-x-1/2 w-10 h-1 mt-1 bg-primary-light02 rounded-full" />
+            <div className="absolute left-1/2 top-1 mt-1 h-1 w-10 -translate-x-1/2 rounded-full bg-primary-light02" />
             <h1 className="font-semibold">{title}</h1>
           </ModalHeader>
         )}
@@ -61,7 +61,7 @@ const BottomSheet = React.forwardRef<HTMLDivElement, BottomSheetProps>(
           {children}
         </ModalContent>
         {footer && (
-          <ModalFooter align="center" className="pb-9 pt-10 px-5">
+          <ModalFooter align="center" className="px-5 pb-9 pt-10">
             {footer}
           </ModalFooter>
         )}

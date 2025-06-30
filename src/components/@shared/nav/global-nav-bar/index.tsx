@@ -224,7 +224,7 @@ export default function GlobalNavBar({ currentPath }: GlobalNavBarProps) {
   };
 
   return (
-    <nav className="fixed bottom-0 h-14 items-center w-full text-xs min-w-80 max-w-3xl bg-white flex py-3 px-8 mx-auto justify-between border-t border-opacity-5 font-bold">
+    <nav className="fixed bottom-0 mx-auto flex h-14 w-full min-w-80 max-w-3xl items-center justify-between border-t border-opacity-5 bg-white px-8 py-3 text-xs font-bold">
       {NAV_BAR_ITEMS.map(
         ({ label, urlKey, ariaLabel, dataButtonName, iconPaths }) => {
           if (!(urlKey in URL_PATHS)) {
@@ -254,7 +254,7 @@ export default function GlobalNavBar({ currentPath }: GlobalNavBarProps) {
               data-button-name={dataButtonName}
               data-section-name="gnb"
               onClick={handleClick}
-              className={`flex flex-col text-xxs items-center ${isActive ? "text-primary" : "text-primary-normal03"}`}
+              className={`flex flex-col items-center text-xxs ${isActive ? "text-primary" : "text-primary-normal03"}`}
             >
               <img
                 src={isActive ? iconPaths.active : iconPaths.inactive}

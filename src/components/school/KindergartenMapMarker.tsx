@@ -52,7 +52,7 @@ export default function KindergartenMarker({
   return (
     <CustomOverlayMap position={{ lat: latitude, lng: longitude }} yAnchor={1}>
       <div
-        className={`flex flex-col items-center transform hover:scale-110 transition-transform ${
+        className={`flex transform flex-col items-center transition-transform hover:scale-110 ${
           onClick ? "cursor-pointer" : ""
         }`}
         onClick={onClick}
@@ -60,7 +60,7 @@ export default function KindergartenMarker({
       >
         {/* 마커 아이콘 */}
         <div
-          className={`${config.markerSize} rounded-full flex items-center justify-center shadow-xl border-2`}
+          className={`${config.markerSize} flex items-center justify-center rounded-full border-2 shadow-xl`}
           style={{
             backgroundColor: styles.bgColor,
             borderColor: styles.borderColor,
@@ -71,7 +71,7 @@ export default function KindergartenMarker({
             <img
               src={SVG_PATHS.SCHOOL.active}
               alt={establishment || "유치원"}
-              className="w-4 h-4 invert"
+              className="h-4 w-4 invert"
             />
           ) : (
             <span className={`${config.textSize} font-semibold`}>
@@ -82,7 +82,7 @@ export default function KindergartenMarker({
 
         {/* 화살표 */}
         <div
-          className="w-0 h-0 border-l-2 border-r-2 border-t-4 border-transparent"
+          className="h-0 w-0 border-l-2 border-r-2 border-t-4 border-transparent"
           style={{
             borderTopColor: styles.showIcon
               ? styles.bgColor
@@ -95,7 +95,7 @@ export default function KindergartenMarker({
         {/* 유치원 이름 라벨 */}
         {showLabel && (
           <div
-            className={`opacity-90 bg-white ${config.labelPadding} rounded shadow-md ${config.labelSize} font-semibold mt-0.5 ${config.labelMaxWidth} truncate`}
+            className={`bg-white opacity-90 ${config.labelPadding} rounded shadow-md ${config.labelSize} mt-0.5 font-semibold ${config.labelMaxWidth} truncate`}
           >
             {name}
           </div>

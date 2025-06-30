@@ -70,10 +70,10 @@ export default function InquiryEditorPage() {
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-base text-primary-dark01 font-semibold">
+                  <FormLabel className="text-base font-semibold text-primary-dark01">
                     문의 유형
                   </FormLabel>
-                  <div className="flex flex-wrap gap-2 mt-2">
+                  <div className="mt-2 flex flex-wrap gap-2">
                     {Object.entries(INQUIRY_TITLE_LABEL).map(([key, label]) => (
                       <Button
                         key={key}
@@ -98,11 +98,11 @@ export default function InquiryEditorPage() {
               name="content"
               render={({ field, fieldState }) => (
                 <FormItem>
-                  <div className="flex justify-between items-center">
-                    <FormLabel className="text-base text-primary-dark01 font-semibold">
+                  <div className="flex items-center justify-between">
+                    <FormLabel className="text-base font-semibold text-primary-dark01">
                       내용
                     </FormLabel>
-                    <span className="font-semibold text-primary-normal02 text-xs">
+                    <span className="text-xs font-semibold text-primary-normal02">
                       *200자 이내
                     </span>
                   </div>

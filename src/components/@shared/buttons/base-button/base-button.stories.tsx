@@ -37,7 +37,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Submit: Story = {
   render: () => (
-    <div className="flex flex-col w-24 gap-4">
+    <div className="flex w-24 flex-col gap-4">
       <Button variant="primary" size="lg" shape="default">
         로그인
       </Button>

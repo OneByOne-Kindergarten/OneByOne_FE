@@ -41,12 +41,12 @@ export default function InquiryMyPage() {
       mainClassName="px-5 mt-14"
     >
       <div className="flex flex-col gap-4">
-        <section className="flex justify-between items-center pt-4">
-          <menu className="flex gap-2.5 items-center">
+        <section className="flex items-center justify-between pt-4">
+          <menu className="flex items-center gap-2.5">
             {INQUIRY_TAB_OPTIONS.map(({ type, label }) => (
               <Toggle key={type} size="sm" onClick={() => setActiveTab(type)}>
                 <span
-                  className={clsx("font-semibold text-sm", {
+                  className={clsx("text-sm font-semibold", {
                     "text-primary-dark01": activeTab === type,
                     "text-primary-normal02": activeTab !== type,
                   })}

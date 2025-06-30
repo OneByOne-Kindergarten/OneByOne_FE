@@ -8,13 +8,13 @@ export default function ShortCutList() {
 
   return (
     <section className="flex flex-col gap-2.5">
-      <div className="flex justify-between items-center">
+      <div className="flex items-center justify-between">
         <h1 className="text-lg font-bold text-primary-dark02">
           원바원 바로가기
         </h1>
         <button
           onClick={navigateToEdit}
-          className="text-sm text-primary-normal03 px-2 py-1 rounded-md hover:bg-gray-100"
+          className="rounded-lg px-2 py-1 text-sm text-primary-normal03 hover:bg-gray-100"
         >
           편집하기
         </button>

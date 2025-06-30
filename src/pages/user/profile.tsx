@@ -23,8 +23,8 @@ export default function ProfilePage() {
       wrapperBg="white"
       mainClassName="flex flex-col gap-5 pb-5 mb-24 mt-14 px-5"
     >
-      <section className="flex flex-col py-5 items-center gap-2.5 ">
-        <div className="flex items-center justify-between w-full">
+      <section className="flex flex-col items-center gap-2.5 py-5">
+        <div className="flex w-full items-center justify-between">
           <h2 className="font-semibold text-primary-dark01">프로필</h2>
           <button
             className="text-sm text-primary-normal03"

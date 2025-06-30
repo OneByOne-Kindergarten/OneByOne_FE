@@ -18,9 +18,9 @@ export default function ShortCutOption({
     <button
       onClick={onClick}
       disabled={isDisabled}
-      className={`px-6 py-3 rounded-md text-left flex justify-between items-center ${
+      className={`flex items-center justify-between rounded-lg px-6 py-3 text-left ${
         isAdded
-          ? "bg-primary-light01 outline outline-1 outline-primary-dark01 text-primary-dark02"
+          ? "bg-primary-light01 text-primary-dark02 outline outline-1 outline-primary-dark01"
           : isDisabled
             ? "opacity-60"
             : "bg-primary-light01 hover:opacity-80"

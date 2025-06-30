@@ -10,7 +10,7 @@ export default function ChatCount({ count, className }: ChatCountProps) {
   return (
     <div
       className={clsx(
-        "flex items-center gap-1 text-xs justify-center font-semibold text-primary-normal03",
+        "flex items-center justify-center gap-1 text-xs font-semibold text-primary-normal03",
         className
       )}
     >

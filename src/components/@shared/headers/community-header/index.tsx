@@ -66,7 +66,7 @@ export default function CommunityHeader({
     <>
       {/* 검색 패널 */}
       {isSearching ? (
-        <aside className="fixed inset-0 z-50 flex bg-white flex-col w-full min-w-80 max-w-3xl mx-auto h-full">
+        <aside className="fixed inset-0 z-50 mx-auto flex h-full w-full min-w-80 max-w-3xl flex-col bg-white">
           <Header
             hasBackButton={true}
             hasBorder={false}
@@ -83,7 +83,7 @@ export default function CommunityHeader({
           </Header>
 
           {/* 검색 결과 */}
-          <div className="flex-1 flex flex-col h-[calc(100vh-56px)]">
+          <div className="flex h-[calc(100vh-56px)] flex-1 flex-col">
             <ErrorBoundary
               onReset={() => {}}
               fallback={
@@ -119,7 +119,7 @@ export default function CommunityHeader({
             {hasWriteButton && (
               <Link
                 to="/community/write"
-                className="flex items-center justify-center rounded-full w-6 h-6 bg-primary-normal01"
+                className="flex h-6 w-6 items-center justify-center rounded-full bg-primary-normal01"
                 aria-label="글쓰기"
               >
                 <img

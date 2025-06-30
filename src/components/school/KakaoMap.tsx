@@ -72,9 +72,9 @@ export default function KakaoMap({
 
   return (
     <div
-      className={`${height} rounded-md border border-primary-normal01 overflow-hidden`}
+      className={`${height} overflow-hidden rounded-lg border border-primary-normal01`}
     >
-      <div className={`w-full h-full ${className}`}>
+      <div className={`h-full w-full ${className}`}>
         {isMapLoading && <MapSkeleton />}
         <Map
           center={{ lat: latitude, lng: longitude }}

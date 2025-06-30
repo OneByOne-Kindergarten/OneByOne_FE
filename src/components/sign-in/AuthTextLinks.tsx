@@ -25,11 +25,11 @@ export default function AuthTextLinks({ types }: AuthTextLinksProps) {
   return (
     <section className="flex flex-col items-center gap-2">
       {types.map((type) => (
-        <div key={type} className="flex gap-2 text-xs justify-center">
+        <div key={type} className="flex justify-center gap-2 text-xs">
           <p className="text-primary-dark03">{authLinks[type].description}</p>
           <Link
             to={authLinks[type].to}
-            className="text-tertiary-3 font-semibold"
+            className="font-semibold text-tertiary-3"
           >
             {type}
           </Link>

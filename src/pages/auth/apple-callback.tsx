@@ -26,11 +26,15 @@ export default function AppleCallbackPage() {
         const errorMessage = urlParams.get("message");
 
         // 토큰 정보 콘솔 로깅
-        console.log("애플 콜백 파라미터:", { 
-          accessToken: accessToken ? accessToken.substring(0, 20) + "..." : null,
-          refreshToken: refreshToken ? refreshToken.substring(0, 20) + "..." : null,
+        console.log("애플 콜백 파라미터:", {
+          accessToken: accessToken
+            ? accessToken.substring(0, 20) + "..."
+            : null,
+          refreshToken: refreshToken
+            ? refreshToken.substring(0, 20) + "..."
+            : null,
           error,
-          errorMessage
+          errorMessage,
         });
 
         // 에러가 있는 경우
@@ -38,7 +42,9 @@ export default function AppleCallbackPage() {
           console.error("애플 로그인 에러:", error, errorMessage);
           toast({
             title: "애플 로그인 실패",
-            description: errorMessage ? decodeURIComponent(errorMessage) : "로그인 중 오류가 발생했습니다.",
+            description: errorMessage
+              ? decodeURIComponent(errorMessage)
+              : "로그인 중 오류가 발생했습니다.",
             variant: "destructive",
           });
           navigate(URL_PATHS.ROOT, { replace: true });
@@ -55,9 +61,12 @@ export default function AppleCallbackPage() {
           });
           navigate(URL_PATHS.HOME, { replace: true });
 
-        // 토큰이 없는 경우
+          // 토큰이 없는 경우
         } else {
-          console.error("애플 콜백 파라미터 누락:", { accessToken, refreshToken });
+          console.error("애플 콜백 파라미터 누락:", {
+            accessToken,
+            refreshToken,
+          });
           toast({
             title: "애플 로그인 실패",
             description: "인증 정보를 받을 수 없습니다.",
@@ -66,7 +75,7 @@ export default function AppleCallbackPage() {
           navigate(URL_PATHS.ROOT, { replace: true });
         }
 
-      // 에러 처리
+        // 에러 처리
       } catch (error) {
         console.error("애플 로그인 처리 중 오류:", error);
         toast({
@@ -81,12 +90,5 @@ export default function AppleCallbackPage() {
     handleAppleCallback();
   }, []);
 
-  return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="text-center">
-        <LoadingSpinner />
-        <p className="mt-4 text-gray-600">애플 로그인 처리 중...</p>
-      </div>
-    </div>
-  );
-} 
+  return <LoadingSpinner type="page" />;
+}

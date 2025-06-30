@@ -16,17 +16,17 @@ export default function Error({
     <section
       className={clsx(
         className,
-        "flex justify-center flex-col gap-3 items-center text-center",
+        "flex flex-col items-center justify-center gap-3 text-center",
         { "py-14": type === "element" }
       )}
       style={type === "page" ? { height: "calc(100vh - 112px)" } : undefined}
     >
-      <div className="bg-secondary-light03 rounded-full h-11 w-11 flex items-center justify-center">
+      <div className="flex h-11 w-11 items-center justify-center rounded-full bg-secondary-light03">
         <img src={SVG_PATHS.ALERT} alt="경고 아이콘" width={31} height={31} />
       </div>
       <div className="flex flex-col gap-1.5">
-        <p className="text-primary-dark02 font-semibold">서비스 오류</p>
-        <span className="text-primary-dark01 text-sm">
+        <p className="font-semibold text-primary-dark02">서비스 오류</p>
+        <span className="text-sm text-primary-dark01">
           {children} <br /> 잠시 후 다시 시도해보세요.
         </span>
       </div>

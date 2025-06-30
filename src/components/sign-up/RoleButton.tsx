@@ -23,9 +23,9 @@ export default function RoleButton({
       type="button"
       onClick={onClick}
       className={clsx(
-        "w-1/2 px-4 pt-5 pb-7 gap-3 flex flex-col text-left rounded-lg",
+        "flex w-1/2 flex-col gap-3 rounded-lg px-4 pb-7 pt-5 text-left",
         isSelected
-          ? "bg-tertiary-1 text-primary-dark01 outline-1 outline outline-tertiary-3"
+          ? "bg-tertiary-1 text-primary-dark01 outline outline-1 outline-tertiary-3"
           : "bg-primary-foreground text-primary-normal03"
       )}
     >
@@ -38,7 +38,7 @@ export default function RoleButton({
       />
       <div className="flex flex-col">
         <strong className="text-sm font-semibold">{title}</strong>
-        <span className="text-xxs text-pretty">{description}</span>
+        <span className="text-pretty text-xxs">{description}</span>
       </div>
     </button>
   );

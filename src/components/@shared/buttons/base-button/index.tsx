@@ -49,8 +49,8 @@ const buttonVariants = cva(
         lg: "text-lg",
       },
       shape: {
-        default: "rounded-md",
-        rounded: "rounded-lg",
+        default: "rounded-lg",
+        rounded: "rounded-xl",
         full: "rounded-full",
       },
     },

@@ -1,12 +1,12 @@
-import { useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import type { ReportRequest, ReportTargetType } from '@/types/reportDTO';
-import { reportService } from '@/services/reportService';
-import PageLayout from '@/components/@shared/layout/page-layout';
-import Button from '@/components/@shared/buttons/base-button';
-import { RadioGroup, RadioGroupItem } from '@/components/@shared/radio-group';
-import { useToast } from '@/hooks/useToast';
-import { URL_PATHS } from '@/constants/url-path';
+import { useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import type { ReportRequest, ReportTargetType } from "@/types/reportDTO";
+import { reportService } from "@/services/reportService";
+import PageLayout from "@/components/@shared/layout/page-layout";
+import Button from "@/components/@shared/buttons/base-button";
+import { RadioGroup, RadioGroupItem } from "@/components/@shared/radio-group";
+import { useToast } from "@/hooks/useToast";
+import { URL_PATHS } from "@/constants/url-path";
 
 const REPORT_REASONS = [
   {
@@ -32,7 +32,9 @@ const TARGET_TYPE_LABELS: Record<ReportTargetType, string> = {
   REVIEW: "리뷰를",
 };
 
-const isValidReportTargetType = (type: string | null): type is ReportTargetType => {
+const isValidReportTargetType = (
+  type: string | null
+): type is ReportTargetType => {
   return type !== null && Object.keys(TARGET_TYPE_LABELS).includes(type);
 };
 
@@ -41,14 +43,16 @@ export default function ReportPage() {
   const [searchParams] = useSearchParams();
   const { toast } = useToast();
 
-  const rawTargetId = searchParams.get('targetId');
-  const rawTargetType = searchParams.get('type');
-  const [selectedReason, setSelectedReason] = useState<string>('');
-  const [otherReason, setOtherReason] = useState<string>('');
+  const rawTargetId = searchParams.get("targetId");
+  const rawTargetType = searchParams.get("type");
+  const [selectedReason, setSelectedReason] = useState<string>("");
+  const [otherReason, setOtherReason] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const targetId = rawTargetId ? Number(rawTargetId) : null;
-  const targetType = isValidReportTargetType(rawTargetType) ? rawTargetType : null;
+  const targetType = isValidReportTargetType(rawTargetType)
+    ? rawTargetType
+    : null;
 
   const handleBackButtonClick = () => {
     navigate(-1);
@@ -57,33 +61,38 @@ export default function ReportPage() {
   const handleSubmit = async () => {
     if (!targetId || !targetType || !selectedReason || Number.isNaN(targetId)) {
       toast({
-        title: '신고 처리 중 오류가 발생했습니다',
-        variant: 'destructive',
+        title: "신고 처리 중 오류가 발생했습니다",
+        variant: "destructive",
       });
       return;
     }
 
     try {
       setIsSubmitting(true);
-      const selectedReasonData = REPORT_REASONS.find(reason => reason.value === selectedReason);
-      
+      const selectedReasonData = REPORT_REASONS.find(
+        (reason) => reason.value === selectedReason
+      );
+
       const reportData: ReportRequest = {
         targetId,
         targetType,
-        reason: selectedReason === 'OTHER' ? otherReason : (selectedReasonData?.label || ''),
+        reason:
+          selectedReason === "OTHER"
+            ? otherReason
+            : selectedReasonData?.label || "",
       };
 
       await reportService.createReport(reportData);
       toast({
-        title: '신고가 접수되었습니다',
+        title: "신고가 접수되었습니다",
       });
       navigate(-1);
     } catch (error) {
       toast({
-        title: '신고 처리 중 오류가 발생했습니다',
-        variant: 'destructive',
+        title: "신고 처리 중 오류가 발생했습니다",
+        variant: "destructive",
       });
-      console.error('신고 처리 실패:', error);
+      console.error("신고 처리 실패:", error);
     } finally {
       setIsSubmitting(false);
     }
@@ -92,8 +101,8 @@ export default function ReportPage() {
   // 유효하지 않은 파라미터로 접근 시 이전 페이지로 리다이렉트
   if (!targetId || !targetType || Number.isNaN(targetId)) {
     toast({
-      title: '잘못된 접근입니다',
-      variant: 'destructive',
+      title: "잘못된 접근입니다",
+      variant: "destructive",
     });
     navigate(-1);
     return null;
@@ -126,11 +135,11 @@ export default function ReportPage() {
           </li>
         ))}
       </RadioGroup>
-      {selectedReason === 'OTHER' && (
+      {selectedReason === "OTHER" && (
         <textarea
           value={otherReason}
           onChange={(e) => setOtherReason(e.target.value)}
-          className="w-full p-3 border rounded-md h-32 text-sm"
+          className="h-32 w-full rounded-lg border p-3 text-sm"
           placeholder="신고 사유를 자세히 설명해주세요."
         />
       )}
@@ -148,10 +157,14 @@ export default function ReportPage() {
           font="sm_sb"
           variant="primary"
           className="w-full"
-          disabled={isSubmitting || !selectedReason || (selectedReason === 'OTHER' && !otherReason)}
+          disabled={
+            isSubmitting ||
+            !selectedReason ||
+            (selectedReason === "OTHER" && !otherReason)
+          }
           onClick={handleSubmit}
         >
-          {isSubmitting ? '처리중...' : '확인'}
+          {isSubmitting ? "처리중..." : "확인"}
         </Button>
       </div>
     </PageLayout>

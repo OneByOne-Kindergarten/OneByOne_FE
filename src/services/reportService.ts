@@ -1,9 +1,8 @@
-import { API_PATHS } from '@/constants/api-path';
-import type { ReportRequest, ReportResponse } from '@/types/reportDTO';
-import { apiCall } from '@/utils/apiUtils';
+import { API_PATHS } from "@/constants/api-path";
+import type { ReportRequest, ReportResponse } from "@/types/reportDTO";
+import { apiCall } from "@/utils/apiUtils";
 
 export const reportService = {
-
   // 신고 생성
   createReport: async (data: ReportRequest): Promise<ReportResponse> => {
     return await apiCall<ReportRequest, ReportResponse>({
@@ -24,5 +23,4 @@ export const reportService = {
       withCredentials: true,
     });
   },
-  
-}; 
+};

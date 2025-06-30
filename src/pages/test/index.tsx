@@ -25,18 +25,18 @@ export default function TEST() {
     {
       label: "편집하기",
       onClick: () => setSelectedOption("편집하기"),
-      icon: <img src={SVG_PATHS.POST.edit} alt="편집" className="w-4 h-4" />,
+      icon: <img src={SVG_PATHS.POST.edit} alt="편집" className="h-4 w-4" />,
     },
     {
       label: "공유하기",
       onClick: () => setSelectedOption("공유하기"),
-      icon: <img src={SVG_PATHS.SHARE} alt="공유" className="w-4 h-4" />,
+      icon: <img src={SVG_PATHS.SHARE} alt="공유" className="h-4 w-4" />,
     },
     {
       label: "삭제하기",
       onClick: () => setSelectedOption("삭제하기"),
       variant: "destructive" as const,
-      icon: <img src={SVG_PATHS.CANCEL} alt="삭제" className="w-4 h-4" />,
+      icon: <img src={SVG_PATHS.CANCEL} alt="삭제" className="h-4 w-4" />,
     },
     {
       label: "비활성화 옵션",
@@ -52,7 +52,7 @@ export default function TEST() {
       <img
         src={SVG_PATHS.ARROW.left}
         alt="아래 화살표"
-        className="w-4 h-4 rotate-90"
+        className="h-4 w-4 rotate-90"
       />
     </Button>
   );
@@ -78,7 +78,7 @@ export default function TEST() {
     >
       <div className="flex flex-col gap-12">
         <section>
-          <h2 className="bg-gray-200 p-1 mb-2">헤더 타입 변경</h2>
+          <h2 className="mb-2 bg-gray-200 p-1">헤더 타입 변경</h2>
           <div className="flex gap-2">
             <Button
               variant={headerType === "base" ? "primary" : "tertiary"}
@@ -114,42 +114,42 @@ export default function TEST() {
         </section>
 
         <section>
-          <h2 className="bg-gray-200 p-1 mb-2">드롭다운</h2>
+          <h2 className="mb-2 bg-gray-200 p-1">드롭다운</h2>
           <div className="flex flex-col gap-8">
             <div>
-              <div className="flex flex-wrap gap-8 items-start">
+              <div className="flex flex-wrap items-start gap-8">
                 <div>
-                  <p className="text-xs mb-2">기본</p>
+                  <p className="mb-2 text-xs">기본</p>
                   <Dropdown options={dropdownOptions} />
                 </div>
                 <div>
-                  <p className="text-xs mb-2">커스텀 트리거</p>
+                  <p className="mb-2 text-xs">커스텀 트리거</p>
                   <Dropdown options={dropdownOptions} trigger={customTrigger} />
                 </div>
                 <div>
-                  <p className="text-xs mb-2">위로 펼쳐짐</p>
+                  <p className="mb-2 text-xs">위로 펼쳐짐</p>
                   <Dropdown options={dropdownOptions} position="top" />
                 </div>
                 <div>
-                  <p className="text-xs mb-2">왼쪽으로 펼쳐짐</p>
+                  <p className="mb-2 text-xs">왼쪽으로 펼쳐짐</p>
                   <Dropdown options={dropdownOptions} position="left" />
                 </div>
               </div>
             </div>
 
             <div>
-              <h3 className="text-sm font-bold mb-2">정렬 및 너비</h3>
-              <div className="flex flex-wrap gap-8 items-start">
+              <h3 className="mb-2 text-sm font-bold">정렬 및 너비</h3>
+              <div className="flex flex-wrap items-start gap-8">
                 <div>
-                  <p className="text-xs mb-2">가운데 정렬</p>
+                  <p className="mb-2 text-xs">가운데 정렬</p>
                   <Dropdown options={dropdownOptions} align="center" />
                 </div>
                 <div>
-                  <p className="text-xs mb-2">오른쪽 정렬</p>
+                  <p className="mb-2 text-xs">오른쪽 정렬</p>
                   <Dropdown options={dropdownOptions} align="end" />
                 </div>
                 <div>
-                  <p className="text-xs mb-2">전체 너비</p>
+                  <p className="mb-2 text-xs">전체 너비</p>
                   <div className="w-40">
                     <Dropdown
                       options={dropdownOptions}
@@ -162,7 +162,7 @@ export default function TEST() {
             </div>
 
             {selectedOption && (
-              <div className="bg-gray-100 p-4 rounded-md">
+              <div className="rounded-lg bg-gray-100 p-4">
                 <p>
                   선택된 옵션: <strong>{selectedOption}</strong>
                 </p>
@@ -172,7 +172,7 @@ export default function TEST() {
         </section>
 
         <section>
-          <h2 className="bg-gray-200 p-1 mb-2">버튼</h2>
+          <h2 className="mb-2 bg-gray-200 p-1">버튼</h2>
           <div className="flex flex-wrap gap-2">
             <Button>default</Button>
             <Button variant="primary">primary</Button>
@@ -187,7 +187,7 @@ export default function TEST() {
         </section>
 
         <section>
-          <h2 className="bg-gray-200 p-1 mb-2">토글</h2>
+          <h2 className="mb-2 bg-gray-200 p-1">토글</h2>
           <div className="flex flex-wrap gap-2">
             <Toggle size="lg" border="gray">
               토글
@@ -208,7 +208,7 @@ export default function TEST() {
         </section>
 
         <section>
-          <h2 className="bg-gray-200 p-1 mb-2">뱃지</h2>
+          <h2 className="mb-2 bg-gray-200 p-1">뱃지</h2>
           <div className="flex gap-2">
             <Badge variant="primary">뱃지</Badge>
             <Badge variant="secondary">뱃지</Badge>
@@ -217,7 +217,7 @@ export default function TEST() {
         </section>
 
         <section>
-          <h2 className="bg-gray-200 p-1 mb-2">모달</h2>
+          <h2 className="mb-2 bg-gray-200 p-1">모달</h2>
           <div className="flex flex-wrap gap-4">
             <Button onClick={() => setIsPopupOpen(true)}>팝업 모달 열기</Button>
             <Button onClick={() => setIsBottomSheetOpen(true)}>
@@ -228,7 +228,7 @@ export default function TEST() {
       </div>
 
       <section>
-        <h2 className="bg-gray-200 p-1 mb-2">진행도</h2>
+        <h2 className="mb-2 bg-gray-200 p-1">진행도</h2>
         <div className="flex flex-wrap gap-2">
           <BarRating value={4} className="h-2 w-12" />
           <LoadingSpinner />
@@ -241,7 +241,7 @@ export default function TEST() {
         onClose={() => setIsPopupOpen(false)}
         title="팝업 모달 제목"
         footer={
-          <div className="flex gap-2 justify-center w-full">
+          <div className="flex w-full justify-center gap-2">
             <Button
               variant="tertiary"
               onClick={() => setIsPopupOpen(false)}
@@ -281,7 +281,7 @@ export default function TEST() {
         }
       >
         <p className="mb-4">바텀 시트 내용</p>
-        <ul className="list-disc pl-5 mb-4">
+        <ul className="mb-4 list-disc pl-5">
           <li>항목 1</li>
           <li>항목 2</li>
         </ul>

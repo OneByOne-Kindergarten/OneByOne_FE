@@ -34,15 +34,11 @@ export default function ToolTip({ children }: { children: React.ReactNode }) {
         aria-expanded={isOpen}
       />
       <div
-        className={`
-          px-2.5 py-1 absolute top-5 bg-tertiary-3 text-nowrap rounded-md
-          transition-all duration-100 ease-in-out
-          ${
-            isOpen
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 -translate-y-1 pointer-events-none"
-          }
-        `}
+        className={`absolute top-5 text-nowrap rounded-lg bg-tertiary-3 px-2.5 py-1 transition-all duration-100 ease-in-out ${
+          isOpen
+            ? "translate-y-0 opacity-100"
+            : "pointer-events-none -translate-y-1 opacity-0"
+        } `}
         role="tooltip"
         aria-hidden={!isOpen}
       >

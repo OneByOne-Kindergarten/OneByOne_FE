@@ -43,7 +43,7 @@ export function NicknameField<T extends FieldValues>({
       name={name}
       render={({ field, fieldState }) => (
         <FormItem>
-          <div className="relative flex justify-between items-center">
+          <div className="relative flex items-center justify-between">
             <FormLabel className="font-semibold text-primary-dark01">
               {label}
             </FormLabel>
@@ -63,7 +63,7 @@ export function NicknameField<T extends FieldValues>({
                 src={SVG_PATHS.CHECK.blue}
                 width={26}
                 height={26}
-                className="absolute top-10 right-3"
+                className="absolute right-3 top-10"
               />
             )}
           </div>
@@ -76,7 +76,7 @@ export function NicknameField<T extends FieldValues>({
             />
           </FormControl>
           {isRandomNickname && (
-            <p className="text-xs text-tertiary-3 mt-1">
+            <p className="mt-1 text-xs text-tertiary-3">
               안전한 커뮤니티 운영을 위한 닉네임이 자동으로 만들어졌어요
             </p>
           )}

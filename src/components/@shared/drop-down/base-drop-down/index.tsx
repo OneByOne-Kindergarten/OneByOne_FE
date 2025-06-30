@@ -16,7 +16,7 @@ const dropdownContainerVariants = cva("relative inline-block", {
 });
 
 const dropdownMenuVariants = cva(
-  "absolute z-50 bg-white border border-primary-normal02 shadow-md rounded-md overflow-hidden min-w-[120px]",
+  "absolute z-50 bg-white border border-primary-normal02 shadow-md rounded-lg overflow-hidden min-w-[120px]",
   {
     variants: {
       isOpen: {
@@ -169,7 +169,7 @@ const Dropdown: React.FC<DropdownProps> = ({
           aria-label="드롭다운 열기"
           className="p-1"
         >
-          <img src={SVG_PATHS.KEBAB} alt="메뉴" className="w-5 h-5" />
+          <img src={SVG_PATHS.KEBAB} alt="메뉴" className="h-5 w-5" />
         </button>
       )}
 
@@ -184,7 +184,7 @@ const Dropdown: React.FC<DropdownProps> = ({
             key={index}
             className={cn(
               dropdownItemVariants({ variant: option.variant }),
-              option.disabled && "opacity-50 cursor-not-allowed"
+              option.disabled && "cursor-not-allowed opacity-50"
             )}
             onClick={() => {
               if (!option.disabled) {
@@ -222,7 +222,7 @@ export const DropdownItem = ({
   <div
     className={cn(
       dropdownItemVariants({ variant }),
-      disabled && "opacity-50 cursor-not-allowed",
+      disabled && "cursor-not-allowed opacity-50",
       className
     )}
     {...props}

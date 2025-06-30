@@ -31,14 +31,14 @@ export default function CommentCard({
 
   return (
     <>
-      <div className="border-b py-5 px-4">
+      <div className="border-b px-4 py-5">
         <div className="flex flex-1 justify-between">
           <CommentUserInfo reply={comment} postAuthor={postAuthor} />
           <ReportDropDown targetId={comment.id} targetType="COMMENT" />
         </div>
-        <p className="text-primary-dark01 text-sm mt-2 mb-3">{content}</p>
-        <div className="flex justify-between gap-2 ">
-          <span className="text-primary-normal03 text-xxs">
+        <p className="mb-3 mt-2 text-sm text-primary-dark01">{content}</p>
+        <div className="flex justify-between gap-2">
+          <span className="text-xxs text-primary-normal03">
             {formatDate(createdAt)}
           </span>
           <ReplyButton onClick={handleReply} />

@@ -24,8 +24,8 @@ export default function AccountSettingPage() {
       hasBackButton={true}
       mainClassName="flex flex-col gap-0 pb-5 mt-14 mb-24"
     >
-      <section className="flex flex-col gap-4 p-5 font-bold bg-white">
-        <menu className="text-primary-dark01 flex flex-col gap-6">
+      <section className="flex flex-col gap-4 bg-white p-5 font-bold">
+        <menu className="flex flex-col gap-6 text-primary-dark01">
           <MenuItem
             iconPath={SVG_PATHS.RESET.password}
             iconAlt="비밀번호 변경 아이콘"

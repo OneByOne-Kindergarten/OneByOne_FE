@@ -66,7 +66,7 @@ export default function PasswordEditorPage() {
               name="currentPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-primary-dark01 font-semibold">
+                  <FormLabel className="font-semibold text-primary-dark01">
                     현재 비밀번호
                   </FormLabel>
                   <FormControl>
@@ -86,7 +86,7 @@ export default function PasswordEditorPage() {
               name="newPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-primary-dark01 font-semibold">
+                  <FormLabel className="font-semibold text-primary-dark01">
                     새 비밀번호
                   </FormLabel>
                   <FormControl>

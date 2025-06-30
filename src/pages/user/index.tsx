@@ -26,7 +26,7 @@ export default function User() {
     >
       {/* 유저 프로필 */}
       <section className="flex flex-col">
-        <div className="flex items-center justify-between bg-white px-5 w-full py-4">
+        <div className="flex w-full items-center justify-between bg-white px-5 py-4">
           <div className="flex items-center gap-7">
             <ProfileImage role={user?.role} />
             <ProfileDetail user={user} />
@@ -44,9 +44,9 @@ export default function User() {
       </section>
 
       <div className="flex flex-col gap-2">
-        <section className="flex flex-col gap-4 p-5 font-bold bg-white">
+        <section className="flex flex-col gap-4 bg-white p-5 font-bold">
           <h2 className="text-primary-dark02">내 설정</h2>
-          <menu className="text-primary-dark01 flex flex-col gap-6">
+          <menu className="flex flex-col gap-6 text-primary-dark01">
             <MenuItem
               iconPath={SVG_PATHS.POST.edit}
               iconAlt="게시물 관리 아이콘"
@@ -68,9 +68,9 @@ export default function User() {
           </menu>
         </section>
 
-        <section className="flex flex-col gap-4 p-5 font-bold bg-white">
+        <section className="flex flex-col gap-4 bg-white p-5 font-bold">
           <h2 className="text-primary-dark02">서비스 안내 · 문의</h2>
-          <menu className="text-primary-dark01 flex flex-col gap-6">
+          <menu className="flex flex-col gap-6 text-primary-dark01">
             <MenuItem
               iconPath={SVG_PATHS.DOCUMENT}
               iconAlt="문서 아이콘"

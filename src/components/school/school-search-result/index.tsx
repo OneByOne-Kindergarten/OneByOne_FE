@@ -112,7 +112,7 @@ export default function SchoolSearchResult({
 
   return (
     <div className="flex flex-col gap-2 pt-4">
-      <h3 className="font-semibold text-sm text-primary-dark01 mx-5">
+      <h3 className="mx-5 text-sm font-semibold text-primary-dark01">
         총 {totalItems > 0 && `${totalItems}`}개의 검색 결과
       </h3>
       <List

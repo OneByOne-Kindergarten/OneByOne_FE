@@ -174,7 +174,7 @@ export default function ReviewFormManager({
 
     return (
       <div
-        className={step > 1 ? "flex mt-6 justify-between" : "flex ml-auto mt-6"}
+        className={step > 1 ? "mt-6 flex justify-between" : "ml-auto mt-6 flex"}
       >
         {step > 1 && (
           <Button size="lg" onClick={handleBack} disabled={isSubmitting}>
@@ -194,7 +194,7 @@ export default function ReviewFormManager({
   };
 
   return (
-    <div className="flex flex-col gap-6 p-5 bg-white rounded-lg">
+    <div className="flex flex-col gap-6 rounded-lg bg-white p-5">
       <ProgressBar value={step} max={totalSteps} />
 
       {type === REVIEW_TYPES.WORK ? (

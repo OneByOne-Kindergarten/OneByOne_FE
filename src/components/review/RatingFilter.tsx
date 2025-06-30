@@ -28,7 +28,7 @@ export default function RatingFilter({
       <Button
         onClick={() => setIsBottomSheetOpen(true)}
         font="sm_sb"
-        className="text-primary-dark01 py-1.5"
+        className="py-1.5 text-primary-dark01"
         size="sm"
       >
         <img src={SVG_PATHS.STAR.darkgray} alt="드롭다운 아이콘" />
@@ -49,7 +49,7 @@ export default function RatingFilter({
           </Button>
         }
       >
-        <h2 className="text-primary-normal03 text-sm mb-3">별점</h2>
+        <h2 className="mb-3 text-sm text-primary-normal03">별점</h2>
         <div className="flex flex-col gap-2">
           {Object.entries(reviewCounts)
             .reverse()
@@ -63,7 +63,7 @@ export default function RatingFilter({
                   size="lg"
                   className="pointer-events-none"
                 />
-                <span className="text-primary-normal03 text-sm">{count}</span>
+                <span className="text-sm text-primary-normal03">{count}</span>
               </button>
             ))}
         </div>
