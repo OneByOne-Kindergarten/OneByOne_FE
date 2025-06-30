@@ -2,87 +2,61 @@ import { useRef, useCallback } from "react";
 import { FixedSizeList as List } from "react-window";
 
 import { useMyPosts } from "@/hooks/useMyPosts";
-import PostCard from "@/components/community/PostCard";
-import { getCategoryLabel } from "@/utils/categoryUtils";
+import ReviewCard from "@/components/review/ReviewCard";
+import { getFieldConfigsByType } from "@/utils/fieldConfigsUtils";
+import { REVIEW_TYPES } from "@/constants/review";
+import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
+import Empty from "@/components/@shared/layout/empty";
+import Error from "@/components/@shared/layout/error";
+import { WorkReview, InternshipReview } from "@/types/reviewDTO";
 
-const ITEM_HEIGHT = 130;
+const ITEM_HEIGHT = 200;
 const LIST_HEIGHT = 690;
 
-const mockData = {
-  pages: [
-    {
-      content: [
-        {
-          id: 1,
-          title: "테스트 게시글입니다.",
-          content: "이 게시글은 mockData로 생성되었습니다.",
-          category: "TEACHER",
-          categoryName: "자유",
-          categoryDescription: "교사",
-          userNickname: "테스트유저",
-          userRole: "TEACHER",
-          career: "5년차",
-          viewCount: 0,
-          likeCount: 0,
-          commentCount: 0,
-          createdAt: "2024-03-20T15:30:00.000Z",
-          updatedAt: "2024-03-20T15:30:00.000Z",
-        },
-        {
-          id: 2,
-          title: "KST 기준 테스트 게시글",
-          content: "이 게시글은 KST 기준으로 생성되었습니다.",
-          category: "TEACHER",
-          categoryName: "자유",
-          categoryDescription: "교사",
-          userNickname: "테스트유저",
-          userRole: "TEACHER",
-          career: "5년차",
-          viewCount: 10,
-          likeCount: 5,
-          commentCount: 3,
-          createdAt: "2024-03-20T14:30:00.000Z",
-          updatedAt: "2024-03-20T14:30:00.000Z",
-        },
-      ],
-      totalPages: 1,
-      totalElements: 2,
-      size: 10,
-      number: 0,
-      first: true,
-      last: true,
-      empty: false,
-    },
-  ],
-};
+type ReviewData = WorkReview | InternshipReview;
 
 interface ListItemProps {
-  data: any[];
+  data: ReviewData[];
   index: number;
   style: React.CSSProperties;
 }
 
 function ListItem({ data, index, style }: ListItemProps) {
-  const post = data[index];
+  const review = data[index];
+
+  // 리뷰 타입 결정 (workReviewId가 있으면 WORK, 없으면 LEARNING)
+  const reviewType =
+    "workReviewId" in review ? REVIEW_TYPES.WORK : REVIEW_TYPES.LEARNING;
+  const fieldConfigs = getFieldConfigsByType(reviewType);
+
   return (
-    <div style={style}>
-      <PostCard
-        showDropdown={true}
-        post={post}
-        index={index}
-        currentCategory="TEACHER"
-        getCategoryLabel={getCategoryLabel}
+    <div style={style} className="px-5 py-4">
+      <ReviewCard
+        review={review}
+        fieldConfigs={fieldConfigs.review}
+        type={reviewType}
       />
     </div>
   );
 }
 
 export default function MyPostList() {
-  const { fetchNextPage, hasNextPage, isFetchingNextPage } = useMyPosts();
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    error,
+  } = useMyPosts();
+
+  console.log(data);
+
   const listRef = useRef<List>(null);
 
-  // mockData 사용
-  const posts = mockData.pages.flatMap((page) => page.content);
+  // 모든 페이지의 리뷰 데이터를 평탄화하고 ReviewData 타입으로 캐스팅
+  const reviews = (data?.pages.flatMap((page) => page.content) ||
+    []) as unknown as ReviewData[];
 
   const loadMore = useCallback(() => {
     if (hasNextPage && !isFetchingNextPage) {
@@ -90,16 +64,39 @@ export default function MyPostList() {
     }
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
+  if (isLoading) {
+    return <LoadingSpinner type="page" />;
+  }
+
+  if (error) {
+    return (
+      <Error type="page">
+        <p className="text-sm">리뷰 불러오기 오류</p>
+        <span className="text-xxs text-primary-normal02">{error?.message}</span>
+      </Error>
+    );
+  }
+
+  if (reviews.length === 0) {
+    return (
+      <Empty
+        type="page"
+        title="작성된 리뷰가 없습니다."
+        subTitle="유치원 상세 페이지에서 리뷰를 작성해보세요."
+      ></Empty>
+    );
+  }
+
   return (
     <List
       ref={listRef}
       height={LIST_HEIGHT}
       width="100%"
-      itemCount={posts.length}
+      itemCount={reviews.length}
       itemSize={ITEM_HEIGHT}
-      itemData={posts}
+      itemData={reviews}
       onItemsRendered={({ visibleStopIndex }) => {
-        if (visibleStopIndex === posts.length - 1) {
+        if (visibleStopIndex === reviews.length - 1) {
           loadMore();
         }
       }}

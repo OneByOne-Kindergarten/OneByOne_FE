@@ -103,9 +103,10 @@ export default function SchoolPage() {
               </span>
             </div>
             {kindergartens.length === 0 ? (
-              <Empty>
-                <p className="text-sm">주변 유치원을 찾을 수 없습니다.</p>
-              </Empty>
+              <Empty
+                title="주변 유치원을 찾을 수 없습니다."
+                subTitle="위치 정보를 확인해주세요."
+              />
             ) : (
               <ul className="flex flex-col gap-2 pb-5">
                 {kindergartens.map((kindergarten: Kindergarten) => (

@@ -22,11 +22,7 @@ export default function InquiryList({
   expandedInquiryId,
 }: InquiryListProps) {
   if (!inquiries?.length) {
-    return (
-      <Empty type="page">
-        <p>문의 내역이 없습니다.</p>
-      </Empty>
-    );
+    return <Empty type="page" title="문의 내역이 없습니다." />;
   }
 
   return (

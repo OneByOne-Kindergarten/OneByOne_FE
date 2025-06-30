@@ -11,7 +11,7 @@ export default function NoticeDetailPage() {
   const { id } = useParams();
 
   if (!id) {
-    return <Empty>공지사항을 찾을 수 없습니다.</Empty>;
+    return <Empty title="공지사항을 찾을 수 없습니다." />;
   }
 
   return (

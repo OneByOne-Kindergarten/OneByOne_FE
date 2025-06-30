@@ -2,13 +2,15 @@ import clsx from "clsx";
 import { IMAGE_PATHS } from "@/constants/assets-path";
 
 interface EmptyProps {
-  children: React.ReactNode;
+  title: string;
+  subTitle?: string;
   className?: string;
   type?: "page" | "element";
 }
 
 export default function Empty({
-  children,
+  title,
+  subTitle,
   className,
   type = "element",
 }: EmptyProps) {
@@ -27,7 +29,8 @@ export default function Empty({
         className="w-24 h-16"
       />
       <div className="flex flex-col gap-1.5 text-primary-normal03">
-        {children}
+        <p className="text-sm">{title}</p>
+        <span className="text-xxs text-primary-normal02">{subTitle}</span>
       </div>
     </div>
   );

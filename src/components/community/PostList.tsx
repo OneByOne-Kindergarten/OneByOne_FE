@@ -128,9 +128,10 @@ export default function PostList({
 
   if (uniquePosts.length === 0) {
     return (
-      <Empty>
-        <p className="text-sm">게시글이 없습니다.</p>
-      </Empty>
+      <Empty
+        title="게시글이 없습니다."
+        subTitle="첫 번째 게시글을 남겨보세요!"
+      />
     );
   }
 

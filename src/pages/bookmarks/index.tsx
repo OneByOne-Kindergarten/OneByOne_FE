@@ -32,12 +32,11 @@ export default function Bookmarks() {
       ) : isError ? (
         <Error type="page">{error?.message}</Error>
       ) : favorites.length === 0 ? (
-        <Empty type="page">
-          <p className="text-sm">유치원을 즐겨찾기 해보세요.</p>
-          <span className="text-xxs text-primary-normal02">
-            유치원 상세 페이지에서 북마크를 눌러 즐겨찾기에 추가해보세요.
-          </span>
-        </Empty>
+        <Empty
+          type="page"
+          title="관심있는 유치원을 추가해보세요."
+          subTitle="유치원 상세 페이지에서 상단바의 북마크 아이콘을 클릭해보세요."
+        ></Empty>
       ) : (
         <ul className="flex flex-col gap-2 my-3 ">
           {favorites.map((favorite) => (

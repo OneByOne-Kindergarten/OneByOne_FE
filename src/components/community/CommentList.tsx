@@ -45,12 +45,11 @@ export default function CommentList({
   return (
     <section className="flex flex-col flex-1 bg-white">
       {!hasComments ? (
-        <Empty className="my-auto">
-          <p className="text-sm">댓글이 없습니다.</p>
-          <span className="text-xxs text-primary-normal02">
-            게시물에 첫 댓글을 남겨보세요!
-          </span>
-        </Empty>
+        <Empty
+          className="my-auto"
+          title="댓글이 없습니다."
+          subTitle="게시물에 첫 댓글을 남겨보세요!"
+        />
       ) : (
         <>
           {commentsData.pages.map((page) =>

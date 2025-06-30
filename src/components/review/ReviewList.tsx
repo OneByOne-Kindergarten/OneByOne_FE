@@ -79,12 +79,10 @@ export default function ReviewList({
           type={type}
         />
       ) : (
-        <Empty>
-          <p className="text-sm">리뷰가 없습니다.</p>
-          <span className="text-xxs text-primary-normal02">
-            {kindergartenName}의 첫 리뷰를 작성해보세요!
-          </span>
-        </Empty>
+        <Empty
+          title="리뷰가 없습니다."
+          subTitle={`${kindergartenName}의 첫 리뷰를 남겨보세요!`}
+        ></Empty>
       )}
     </section>
   );

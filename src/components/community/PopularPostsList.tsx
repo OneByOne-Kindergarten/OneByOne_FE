@@ -21,9 +21,10 @@ export default function PopularPostsList() {
       </div>
 
       {posts.length === 0 ? (
-        <Empty>
-          <p className="text-sm">게시글이 없습니다.</p>
-        </Empty>
+        <Empty
+          title="게시글이 없습니다."
+          subTitle="첫 번째 게시글을 작성해보세요!"
+        />
       ) : (
         <ul className="flex flex-col gap-5">
           {posts.map((post, index) => (
