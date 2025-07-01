@@ -36,8 +36,7 @@ export function RoleField({
           onClick={() => onRoleChange("PROSPECTIVE_TEACHER")}
           character={SVG_PATHS.CHARACTER.chick}
           title="예비교사예요."
-          description="교사를 꿈꾸는, 아직 경력이 <br />
-              없는 사람이에요!"
+          description="교사를 꿈꾸는, 아직 경력이 없는 사람이에요!"
         />
       </div>
       {error && <FormMessage>{error}</FormMessage>}
