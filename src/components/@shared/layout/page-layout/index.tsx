@@ -46,6 +46,7 @@ interface PageLayoutProps {
   kindergartenId?: string;
   showBookmark?: boolean;
   onSave?: () => void;
+  showAlarmButton?: boolean;
 }
 
 export default function PageLayout({
@@ -66,6 +67,7 @@ export default function PageLayout({
   kindergartenId,
   showBookmark,
   onSave,
+  showAlarmButton = false,
 }: PageLayoutProps) {
   const renderHeader = () => {
     if (!headerTitle && !headerLogo) return null;
@@ -76,6 +78,7 @@ export default function PageLayout({
       hasBorder: headerHasBorder,
       hasBackButton: hasBackButton,
       onBackButtonClick: onBackButtonClick,
+      showAlarmButton: showAlarmButton,
     };
 
     switch (headerType) {

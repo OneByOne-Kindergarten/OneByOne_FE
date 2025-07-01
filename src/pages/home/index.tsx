@@ -16,6 +16,7 @@ export default function HomePage() {
       currentPath={URL_PATHS.HOME}
       wrapperBg="white"
       mainClassName="flex flex-col gap-9 px-5 py-4 mt-14 mb-24"
+      showAlarmButton={true}
     >
       <section className="flex flex-col gap-4">
         <NoticeCard />

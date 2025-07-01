@@ -5,6 +5,7 @@ import { cn } from "@/utils/cn";
 import { SVG_PATHS, IMAGE_PATHS } from "@/constants/assets-path";
 import { useHeaderNavigation } from "@/hooks/useHeaderNavigation";
 import { URL_PATHS } from "@/constants/url-path";
+import AlarmButton from "@/components/@shared/buttons/alarm-button";
 
 interface HeaderProps extends VariantProps<typeof headerVariants> {
   children?: React.ReactNode;
@@ -12,6 +13,7 @@ interface HeaderProps extends VariantProps<typeof headerVariants> {
   headerLogo?: boolean;
   hasBackButton?: boolean;
   onBackButtonClick?: () => void;
+  showAlarmButton?: boolean; // 알림 버튼 표시 여부
 }
 
 const headerVariants = cva(
@@ -36,6 +38,7 @@ export default function Header({
   hasBorder = true,
   hasBackButton,
   onBackButtonClick,
+  showAlarmButton = false,
 }: HeaderProps) {
   // 헤더 네비게이션 훅 사용
   const { shouldShowBackButton, handleBackNavigation } = useHeaderNavigation({
@@ -63,7 +66,11 @@ export default function Header({
             />
           </Link>
         ) : null}
-        {children}
+        {/* 알림 버튼 표시 여부 */}
+        <div className="flex items-center gap-2">
+          {showAlarmButton && <AlarmButton />}
+          {children}
+        </div>
       </div>
     </header>
   );

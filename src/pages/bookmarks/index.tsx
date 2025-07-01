@@ -26,6 +26,7 @@ export default function Bookmarks() {
       mainBg="gray"
       hasBackButton={false}
       mainClassName={favorites.length === 0 ? "pb-0 mb-0" : "mt-14"}
+      showAlarmButton={true}
     >
       {isLoading ? (
         <LoadingSpinner type="page" />

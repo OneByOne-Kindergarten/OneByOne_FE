@@ -39,6 +39,7 @@ export const URL_PATHS = {
   // 프로필 - 공지사항
   NOTICE: "/user/notice",
   NOTICE_DETAIL: "/user/notice/:id",
+  ALARM: "/user/alarm",
   // 프로필 - 문의사항
   INQUIRY: "/user/inquiry",
   INQUIRY_PUBLIC: "/user/inquiry/public",

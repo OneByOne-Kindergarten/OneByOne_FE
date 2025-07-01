@@ -23,6 +23,7 @@ export default function User() {
       mainBg="gray"
       hasBackButton={false}
       mainClassName="flex flex-col gap-0 pb-5 mt-14 mb-24"
+      showAlarmButton={true}
     >
       {/* 유저 프로필 */}
       <section className="flex flex-col">
@@ -58,12 +59,6 @@ export default function User() {
               iconAlt="설정 아이콘"
               to={URL_PATHS.USER_ACCOUNT_SETTING}
               label="계정 설정"
-            />
-            <MenuItem
-              iconPath={SVG_PATHS.ALARM}
-              iconAlt="알림 아이콘"
-              to="?alarm"
-              label="알림 설정"
             />
           </menu>
         </section>

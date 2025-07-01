@@ -50,6 +50,12 @@ export const API_PATHS = {
     ADMIN: "/admin/notice",
     STATUS: (noticeId: number) => `/admin/notice/${noticeId}/status`,
   },
+  ALARM: {
+    BASE: "/notification/my",
+    UNREAD_COUNT: "/notification/my/unread/count", 
+    READ: (id: number) => `/notification/${id}/read`,
+    READ_ALL: "/notification/my/read-all",
+  },
   USER: {
     BASE: "/users",
     MY_POST: "/users/user/community-comments",
