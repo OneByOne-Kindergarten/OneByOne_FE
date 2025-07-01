@@ -1,17 +1,17 @@
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
 
+import Button from "@/components/@shared/buttons/base-button";
 import {
   Form,
+  FormControl,
+  FormField,
   FormItem,
   FormLabel,
-  FormControl,
   FormMessage,
-  FormField,
 } from "@/components/@shared/form";
 import Input from "@/components/@shared/form/input";
-import Button from "@/components/@shared/buttons/base-button";
 import { useSendEmailCertification } from "@/hooks/useAuth";
 
 const step1Schema = z.object({
@@ -72,7 +72,7 @@ export function EmailForm({
           font="md"
           disabled={!form.formState.isValid || isPending}
         >
-          {isPending ? "발송 중..." : "인증번호 발송"}
+          {isPending ? "발송 중" : "인증번호 발송"}
         </Button>
       </form>
     </Form>

@@ -52,7 +52,7 @@ export const API_PATHS = {
   },
   ALARM: {
     BASE: "/notification/my",
-    UNREAD_COUNT: "/notification/my/unread/count", 
+    UNREAD_COUNT: "/notification/my/unread/count",
     READ: (id: number) => `/notification/${id}/read`,
     READ_ALL: "/notification/my/read-all",
   },
@@ -64,6 +64,7 @@ export const API_PATHS = {
     SIGN_UP: "/users/sign-up",
     FIND_PASSWORD: "/users/email-certification",
     FIND_PASSWORD_CHECK: "/users/check-email-certification",
+    RESET_PASSWORD: "/users/temporary-password",
     WITHDRAW: "/users/withdraw",
     PASSWORD: "/users/password",
     NICKNAME: "/users/nickname",

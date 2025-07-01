@@ -34,6 +34,14 @@ export interface TokenRefreshResponse {
   refreshToken: string;
 }
 
+export interface ResetPasswordRequest {
+  email: string;
+}
+
+export interface ResetPasswordResponse {
+  message: string;
+}
+
 export interface NaverCallbackRequest {
   code: string;
   state: string;

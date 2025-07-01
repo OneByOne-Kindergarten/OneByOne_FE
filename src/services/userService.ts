@@ -1,14 +1,14 @@
-import { getDefaultStore } from "jotai/vanilla";
-import { userAtom } from "@/stores/userStore";
-import { User, UserResponse } from "@/types/userDTO";
-import { apiCall } from "@/utils/apiUtils";
 import { API_PATHS } from "@/constants/api-path";
 import { getAccessToken } from "@/services/authService";
+import { userAtom } from "@/stores/userStore";
 import {
   Shortcut,
   UpdateShortcutsRequest,
   UpdateShortcutsResponse,
 } from "@/types/homeDTO";
+import { User, UserResponse } from "@/types/userDTO";
+import { apiCall } from "@/utils/apiUtils";
+import { getDefaultStore } from "jotai/vanilla";
 
 const jotaiStore = getDefaultStore();
 
@@ -251,6 +251,6 @@ export const checkEmailCertification = async (
     return true;
   } catch (error) {
     console.error("이메일 인증 번호 검증 실패:", error);
-    return false;
+    throw error;
   }
 };

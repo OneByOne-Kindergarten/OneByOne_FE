@@ -16,18 +16,8 @@ export function useStepRenderer({ stepConfigs }: StepRendererConfig) {
     return stepConfigs[step] || { title: "" };
   };
 
-  const getStepTitle = (step: number, formData?: Record<string, unknown>) => {
+  const getStepTitle = (step: number, _formData?: Record<string, unknown>) => {
     const config = getStepConfig(step);
-
-    if (config.getSubtitle && formData) {
-      return React.createElement(
-        React.Fragment,
-        null,
-        config.title,
-        config.getSubtitle(formData)
-      );
-    }
-
     return config.title;
   };
 

@@ -1,16 +1,16 @@
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
 
+import Button from "@/components/@shared/buttons/base-button";
 import {
   Form,
-  FormItem,
   FormControl,
-  FormMessage,
   FormField,
+  FormItem,
+  FormMessage,
 } from "@/components/@shared/form";
 import Input from "@/components/@shared/form/input";
-import Button from "@/components/@shared/buttons/base-button";
 import { useCheckEmailCertification } from "@/hooks/useAuth";
 
 const step2Schema = z.object({

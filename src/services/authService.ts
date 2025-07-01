@@ -4,6 +4,8 @@ import {
   AppleCallbackRequest,
   KakaoCallbackRequest,
   NaverCallbackRequest,
+  ResetPasswordRequest,
+  ResetPasswordResponse,
   SignInRequest,
   SignInResponse,
   SignUpRequest,
@@ -228,6 +230,28 @@ export const appleCallback = async (
     return result;
   } catch (error) {
     console.error("애플 로그인 에러:", error);
+    throw error;
+  }
+};
+
+/**
+ * 임시 비밀번호 요청
+ * @param data - email
+ * @returns {Promise<ResetPasswordResponse>}
+ */
+export const resetPassword = async (
+  data: ResetPasswordRequest
+): Promise<ResetPasswordResponse> => {
+  try {
+    const result = await apiCall<ResetPasswordRequest, ResetPasswordResponse>({
+      method: "PATCH",
+      path: API_PATHS.USER.RESET_PASSWORD,
+      data,
+    });
+
+    return result;
+  } catch (error) {
+    console.error("임시 비밀번호 요청 에러:", error);
     throw error;
   }
 };

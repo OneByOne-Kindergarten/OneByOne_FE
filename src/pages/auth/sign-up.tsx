@@ -1,6 +1,7 @@
-import { SignUpRequest } from "@/types/authDTO";
-import { EmailForm, EmailFormValues } from "@/components/sign-up/EmailForm";
+import PageLayout from "@/components/@shared/layout/page-layout";
+import AuthTextLinks from "@/components/sign-in/AuthTextLinks";
 import { EmailCertificationForm } from "@/components/sign-up/EmailCertificationForm";
+import { EmailForm, EmailFormValues } from "@/components/sign-up/EmailForm";
 import {
   PasswordForm,
   PasswordFormValues,
@@ -9,13 +10,12 @@ import {
   UserInfoForm,
   UserInfoFormValues,
 } from "@/components/sign-up/UserInfoForm";
-import PageLayout from "@/components/@shared/layout/page-layout";
-import AuthTextLinks from "@/components/sign-in/AuthTextLinks";
 import { URL_PATHS } from "@/constants/url-path";
 import { useSignUp } from "@/hooks/useAuth";
-import { useStepNavigation } from "@/hooks/useStepNavigation";
 import { useFormData } from "@/hooks/useFormData";
+import { useStepNavigation } from "@/hooks/useStepNavigation";
 import { useStepRenderer } from "@/hooks/useStepRenderer";
+import { SignUpRequest } from "@/types/authDTO";
 
 type SignUpFormData = {
   email: string;
@@ -61,9 +61,10 @@ export default function SignUp() {
     maxStep: 4,
   });
   const { formData, updateFormData } = useFormData<SignUpFormData>({});
-  const { getStepTitle, shouldShowSignInLink, renderStep } = useStepRenderer({
-    stepConfigs: SIGNUP_STEP_CONFIG,
-  });
+  const { getStepTitle, getStepSubtitle, shouldShowSignInLink, renderStep } =
+    useStepRenderer({
+      stepConfigs: SIGNUP_STEP_CONFIG,
+    });
 
   const stepHandlers = {
     1: (data: EmailFormValues) => {
@@ -113,7 +114,10 @@ export default function SignUp() {
       hasBackButton={true}
       onBackButtonClick={goToPreviousStep}
     >
-      <h1 className="text-center text-lg">{getStepTitle(step, formData)}</h1>
+      <section className="text-center text-lg">
+        <h1>{getStepTitle(step, formData)}</h1>
+        {getStepSubtitle(step, formData)}
+      </section>
       <section className="flex flex-col gap-9 px-5">
         {renderStep(step, stepComponents)}
       </section>
