@@ -1,17 +1,17 @@
-import {
-  useMutation,
-  useQueryClient,
-  useSuspenseQuery,
-  useQuery,
-} from "@tanstack/react-query";
+import { toast } from "@/hooks/useToast";
 import {
   getAlarms,
   getUnreadAlarmCount,
   readAlarm,
   readAllAlarms,
 } from "@/services/alarmService";
-import { toast } from "@/hooks/useToast";
 import type { Alarm } from "@/types/alarmDTO";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
 
 // 알림 데이터와 계산된 상태를 반환하는 메인 훅
 export const useAlarms = () => {
@@ -22,7 +22,8 @@ export const useAlarms = () => {
   });
 
   // 읽지 않은 알림 개수 계산
-  const unreadCount = query.data?.data?.filter((alarm: Alarm) => !alarm.isRead).length || 0;
+  const unreadCount =
+    query.data?.data?.filter((alarm: Alarm) => !alarm.isRead).length || 0;
   const hasUnreadAlarms = unreadCount > 0;
 
   return {
@@ -35,12 +36,14 @@ export const useAlarms = () => {
 // 헤더 버튼용 가벼운 훅 (알림 데이터가 없으면 개수만 조회)
 export const useUnreadAlarmCount = () => {
   const queryClient = useQueryClient();
-  
+
   // 캐시된 알림 데이터가 있으면 거기서 계산
   const cachedAlarms = queryClient.getQueryData<{ data: Alarm[] }>(["alarms"]);
-  
+
   if (cachedAlarms?.data) {
-    const unreadCount = cachedAlarms.data.filter(alarm => !alarm.isRead).length;
+    const unreadCount = cachedAlarms.data.filter(
+      (alarm) => !alarm.isRead
+    ).length;
     return {
       data: { data: unreadCount },
       isLoading: false,
@@ -65,7 +68,7 @@ export const useReadAlarm = () => {
       // Optimistic update
       await queryClient.cancelQueries({ queryKey: ["alarms"] });
       const previousAlarms = queryClient.getQueryData(["alarms"]);
-      
+
       queryClient.setQueryData(["alarms"], (old: any) => {
         if (!old?.data) return old;
         return {
@@ -78,7 +81,7 @@ export const useReadAlarm = () => {
 
       return { previousAlarms };
     },
-    onError: (err, alarmId, context) => {
+    onError: (_err, _alarmId, context) => {
       // 에러 시 롤백
       if (context?.previousAlarms) {
         queryClient.setQueryData(["alarms"], context.previousAlarms);
@@ -106,7 +109,7 @@ export const useReadAllAlarms = () => {
       // Optimistic update
       await queryClient.cancelQueries({ queryKey: ["alarms"] });
       const previousAlarms = queryClient.getQueryData(["alarms"]);
-      
+
       queryClient.setQueryData(["alarms"], (old: any) => {
         if (!old?.data) return old;
         return {
@@ -124,7 +127,7 @@ export const useReadAllAlarms = () => {
         variant: "default",
       });
     },
-    onError: (err, variables, context) => {
+    onError: (_err, _variables, context) => {
       if (context?.previousAlarms) {
         queryClient.setQueryData(["alarms"], context.previousAlarms);
       }
@@ -139,4 +142,4 @@ export const useReadAllAlarms = () => {
       queryClient.invalidateQueries({ queryKey: ["unread-alarm-count"] });
     },
   });
-}; 
+};
