@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import { URL_PATHS } from "@/constants/url-path";
 import { SVG_PATHS } from "@/constants/assets-path";
+import { URL_PATHS } from "@/constants/url-path";
 import {
   getPathWithoutParams,
   getUrlKeyFromPath,
@@ -68,6 +68,7 @@ const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
   REVIEW_EDITOR: ["REVIEW_EDITOR"],
   SIGNIN: ["SIGNIN"],
   SIGNUP: ["SIGNUP"],
+  FIND_PASSWORD: ["FIND_PASSWORD"],
   INQUIRY_PUBLIC: ["INQUIRY_PUBLIC"],
   INQUIRY_MY: ["INQUIRY_MY"],
   INQUIRY_EDITOR: ["INQUIRY_EDITOR"],

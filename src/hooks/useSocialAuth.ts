@@ -94,6 +94,8 @@ export const extractAuthParams = () => {
   return {
     code: urlParams.get("code"),
     state: urlParams.get("state"),
+    error: urlParams.get("error"),
+    error_description: urlParams.get("error_description"),
   };
 };
 
