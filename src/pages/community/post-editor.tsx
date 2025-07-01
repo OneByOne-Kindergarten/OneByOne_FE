@@ -1,36 +1,36 @@
-import { useState, useEffect, useCallback, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 
-import PageLayout from "@/components/@shared/layout/page-layout";
+import Button from "@/components/@shared/buttons/base-button";
 import {
   Form,
+  FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormControl,
   FormMessage,
 } from "@/components/@shared/form";
 import Input from "@/components/@shared/form/input";
 import Textarea from "@/components/@shared/form/textarea";
-import Button from "@/components/@shared/buttons/base-button";
+import PageLayout from "@/components/@shared/layout/page-layout";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 
 import { URL_PATHS } from "@/constants/url-path";
+import { useCreatePost } from "@/hooks/useCommunity";
+import { CreateCommunityPostRequest } from "@/types/communityDTO";
 import {
-  getCommunityCategoryName,
+  getCategoryOptions,
+  getValidCategoryName,
+} from "@/utils/categoryUtils";
+import {
   getCommunityCategory,
+  getCommunityCategoryName,
   setCommunityCategory,
   setCommunityCategoryName,
 } from "@/utils/lastVisitedPathUtils";
-import {
-  getValidCategoryName,
-  getCategoryOptions,
-} from "@/utils/categoryUtils";
-import { useCreatePost } from "@/hooks/useCommunity";
-import { CreateCommunityPostRequest } from "@/types/communityDTO";
 
 const postSchema = z.object({
   title: z.string().min(1, "제목을 입력해주세요"),
@@ -182,7 +182,7 @@ export default function PostEditorPage() {
       wrapperBg="white"
     >
       {isPending ? (
-        <LoadingSpinner />
+        <LoadingSpinner type="page" />
       ) : (
         <section className="flex flex-col gap-5 p-5">
           <h2 className="text-base font-semibold text-primary-dark01">

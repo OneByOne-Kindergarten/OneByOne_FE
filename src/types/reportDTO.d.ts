@@ -1,4 +1,3 @@
-export type ReportTargetType = "REVIEW" | "POST" | "COMMENT";
 export type ReportStatus = "PENDING" | "PROCESSED" | "REJECTED" | "YET";
 
 export interface ReportRequest {

@@ -33,12 +33,14 @@ export const API_PATHS = {
       DETAIL: (id: number) => `/community/${id}`,
       LIKE: (id: number) => `/community/${id}/like`,
       TOP: "/community/top",
+      DELETE: (id: number) => `/community/${id}`,
     },
     COMMENT: {
       BASE: (postId: number) => `/community/${postId}/comment`,
       ALL: (postId: number) => `/community/${postId}/comment/all`,
       RECOMMEND: (postId: number, commentId: number) =>
         `/community/${postId}/comment/replies/${commentId}`,
+      DELETE: (commentId: number) => `/comment/${commentId}`,
     },
   },
   FAVORITE: {

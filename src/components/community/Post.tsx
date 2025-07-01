@@ -1,12 +1,14 @@
-import Badge from "@/components/@shared/badge";
 import AlertCard from "@/components/@shared/alert/alert-card";
+import Badge from "@/components/@shared/badge";
 import LikeToggle from "@/components/@shared/buttons/like-toggle";
-import ChatCount from "@/components/community/ChatCount";
 import ShareButton from "@/components/@shared/buttons/share-button";
-import ReportDropDown from "@/components/@shared/drop-down/report-drop-down";
+import ActionDropDown from "@/components/@shared/drop-down/report-drop-down";
+import ChatCount from "@/components/community/ChatCount";
+import { useNavigate } from "react-router-dom";
 
 import { SVG_PATHS } from "@/constants/assets-path";
 import { CATEGORY_LABELS } from "@/constants/community";
+import { URL_PATHS } from "@/constants/url-path";
 import { CommunityPostItem, LikeStatusData } from "@/types/communityDTO";
 import { getCategoryLabel } from "@/utils/categoryUtils";
 import { formatDate } from "@/utils/dateUtils";
@@ -24,6 +26,12 @@ export default function Post({
   isLiking: boolean;
   handleLikeToggle: () => void;
 }) {
+  const navigate = useNavigate();
+
+  const handleDeleteSuccess = () => {
+    navigate(URL_PATHS.COMMUNITY);
+  };
+
   return (
     <article className="flex flex-col gap-7 bg-white px-5 pb-4 pt-7">
       <section className="flex flex-col gap-2.5">
@@ -58,7 +66,12 @@ export default function Post({
               </ul>
             </div>
           </div>
-          <ReportDropDown targetId={post.id} targetType="POST" />
+          <ActionDropDown
+            targetId={post.id}
+            targetType="POST"
+            authorNickname={post.userNickname}
+            onDeleteSuccess={handleDeleteSuccess}
+          />
         </div>
       </section>
       <section className="flex flex-col gap-4 text-primary-dark01">

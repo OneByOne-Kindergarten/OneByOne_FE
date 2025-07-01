@@ -1,31 +1,33 @@
-import {
-  useMutation,
-  useQuery,
-  useSuspenseInfiniteQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
 import { toast } from "@/hooks/useToast";
 import {
-  getCommunityPostDetail,
-  getPopularPosts,
-  getCommunityPosts,
-  createCommunityPost,
-  toggleLike,
-  getLikeStatus,
-  getComments,
   createComment,
+  createCommunityPost,
+  deleteComment,
+  deleteCommunityPost,
+  getComments,
+  getCommunityPostDetail,
+  getCommunityPosts,
+  getLikeStatus,
+  getPopularPosts,
+  toggleLike,
 } from "@/services/communityService";
 import {
+  CommentListParams,
+  CommentListResponse,
   CommunityPostDetailResponse,
-  PopularPostsResponse,
+  CreateCommentRequest,
+  CreateCommentResponse,
   CreateCommunityPostRequest,
   CreateCommunityPostResponse,
   LikeStatusResponse,
-  CommentListResponse,
-  CommentListParams,
-  CreateCommentRequest,
-  CreateCommentResponse,
+  PopularPostsResponse,
 } from "@/types/communityDTO";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  useSuspenseInfiniteQuery,
+} from "@tanstack/react-query";
 
 export const usePopularPosts = () => {
   return useQuery<PopularPostsResponse>({
@@ -106,13 +108,13 @@ export const useCreatePost = () => {
       });
 
       toast({
-        title: "게시글을 등록했습니다.",
+        title: "게시글 작성 완료",
         variant: "default",
       });
     },
     onError: (error) => {
       toast({
-        title: "게시글 등록에 실패했습니다.",
+        title: "게시글 작성 실패",
         variant: "destructive",
       });
       console.error("게시글 생성 에러:", error);
@@ -129,7 +131,7 @@ export const useToggleLike = () => {
     mutationFn: (postId) => toggleLike(postId),
     onError: (error) => {
       toast({
-        title: "좋아요 토글에 실패했습니다.",
+        title: "좋아요 오류",
         description: error.message,
         variant: "destructive",
       });
@@ -200,7 +202,61 @@ export const useCreateComment = () => {
       console.error("댓글 작성 에러:", error);
 
       toast({
-        title: "댓글 등록에 실패했습니다.",
+        title: "댓글 작성 실패",
+        variant: "destructive",
+      });
+    },
+  });
+};
+
+/**
+ * 게시글 삭제
+ */
+export const useDeletePost = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<void, Error, number>({
+    mutationFn: deleteCommunityPost,
+    onSuccess: () => {
+      // 모든 커뮤니티 게시글 관련 쿼리를 무효화
+      queryClient.invalidateQueries({
+        queryKey: ["communityPosts"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["popularPosts"],
+      });
+
+      toast({
+        title: "게시글 삭제 완료",
+        variant: "default",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "게시글 삭제 실패",
+        variant: "destructive",
+      });
+    },
+  });
+};
+
+/**
+ * 댓글 삭제
+ */
+export const useDeleteComment = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<void, Error, { commentId: number; postId: number }>({
+    mutationFn: ({ commentId }) => deleteComment(commentId),
+    onSuccess: (_, variables) => {
+      // 해당 게시글의 댓글 목록을 무효화
+      queryClient.invalidateQueries({
+        queryKey: ["comments", variables.postId],
+      });
+    },
+    onError: () => {
+      toast({
+        title: "댓글 삭제 실패",
         variant: "destructive",
       });
     },

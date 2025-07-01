@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 
 import Badge from "@/components/@shared/badge";
-import ReportDropDown from "@/components/@shared/drop-down/report-drop-down";
+import ActionDropDown from "@/components/@shared/drop-down/report-drop-down";
 import { SVG_PATHS } from "@/constants/assets-path";
-import { formatDate } from "@/utils/dateUtils";
 import type { CommunityPostItem } from "@/types/communityDTO";
+import { formatDate } from "@/utils/dateUtils";
 
 interface PostCardProps {
   post: CommunityPostItem;
@@ -36,7 +36,11 @@ export default function PostCard({
             </Badge>
           </div>
           {showDropdown && (
-            <ReportDropDown targetId={post.id} targetType="POST" />
+            <ActionDropDown
+              targetId={post.id}
+              targetType="POST"
+              authorNickname={post.userNickname}
+            />
           )}
         </div>
         <Link to={`/community/${post.id}`}>

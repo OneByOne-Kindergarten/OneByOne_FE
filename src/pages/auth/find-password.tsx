@@ -26,7 +26,7 @@ const FIND_PASSWORD_STEP_CONFIGS = {
     getSubtitle: (data: Record<string, unknown>) => (
       <p className="mt-2 text-sm text-primary-normal03">
         {data.email as string}로 발송되었습니다. <br />
-        인증 후 임시 비밀번호를 발급해드릴게요.
+        인증 후 메일로 임시 비밀번호를 발급해드릴게요.
       </p>
     ),
   },

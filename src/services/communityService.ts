@@ -1,19 +1,19 @@
-import { apiCall } from "@/utils/apiUtils";
 import { API_PATHS } from "@/constants/api-path";
 import {
+  CommentListParams,
+  CommentListResponse,
   CommunityPostData,
   CommunityPostDetailResponse,
-  PopularPostsResponse,
-  CreateCommunityPostRequest,
-  CreateCommunityPostResponse,
-  LikeStatusResponse,
-  LikeStatusRequest,
-  CommentListResponse,
-  CommentListParams,
   CommunityPostParams,
   CreateCommentRequest,
   CreateCommentResponse,
+  CreateCommunityPostRequest,
+  CreateCommunityPostResponse,
+  LikeStatusRequest,
+  LikeStatusResponse,
+  PopularPostsResponse,
 } from "@/types/communityDTO";
+import { apiCall } from "@/utils/apiUtils";
 
 /**
  * 인기 게시글 조회
@@ -170,6 +170,30 @@ export const createComment = async (
     method: "POST",
     path: API_PATHS.COMMUNITY.COMMENT.BASE(postId),
     data: commentData,
+    withAuth: true,
+  });
+};
+
+/**
+ * 게시글 삭제
+ * @param postId 삭제할 게시글 ID
+ */
+export const deleteCommunityPost = async (postId: number): Promise<void> => {
+  return apiCall<void, void>({
+    method: "DELETE",
+    path: API_PATHS.COMMUNITY.POST.DELETE(postId),
+    withAuth: true,
+  });
+};
+
+/**
+ * 댓글 삭제
+ * @param commentId 삭제할 댓글 ID
+ */
+export const deleteComment = async (commentId: number): Promise<void> => {
+  return apiCall<void, void>({
+    method: "DELETE",
+    path: API_PATHS.COMMUNITY.COMMENT.DELETE(commentId),
     withAuth: true,
   });
 };

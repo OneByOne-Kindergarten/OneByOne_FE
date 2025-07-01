@@ -1,14 +1,20 @@
+import ActionDropDown from "@/components/@shared/drop-down/report-drop-down";
 import CommentUserInfo from "@/components/community/CommentUserInfo";
-import { formatDate } from "@/utils/dateUtils";
 import { SVG_PATHS } from "@/constants/assets-path";
 import type { CommentItem } from "@/types/communityDTO";
+import { formatDate } from "@/utils/dateUtils";
 
 interface ReplyCardProps {
   reply: CommentItem;
   postAuthor: string;
+  postId: number;
 }
 
-export default function ReplyCard({ reply, postAuthor }: ReplyCardProps) {
+export default function ReplyCard({
+  reply,
+  postAuthor,
+  postId,
+}: ReplyCardProps) {
   return (
     <div className="border-b px-4 py-5">
       <div className="flex flex-1 items-start gap-2.5">
@@ -21,12 +27,11 @@ export default function ReplyCard({ reply, postAuthor }: ReplyCardProps) {
         <div className="flex flex-1 flex-col gap-2">
           <div className="flex justify-between">
             <CommentUserInfo reply={reply} postAuthor={postAuthor} />
-            <img
-              src={SVG_PATHS.KEBAB}
-              alt="커뮤니티 게시글 옵션 메뉴"
-              width="20"
-              height="20"
-              className="mb-auto"
+            <ActionDropDown
+              targetId={reply.id}
+              targetType="COMMENT"
+              authorNickname={reply.nickName}
+              postId={postId}
             />
           </div>
           <p className="whitespace-pre-wrap text-sm text-primary-dark01">

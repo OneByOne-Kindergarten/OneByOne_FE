@@ -1,10 +1,10 @@
+import Empty from "@/components/@shared/layout/empty";
+import CommentCard from "@/components/community/CommentCard";
+import ReplyCard from "@/components/community/ReplyCard";
+import { useComments } from "@/hooks/useCommunity";
+import { CommunityPostItem } from "@/types/communityDTO";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import Empty from "@/components/@shared/layout/empty";
-import ReplyCard from "@/components/community/ReplyCard";
-import CommentCard from "@/components/community/CommentCard";
-import { CommunityPostItem } from "@/types/communityDTO";
-import { useComments } from "@/hooks/useCommunity";
 
 interface CommentListProps {
   postId: number;
@@ -56,11 +56,16 @@ export default function CommentList({
             page.content.map((comment) => (
               <div key={comment.id}>
                 {comment.reply ? (
-                  <ReplyCard reply={comment} postAuthor={post.userNickname} />
+                  <ReplyCard
+                    reply={comment}
+                    postAuthor={post.userNickname}
+                    postId={postId}
+                  />
                 ) : (
                   <CommentCard
                     comment={comment}
                     postAuthor={post.userNickname}
+                    postId={postId}
                     onReply={() => handleReply(comment.nickName, comment.id)}
                   />
                 )}
