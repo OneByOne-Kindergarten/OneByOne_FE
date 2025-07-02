@@ -1,14 +1,14 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { FixedSizeList as List } from "react-window";
 
-import PostCard from "@/components/community/PostCard";
 import Empty from "@/components/@shared/layout/empty";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
+import PostCard from "@/components/community/PostCard";
 import { useCommunityPosts } from "@/hooks/useCommunity";
-import { getCategoryLabel } from "@/utils/categoryUtils";
-import { CommunityPostItem } from "@/types/communityDTO";
 import styles from "@/styles/scroll.module.css";
+import { CommunityPostItem } from "@/types/communityDTO";
+import { getCategoryLabel } from "@/utils/categoryUtils";
 
 interface PostListProps {
   type: "teacher" | "pre-teacher";
@@ -63,13 +63,29 @@ export default function PostList({
     rootMargin: "0px 0px 200px 0px",
   });
 
-  const categoryParams = categoryName !== "all" ? { categoryName } : undefined;
+  // useMemo를 사용하여 options 객체를 메모이제이션
+  const queryOptions = useMemo(() => {
+    const options: {
+      categoryName?: string;
+      title?: string;
+      content?: string;
+      userName?: string;
+    } = {};
 
-  const searchParams = searchQuery
-    ? searchType === "title"
-      ? { title: searchQuery }
-      : { content: searchQuery }
-    : undefined;
+    if (categoryName !== "all") {
+      options.categoryName = categoryName;
+    }
+
+    if (searchQuery) {
+      if (searchType === "title") {
+        options.title = searchQuery;
+      } else {
+        options.content = searchQuery;
+      }
+    }
+
+    return options;
+  }, [categoryName, searchQuery, searchType]);
 
   const {
     data: communityPostsData,
@@ -80,10 +96,7 @@ export default function PostList({
   } = useCommunityPosts(
     10,
     type === "teacher" ? "TEACHER" : "PROSPECTIVE_TEACHER",
-    {
-      ...categoryParams,
-      ...searchParams,
-    }
+    queryOptions
   );
 
   // 창 크기 변경 시 높이 업데이트

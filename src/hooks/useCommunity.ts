@@ -1,3 +1,10 @@
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  useSuspenseInfiniteQuery,
+} from "@tanstack/react-query";
+
 import { toast } from "@/hooks/useToast";
 import {
   createComment,
@@ -22,19 +29,13 @@ import {
   LikeStatusResponse,
   PopularPostsResponse,
 } from "@/types/communityDTO";
-import {
-  useMutation,
-  useQuery,
-  useQueryClient,
-  useSuspenseInfiniteQuery,
-} from "@tanstack/react-query";
 
 export const usePopularPosts = () => {
   return useQuery<PopularPostsResponse>({
     queryKey: ["popularPosts"],
     queryFn: getPopularPosts,
-    staleTime: 1000 * 60 * 15, // 15분
-    gcTime: 1000 * 60 * 30, // 30분
+    staleTime: 1000 * 60 * 20,
+    gcTime: 1000 * 60 * 30,
   });
 };
 
@@ -48,17 +49,19 @@ export const useCommunityPosts = (
     userName?: string;
   }
 ) => {
-  const queryParams = {
-    pageSize,
+  // queryKey를 안정적으로 생성하기 위해 문자열 배열로 변경
+  const queryKey = [
+    "communityPosts",
     category,
-    categoryName: options?.categoryName,
-    title: options?.title,
-    content: options?.content,
-    userName: options?.userName,
-  };
+    pageSize.toString(),
+    options?.categoryName || "all",
+    options?.title || "",
+    options?.content || "",
+    options?.userName || "",
+  ];
 
   return useSuspenseInfiniteQuery({
-    queryKey: ["communityPosts", queryParams],
+    queryKey,
     queryFn: ({ pageParam = 0 }) =>
       getCommunityPosts({
         page: pageParam,
@@ -74,9 +77,8 @@ export const useCommunityPosts = (
       return lastPage.pageNumber + 1;
     },
     initialPageParam: 0,
-    refetchOnMount: true,
-    staleTime: 1000 * 60 * 1, // 1분
-    gcTime: 1000 * 60 * 5, // 5분
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 10,
   });
 };
 
@@ -102,40 +104,35 @@ export const useCreatePost = () => {
   >({
     mutationFn: createCommunityPost,
     onSuccess: () => {
-      queryClient.refetchQueries({
+      queryClient.invalidateQueries({
         queryKey: ["communityPosts"],
-        type: "active",
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["popularPosts"],
       });
 
       toast({
-        title: "게시글 작성 완료",
+        title: "게시글 등록 완료",
         variant: "default",
       });
     },
-    onError: (error) => {
+    onError: () => {
       toast({
-        title: "게시글 작성 실패",
+        title: "게시글 등록 실패",
         variant: "destructive",
       });
-      console.error("게시글 생성 에러:", error);
     },
   });
 };
 
-// TODO: 게시글 수정
-
-// TODO: 게시글 삭제
-
 export const useToggleLike = () => {
   return useMutation<LikeStatusResponse, Error, number>({
     mutationFn: (postId) => toggleLike(postId),
-    onError: (error) => {
+    onError: () => {
       toast({
         title: "좋아요 오류",
-        description: error.message,
         variant: "destructive",
       });
-      console.error("좋아요 토글 에러:", error);
     },
   });
 };
@@ -167,8 +164,8 @@ export const useComments = (params: CommentListParams) => {
     getNextPageParam: (lastPage): number | undefined =>
       lastPage.last ? undefined : lastPage.pageNumber + 1,
     initialPageParam: startPage,
-    staleTime: 1000 * 60, // 1분
-    gcTime: 1000 * 60 * 5, // 5분
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 10,
   });
 
   // 댓글 작성 후 댓글을 다시 불러오기 위한 함수
@@ -193,14 +190,11 @@ export const useCreateComment = () => {
   return useMutation<CreateCommentResponse, Error, CreateCommentRequest>({
     mutationFn: createComment,
     onSuccess: (_, variables) => {
-      // 게시글 및 댓글 관련 모든 쿼리를 한 번에 무효화
       queryClient.invalidateQueries({
         queryKey: ["comments", variables.postId],
       });
     },
-    onError: (error) => {
-      console.error("댓글 작성 에러:", error);
-
+    onError: () => {
       toast({
         title: "댓글 작성 실패",
         variant: "destructive",
@@ -218,7 +212,6 @@ export const useDeletePost = () => {
   return useMutation<void, Error, number>({
     mutationFn: deleteCommunityPost,
     onSuccess: () => {
-      // 모든 커뮤니티 게시글 관련 쿼리를 무효화
       queryClient.invalidateQueries({
         queryKey: ["communityPosts"],
       });
@@ -249,7 +242,6 @@ export const useDeleteComment = () => {
   return useMutation<void, Error, { commentId: number; postId: number }>({
     mutationFn: ({ commentId }) => deleteComment(commentId),
     onSuccess: (_, variables) => {
-      // 해당 게시글의 댓글 목록을 무효화
       queryClient.invalidateQueries({
         queryKey: ["comments", variables.postId],
       });

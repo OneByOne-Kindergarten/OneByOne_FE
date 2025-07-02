@@ -1,20 +1,19 @@
-import { useEffect, useRef } from "react";
-import { useQueryClient } from "@tanstack/react-query";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
-import NavBar from "@/components/@shared/nav/nav-bar";
+import PostButton from "@/components/@shared/buttons/post-button";
 import PageLayout from "@/components/@shared/layout/page-layout";
+import NavBar from "@/components/@shared/nav/nav-bar";
 import CategorySelector from "@/components/community/CategorySelector";
 import PopularPostsList from "@/components/community/PopularPostsList";
 import CommunityPostsList from "@/components/community/PostList";
-import PostButton from "@/components/@shared/buttons/post-button";
 
+import { SVG_PATHS } from "@/constants/assets-path";
 import {
   PROSPECTIVE_TEACHER_CATEGORIES,
   TEACHER_CATEGORIES,
 } from "@/constants/community";
 import { setCommunityState } from "@/utils/lastVisitedPathUtils";
-import { SVG_PATHS } from "@/constants/assets-path";
 
 const communityTypeOptions = [
   {
@@ -42,11 +41,6 @@ const communityTypeOptions = [
 export default function CommunityPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
-
-  // 카테고리 변경 추적을 위한 ref
-  const prevCategoryRef = useRef<string | null>(null);
-  const prevTypeRef = useRef<string | null>(null);
 
   const communityType =
     searchParams.get("type") === "pre-teacher" ? "pre-teacher" : "teacher";
@@ -57,39 +51,14 @@ export default function CommunityPage() {
       ? PROSPECTIVE_TEACHER_CATEGORIES
       : TEACHER_CATEGORIES;
 
-  // 세션 스토리지에 위치 정보 저장 및 카테고리 변경 시 데이터 관리
+  // 세션 스토리지에 위치 정보 저장
   useEffect(() => {
     setCommunityState({
       path: `/community?type=${communityType}&category=${categoryName}`,
       category: communityType,
       communityCategoryName: categoryName,
     });
-
-    const categoryChanged = prevCategoryRef.current !== categoryName;
-    const typeChanged = prevTypeRef.current !== communityType;
-
-    prevCategoryRef.current = categoryName;
-    prevTypeRef.current = communityType;
-
-    if (categoryChanged || typeChanged) {
-      // 일반 게시글 카테고리에서 데이터 갱신
-      if (categoryName !== "top10") {
-        const queryParams = {
-          pageSize: 10,
-          category:
-            communityType === "teacher" ? "TEACHER" : "PROSPECTIVE_TEACHER",
-          categoryName: categoryName !== "all" ? categoryName : undefined,
-        };
-
-        if (categoryName === "all") {
-          queryClient.refetchQueries({
-            queryKey: ["communityPosts", queryParams],
-            exact: false,
-          });
-        }
-      }
-    }
-  }, [communityType, categoryName, queryClient]);
+  }, [communityType, categoryName]);
 
   return (
     <PageLayout
