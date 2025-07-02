@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
 import type { Shortcut } from "@/types/homeDTO";
+import { Link } from "react-router-dom";
 
 export default function ShortCutButton({ shortcut }: { shortcut: Shortcut }) {
   return (
@@ -11,8 +11,8 @@ export default function ShortCutButton({ shortcut }: { shortcut: Shortcut }) {
         <img
           src={shortcut.iconName}
           alt={`${shortcut.name} 바로가기`}
-          width={38}
-          height={42}
+          width={32}
+          height={32}
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
         />
       </Link>

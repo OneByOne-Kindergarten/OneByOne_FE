@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import PageLayout from "@/components/@shared/layout/page-layout";
-import ShortCutOption from "@/components/home/ShortCutOption";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
+import ShortCutOption from "@/components/home/ShortCutOption";
+import { shortcutOptions } from "@/constants/shortcutOptions";
+import { URL_PATHS } from "@/constants/url-path";
 import { useShortcuts } from "@/hooks/useShortcuts";
 import { useToast } from "@/hooks/useToast";
-import { URL_PATHS } from "@/constants/url-path";
-import { shortcutOptions } from "@/constants/shortcutOptions";
 import type { Shortcut } from "@/types/homeDTO";
 
 export default function ShortcutsEditorPage() {
@@ -86,7 +86,6 @@ export default function ShortcutsEditorPage() {
     setShortcuts([...shortcuts, { ...preset }]);
   };
 
-  // 바로가기가 이미 추가되었는지 확인
   const isShortcutAdded = (link: string) => {
     return shortcuts.some((shortcut) => shortcut.link === link);
   };
