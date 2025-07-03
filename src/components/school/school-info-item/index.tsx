@@ -17,7 +17,7 @@ export default function SchoolInfoItem({
         <div>
           <img src={icon} alt={altText} width="18" height="18" />
         </div>
-        <div className="flex flex-1 flex-col gap-0.5">
+        <div className="flex min-w-0 flex-1 flex-col gap-0.5">
           <h3 className="text-sm font-medium text-primary-normal03">{title}</h3>
           {typeof children === "string" ? (
             <p className="line-clamp-1 text-base font-semibold text-primary-dark02">

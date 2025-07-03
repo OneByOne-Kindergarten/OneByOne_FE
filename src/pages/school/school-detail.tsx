@@ -205,7 +205,7 @@ export default function SchoolDetailPage() {
               >
                 <Link
                   to={kindergarten.homepage}
-                  className="line-clamp-1 font-semibold text-primary-dark02 hover:underline"
+                  className="block truncate font-semibold text-primary-dark02 hover:underline"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
