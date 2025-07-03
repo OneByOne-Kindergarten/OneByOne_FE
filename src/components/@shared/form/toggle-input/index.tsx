@@ -3,6 +3,7 @@ import * as React from "react";
 import Toggle from "@/components/@shared/buttons/base-toggle";
 import { SVG_PATHS } from "@/constants/assets-path";
 import { cn } from "@/utils/cn";
+import { filterPasswordInput } from "@/utils/validationSchemas";
 
 export interface ToggleInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -11,11 +12,56 @@ export interface ToggleInputProps
 }
 
 const ToggleInput = React.forwardRef<HTMLInputElement, ToggleInputProps>(
-  ({ className, type, iconClassName, error, ...props }, ref) => {
+  ({ className, type, iconClassName, error, onChange, ...props }, ref) => {
     const [showPassword, setShowPassword] = React.useState(false);
+    const [isComposing, setIsComposing] = React.useState(false);
 
     const togglePasswordVisibility = () => {
       setShowPassword(!showPassword);
+    };
+
+    // IME 조합 시작
+    const handleCompositionStart = () => {
+      setIsComposing(true);
+    };
+
+    // IME 조합 완료
+    const handleCompositionEnd = (
+      e: React.CompositionEvent<HTMLInputElement>
+    ) => {
+      setIsComposing(false);
+      // 조합 완료 후 필터링 적용
+      const filteredValue = filterPasswordInput(e.currentTarget.value);
+      if (filteredValue !== e.currentTarget.value) {
+        const filteredEvent = {
+          ...e,
+          target: {
+            ...e.currentTarget,
+            value: filteredValue,
+          },
+        } as React.ChangeEvent<HTMLInputElement>;
+        onChange?.(filteredEvent);
+      }
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (!isComposing) {
+        const filteredValue = filterPasswordInput(e.target.value);
+
+        if (filteredValue !== e.target.value) {
+          const filteredEvent = {
+            ...e,
+            target: {
+              ...e.target,
+              value: filteredValue,
+            },
+          };
+          onChange?.(filteredEvent);
+          return;
+        }
+      }
+
+      onChange?.(e);
     };
 
     return (
@@ -28,6 +74,9 @@ const ToggleInput = React.forwardRef<HTMLInputElement, ToggleInputProps>(
             className
           )}
           ref={ref}
+          onChange={handleChange}
+          onCompositionStart={handleCompositionStart}
+          onCompositionEnd={handleCompositionEnd}
           {...props}
         />
         <Toggle

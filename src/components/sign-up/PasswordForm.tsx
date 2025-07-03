@@ -5,28 +5,16 @@ import * as z from "zod";
 import Button from "@/components/@shared/buttons/base-button";
 import {
   Form,
+  FormControl,
+  FormField,
   FormItem,
   FormLabel,
-  FormControl,
   FormMessage,
-  FormField,
 } from "@/components/@shared/form";
 import ToggleInput from "@/components/@shared/form/toggle-input";
+import { passwordWithConfirmSchema } from "@/utils/validationSchemas";
 
-const step3Schema = z
-  .object({
-    password: z
-      .string()
-      .min(6, "비밀번호는 최소 6자 이상이어야 합니다.")
-      .max(20, "비밀번호는 최대 20자까지 가능합니다."),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "비밀번호가 일치하지 않습니다.",
-    path: ["confirmPassword"],
-  });
-
-export type PasswordFormValues = z.infer<typeof step3Schema>;
+export type PasswordFormValues = z.infer<typeof passwordWithConfirmSchema>;
 
 export function PasswordForm({
   onNext,
@@ -36,7 +24,7 @@ export function PasswordForm({
   isLoading?: boolean;
 }) {
   const form = useForm<PasswordFormValues>({
-    resolver: zodResolver(step3Schema),
+    resolver: zodResolver(passwordWithConfirmSchema),
     defaultValues: { password: "", confirmPassword: "" },
     mode: "onChange",
   });

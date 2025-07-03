@@ -5,29 +5,25 @@ import { z } from "zod";
 import Button from "@/components/@shared/buttons/base-button";
 import {
   Form,
-  FormLabel,
+  FormControl,
   FormField,
   FormItem,
-  FormControl,
+  FormLabel,
   FormMessage,
 } from "@/components/@shared/form";
-import Input from "@/components/@shared/form/input";
+import ToggleInput from "@/components/@shared/form/toggle-input";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import { URL_PATHS } from "@/constants/url-path";
 import { useUpdatePassword } from "@/hooks/useAuth";
+import { passwordChangeSchema } from "@/utils/validationSchemas";
 
-const passwordSchema = z.object({
-  currentPassword: z.string().min(1, "현재 비밀번호를 입력해주세요."),
-  newPassword: z.string().min(1, "새 비밀번호를 입력해주세요."),
-});
-
-type PasswordFormData = z.infer<typeof passwordSchema>;
+type PasswordFormData = z.infer<typeof passwordChangeSchema>;
 
 export default function PasswordEditorPage() {
   const { mutate: updatePassword, isPending } = useUpdatePassword();
 
   const form = useForm<PasswordFormData>({
-    resolver: zodResolver(passwordSchema),
+    resolver: zodResolver(passwordChangeSchema),
     defaultValues: {
       currentPassword: "",
       newPassword: "",
@@ -64,15 +60,15 @@ export default function PasswordEditorPage() {
             <FormField
               control={form.control}
               name="currentPassword"
-              render={({ field }) => (
+              render={({ field, fieldState }) => (
                 <FormItem>
                   <FormLabel className="font-semibold text-primary-dark01">
                     현재 비밀번호
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      type="password"
+                    <ToggleInput
                       placeholder="현재 비밀번호를 입력해주세요"
+                      error={!!fieldState.error}
                       {...field}
                     />
                   </FormControl>
@@ -84,15 +80,15 @@ export default function PasswordEditorPage() {
             <FormField
               control={form.control}
               name="newPassword"
-              render={({ field }) => (
+              render={({ field, fieldState }) => (
                 <FormItem>
                   <FormLabel className="font-semibold text-primary-dark01">
                     새 비밀번호
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      type="password"
+                    <ToggleInput
                       placeholder="새 비밀번호를 입력해주세요"
+                      error={!!fieldState.error}
                       {...field}
                     />
                   </FormControl>
