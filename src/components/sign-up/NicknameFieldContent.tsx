@@ -1,7 +1,7 @@
 import { clsx } from "clsx";
 import {
+  ControllerFieldState,
   ControllerRenderProps,
-  FieldError,
   FieldPath,
   FieldValues,
 } from "react-hook-form";
@@ -11,7 +11,7 @@ import { SVG_PATHS } from "@/constants/assets-path";
 
 interface NicknameFieldContentProps<T extends FieldValues = FieldValues> {
   field: ControllerRenderProps<T, FieldPath<T>>;
-  error?: FieldError;
+  fieldState: ControllerFieldState;
   isRandomNickname: boolean;
   placeholder: string;
 }
@@ -37,11 +37,16 @@ const getCheckIconProps = (
 
 export function NicknameFieldContent<T extends FieldValues = FieldValues>({
   field,
-  error,
+  fieldState,
   isRandomNickname,
   placeholder,
 }: NicknameFieldContentProps<T>) {
-  const isManualValid = !isRandomNickname && field.value && !error;
+  const isManualValid =
+    !isRandomNickname &&
+    field.value &&
+    !fieldState.invalid &&
+    !fieldState.error;
+
   const checkIconProps = getCheckIconProps(isRandomNickname, isManualValid);
   const inputClassName = getInputStyles(isRandomNickname, isManualValid);
 
@@ -51,7 +56,7 @@ export function NicknameFieldContent<T extends FieldValues = FieldValues>({
         <Input
           className={inputClassName}
           placeholder={placeholder}
-          error={!!error}
+          error={!!fieldState.error}
           disabled={isRandomNickname}
           {...field}
         />

@@ -40,38 +40,36 @@ export function NicknameField<T extends FieldValues>({
     <FormField
       control={control}
       name={name}
-      render={({ field, fieldState }) => {
-        return (
-          <FormItem>
-            <div className="flex items-center justify-between">
-              <FormLabel className="font-semibold text-primary-dark01">
-                {label}
-              </FormLabel>
+      render={({ field, fieldState }) => (
+        <FormItem>
+          <div className="flex items-center justify-between">
+            <FormLabel className="font-semibold text-primary-dark01">
+              {label}
+            </FormLabel>
 
-              <Button
-                type="button"
-                variant="transparent_gray"
-                font="sm"
-                size="sm"
-                onClick={
-                  isRandomNickname ? handleManualNickname : handleRandomNickname
-                }
-              >
-                <p>{isRandomNickname ? "직접 설정" : "랜덤 설정"}</p>
-              </Button>
-            </div>
+            <Button
+              type="button"
+              variant="transparent_gray"
+              font="sm"
+              size="sm"
+              onClick={
+                isRandomNickname ? handleManualNickname : handleRandomNickname
+              }
+            >
+              <p>{isRandomNickname ? "직접 설정" : "랜덤 설정"}</p>
+            </Button>
+          </div>
 
-            <NicknameFieldContent
-              field={field}
-              error={fieldState.error}
-              isRandomNickname={isRandomNickname}
-              placeholder={placeholder}
-            />
+          <NicknameFieldContent
+            field={field}
+            fieldState={fieldState}
+            isRandomNickname={isRandomNickname}
+            placeholder={placeholder}
+          />
 
-            <FormMessage />
-          </FormItem>
-        );
-      }}
+          <FormMessage />
+        </FormItem>
+      )}
     />
   );
 }

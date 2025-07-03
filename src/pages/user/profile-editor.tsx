@@ -15,13 +15,7 @@ import { CommunityCategoryType } from "@/constants/community";
 import { URL_PATHS } from "@/constants/url-path";
 import { useUpdateNickname, useUpdateUserRole } from "@/hooks/useAuth";
 import { userAtom } from "@/stores/userStore";
-
-const profileSchema = z.object({
-  nickname: z
-    .string()
-    .min(2, "닉네임은 최소 2자 이상이어야 합니다.")
-    .max(10, "닉네임은 최대 10자까지 가능합니다."),
-});
+import { profileSchema } from "@/utils/validationSchemas";
 
 const roleSchema = z.object({
   role: z.enum(["TEACHER", "PROSPECTIVE_TEACHER"], {
@@ -70,6 +64,8 @@ export default function ProfileEditorPage() {
   const nicknameFormConfig = useMemo(
     () => ({
       resolver: zodResolver(profileSchema),
+      mode: "onChange" as const,
+      reValidateMode: "onChange" as const,
       defaultValues: {
         nickname: computedValues.defaultNickname,
       },
@@ -90,6 +86,7 @@ export default function ProfileEditorPage() {
   const nicknameForm = useForm<ProfileFormData>(nicknameFormConfig);
   const roleForm = useForm<RoleFormData>(roleFormConfig);
 
+  // 핸들러 함수들을 메모이제이션
   const handleNicknameUpdate = useCallback(
     (data: ProfileFormData) => {
       updateNickname(data.nickname, {
