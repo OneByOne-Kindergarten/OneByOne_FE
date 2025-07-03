@@ -190,3 +190,22 @@ export function getReviewPath(): string {
 export function setReviewPath(path: string): void {
   setPath("review", path);
 }
+
+// 스쿨 경로 상태
+export function getSchoolState(): LastVisitedPaths["school"] {
+  return getState("school");
+}
+
+export function setSchoolState(
+  state: Partial<NonNullable<LastVisitedPaths["school"]>>
+): void {
+  setState("school", state);
+}
+
+export function getSchoolPath(): string {
+  return getPath("school");
+}
+
+export function setSchoolPath(path: string): void {
+  setPath("school", path);
+}

@@ -1,19 +1,23 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-  createInquiry,
-  closeInquiry,
+  DETAIL_CACHE_CONFIG,
+  INQUIRY_CACHE_CONFIG,
+} from "@/constants/cache-config";
+import {
   answerInquiry,
-  getMyInquiries,
+  closeInquiry,
+  createInquiry,
+  getAllInquiries,
   getInquiriesByStatus,
   getInquiryById,
-  getAllInquiries,
+  getMyInquiries,
 } from "@/services/inquiryService";
 import type {
-  CreateInquiryRequest,
   AnswerInquiryRequest,
+  CreateInquiryRequest,
   InquiryResponse,
   InquiryStatus,
 } from "@/types/inquiryDTO";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "./useToast";
 
 export function useAllInquiries() {
@@ -25,6 +29,7 @@ export function useAllInquiries() {
         size: 1,
         sort: "",
       }),
+    ...INQUIRY_CACHE_CONFIG,
   });
 }
 
@@ -37,6 +42,7 @@ export function useMyInquiries() {
         size: 1,
         sort: "",
       }),
+    ...INQUIRY_CACHE_CONFIG,
   });
 }
 
@@ -44,6 +50,7 @@ export function useInquiriesByStatus(status: InquiryStatus) {
   return useQuery<InquiryResponse>({
     queryKey: ["inquiries", "status", status],
     queryFn: () => getInquiriesByStatus(status),
+    ...INQUIRY_CACHE_CONFIG,
   });
 }
 
@@ -52,6 +59,7 @@ export function useInquiryById(id: number) {
     queryKey: ["inquiry", id],
     queryFn: () => getInquiryById(id),
     enabled: !!id,
+    ...DETAIL_CACHE_CONFIG,
   });
 }
 

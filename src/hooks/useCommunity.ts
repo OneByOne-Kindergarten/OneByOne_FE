@@ -5,6 +5,11 @@ import {
   useSuspenseInfiniteQuery,
 } from "@tanstack/react-query";
 
+import {
+  DETAIL_CACHE_CONFIG,
+  DYNAMIC_CACHE_CONFIG,
+  REALTIME_CACHE_CONFIG,
+} from "@/constants/query-config";
 import { toast } from "@/hooks/useToast";
 import {
   createComment,
@@ -34,8 +39,7 @@ export const usePopularPosts = () => {
   return useQuery<PopularPostsResponse>({
     queryKey: ["popularPosts"],
     queryFn: getPopularPosts,
-    staleTime: 1000 * 60 * 20,
-    gcTime: 1000 * 60 * 30,
+    ...DYNAMIC_CACHE_CONFIG,
   });
 };
 
@@ -77,8 +81,7 @@ export const useCommunityPosts = (
       return lastPage.pageNumber + 1;
     },
     initialPageParam: 0,
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 10,
+    ...DYNAMIC_CACHE_CONFIG,
   });
 };
 
@@ -86,6 +89,8 @@ export const useCommunityPostDetail = (id: number) => {
   return useQuery<CommunityPostDetailResponse>({
     queryKey: ["communityPost", id],
     queryFn: () => getCommunityPostDetail(id),
+    enabled: !!id,
+    ...DETAIL_CACHE_CONFIG,
   });
 };
 
@@ -142,6 +147,7 @@ export const useLikeStatus = (postId: number) => {
     queryKey: ["likeStatus", postId],
     queryFn: () => getLikeStatus(postId),
     enabled: !!postId,
+    ...REALTIME_CACHE_CONFIG,
   });
 };
 
@@ -164,8 +170,7 @@ export const useComments = (params: CommentListParams) => {
     getNextPageParam: (lastPage): number | undefined =>
       lastPage.last ? undefined : lastPage.pageNumber + 1,
     initialPageParam: startPage,
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 10,
+    ...DYNAMIC_CACHE_CONFIG,
   });
 
   // 댓글 작성 후 댓글을 다시 불러오기 위한 함수

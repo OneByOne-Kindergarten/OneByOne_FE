@@ -1,24 +1,24 @@
-import {
-  useSuspenseQuery,
-  useMutation,
-  useQueryClient,
-} from "@tanstack/react-query";
+import type { LearningReviewFormValues } from "@/components/review/LearningReviewForm";
+import type { WorkReviewFormValues } from "@/components/review/WorkReviewForm";
 import { REVIEW_TYPES } from "@/constants/review";
+import { useToast } from "@/hooks/useToast";
 import {
-  getWorkReviews,
-  getInternshipReviews,
   createInternshipReview,
   createWorkReview,
+  getInternshipReviews,
+  getWorkReviews,
 } from "@/services/reviewService";
 import type {
-  WorkReview,
   InternshipReview,
   LikeResponse,
+  WorkReview,
 } from "@/types/reviewDTO";
-import type { WorkReviewFormValues } from "@/components/review/WorkReviewForm";
-import type { LearningReviewFormValues } from "@/components/review/LearningReviewForm";
 import { SortType } from "@/types/reviewDTO";
-import { useToast } from "@/hooks/useToast";
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
 
 type ReviewData = InternshipReview | WorkReview;
 

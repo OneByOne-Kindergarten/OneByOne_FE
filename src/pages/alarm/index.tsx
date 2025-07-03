@@ -1,10 +1,10 @@
-import { Suspense } from "react";
-import PageLayout from "@/components/@shared/layout/page-layout";
-import AlarmList from "@/components/alarm/AlarmList";
-import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import Button from "@/components/@shared/buttons/base-button";
-import { useReadAllAlarms, useAlarms } from "@/hooks/useAlarm";
+import PageLayout from "@/components/@shared/layout/page-layout";
+import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
+import AlarmList from "@/components/alarm/AlarmList";
 import { URL_PATHS } from "@/constants/url-path";
+import { useAlarms, useReadAllAlarms } from "@/hooks/useAlarm";
+import { Suspense } from "react";
 
 export default function AlarmPage() {
   const { mutate: readAllAlarms, isPending } = useReadAllAlarms();
@@ -23,37 +23,34 @@ export default function AlarmPage() {
       wrapperBg="white"
       mainClassName="mt-14"
     >
-      <Suspense fallback={<LoadingSpinner type="page" />}>
-        <AlarmPageContent 
-          handleReadAll={handleReadAll} 
-          isPending={isPending} 
-        />
+      <Suspense fallback={<LoadingSpinner />}>
+        <AlarmPageContent handleReadAll={handleReadAll} isPending={isPending} />
       </Suspense>
     </PageLayout>
   );
 }
 
-function AlarmPageContent({ 
-  handleReadAll, 
-  isPending 
-}: { 
-  handleReadAll: () => void; 
-  isPending: boolean; 
+function AlarmPageContent({
+  handleReadAll,
+  isPending,
+}: {
+  handleReadAll: () => void;
+  isPending: boolean;
 }) {
   const { hasUnreadAlarms } = useAlarms();
 
   return (
     <>
-      <div className="flex justify-end items-center p-4">
+      <div className="flex items-center justify-end p-4">
         <Button
           variant="transparent"
           size="sm"
           onClick={handleReadAll}
           disabled={isPending || !hasUnreadAlarms}
           className={`text-sm ${
-            hasUnreadAlarms 
-              ? "text-primary-normal01" 
-              : "text-gray-400 cursor-not-allowed"
+            hasUnreadAlarms
+              ? "text-primary-normal01"
+              : "cursor-not-allowed text-gray-400"
           }`}
         >
           {isPending ? "처리중..." : "모두 읽음"}
@@ -62,4 +59,4 @@ function AlarmPageContent({
       <AlarmList />
     </>
   );
-} 
+}

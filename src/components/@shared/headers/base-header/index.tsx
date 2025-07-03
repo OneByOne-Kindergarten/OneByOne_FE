@@ -1,19 +1,20 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { Link } from "react-router-dom";
 
-import { cn } from "@/utils/cn";
-import { SVG_PATHS, IMAGE_PATHS } from "@/constants/assets-path";
-import { useHeaderNavigation } from "@/hooks/useHeaderNavigation";
-import { URL_PATHS } from "@/constants/url-path";
 import AlarmButton from "@/components/@shared/buttons/alarm-button";
+import { IMAGE_PATHS, SVG_PATHS } from "@/constants/assets-path";
+import { URL_PATHS } from "@/constants/url-path";
+import { useHeaderNavigation } from "@/hooks/useHeaderNavigation";
+import { cn } from "@/utils/cn";
 
 interface HeaderProps extends VariantProps<typeof headerVariants> {
   children?: React.ReactNode;
   title?: string;
+  titleElement?: React.ReactNode;
   headerLogo?: boolean;
   hasBackButton?: boolean;
   onBackButtonClick?: () => void;
-  showAlarmButton?: boolean; // 알림 버튼 표시 여부
+  showAlarmButton?: boolean;
 }
 
 const headerVariants = cva(
@@ -34,6 +35,7 @@ const headerVariants = cva(
 export default function Header({
   children,
   title,
+  titleElement,
   headerLogo,
   hasBorder = true,
   hasBackButton,
@@ -54,7 +56,9 @@ export default function Header({
         </button>
       )}
       <div className="flex w-full items-center justify-between">
-        {title ? (
+        {titleElement ? (
+          <div className="min-w-0 flex-1">{titleElement}</div>
+        ) : title ? (
           <h1 className="min-w-0 flex-1 truncate pr-2">{title}</h1>
         ) : headerLogo ? (
           <Link to={URL_PATHS.HOME} className="flex-shrink-0">

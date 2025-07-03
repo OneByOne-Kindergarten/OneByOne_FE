@@ -1,5 +1,5 @@
-import clsx from "clsx";
 import { SVG_PATHS } from "@/constants/assets-path";
+import clsx from "clsx";
 
 interface ErrorProps {
   children: React.ReactNode;
@@ -25,8 +25,8 @@ export default function Error({
         <img src={SVG_PATHS.ALERT} alt="경고 아이콘" width={31} height={31} />
       </div>
       <div className="flex flex-col gap-1.5">
-        <p className="font-semibold text-primary-dark02">서비스 오류</p>
-        <span className="text-sm text-primary-dark01">
+        <p className="text-sm font-semibold text-primary-dark02">서비스 오류</p>
+        <span className="text-xs text-primary-dark01">
           {children} <br /> 잠시 후 다시 시도해보세요.
         </span>
       </div>

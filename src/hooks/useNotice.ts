@@ -3,18 +3,21 @@ import {
   useQueryClient,
   useSuspenseQuery,
 } from "@tanstack/react-query";
+
+import { STATIC_CACHE_CONFIG } from "@/constants/query-config";
+import { toast } from "@/hooks/useToast";
 import {
-  getNotices,
   createNotice,
+  getNotices,
   toggleNoticeStatus,
 } from "@/services/noticeService";
-import { CreateNoticeRequest } from "@/types/noticeDTO";
-import { toast } from "@/hooks/useToast";
+import type { CreateNoticeRequest } from "@/types/noticeDTO";
 
 export const useNotices = () => {
   return useSuspenseQuery({
     queryKey: ["notices"],
     queryFn: getNotices,
+    ...STATIC_CACHE_CONFIG,
   });
 };
 

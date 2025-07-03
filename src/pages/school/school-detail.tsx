@@ -1,19 +1,19 @@
-import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
-import PageLayout from "@/components/@shared/layout/page-layout";
-import NavBar from "@/components/@shared/nav/nav-bar";
 import Error from "@/components/@shared/layout/error";
+import PageLayout from "@/components/@shared/layout/page-layout";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
-import SchoolInfoItem from "@/components/school/school-info-item";
+import NavBar from "@/components/@shared/nav/nav-bar";
 import SchoolInfoChart from "@/components/school/school-info-chart";
+import SchoolInfoItem from "@/components/school/school-info-item";
 import SchoolMap from "@/components/school/SchoolMap";
 
-import { URL_PATHS } from "@/constants/url-path";
 import { SVG_PATHS } from "@/constants/assets-path";
 import { REVIEW_TYPES } from "@/constants/review";
-import { Kindergarten } from "@/types/kindergartenDTO";
+import { URL_PATHS } from "@/constants/url-path";
 import { getKindergartenDetail } from "@/services/kindergartenService";
+import { Kindergarten } from "@/types/kindergartenDTO";
 
 const SCHOOL_STATS_COLORS = {
   AGE_3: "bg-star",
@@ -34,6 +34,8 @@ type StatsType = keyof typeof SCHOOL_STATS_COLORS;
 
 export default function SchoolDetailPage() {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const location = useLocation();
   const safeId = id || "unknown";
 
   const {
@@ -98,9 +100,19 @@ export default function SchoolDetailPage() {
     return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
   };
 
+  const handleBackClick = () => {
+    if (location.state?.fromSearch) {
+      const { searchQuery } = location.state;
+      const searchPath = `${URL_PATHS.SEARCH_SCHOOL}?query=${encodeURIComponent(searchQuery)}`;
+      navigate(searchPath, { replace: true });
+    } else {
+      navigate(-1);
+    }
+  };
+
   const renderContent = () => {
     if (isLoading) {
-      return <LoadingSpinner type="page" />;
+      return <LoadingSpinner />;
     }
 
     if (error || !kindergarten) {
@@ -219,6 +231,8 @@ export default function SchoolDetailPage() {
       kindergartenId={safeId}
       showBookmark={true}
       mainClassName="flex flex-col mt-14"
+      hasBackButton={true}
+      onBackButtonClick={handleBackClick}
     >
       {renderContent()}
     </PageLayout>

@@ -6,7 +6,7 @@ interface LoadingSpinnerProps {
 }
 
 export default function LoadingSpinner({
-  type = "element",
+  type = "page",
   className,
 }: LoadingSpinnerProps) {
   return (

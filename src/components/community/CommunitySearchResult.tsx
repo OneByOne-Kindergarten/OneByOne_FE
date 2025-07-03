@@ -1,9 +1,9 @@
-import { useEffect, useCallback, useState } from "react";
-import { FixedSizeList as List } from "react-window";
 import styles from "@/styles/scroll.module.css";
+import { useCallback, useEffect, useState } from "react";
+import { FixedSizeList as List } from "react-window";
 
-import { CommunityPostItem } from "@/types/communityDTO";
 import PostCardRenderer from "@/components/community/PostCardRenderer";
+import { CommunityPostItem } from "@/types/communityDTO";
 
 // 가상 스크롤 항목
 interface PostItemProps {
@@ -66,7 +66,6 @@ export default function CommunitySearchResult({
   const listHeight = Math.min(results.length * itemHeight, maxListHeight);
   const loadMoreThreshold = Math.floor(results.length * 0.8);
 
-  // 창 크기 변경 시 높이 업데이트
   useEffect(() => {
     const handleResize = () => {
       setMaxListHeight(window.innerHeight - 120);
@@ -139,11 +138,7 @@ export default function CommunitySearchResult({
           {PostItem}
         </List>
 
-        {isFetchingNextPage && (
-          <div className="flex w-full justify-center py-2">
-            <div className="text-sm text-gray-500">더 불러오는 중...</div>
-          </div>
-        )}
+        {isFetchingNextPage && <div className="h-2 w-full" />}
       </section>
     </div>
   );

@@ -1,16 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 
-import SchoolCard from "@/components/school/school-card";
-import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
-import PageLayout from "@/components/@shared/layout/page-layout";
 import Empty from "@/components/@shared/layout/empty";
 import Error from "@/components/@shared/layout/error";
+import PageLayout from "@/components/@shared/layout/page-layout";
+import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import NearbySchoolMap from "@/components/school/NearbySchoolMap";
+import SchoolCard from "@/components/school/school-card";
 
-import { getNearbyKindergartens } from "@/services/kindergartenService";
 import { URL_PATHS } from "@/constants/url-path";
 import { useGeolocation } from "@/hooks/useGeolocation";
+import { getNearbyKindergartens } from "@/services/kindergartenService";
 import type { Kindergarten } from "@/types/kindergartenDTO";
 
 export default function SchoolPage() {
@@ -77,7 +77,7 @@ export default function SchoolPage() {
       hasBackButton={false}
     >
       {isLoading ? (
-        <LoadingSpinner type="page" />
+        <LoadingSpinner />
       ) : error ? (
         <Error type="page">{error}</Error>
       ) : (

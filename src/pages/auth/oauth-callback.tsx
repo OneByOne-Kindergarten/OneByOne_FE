@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import {
-  useNaverAuth,
-  useKakaoAuth,
-  extractAuthParams,
-} from "@/hooks/useSocialAuth";
-import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import Error from "@/components/@shared/layout/error";
+import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import { URL_PATHS } from "@/constants/url-path";
+import {
+  extractAuthParams,
+  useKakaoAuth,
+  useNaverAuth,
+} from "@/hooks/useSocialAuth";
+import { useToast } from "@/hooks/useToast";
 import { setCookie } from "@/services/authService";
 import { getUserInfo } from "@/services/userService";
-import { useToast } from "@/hooks/useToast";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 type SocialProvider = "naver" | "kakao";
 
@@ -338,7 +338,7 @@ export default function OAuthCallbackPage() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-4">
-      <LoadingSpinner type="page" />
+      <LoadingSpinner />
       {/* 디버깅 정보 */}
       {import.meta.env.DEV && (
         <div className="max-w-md rounded bg-gray-100 p-4 text-xs">

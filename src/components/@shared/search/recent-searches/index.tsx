@@ -1,60 +1,22 @@
-import { useState, useEffect } from "react";
 import { SVG_PATHS } from "@/constants/assets-path";
-
-// 최근 검색어 관리 상수
-const RECENT_SEARCHES_KEY = "recentSearches";
-const MAX_RECENT_SEARCHES = 8;
+import { useRecentSearches } from "@/hooks/useRecentSearches";
 
 interface RecentSearchesProps {
   onSelectQuery: (query: string) => void;
 }
 
 export default function RecentSearches({ onSelectQuery }: RecentSearchesProps) {
-  const [recentSearches, setRecentSearches] = useState<string[]>([]);
+  const { recentSearches, removeRecentSearch, clearAllRecentSearches } =
+    useRecentSearches();
 
-  useEffect(() => {
-    loadRecentSearches();
-  }, []);
-
-  const loadRecentSearches = () => {
-    try {
-      const savedSearches = localStorage.getItem(RECENT_SEARCHES_KEY);
-      if (savedSearches) {
-        setRecentSearches(JSON.parse(savedSearches));
-      }
-    } catch (error) {
-      console.error("최근 검색어 불러오기 실패:", error);
-    }
-  };
-
-  // 최근 검색어 개별 삭제
-  const removeRecentSearch = (query: string, event: React.MouseEvent) => {
-    event.stopPropagation();
-    try {
-      const updatedSearches = recentSearches.filter((item) => item !== query);
-      setRecentSearches(updatedSearches);
-      localStorage.setItem(
-        RECENT_SEARCHES_KEY,
-        JSON.stringify(updatedSearches)
-      );
-    } catch (error) {
-      console.error("최근 검색어 삭제 실패:", error);
-    }
-  };
-
-  // 최근 검색어 전체 삭제
-  const clearAllRecentSearches = () => {
-    try {
-      setRecentSearches([]);
-      localStorage.removeItem(RECENT_SEARCHES_KEY);
-    } catch (error) {
-      console.error("최근 검색어 전체 삭제 실패:", error);
-    }
-  };
-
-  // 최근 검색어 클릭
   const handleRecentSearchClick = (query: string) => {
     onSelectQuery(query);
+  };
+
+  // 검색어 개별 삭제
+  const handleRemoveSearch = (query: string, event: React.MouseEvent) => {
+    event.stopPropagation();
+    removeRecentSearch(query);
   };
 
   return (
@@ -91,7 +53,7 @@ export default function RecentSearches({ onSelectQuery }: RecentSearchesProps) {
                 {query}
               </button>
               <button
-                onClick={(e) => removeRecentSearch(query, e)}
+                onClick={(e) => handleRemoveSearch(query, e)}
                 className="ml-1 text-xs text-gray-400 hover:text-gray-600"
                 aria-label="검색어 삭제"
               >
@@ -109,30 +71,3 @@ export default function RecentSearches({ onSelectQuery }: RecentSearchesProps) {
     </section>
   );
 }
-
-// 외부에서 최근 검색어 추가를 위한 유틸리티 함수
-export const addToRecentSearches = (query: string) => {
-  if (!query || query.trim() === "") return;
-
-  try {
-    const savedSearches = localStorage.getItem(RECENT_SEARCHES_KEY);
-    let currentSearches: string[] = [];
-
-    if (savedSearches) {
-      try {
-        currentSearches = JSON.parse(savedSearches);
-      } catch (e) {
-        console.error("기존 검색어 파싱 오류:", e);
-      }
-    }
-
-    const updatedSearches = [
-      query,
-      ...currentSearches.filter((item) => item !== query),
-    ].slice(0, MAX_RECENT_SEARCHES);
-
-    localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(updatedSearches));
-  } catch (error) {
-    console.error("최근 검색어 저장 실패:", error);
-  }
-};

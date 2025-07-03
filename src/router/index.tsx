@@ -19,6 +19,8 @@ const AppleCallbackPage = lazy(() => import("../pages/auth/apple-callback"));
 const SchoolDetailPage = lazy(() => import("../pages/school/school-detail"));
 const ReviewPage = lazy(() => import("../pages/review/index"));
 const ReviewEditorPage = lazy(() => import("../pages/review/review-editor"));
+const SchoolSearchPage = lazy(() => import("../pages/search/school"));
+const CommunitySearchPage = lazy(() => import("../pages/search/community"));
 const CommunityPage = lazy(() => import("../pages/community"));
 const CommunityPostPage = lazy(() => import("../pages/community/post"));
 const PostEditorPage = lazy(() => import("../pages/community/post-editor"));
@@ -57,6 +59,9 @@ const routes = {
     { path: URL_PATHS.KAKAO_CALLBACK, element: <KakaoCallbackPage /> },
     { path: URL_PATHS.NAVER_CALLBACK, element: <NaverCallbackPage /> },
     { path: URL_PATHS.APPLE_CALLBACK, element: <AppleCallbackPage /> },
+    // 검색
+    { path: URL_PATHS.SEARCH_SCHOOL, element: <SchoolSearchPage /> },
+    { path: URL_PATHS.SEARCH_COMMUNITY, element: <CommunitySearchPage /> },
     // 기관
     { path: URL_PATHS.SCHOOL, element: <SchoolPage /> },
     { path: URL_PATHS.SCHOOL_DETAIL, element: <SchoolDetailPage /> },

@@ -1,6 +1,6 @@
-import PostCard from "@/components/community/PostCard";
 import Empty from "@/components/@shared/layout/empty";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
+import PostCard from "@/components/community/PostCard";
 import { SVG_PATHS } from "@/constants/assets-path";
 import { usePopularPosts } from "@/hooks/useCommunity";
 import { getCategoryLabel } from "@/utils/categoryUtils";
@@ -10,7 +10,7 @@ export default function PopularPostsList() {
   const posts = popularPostsData?.data || [];
 
   if (isLoading) {
-    return <LoadingSpinner />;
+    return <LoadingSpinner type="element" />;
   }
 
   return (

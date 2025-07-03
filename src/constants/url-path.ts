@@ -10,6 +10,9 @@ export const URL_PATHS = {
   NAVER_CALLBACK: "/users/naver/callback",
   KAKAO_CALLBACK: "/users/kakao/callback",
   APPLE_CALLBACK: "/users/apple/callback",
+  // 검색
+  SEARCH_SCHOOL: "/search/school",
+  SEARCH_COMMUNITY: "/search/community",
   // 유치원
   SCHOOL: "/school",
   SCHOOL_DETAIL: "/school/:id",

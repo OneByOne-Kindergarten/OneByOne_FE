@@ -41,5 +41,5 @@ export default function KakaoCallbackPage() {
     );
   }
 
-  return <LoadingSpinner type="page" />;
+  return <LoadingSpinner />;
 }

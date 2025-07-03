@@ -69,7 +69,7 @@ export const useReadAlarm = () => {
       await queryClient.cancelQueries({ queryKey: ["alarms"] });
       const previousAlarms = queryClient.getQueryData(["alarms"]);
 
-      queryClient.setQueryData(["alarms"], (old: any) => {
+      queryClient.setQueryData(["alarms"], (old: Alarm[]) => {
         if (!old?.data) return old;
         return {
           ...old,

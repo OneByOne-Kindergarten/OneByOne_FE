@@ -1,18 +1,15 @@
-import { useState, useEffect, useRef, useCallback, Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
-import Error from "@/components/@shared/layout/error";
 import Header from "@/components/@shared/headers/base-header";
-import SearchInput from "@/components/@shared/form/search-input";
-import SchoolSearchAside from "@/components/school/school-search-aside";
 
 import { SVG_PATHS } from "@/constants/assets-path";
+import { URL_PATHS } from "@/constants/url-path";
+import { useFavorites } from "@/hooks/useFavorites";
 import {
   checkFavoriteStatus,
   toggleFavorite as toggleFavoriteService,
 } from "@/services/favoriteService";
-import { useFavorites } from "@/hooks/useFavorites";
 
 interface SchoolHeaderProps {
   title?: string;
@@ -33,19 +30,10 @@ export default function SchoolHeader({
   kindergartenId,
   showBookmark = false,
 }: SchoolHeaderProps) {
-  const [isSearching, setIsSearching] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
   const [isFavorite, setIsFavorite] = useState(false);
   const [favoriteLoading, setFavoriteLoading] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
   const { refetch } = useFavorites();
-
-  // 검색 모드 활성화
-  useEffect(() => {
-    if (isSearching && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [isSearching]);
 
   // 즐겨찾기 상태 확인
   useEffect(() => {
@@ -85,28 +73,7 @@ export default function SchoolHeader({
   }, [kindergartenId, favoriteLoading, refetch]);
 
   const handleSearch = () => {
-    setIsSearching(true);
-  };
-
-  // 최근 검색어 선택 처리
-  const handleSearchQuerySelect = (query: string) => {
-    setSearchQuery(query);
-  };
-
-  // 검색 폼 제출 처리
-  const handleSearchSubmit = (query: string) => {
-    setSearchQuery(query);
-  };
-
-  // 검색 결과 닫기
-  const handleCloseSearchResult = () => {
-    setIsSearching(false);
-    setSearchQuery("");
-  };
-
-  // 검색어 초기화 처리
-  const handleClearSearch = () => {
-    setSearchQuery("");
+    navigate(URL_PATHS.SEARCH_SCHOOL);
   };
 
   const handleMap = () => {
@@ -114,77 +81,40 @@ export default function SchoolHeader({
   };
 
   return (
-    <>
-      {/* 검색 패널 */}
-      {isSearching ? (
-        <aside className="fixed inset-0 z-50 mx-auto flex h-full w-full min-w-80 max-w-3xl flex-col bg-white">
-          <Header
-            hasBackButton={true}
-            hasBorder={false}
-            onBackButtonClick={handleCloseSearchResult}
+    <Header
+      title={title}
+      headerLogo={headerLogo}
+      hasBorder={hasBorder}
+      hasBackButton={hasBackButton}
+      onBackButtonClick={onBackButtonClick}
+    >
+      <div className="flex items-center gap-4">
+        {showBookmark && (
+          <button
+            onClick={handleToggleFavorite}
+            aria-label={isFavorite ? "즐겨찾기 취소" : "즐겨찾기 추가"}
+            disabled={favoriteLoading}
+            className={favoriteLoading ? "opacity-50" : ""}
           >
-            <SearchInput
-              placeholder="유치원 이름으로 검색해보세요"
-              initialValue={searchQuery}
-              onSubmit={handleSearchSubmit}
-              onClear={handleClearSearch}
-              autoFocus={true}
-              ref={inputRef}
+            <img
+              src={
+                isFavorite
+                  ? SVG_PATHS.BOOKMARKER.active
+                  : SVG_PATHS.BOOKMARKER.inactive
+              }
+              alt="북마크"
+              width={24}
+              height={24}
             />
-          </Header>
-
-          {/* 검색 결과 */}
-          <div className="flex h-[calc(100vh-56px)] flex-1 flex-col">
-            <ErrorBoundary
-              fallback={<Error type="page">잠시 후 다시 시도해주세요.</Error>}
-            >
-              <Suspense fallback={<LoadingSpinner type="page" />}>
-                <SchoolSearchAside
-                  onClose={handleCloseSearchResult}
-                  searchQuery={searchQuery}
-                  onSearchQuerySelect={handleSearchQuerySelect}
-                />
-              </Suspense>
-            </ErrorBoundary>
-          </div>
-        </aside>
-      ) : (
-        <Header
-          title={title}
-          headerLogo={headerLogo}
-          hasBorder={hasBorder}
-          hasBackButton={hasBackButton}
-          onBackButtonClick={onBackButtonClick}
-        >
-          <div className="flex items-center gap-4">
-            {showBookmark && (
-              <button
-                onClick={handleToggleFavorite}
-                aria-label={isFavorite ? "즐겨찾기 취소" : "즐겨찾기 추가"}
-                disabled={favoriteLoading}
-                className={favoriteLoading ? "opacity-50" : ""}
-              >
-                <img
-                  src={
-                    isFavorite
-                      ? SVG_PATHS.BOOKMARKER.active
-                      : SVG_PATHS.BOOKMARKER.inactive
-                  }
-                  alt="북마크"
-                  width={24}
-                  height={24}
-                />
-              </button>
-            )}
-            <button onClick={handleMap} aria-label="지도">
-              <img src={SVG_PATHS.MAP} alt="지도" width={24} height={24} />
-            </button>
-            <button onClick={handleSearch} aria-label="검색">
-              <img src={SVG_PATHS.SEARCH} alt="검색" width={24} height={24} />
-            </button>
-          </div>
-        </Header>
-      )}
-    </>
+          </button>
+        )}
+        <button onClick={handleMap} aria-label="지도">
+          <img src={SVG_PATHS.MAP} alt="지도" width={24} height={24} />
+        </button>
+        <button onClick={handleSearch} aria-label="검색">
+          <img src={SVG_PATHS.SEARCH} alt="검색" width={24} height={24} />
+        </button>
+      </div>
+    </Header>
   );
 }

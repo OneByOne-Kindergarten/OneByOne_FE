@@ -1,14 +1,14 @@
-import { useRef, useCallback } from "react";
+import { useCallback, useRef } from "react";
 import { FixedSizeList as List } from "react-window";
 
-import { useMyPosts } from "@/hooks/useMyPosts";
-import ReviewCard from "@/components/review/ReviewCard";
-import { getFieldConfigsByType } from "@/utils/fieldConfigsUtils";
-import { REVIEW_TYPES } from "@/constants/review";
-import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import Empty from "@/components/@shared/layout/empty";
 import Error from "@/components/@shared/layout/error";
-import { WorkReview, InternshipReview } from "@/types/reviewDTO";
+import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
+import ReviewCard from "@/components/review/ReviewCard";
+import { REVIEW_TYPES } from "@/constants/review";
+import { useMyPosts } from "@/hooks/useMyPosts";
+import { InternshipReview, WorkReview } from "@/types/reviewDTO";
+import { getFieldConfigsByType } from "@/utils/fieldConfigsUtils";
 
 const ITEM_HEIGHT = 200;
 const LIST_HEIGHT = 690;
@@ -65,7 +65,7 @@ export default function MyPostList() {
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   if (isLoading) {
-    return <LoadingSpinner type="page" />;
+    return <LoadingSpinner />;
   }
 
   if (error) {

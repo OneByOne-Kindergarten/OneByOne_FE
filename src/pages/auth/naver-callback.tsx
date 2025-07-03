@@ -36,5 +36,5 @@ export default function NaverCallbackPage() {
     );
   }
 
-  return <LoadingSpinner type="page" />;
+  return <LoadingSpinner />;
 }

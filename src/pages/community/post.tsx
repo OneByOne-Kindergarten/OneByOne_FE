@@ -1,5 +1,5 @@
 import { Suspense, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import Error from "@/components/@shared/layout/error";
 import PageLayout from "@/components/@shared/layout/page-layout";
@@ -7,6 +7,7 @@ import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import ChatBar from "@/components/community/ChatBar";
 import CommentList from "@/components/community/CommentList";
 import Post from "@/components/community/Post";
+import { URL_PATHS } from "@/constants/url-path";
 import {
   useCommunityPostDetail,
   useCreateComment,
@@ -16,6 +17,8 @@ import {
 
 export default function CommunityPostPage() {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const location = useLocation();
   const postId = id ? Number(id) : 0;
 
   const [replyToUser, setReplyToUser] = useState<string | undefined>(undefined);
@@ -36,6 +39,17 @@ export default function CommunityPostPage() {
   const toggleLikeMutation = useToggleLike();
 
   const post = postData?.data;
+
+  const handleBackClick = () => {
+    // 검색 페이지에서 온 경우 검색 페이지로 직접 이동
+    if (location.state?.fromSearch) {
+      const { searchQuery, category } = location.state;
+      const searchPath = `${URL_PATHS.SEARCH_COMMUNITY}?query=${encodeURIComponent(searchQuery)}${category ? `&category=${category}` : ""}`;
+      navigate(searchPath, { replace: true });
+    } else {
+      navigate(-1);
+    }
+  };
 
   const handleLikeToggle = async () => {
     if (isLiking || !id) return;
@@ -85,9 +99,10 @@ export default function CommunityPostPage() {
       mainBg="gray"
       mainClassName="flex flex-1 flex-col gap-2 mb-16 mt-14"
       hasBackButton={true}
+      onBackButtonClick={handleBackClick}
     >
       {postLoading ? (
-        <LoadingSpinner type="page" />
+        <LoadingSpinner />
       ) : post ? (
         <>
           <Post

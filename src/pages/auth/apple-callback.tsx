@@ -84,5 +84,5 @@ export default function AppleCallbackPage() {
     handleAppleCallback();
   }, []);
 
-  return <LoadingSpinner type="page" />;
+  return <LoadingSpinner />;
 }

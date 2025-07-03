@@ -136,7 +136,7 @@ export default function PostList({
   );
 
   if (isLoading) {
-    return <LoadingSpinner />;
+    return <LoadingSpinner type="element" />;
   }
 
   if (uniquePosts.length === 0) {
