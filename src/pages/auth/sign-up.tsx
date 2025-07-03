@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 import PageLayout from "@/components/@shared/layout/page-layout";
 import AuthTextLinks from "@/components/sign-in/AuthTextLinks";
 import { EmailCertificationForm } from "@/components/sign-up/EmailCertificationForm";
@@ -51,6 +53,7 @@ const SIGNUP_STEP_CONFIG = {
 };
 
 export default function SignUp() {
+  const navigate = useNavigate();
   const { mutate: signUpMutate, isPending } = useSignUp();
   const {
     currentStep: step,
@@ -65,6 +68,14 @@ export default function SignUp() {
     useStepRenderer({
       stepConfigs: SIGNUP_STEP_CONFIG,
     });
+
+  const handleBackNavigation = () => {
+    if (step === 1) {
+      navigate(URL_PATHS.ROOT);
+    } else {
+      goToPreviousStep();
+    }
+  };
 
   const stepHandlers = {
     1: (data: EmailFormValues) => {
@@ -112,7 +123,7 @@ export default function SignUp() {
       mainClassName="my-auto flex flex-col gap-16"
       wrapperBg="white"
       hasBackButton={true}
-      onBackButtonClick={goToPreviousStep}
+      onBackButtonClick={handleBackNavigation}
     >
       <section className="text-center text-lg">
         <h1>{getStepTitle(step, formData)}</h1>

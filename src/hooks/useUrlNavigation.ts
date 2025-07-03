@@ -24,6 +24,7 @@ export const ROOT_URL_KEYS: UrlKeys[] = [
 
 // 상위 UrlKey 및 하위 UrlKey 그룹화
 export const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
+  ROOT: ["SIGNIN", "SIGNUP"],
   HOME: ["HOME"],
   SCHOOL: [
     "SCHOOL",
@@ -60,7 +61,6 @@ export const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
   SIGNIN: [],
   SIGNUP: [],
   TEST: [],
-  ROOT: [],
   USER_PROFILE: [],
   USER_PROFILE_EDITOR: [],
   USER_PASSWORD_EDITOR: [],
@@ -100,7 +100,6 @@ export const SESSION_STORAGE_BASED_URL_KEYS: UrlKeys[] = [
  * @param customBackHandler 커스텀 뒤로가기 핸들러
  * @param shouldShowBackButtonOverride 뒤로가기 버튼 표시 여부 설정
  */
-
 export function useUrlNavigation(
   customBackHandler?: () => void,
   shouldShowBackButtonOverride?: boolean
