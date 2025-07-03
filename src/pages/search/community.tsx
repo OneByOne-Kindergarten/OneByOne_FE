@@ -14,7 +14,6 @@ export default function CommunitySearchPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  // 공통 검색 로직 사용
   const {
     searchQuery,
     isInitialRender,
@@ -24,17 +23,6 @@ export default function CommunitySearchPage() {
     isSearchResult,
   } = useSearchPage<CommunityPostItem>("query");
 
-  const handleBackClick = () => {
-    const lastCommunityPath = getCommunityPath();
-
-    if (lastCommunityPath) {
-      navigate(lastCommunityPath);
-    } else {
-      navigate(URL_PATHS.COMMUNITY);
-    }
-  };
-
-  // URL에서 카테고리와 검색 타입 가져오기
   const category =
     (searchParams.get("category") as "TEACHER" | "PROSPECTIVE_TEACHER") ||
     "TEACHER";
@@ -56,7 +44,6 @@ export default function CommunitySearchPage() {
     }
   }, [searchQuery, searchType]);
 
-  // 커뮤니티 게시글 검색
   const {
     data: communityPostsData,
     isLoading,
@@ -74,6 +61,16 @@ export default function CommunitySearchPage() {
       new Map(allPosts.map((post) => [post.id, post])).values()
     );
   }, [communityPostsData]);
+
+  const handleBackClick = () => {
+    const lastCommunityPath = getCommunityPath();
+
+    if (lastCommunityPath) {
+      navigate(lastCommunityPath);
+    } else {
+      navigate(URL_PATHS.COMMUNITY);
+    }
+  };
 
   const handlePostClick = (id: string) => {
     navigate(URL_PATHS.COMMUNITY_POST.replace(":id", id), {
@@ -115,11 +112,11 @@ export default function CommunitySearchPage() {
           </div>
         ) : (
           searchQuery && (
-            <div className="flex-1 bg-white">
+            <section className="flex-1 bg-white">
               <p className="py-8 text-center text-sm text-primary-normal03">
                 검색 결과가 없습니다.
               </p>
-            </div>
+            </section>
           )
         )}
 

@@ -15,8 +15,8 @@ import { getSchoolPath } from "@/utils/lastVisitedPathUtils";
 
 export default function SchoolSearchPage() {
   const navigate = useNavigate();
+  // const [searchParams] = useSearchParams();
 
-  // 공통 검색 로직 사용
   const {
     searchQuery,
     isInitialRender,
@@ -25,6 +25,34 @@ export default function SchoolSearchPage() {
     handleRecentSearchSelect,
     isSearchResult,
   } = useSearchPage<Kindergarten>("query");
+
+  // TODO: 서버에서 sort 지원 시 주석 해제
+  // const sortOption = (searchParams.get("sort") as KindergartenSortOption) || "RATING";
+
+  // 유치원 검색 파라미터 설정
+  const [kindergartenSearchParams, setKindergartenSearchParams] =
+    useState<KindergartenSearchParams>({
+      name: searchQuery,
+      // TODO: 서버에서 sort 지원 시 주석 해제
+      // sort: [sortOption],
+    });
+
+  // 검색어 또는 정렬 옵션 변경 시 파라미터 업데이트
+  useEffect(() => {
+    setKindergartenSearchParams({
+      name: searchQuery,
+      // TODO: 서버에서 sort 지원 시 주석 해제
+      // sort: [sortOption],
+    });
+  }, [searchQuery]); // TODO: 서버에서 sort 지원 시 sortOption 의존성 추가
+
+  const {
+    results,
+    totalItems,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useSearchKindergartens(kindergartenSearchParams);
 
   const handleBackClick = () => {
     const lastSchoolPath = getSchoolPath();
@@ -35,25 +63,6 @@ export default function SchoolSearchPage() {
       navigate(URL_PATHS.SCHOOL);
     }
   };
-
-  // 유치원 검색 파라미터 설정
-  const [kindergartenSearchParams, setKindergartenSearchParams] =
-    useState<KindergartenSearchParams>({
-      name: searchQuery,
-    });
-
-  // 검색어 변경 시 파라미터 업데이트
-  useEffect(() => {
-    setKindergartenSearchParams({ name: searchQuery });
-  }, [searchQuery]);
-
-  const {
-    results,
-    totalItems,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useSearchKindergartens(kindergartenSearchParams);
 
   const handleSchoolClick = (id: string) => {
     navigate(URL_PATHS.SCHOOL_DETAIL.replace(":id", id), {

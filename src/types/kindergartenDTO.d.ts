@@ -3,6 +3,8 @@ export interface KindergartenSimple {
   name: string;
 }
 
+export type KindergartenSortOption = "RATING" | "REVIEW_COUNT";
+
 export interface Kindergarten {
   id: number;
   name: string;

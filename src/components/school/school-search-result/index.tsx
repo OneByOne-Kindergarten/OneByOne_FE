@@ -1,7 +1,9 @@
-import { useEffect, useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FixedSizeList as List } from "react-window";
 
 import SchoolCard from "@/components/school/school-card";
+// TODO: 서버에서 sort 지원 시 주석 해제
+// import SchoolSearchOrder from "@/components/school/SchoolSearchOrder";
 import styles from "@/styles/scroll.module.css";
 import { Kindergarten } from "@/types/kindergartenDTO";
 
@@ -112,9 +114,13 @@ export default function SchoolSearchResult({
 
   return (
     <div className="flex flex-col gap-2 pt-4">
-      <h3 className="mx-5 text-sm font-semibold text-primary-dark01">
-        총 {totalItems > 0 && `${totalItems}`}개의 검색 결과
-      </h3>
+      <div className="mx-5 flex justify-between">
+        <h3 className="text-sm font-semibold text-primary-dark01">
+          총 {totalItems > 0 && `${totalItems}`}개의 검색 결과
+        </h3>
+        {/* TODO: 서버에서 sort 지원 시 주석 해제 */}
+        {/* <SchoolSearchOrder /> */}
+      </div>
       <List
         height={listHeight}
         width="100%"
