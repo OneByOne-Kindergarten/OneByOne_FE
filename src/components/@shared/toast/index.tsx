@@ -100,7 +100,7 @@ const ToastTitle = React.forwardRef<
     {variant === "destructive" ? (
       <img src={SVG_PATHS.ERROR} width={20} height={20} />
     ) : (
-      <img src={SVG_PATHS.CHECK.green} width={20} height={20} />
+      <img src={SVG_PATHS.CHECK.blue} width={20} height={20} />
     )}
     {children}
   </ToastPrimitives.Title>
@@ -124,13 +124,13 @@ type ToastProps = React.ComponentPropsWithoutRef<typeof Toast>;
 type ToastActionElement = React.ReactElement<typeof ToastAction>;
 
 export {
-  type ToastProps,
-  type ToastActionElement,
-  ToastProvider,
-  ToastViewport,
   Toast,
-  ToastTitle,
-  ToastDescription,
-  ToastClose,
   ToastAction,
+  ToastClose,
+  ToastDescription,
+  ToastProvider,
+  ToastTitle,
+  ToastViewport,
+  type ToastActionElement,
+  type ToastProps,
 };
