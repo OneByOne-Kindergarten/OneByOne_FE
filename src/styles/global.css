@@ -67,6 +67,7 @@
     --radius: 0.5rem;
     --star: 54 100% 49%;
     --green: 105 100% 71%;
+    --green-normal-01: 138 54% 60%;
   }
   .dark {
     --background: 0 0% 3.9%;

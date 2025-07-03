@@ -1,4 +1,3 @@
-import { clsx } from "clsx";
 import {
   Control,
   FieldPath,
@@ -8,16 +7,14 @@ import {
 
 import Button from "@/components/@shared/buttons/base-button";
 import {
+  FormField,
   FormItem,
   FormLabel,
-  FormControl,
   FormMessage,
-  FormField,
 } from "@/components/@shared/form";
-import Input from "@/components/@shared/form/input";
-import { SVG_PATHS } from "@/constants/assets-path";
 import { useRandomNickname } from "@/hooks/useRandomNickname";
 
+import { NicknameFieldContent } from "./NicknameFieldContent";
 
 interface NicknameFieldProps<T extends FieldValues> {
   control: Control<T>;
@@ -43,48 +40,38 @@ export function NicknameField<T extends FieldValues>({
     <FormField
       control={control}
       name={name}
-      render={({ field, fieldState }) => (
-        <FormItem>
-          <div className="relative flex items-center justify-between">
-            <FormLabel className="font-semibold text-primary-dark01">
-              {label}
-            </FormLabel>
-            <Button
-              type="button"
-              variant="transparent_gray"
-              font="sm"
-              size="sm"
-              onClick={
-                isRandomNickname ? handleManualNickname : handleRandomNickname
-              }
-            >
-              <p>{isRandomNickname ? "직접 설정" : "랜덤 설정"}</p>
-            </Button>
-            {isRandomNickname && (
-              <img
-                src={SVG_PATHS.CHECK.blue}
-                width={26}
-                height={26}
-                className="absolute right-3 top-10"
-              />
-            )}
-          </div>
-          <FormControl>
-            <Input
-              className={clsx(isRandomNickname && "border-tertiary-3")}
+      render={({ field, fieldState }) => {
+        return (
+          <FormItem>
+            <div className="flex items-center justify-between">
+              <FormLabel className="font-semibold text-primary-dark01">
+                {label}
+              </FormLabel>
+
+              <Button
+                type="button"
+                variant="transparent_gray"
+                font="sm"
+                size="sm"
+                onClick={
+                  isRandomNickname ? handleManualNickname : handleRandomNickname
+                }
+              >
+                <p>{isRandomNickname ? "직접 설정" : "랜덤 설정"}</p>
+              </Button>
+            </div>
+
+            <NicknameFieldContent
+              field={field}
+              error={fieldState.error}
+              isRandomNickname={isRandomNickname}
               placeholder={placeholder}
-              error={!!fieldState.error}
-              {...field}
             />
-          </FormControl>
-          {isRandomNickname && (
-            <p className="mt-1 text-xs text-tertiary-3">
-              안전한 커뮤니티 운영을 위한 닉네임이 자동으로 만들어졌어요
-            </p>
-          )}
-          <FormMessage />
-        </FormItem>
-      )}
+
+            <FormMessage />
+          </FormItem>
+        );
+      }}
     />
   );
 }
