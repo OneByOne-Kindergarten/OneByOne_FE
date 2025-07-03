@@ -2,7 +2,6 @@ import { useAtom } from "jotai";
 import { Link } from "react-router-dom";
 
 import PageLayout from "@/components/@shared/layout/page-layout";
-import CertificationBanner from "@/components/user/CertificationBanner";
 import MenuItem from "@/components/user/MenuItem";
 import ProfileDetail from "@/components/user/ProfileDetail";
 import ProfileImage from "@/components/user/ProfileImage";
@@ -40,10 +39,10 @@ export default function User() {
             />
           </Link>
         </div>
-        <CertificationBanner />
+        {/* <CertificationBanner /> */}
       </section>
 
-      <div className="flex flex-col gap-2">
+      <div className="mt-2 flex flex-col gap-2">
         <section className="flex flex-col gap-4 bg-white p-5 font-bold">
           <h2 className="text-primary-dark02">내 설정</h2>
           <menu className="flex flex-col gap-6 text-primary-dark01">

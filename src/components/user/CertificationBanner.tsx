@@ -3,7 +3,7 @@ import { IMAGE_PATHS } from "@/constants/assets-path";
 
 export default function CertificationBanner() {
   return (
-    <div className="mx-3 my-2 flex items-center justify-between rounded-lg bg-secondary-light02 px-5 py-4 shadow-sm">
+    <div className="mx-3 mt-2 flex items-center justify-between rounded-lg bg-secondary-light02 px-5 py-4 shadow-sm">
       <div className="flex items-center gap-2">
         <img
           src={IMAGE_PATHS.CERTIFICATION}
