@@ -1,6 +1,6 @@
-import { apiCall } from "@/utils/apiUtils";
 import { API_PATHS } from "@/constants/api-path";
 import { MyPostResponse, MyPostParams } from "@/types/myPostDTO";
+import { apiCall } from "@/utils/apiUtils";
 
 export const getMyPosts = async (
   params: MyPostParams

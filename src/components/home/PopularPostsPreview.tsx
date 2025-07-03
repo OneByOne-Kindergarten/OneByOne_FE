@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 
 import Button from "@/components/@shared/buttons/base-button";
 import PostCard from "@/components/community/PostCard";
-import { getCategoryLabel } from "@/utils/categoryUtils";
 import { URL_PATHS } from "@/constants/url-path";
 import { usePopularPosts } from "@/hooks/useCommunity";
+import { getCategoryLabel } from "@/utils/categoryUtils";
 
 export default function PopularPostsPreview() {
   const { data: posts } = usePopularPosts();

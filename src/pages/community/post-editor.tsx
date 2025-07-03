@@ -17,7 +17,6 @@ import Input from "@/components/@shared/form/input";
 import Textarea from "@/components/@shared/form/textarea";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
-
 import { URL_PATHS } from "@/constants/url-path";
 import { useCreatePost } from "@/hooks/useCommunity";
 import { CreateCommunityPostRequest } from "@/types/communityDTO";

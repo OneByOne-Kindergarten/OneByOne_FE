@@ -1,6 +1,6 @@
-import { getUserRoleLabel } from "@/utils/getUserRoleLabel";
 import type { User } from "@/types/userDTO";
 import { cn } from "@/utils/cn";
+import { getUserRoleLabel } from "@/utils/getUserRoleLabel";
 
 export default function ProfileDetail({
   user,

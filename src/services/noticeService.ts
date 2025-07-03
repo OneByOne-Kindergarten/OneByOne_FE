@@ -1,6 +1,6 @@
-import { apiCall } from "@/utils/apiUtils";
 import { API_PATHS } from "@/constants/api-path";
 import { NoticeResponse, CreateNoticeRequest } from "@/types/noticeDTO";
+import { apiCall } from "@/utils/apiUtils";
 
 /**
  * 공지사항 조회

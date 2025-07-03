@@ -1,8 +1,8 @@
-import styles from "@/styles/scroll.module.css";
 import { useCallback, useEffect, useState } from "react";
 import { FixedSizeList as List } from "react-window";
 
 import PostCardRenderer from "@/components/community/PostCardRenderer";
+import styles from "@/styles/scroll.module.css";
 import { CommunityPostItem } from "@/types/communityDTO";
 
 // 가상 스크롤 항목

@@ -1,5 +1,8 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import Button from "@/components/@shared/buttons/base-button";
 import {
   Form,
   FormLabel,
@@ -8,12 +11,9 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/@shared/form";
+import Input from "@/components/@shared/form/input";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import { URL_PATHS } from "@/constants/url-path";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import Input from "@/components/@shared/form/input";
-import Button from "@/components/@shared/buttons/base-button";
 import { useUpdatePassword } from "@/hooks/useAuth";
 
 const passwordSchema = z.object({

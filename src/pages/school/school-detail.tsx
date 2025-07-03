@@ -8,7 +8,6 @@ import NavBar from "@/components/@shared/nav/nav-bar";
 import SchoolInfoChart from "@/components/school/school-info-chart";
 import SchoolInfoItem from "@/components/school/school-info-item";
 import SchoolMap from "@/components/school/SchoolMap";
-
 import { SVG_PATHS } from "@/constants/assets-path";
 import { REVIEW_TYPES } from "@/constants/review";
 import { URL_PATHS } from "@/constants/url-path";

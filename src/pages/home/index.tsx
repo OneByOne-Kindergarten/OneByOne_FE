@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 
 import PageLayout from "@/components/@shared/layout/page-layout";
 import NoticeCard from "@/components/home/NoticeCard";
-import ShortCutList from "@/components/home/ShortCutList";
 import PopularPostsPreview from "@/components/home/PopularPostsPreview";
-import { URL_PATHS } from "@/constants/url-path";
+import ShortCutList from "@/components/home/ShortCutList";
 import { IMAGE_PATHS } from "@/constants/assets-path";
+import { URL_PATHS } from "@/constants/url-path";
 
 export default function HomePage() {
   return (

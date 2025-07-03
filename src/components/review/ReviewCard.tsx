@@ -1,14 +1,16 @@
 import { useState } from "react";
-import { useReviewLike } from "@/hooks/useReviewLike";
-import { REVIEW_TYPES } from "@/constants/review";
-import type { InternshipReview, WorkReview } from "@/types/reviewDTO";
-import ReviewRating from "@/components/review/ReviewRating";
+
+import ReviewActions from "@/components/review/ReviewActions";
 import ReviewContent, {
   ReviewFieldConfig,
 } from "@/components/review/ReviewContent";
-import ReviewActions from "@/components/review/ReviewActions";
-import ReportDropDown from "../@shared/drop-down/report-drop-down";
+import ReviewRating from "@/components/review/ReviewRating";
+import { REVIEW_TYPES } from "@/constants/review";
+import { useReviewLike } from "@/hooks/useReviewLike";
+import type { InternshipReview, WorkReview } from "@/types/reviewDTO";
 import { formatDate } from "@/utils/dateUtils";
+
+import ReportDropDown from "../@shared/drop-down/report-drop-down";
 
 export type ReviewData = InternshipReview | WorkReview;
 

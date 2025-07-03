@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 
-import { formatDate } from "@/utils/dateUtils";
 import { URL_PATHS } from "@/constants/url-path";
-import { cn } from "@/utils/cn";
 import type { Notice } from "@/types/noticeDTO";
+import { cn } from "@/utils/cn";
+import { formatDate } from "@/utils/dateUtils";
 
 interface NoticeItemProps {
   notice: Notice;

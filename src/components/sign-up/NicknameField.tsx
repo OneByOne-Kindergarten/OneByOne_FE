@@ -1,21 +1,23 @@
 import { clsx } from "clsx";
 import {
+  Control,
+  FieldPath,
+  FieldValues,
+  UseFormSetValue,
+} from "react-hook-form";
+
+import Button from "@/components/@shared/buttons/base-button";
+import {
   FormItem,
   FormLabel,
   FormControl,
   FormMessage,
   FormField,
 } from "@/components/@shared/form";
-import { useRandomNickname } from "@/hooks/useRandomNickname";
 import Input from "@/components/@shared/form/input";
-import Button from "@/components/@shared/buttons/base-button";
 import { SVG_PATHS } from "@/constants/assets-path";
-import {
-  Control,
-  FieldPath,
-  FieldValues,
-  UseFormSetValue,
-} from "react-hook-form";
+import { useRandomNickname } from "@/hooks/useRandomNickname";
+
 
 interface NicknameFieldProps<T extends FieldValues> {
   control: Control<T>;

@@ -1,6 +1,6 @@
-import { useAlarms } from "@/hooks/useAlarm";
-import AlarmItem from "@/components/alarm/AlarmItem";
 import Empty from "@/components/@shared/layout/empty";
+import AlarmItem from "@/components/alarm/AlarmItem";
+import { useAlarms } from "@/hooks/useAlarm";
 
 // 알림 목록 컴포넌트
 export default function AlarmList() {

@@ -1,8 +1,8 @@
 import { useEffect, useCallback, useState } from "react";
 import { FixedSizeList as List } from "react-window";
-import styles from "@/styles/scroll.module.css";
 
 import SchoolCard from "@/components/school/school-card";
+import styles from "@/styles/scroll.module.css";
 import { Kindergarten } from "@/types/kindergartenDTO";
 
 // 가상 스크롤 항목

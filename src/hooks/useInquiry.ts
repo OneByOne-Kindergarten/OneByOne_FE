@@ -1,7 +1,9 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+
 import {
   DETAIL_CACHE_CONFIG,
   INQUIRY_CACHE_CONFIG,
-} from "@/constants/cache-config";
+} from "@/constants/query-config";
 import {
   answerInquiry,
   closeInquiry,
@@ -17,7 +19,7 @@ import type {
   InquiryResponse,
   InquiryStatus,
 } from "@/types/inquiryDTO";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+
 import { useToast } from "./useToast";
 
 export function useAllInquiries() {

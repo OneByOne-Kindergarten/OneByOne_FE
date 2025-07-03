@@ -1,7 +1,8 @@
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
 
+import Button from "@/components/@shared/buttons/base-button";
 import {
   Form,
   FormItem,
@@ -11,7 +12,6 @@ import {
   FormField,
 } from "@/components/@shared/form";
 import ToggleInput from "@/components/@shared/form/toggle-input";
-import Button from "@/components/@shared/buttons/base-button";
 
 const step3Schema = z
   .object({

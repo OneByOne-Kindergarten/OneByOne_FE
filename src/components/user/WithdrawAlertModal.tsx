@@ -1,5 +1,5 @@
-import PopUpModal from "@/components/@shared/modal/pop-up";
 import Button from "@/components/@shared/buttons/base-button";
+import PopUpModal from "@/components/@shared/modal/pop-up";
 import { SVG_PATHS } from "@/constants/assets-path";
 
 interface WithdrawAlertModalProps {

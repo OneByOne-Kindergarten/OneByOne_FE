@@ -1,5 +1,5 @@
-import { useNotices } from "@/hooks/useNotice";
 import NoticeItem from "@/components/notice/NoticeItem";
+import { useNotices } from "@/hooks/useNotice";
 
 export default function NoticeDetail({ id }: { id: number }) {
   const { data: notices } = useNotices();

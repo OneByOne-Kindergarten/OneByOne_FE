@@ -1,3 +1,10 @@
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
+
 import { toast } from "@/hooks/useToast";
 import {
   getAlarms,
@@ -6,12 +13,6 @@ import {
   readAllAlarms,
 } from "@/services/alarmService";
 import type { Alarm } from "@/types/alarmDTO";
-import {
-  useMutation,
-  useQuery,
-  useQueryClient,
-  useSuspenseQuery,
-} from "@tanstack/react-query";
 
 // 알림 데이터와 계산된 상태를 반환하는 메인 훅
 export const useAlarms = () => {
@@ -40,6 +41,14 @@ export const useUnreadAlarmCount = () => {
   // 캐시된 알림 데이터가 있으면 거기서 계산
   const cachedAlarms = queryClient.getQueryData<{ data: Alarm[] }>(["alarms"]);
 
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["unread-alarm-count"],
+    queryFn: getUnreadAlarmCount,
+    staleTime: 1000 * 60 * 2, // 2분간 캐시 유지
+    enabled: !cachedAlarms?.data, // 캐시된 데이터가 없을 때만 요청
+  });
+
+  // 캐시된 데이터가 있으면 거기서 계산
   if (cachedAlarms?.data) {
     const unreadCount = cachedAlarms.data.filter(
       (alarm) => !alarm.isRead
@@ -52,11 +61,7 @@ export const useUnreadAlarmCount = () => {
   }
 
   // 캐시된 데이터가 없으면 개수만 조회
-  return useQuery({
-    queryKey: ["unread-alarm-count"],
-    queryFn: getUnreadAlarmCount,
-    staleTime: 1000 * 60 * 2, // 2분간 캐시 유지
-  });
+  return { data, isLoading, error };
 };
 
 export const useReadAlarm = () => {
@@ -69,15 +74,18 @@ export const useReadAlarm = () => {
       await queryClient.cancelQueries({ queryKey: ["alarms"] });
       const previousAlarms = queryClient.getQueryData(["alarms"]);
 
-      queryClient.setQueryData(["alarms"], (old: Alarm[]) => {
-        if (!old?.data) return old;
-        return {
-          ...old,
-          data: old.data.map((alarm: Alarm) =>
-            alarm.id === alarmId ? { ...alarm, isRead: true } : alarm
-          ),
-        };
-      });
+      queryClient.setQueryData(
+        ["alarms"],
+        (old: { data: Alarm[] } | undefined) => {
+          if (!old?.data) return old;
+          return {
+            ...old,
+            data: old.data.map((alarm: Alarm) =>
+              alarm.id === alarmId ? { ...alarm, isRead: true } : alarm
+            ),
+          };
+        }
+      );
 
       return { previousAlarms };
     },
@@ -110,13 +118,16 @@ export const useReadAllAlarms = () => {
       await queryClient.cancelQueries({ queryKey: ["alarms"] });
       const previousAlarms = queryClient.getQueryData(["alarms"]);
 
-      queryClient.setQueryData(["alarms"], (old: any) => {
-        if (!old?.data) return old;
-        return {
-          ...old,
-          data: old.data.map((alarm: Alarm) => ({ ...alarm, isRead: true })),
-        };
-      });
+      queryClient.setQueryData(
+        ["alarms"],
+        (old: { data: Alarm[] } | undefined) => {
+          if (!old?.data) return old;
+          return {
+            ...old,
+            data: old.data.map((alarm: Alarm) => ({ ...alarm, isRead: true })),
+          };
+        }
+      );
 
       return { previousAlarms };
     },

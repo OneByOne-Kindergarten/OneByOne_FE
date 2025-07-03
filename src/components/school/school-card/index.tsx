@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 
+import Badge from "@/components/@shared/badge";
 import { SVG_PATHS } from "@/constants/assets-path";
 import { URL_PATHS } from "@/constants/url-path";
-import Badge from "@/components/@shared/badge";
 import { Kindergarten } from "@/types/kindergartenDTO";
 
 interface SchoolCardProps {

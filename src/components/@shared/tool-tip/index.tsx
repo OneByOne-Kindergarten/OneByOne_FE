@@ -1,5 +1,6 @@
-import { SVG_PATHS } from "@/constants/assets-path";
 import { useState, useRef, useCallback } from "react";
+
+import { SVG_PATHS } from "@/constants/assets-path";
 
 export default function ToolTip({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);

@@ -1,4 +1,5 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
+
 import { getMyPosts } from "@/services/myPostService";
 import { MyPostParams } from "@/types/myPostDTO";
 

@@ -1,10 +1,10 @@
-import { apiCall } from "@/utils/apiUtils";
 import { API_PATHS } from "@/constants/api-path";
 import type {
   InquiryResponse,
   CreateInquiryRequest,
   AnswerInquiryRequest,
 } from "@/types/inquiryDTO";
+import { apiCall } from "@/utils/apiUtils";
 
 interface PaginationParams {
   page: number;

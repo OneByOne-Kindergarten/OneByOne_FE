@@ -1,4 +1,3 @@
-import { apiCall } from "@/utils/apiUtils";
 import { API_PATHS } from "@/constants/api-path";
 import {
   KindergartenDetailResponse,
@@ -8,6 +7,7 @@ import {
   KindergartenSearchResponse,
   KindergartenSimple,
 } from "@/types/kindergartenDTO";
+import { apiCall } from "@/utils/apiUtils";
 
 /**
  * 유치원 이름 조회

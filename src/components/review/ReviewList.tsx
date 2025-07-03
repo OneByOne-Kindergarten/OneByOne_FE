@@ -1,14 +1,13 @@
-import { useSearchParams } from "react-router-dom";
 import clsx from "clsx";
+import { useSearchParams } from "react-router-dom";
 
 import Toggle from "@/components/@shared/buttons/base-toggle";
-import RatingFilter from "@/components/review/RatingFilter";
-import ReviewCard from "@/components/review/ReviewCard";
 import Empty from "@/components/@shared/layout/empty";
-import { ReviewData } from "@/components/review/ReviewCard";
+import RatingFilter from "@/components/review/RatingFilter";
+import ReviewCard, { ReviewData } from "@/components/review/ReviewCard";
 import { ReviewFieldConfig } from "@/components/review/ReviewContent";
-import { SortType } from "@/types/reviewDTO";
 import { REVIEW_TYPES } from "@/constants/review";
+import { SortType } from "@/types/reviewDTO";
 
 const SORT_OPTIONS: { type: SortType; label: string }[] = [
   { type: SortType.POPULAR, label: "추천순" },

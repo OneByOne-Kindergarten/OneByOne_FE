@@ -1,8 +1,9 @@
+import { cva, type VariantProps } from "class-variance-authority";
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/utils/cn";
+
 import { SVG_PATHS } from "@/constants/assets-path";
+import { cn } from "@/utils/cn";
 
 const modalVariants = cva("bg-white shadow-lg overflow-hidden transition-all", {
   variants: {

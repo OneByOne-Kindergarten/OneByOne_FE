@@ -1,5 +1,6 @@
-import { IMAGE_PATHS } from "@/constants/assets-path";
 import clsx from "clsx";
+
+import { IMAGE_PATHS } from "@/constants/assets-path";
 
 interface EmptyProps {
   title: string;

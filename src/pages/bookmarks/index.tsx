@@ -5,7 +5,6 @@ import Error from "@/components/@shared/layout/error";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import SchoolCard from "@/components/school/school-card";
-
 import { URL_PATHS } from "@/constants/url-path";
 import { useFavorites } from "@/hooks/useFavorites";
 

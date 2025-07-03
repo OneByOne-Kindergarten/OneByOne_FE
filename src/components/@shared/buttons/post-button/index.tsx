@@ -1,5 +1,5 @@
-import { SVG_PATHS } from "@/constants/assets-path";
 import FloatButton from "@/components/@shared/buttons/float-button";
+import { SVG_PATHS } from "@/constants/assets-path";
 
 interface PostButtonProps {
   onClick: () => void;

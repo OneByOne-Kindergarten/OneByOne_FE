@@ -1,4 +1,5 @@
 import clsx from "clsx";
+
 import { CommunityCategoryType } from "@/constants/community";
 
 interface RoleButtonProps {

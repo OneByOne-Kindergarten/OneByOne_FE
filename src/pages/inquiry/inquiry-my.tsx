@@ -1,14 +1,14 @@
+import clsx from "clsx";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import clsx from "clsx";
 
-import PageLayout from "@/components/@shared/layout/page-layout";
 import Button from "@/components/@shared/buttons/base-button";
 import Toggle from "@/components/@shared/buttons/base-toggle";
 import InquiryList from "@/components/@shared/inquiry/InquiryList";
+import PageLayout from "@/components/@shared/layout/page-layout";
+import { INQUIRY_TAB_OPTIONS } from "@/constants/inquiry";
 import { URL_PATHS } from "@/constants/url-path";
 import { useMyInquiries } from "@/hooks/useInquiry";
-import { INQUIRY_TAB_OPTIONS } from "@/constants/inquiry";
 
 type InquiryTab = (typeof INQUIRY_TAB_OPTIONS)[number]["type"];
 

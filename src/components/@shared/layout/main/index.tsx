@@ -1,5 +1,5 @@
-import React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
+import React from "react";
 
 /**
  * 페이지 내용 컨테이너

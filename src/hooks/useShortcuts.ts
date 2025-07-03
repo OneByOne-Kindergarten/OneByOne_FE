@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
-import { Shortcut, UpdateShortcutsResponse } from "@/types/homeDTO";
-import { updateUserShortcuts } from "@/services/userService";
-import { useNavigate } from "react-router-dom";
-import { URL_PATHS } from "@/constants/url-path";
 import { useAtom } from "jotai";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { URL_PATHS } from "@/constants/url-path";
+import { updateUserShortcuts , getUserInfo } from "@/services/userService";
 import { userAtom } from "@/stores/userStore";
-import { getUserInfo } from "@/services/userService";
+import { Shortcut, UpdateShortcutsResponse } from "@/types/homeDTO";
 
 export const useShortcuts = () => {
   const [user, setUser] = useAtom(userAtom);

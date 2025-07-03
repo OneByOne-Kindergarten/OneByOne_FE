@@ -1,8 +1,9 @@
 import clsx from "clsx";
-import { cn } from "@/utils/cn";
+
 
 import { SVG_PATHS } from "@/constants/assets-path";
 import type { UserRole } from "@/types/userDTO";
+import { cn } from "@/utils/cn";
 
 const PROFILE_CONFIG: Record<
   UserRole,

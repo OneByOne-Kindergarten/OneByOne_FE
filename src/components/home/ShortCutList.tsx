@@ -1,5 +1,5 @@
-import ShortCutButton from "@/components/home/ShortCutButton";
 import ShortCutAddButton from "@/components/home/ShortCutAddButton";
+import ShortCutButton from "@/components/home/ShortCutButton";
 import { useShortcuts } from "@/hooks/useShortcuts";
 import type { Shortcut } from "@/types/homeDTO";
 

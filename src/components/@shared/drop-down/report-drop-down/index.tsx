@@ -1,9 +1,10 @@
+import { useAtomValue } from "jotai";
+import { useNavigate } from "react-router-dom";
+
 import DropDown from "@/components/@shared/drop-down/base-drop-down";
 import { URL_PATHS } from "@/constants/url-path";
 import { useDeleteComment, useDeletePost } from "@/hooks/useCommunity";
 import { userAtom } from "@/stores/userStore";
-import { useAtomValue } from "jotai";
-import { useNavigate } from "react-router-dom";
 
 type ReportTargetType = "REVIEW" | "POST" | "COMMENT";
 

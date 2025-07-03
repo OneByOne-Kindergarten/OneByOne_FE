@@ -1,14 +1,15 @@
-import { URL_PATHS } from "@/constants/url-path";
-import { SVG_PATHS, IMAGE_PATHS } from "@/constants/assets-path";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import PageLayout from "@/components/@shared/layout/page-layout";
+
 import Button from "@/components/@shared/buttons/base-button";
+import PageLayout from "@/components/@shared/layout/page-layout";
 import OauthButton from "@/components/sign-in/OauthButton";
+import { SVG_PATHS, IMAGE_PATHS } from "@/constants/assets-path";
+import { URL_PATHS } from "@/constants/url-path";
 import {
   isFlutterWebView,
   useRequestFcmToken,
 } from "@/hooks/useFlutterCommunication";
-import { useEffect } from "react";
 import { setCookie } from "@/services/authService";
 
 export default function RootPage() {

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+
 import { sendToFlutter, MessageType } from "@/utils/webViewCommunication";
 export interface GeolocationState {
   loading: boolean;

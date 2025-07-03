@@ -1,5 +1,6 @@
-import React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
+import React from "react";
+
 import { cn } from "@/utils/cn";
 
 const boxVariants = cva("cursor-pointer transition-colors", {

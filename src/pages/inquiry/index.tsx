@@ -2,8 +2,8 @@ import { useAtomValue } from "jotai";
 
 import PageLayout from "@/components/@shared/layout/page-layout";
 import MenuItem from "@/components/user/MenuItem";
-import { URL_PATHS } from "@/constants/url-path";
 import { SVG_PATHS } from "@/constants/assets-path";
+import { URL_PATHS } from "@/constants/url-path";
 import { userAtom } from "@/stores/userStore";
 
 export default function InquiryPage() {

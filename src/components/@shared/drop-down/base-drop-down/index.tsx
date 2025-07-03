@@ -1,7 +1,8 @@
-import React, { useState, useRef, useEffect } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/utils/cn";
+import React, { useState, useRef, useEffect } from "react";
+
 import { SVG_PATHS } from "@/constants/assets-path";
+import { cn } from "@/utils/cn";
 
 const dropdownContainerVariants = cva("relative inline-block", {
   variants: {

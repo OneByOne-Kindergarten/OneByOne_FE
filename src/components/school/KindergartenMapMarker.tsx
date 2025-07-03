@@ -1,6 +1,7 @@
 import { CustomOverlayMap } from "react-kakao-maps-sdk";
-import { getMarkerStyles } from "@/utils/mapUtils";
+
 import { SVG_PATHS } from "@/constants/assets-path";
+import { getMarkerStyles } from "@/utils/mapUtils";
 
 interface KindergartenMarkerProps {
   latitude: number;

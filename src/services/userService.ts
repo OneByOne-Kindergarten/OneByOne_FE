@@ -1,3 +1,5 @@
+import { getDefaultStore } from "jotai/vanilla";
+
 import { API_PATHS } from "@/constants/api-path";
 import { getAccessToken } from "@/services/authService";
 import { userAtom } from "@/stores/userStore";
@@ -8,7 +10,6 @@ import {
 } from "@/types/homeDTO";
 import { User, UserResponse } from "@/types/userDTO";
 import { apiCall } from "@/utils/apiUtils";
-import { getDefaultStore } from "jotai/vanilla";
 
 const jotaiStore = getDefaultStore();
 

@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
 import clsx from "clsx";
+import { useState, useEffect } from "react";
+
 import Toggle from "@/components/@shared/buttons/base-toggle";
 import { SVG_PATHS } from "@/constants/assets-path";
 

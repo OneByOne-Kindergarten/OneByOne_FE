@@ -1,10 +1,10 @@
-import { useForm } from "react-hook-form";
-import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { Form } from "@/components/@shared/form";
 import Button from "@/components/@shared/buttons/base-button";
+import { Form } from "@/components/@shared/form";
 import { NicknameField } from "@/components/sign-up/NicknameField";
 import { RoleField } from "@/components/sign-up/RoleField";
 import { CommunityCategoryType } from "@/constants/community";

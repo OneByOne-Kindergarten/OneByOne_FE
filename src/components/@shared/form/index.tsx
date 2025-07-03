@@ -1,6 +1,6 @@
-import * as React from "react";
 import * as LabelPrimitive from "@radix-ui/react-label";
 import { Slot } from "@radix-ui/react-slot";
+import * as React from "react";
 import {
   Controller,
   FormProvider,
@@ -10,8 +10,8 @@ import {
   type FieldValues,
 } from "react-hook-form";
 
-import { cn } from "@/utils/cn";
 import Label from "@/components/@shared/form/label";
+import { cn } from "@/utils/cn";
 
 const Form = FormProvider;
 

@@ -1,10 +1,11 @@
+import { useEffect } from "react";
+import { useInView } from "react-intersection-observer";
+
 import Empty from "@/components/@shared/layout/empty";
 import CommentCard from "@/components/community/CommentCard";
 import ReplyCard from "@/components/community/ReplyCard";
 import { useComments } from "@/hooks/useCommunity";
 import { CommunityPostItem } from "@/types/communityDTO";
-import { useEffect } from "react";
-import { useInView } from "react-intersection-observer";
 
 interface CommentListProps {
   postId: number;

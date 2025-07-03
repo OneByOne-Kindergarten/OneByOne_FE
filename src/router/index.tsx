@@ -1,7 +1,8 @@
-import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
-import { URL_PATHS } from "@/constants/url-path";
 import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+
+import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
+import { URL_PATHS } from "@/constants/url-path";
 
 const TestPage = lazy(() => import("../pages/test"));
 const RootPage = lazy(() => import("../pages"));

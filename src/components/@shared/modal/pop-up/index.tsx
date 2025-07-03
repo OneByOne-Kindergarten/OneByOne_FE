@@ -1,11 +1,13 @@
 import React from "react";
+
+import { cn } from "@/utils/cn";
+
 import {
   BaseModal,
   ModalHeader,
   ModalContent,
   ModalFooter,
 } from "../base-modal";
-import { cn } from "@/utils/cn";
 
 interface PopupModalProps {
   title?: React.ReactNode;

@@ -7,7 +7,6 @@ import PageLayout from "@/components/@shared/layout/page-layout";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import NearbySchoolMap from "@/components/school/NearbySchoolMap";
 import SchoolCard from "@/components/school/school-card";
-
 import { URL_PATHS } from "@/constants/url-path";
 import { useGeolocation } from "@/hooks/useGeolocation";
 import { getNearbyKindergartens } from "@/services/kindergartenService";

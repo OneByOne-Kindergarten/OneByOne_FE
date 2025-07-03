@@ -1,7 +1,8 @@
+import { useEffect } from "react";
+
 import Error from "@/components/@shared/layout/error";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import { extractAuthParams, useKakaoAuth } from "@/hooks/useSocialAuth";
-import { useEffect } from "react";
 
 export default function KakaoCallbackPage() {
   const kakaoAuthMutation = useKakaoAuth();

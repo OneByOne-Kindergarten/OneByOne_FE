@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+
 import { SVG_PATHS } from "@/constants/assets-path";
 
 interface MenuItemProps {

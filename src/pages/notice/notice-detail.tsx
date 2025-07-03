@@ -1,10 +1,10 @@
-import { useParams } from "react-router-dom";
 import { Suspense } from "react";
+import { useParams } from "react-router-dom";
 
-import NoticeDetail from "@/components/notice/NoticeDetail";
+import Empty from "@/components/@shared/layout/empty";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
-import Empty from "@/components/@shared/layout/empty";
+import NoticeDetail from "@/components/notice/NoticeDetail";
 import { URL_PATHS } from "@/constants/url-path";
 
 export default function NoticeDetailPage() {

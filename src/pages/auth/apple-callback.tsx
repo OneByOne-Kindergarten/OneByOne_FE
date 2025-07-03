@@ -1,10 +1,11 @@
+import { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import { URL_PATHS } from "@/constants/url-path";
 import { useToast } from "@/hooks/useToast";
 import { setCookie } from "@/services/authService";
 import { getUserInfo } from "@/services/userService";
-import { useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 
 export default function AppleCallbackPage() {
   const navigate = useNavigate();

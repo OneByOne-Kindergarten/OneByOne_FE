@@ -1,7 +1,6 @@
 import ActionDropDown from "@/components/@shared/drop-down/report-drop-down";
 import CommentUserInfo from "@/components/community/CommentUserInfo";
 import ReplyButton from "@/components/community/ReplyButton";
-
 import type { CommentItem } from "@/types/communityDTO";
 import { formatDate } from "@/utils/dateUtils";
 

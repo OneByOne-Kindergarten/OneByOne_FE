@@ -7,7 +7,6 @@ import NavBar from "@/components/@shared/nav/nav-bar";
 import CategorySelector from "@/components/community/CategorySelector";
 import PopularPostsList from "@/components/community/PopularPostsList";
 import CommunityPostsList from "@/components/community/PostList";
-
 import { SVG_PATHS } from "@/constants/assets-path";
 import {
   PROSPECTIVE_TEACHER_CATEGORIES,

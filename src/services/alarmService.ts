@@ -1,6 +1,6 @@
-import { apiCall } from "@/utils/apiUtils";
 import { API_PATHS } from "@/constants/api-path";
 import type { AlarmResponse } from "@/types/alarmDTO";
+import { apiCall } from "@/utils/apiUtils";
 
 /**
  * 알림 목록 조회

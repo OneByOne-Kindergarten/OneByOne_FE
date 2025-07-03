@@ -1,5 +1,5 @@
-import { InquiryStatus } from "@/types/inquiryDTO";
 import { INQUIRY_STATUS_LABEL, INQUIRY_TITLE_LABEL } from "@/constants/inquiry";
+import { InquiryStatus } from "@/types/inquiryDTO";
 
 export function getInquiryStatusLabel(status: InquiryStatus): string {
   return INQUIRY_STATUS_LABEL[status];

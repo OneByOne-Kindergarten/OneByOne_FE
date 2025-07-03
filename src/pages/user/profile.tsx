@@ -1,14 +1,15 @@
 import { useAtom } from "jotai";
 import { useNavigate } from "react-router-dom";
-import { userAtom } from "@/stores/userStore";
+
 
 import PageLayout from "@/components/@shared/layout/page-layout";
+import { Switch } from "@/components/@shared/switch";
+import ToolTip from "@/components/@shared/tool-tip";
 import ProfileDetail from "@/components/user/ProfileDetail";
 import ProfileImage from "@/components/user/ProfileImage";
-import ToolTip from "@/components/@shared/tool-tip";
-import { URL_PATHS } from "@/constants/url-path";
 import { IMAGE_PATHS } from "@/constants/assets-path";
-import { Switch } from "@/components/@shared/switch";
+import { URL_PATHS } from "@/constants/url-path";
+import { userAtom } from "@/stores/userStore";
 
 export default function ProfilePage() {
   const [user] = useAtom(userAtom);

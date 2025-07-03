@@ -1,6 +1,7 @@
 import clsx from "clsx";
-import Button from "@/components/@shared/buttons/base-button";
+
 import SVG_PATH from "@/assets/icons/share.svg";
+import Button from "@/components/@shared/buttons/base-button";
 
 interface ShareButtonProps {
   variant?: "primary" | "secondary";

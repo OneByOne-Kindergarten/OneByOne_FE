@@ -1,8 +1,8 @@
 import * as React from "react";
-import { SVG_PATHS } from "@/constants/assets-path";
 
-import { cn } from "@/utils/cn";
 import Toggle from "@/components/@shared/buttons/base-toggle";
+import { SVG_PATHS } from "@/constants/assets-path";
+import { cn } from "@/utils/cn";
 
 export interface ToggleInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {

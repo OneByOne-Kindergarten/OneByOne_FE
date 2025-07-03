@@ -1,7 +1,7 @@
 import Badge from "@/components/@shared/badge";
 import ProfileImage from "@/components/user/ProfileImage";
-import { getUserRoleLabel } from "@/utils/getUserRoleLabel";
 import type { CommentItem } from "@/types/communityDTO";
+import { getUserRoleLabel } from "@/utils/getUserRoleLabel";
 
 interface ReplyCardProps {
   reply: CommentItem;

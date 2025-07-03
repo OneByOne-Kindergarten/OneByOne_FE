@@ -1,8 +1,9 @@
+import { useState } from "react";
+
 import Button from "@/components/@shared/buttons/base-button";
 import BottomSheet from "@/components/@shared/modal/bottom-sheet";
 import { StarRating } from "@/components/@shared/rating/star-rating";
 import { SVG_PATHS } from "@/constants/assets-path";
-import { useState } from "react";
 
 interface RatingFilterProps {
   reviewCounts?: {

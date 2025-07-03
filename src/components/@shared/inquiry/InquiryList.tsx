@@ -3,12 +3,12 @@ import clsx from "clsx";
 import Badge from "@/components/@shared/badge";
 import Empty from "@/components/@shared/layout/empty";
 import { SVG_PATHS } from "@/constants/assets-path";
+import type { Inquiry } from "@/types/inquiryDTO";
 import {
   getInquiryStatusLabel,
   getInquiryTitleLabel,
   formatInquiryDate,
 } from "@/utils/getInquiryLabel";
-import type { Inquiry } from "@/types/inquiryDTO";
 
 interface InquiryListProps {
   inquiries: Inquiry[];

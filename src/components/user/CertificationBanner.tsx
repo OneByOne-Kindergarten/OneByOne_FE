@@ -1,5 +1,5 @@
-import { IMAGE_PATHS } from "@/constants/assets-path";
 import Button from "@/components/@shared/buttons/base-button";
+import { IMAGE_PATHS } from "@/constants/assets-path";
 
 export default function CertificationBanner() {
   return (

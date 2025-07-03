@@ -1,5 +1,5 @@
-import { SVG_PATHS } from "@/constants/assets-path";
 import Header from "@/components/@shared/headers/base-header";
+import { SVG_PATHS } from "@/constants/assets-path";
 
 interface BookmarkHeaderProps {
   title?: string;

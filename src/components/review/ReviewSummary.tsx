@@ -1,5 +1,5 @@
-import TotalRatingCard from "@/components/review/TotalRatingCard";
 import { ReviewFieldConfig } from "@/components/review/ReviewContent";
+import TotalRatingCard from "@/components/review/TotalRatingCard";
 
 interface ReviewSummaryProps {
   reviewCount: number;

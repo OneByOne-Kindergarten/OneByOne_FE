@@ -1,4 +1,5 @@
-import { apiCall } from "@/utils/apiUtils";
+import type { LearningReviewFormValues } from "@/components/review/LearningReviewForm";
+import type { WorkReviewFormValues } from "@/components/review/WorkReviewForm";
 import { API_PATHS } from "@/constants/api-path";
 import type {
   WorkReviewResponse,
@@ -6,8 +7,7 @@ import type {
   LikeResponse,
   SortType,
 } from "@/types/reviewDTO";
-import type { WorkReviewFormValues } from "@/components/review/WorkReviewForm";
-import type { LearningReviewFormValues } from "@/components/review/LearningReviewForm";
+import { apiCall } from "@/utils/apiUtils";
 
 /**
  * 근무 리뷰 목록을 가져옵니다.

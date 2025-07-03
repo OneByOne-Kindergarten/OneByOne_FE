@@ -1,5 +1,6 @@
-import React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
+import React from "react";
+
 import { SVG_PATHS } from "@/constants/assets-path";
 import { cn } from "@/utils/cn";
 

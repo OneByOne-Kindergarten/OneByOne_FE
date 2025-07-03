@@ -1,3 +1,6 @@
+import { useCallback, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+
 import { URL_PATHS } from "@/constants/url-path";
 import {
   getCommunityState,
@@ -9,8 +12,6 @@ import {
   getUrlKeyFromPath,
   UrlKeys,
 } from "@/utils/urlUtils";
-import { useCallback, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 
 // 상위 UrlKey 목록
 export const ROOT_URL_KEYS: UrlKeys[] = [

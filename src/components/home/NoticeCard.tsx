@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-import { useNotices } from "@/hooks/useNotice";
+
 import { SVG_PATHS } from "@/constants/assets-path";
 import { URL_PATHS } from "@/constants/url-path";
+import { useNotices } from "@/hooks/useNotice";
 
 export default function NoticeCard() {
   const { data: notices } = useNotices();

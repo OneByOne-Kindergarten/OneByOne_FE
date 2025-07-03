@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+
 import Error from "@/components/@shared/layout/error";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import { URL_PATHS } from "@/constants/url-path";
@@ -9,8 +12,6 @@ import {
 import { useToast } from "@/hooks/useToast";
 import { setCookie } from "@/services/authService";
 import { getUserInfo } from "@/services/userService";
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 
 type SocialProvider = "naver" | "kakao";
 

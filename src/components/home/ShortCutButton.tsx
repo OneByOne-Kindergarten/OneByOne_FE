@@ -1,5 +1,6 @@
-import type { Shortcut } from "@/types/homeDTO";
 import { Link } from "react-router-dom";
+
+import type { Shortcut } from "@/types/homeDTO";
 
 export default function ShortCutButton({ shortcut }: { shortcut: Shortcut }) {
   return (

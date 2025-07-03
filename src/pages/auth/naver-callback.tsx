@@ -1,7 +1,8 @@
+import { useEffect } from "react";
+
 import Error from "@/components/@shared/layout/error";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import { extractAuthParams, useNaverAuth } from "@/hooks/useSocialAuth";
-import { useEffect } from "react";
 
 export default function NaverCallbackPage() {
   const naverAuthMutation = useNaverAuth();

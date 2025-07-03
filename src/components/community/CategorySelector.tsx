@@ -1,5 +1,6 @@
-import { useSearchParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
+import { useSearchParams } from "react-router-dom";
+
 import Button from "@/components/@shared/buttons/base-button";
 import { CategoryOption } from "@/constants/community";
 import { setCommunityState } from "@/utils/lastVisitedPathUtils";

@@ -1,10 +1,10 @@
-import { apiCall } from "@/utils/apiUtils";
 import { API_PATHS } from "@/constants/api-path";
 import {
   FavoriteStatusResponse,
   FavoriteToggleResponse,
   FavoritesResponse,
 } from "@/types/favoriteDTO";
+import { apiCall } from "@/utils/apiUtils";
 
 /**
  * 유치원 즐겨찾기 상태 조회

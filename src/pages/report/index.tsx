@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import type { ReportRequest, ReportTargetType } from "@/types/reportDTO";
-import { reportService } from "@/services/reportService";
-import PageLayout from "@/components/@shared/layout/page-layout";
+
 import Button from "@/components/@shared/buttons/base-button";
+import PageLayout from "@/components/@shared/layout/page-layout";
 import { RadioGroup, RadioGroupItem } from "@/components/@shared/radio-group";
-import { useToast } from "@/hooks/useToast";
 import { URL_PATHS } from "@/constants/url-path";
+import { useToast } from "@/hooks/useToast";
+import { reportService } from "@/services/reportService";
+import type { ReportRequest, ReportTargetType } from "@/types/reportDTO";
 
 const REPORT_REASONS = [
   {
@@ -30,6 +31,7 @@ const TARGET_TYPE_LABELS: Record<ReportTargetType, string> = {
   POST: "게시글을",
   COMMENT: "댓글을",
   REVIEW: "리뷰를",
+  USER: "사용자를",
 };
 
 const isValidReportTargetType = (

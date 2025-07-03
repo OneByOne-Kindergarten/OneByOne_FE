@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { FavoritesResponse } from "@/types/favoriteDTO";
+
 import { getFavorites } from "@/services/favoriteService";
+import { FavoritesResponse } from "@/types/favoriteDTO";
 
 /**
  * 즐겨찾기 목록 조회

@@ -1,6 +1,7 @@
+import { calculateMapLevel } from "@/utils/mapUtils";
+
 import KakaoMap from "./KakaoMap";
 import KindergartenMapMarker from "./KindergartenMapMarker";
-import { calculateMapLevel } from "@/utils/mapUtils";
 
 interface KindergartenMapMarker {
   id: number;

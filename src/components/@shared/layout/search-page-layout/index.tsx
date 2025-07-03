@@ -1,8 +1,9 @@
+import { ReactNode } from "react";
+
 import SearchInput from "@/components/@shared/form/search-input";
 import Header from "@/components/@shared/headers/base-header";
 import Wrapper from "@/components/@shared/layout/page-wrapper";
 import Metadata from "@/hooks/useMetadata";
-import { ReactNode } from "react";
 
 interface SearchPageLayoutProps {
   children: ReactNode;

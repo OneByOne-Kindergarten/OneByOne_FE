@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+
 import { getKindergartenName } from "@/services/kindergartenService";
 
 export const useKindergartenName = (id: string) => {

@@ -1,7 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 
 import Header from "@/components/@shared/headers/base-header";
-
 import { SVG_PATHS } from "@/constants/assets-path";
 import { URL_PATHS } from "@/constants/url-path";
 

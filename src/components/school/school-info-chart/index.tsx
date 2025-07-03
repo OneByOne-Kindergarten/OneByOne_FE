@@ -1,6 +1,6 @@
-import { SVG_PATHS } from "@/constants/assets-path";
 import CircleGraph from "@/components/school/circle-graph";
 import SchoolInfoItem from "@/components/school/school-info-item";
+import { SVG_PATHS } from "@/constants/assets-path";
 
 const fixedColors = ["#FFD700", "#4CAF50", "#6CA6ED"];
 

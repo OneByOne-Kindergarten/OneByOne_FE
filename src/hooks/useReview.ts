@@ -1,3 +1,9 @@
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
+
 import type { LearningReviewFormValues } from "@/components/review/LearningReviewForm";
 import type { WorkReviewFormValues } from "@/components/review/WorkReviewForm";
 import { REVIEW_TYPES } from "@/constants/review";
@@ -14,11 +20,6 @@ import type {
   WorkReview,
 } from "@/types/reviewDTO";
 import { SortType } from "@/types/reviewDTO";
-import {
-  useMutation,
-  useQueryClient,
-  useSuspenseQuery,
-} from "@tanstack/react-query";
 
 type ReviewData = InternshipReview | WorkReview;
 

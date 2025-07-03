@@ -1,7 +1,8 @@
-import { BrowserRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
-import QueryProvider from "@/components/@shared/providers/QueryProvider";
+import { BrowserRouter } from "react-router-dom";
+
 import AuthProvider from "@/components/@shared/providers/AuthProvider";
+import QueryProvider from "@/components/@shared/providers/QueryProvider";
 import { Toaster } from "@/components/@shared/toast/toaster";
 
 interface AppProviderProps {

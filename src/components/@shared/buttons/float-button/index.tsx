@@ -1,6 +1,6 @@
+import { VariantProps , cva } from "class-variance-authority";
 import * as React from "react";
-import { VariantProps } from "class-variance-authority";
-import { cva } from "class-variance-authority";
+
 import Button from "@/components/@shared/buttons/base-button";
 import { cn } from "@/utils/cn";
 
