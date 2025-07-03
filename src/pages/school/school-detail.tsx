@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 
 import Error from "@/components/@shared/layout/error";
 import PageLayout from "@/components/@shared/layout/page-layout";
@@ -203,14 +203,14 @@ export default function SchoolDetailPage() {
                 title="홈페이지"
                 altText="홈 아이콘"
               >
-                <a
-                  href={kindergarten.homepage}
-                  className="font-semibold text-primary-dark02 hover:underline"
+                <Link
+                  to={kindergarten.homepage}
+                  className="line-clamp-1 font-semibold text-primary-dark02 hover:underline"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   {kindergarten.homepage}
-                </a>
+                </Link>
               </SchoolInfoItem>
             )}
           </ul>

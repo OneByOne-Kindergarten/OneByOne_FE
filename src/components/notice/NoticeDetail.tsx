@@ -16,7 +16,7 @@ export default function NoticeDetail({ id }: { id: number }) {
       </div>
       <div className="flex flex-col gap-1 text-xs text-primary-dark01">
         <p>📞 고객센터: 0000-0000</p>
-        <p>📧 이메일: support@[원바원].com</p>
+        <p>📧 이메일: onebyone.kindergarten.management@gmail.com</p>
       </div>
     </div>
   );

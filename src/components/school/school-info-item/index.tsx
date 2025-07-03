@@ -20,7 +20,7 @@ export default function SchoolInfoItem({
         <div className="flex flex-1 flex-col gap-0.5">
           <h3 className="text-sm font-medium text-primary-normal03">{title}</h3>
           {typeof children === "string" ? (
-            <p className="text-base font-semibold text-primary-dark02">
+            <p className="line-clamp-1 text-base font-semibold text-primary-dark02">
               {children}
             </p>
           ) : (
