@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 
-import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import PageLayout from "@/components/@shared/layout/page-layout";
+import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import MyPostList from "@/components/user/MyPostList";
 import { URL_PATHS } from "@/constants/url-path";
 
@@ -15,7 +15,7 @@ export default function MyPostPage() {
       wrapperBg="white"
       mainClassName="p-5 mt-14"
     >
-      <Suspense fallback={<LoadingSpinner type="page" />}>
+      <Suspense fallback={<LoadingSpinner />}>
         <MyPostList />
       </Suspense>
     </PageLayout>

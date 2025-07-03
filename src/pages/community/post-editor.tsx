@@ -182,7 +182,7 @@ export default function PostEditorPage() {
       wrapperBg="white"
     >
       {isPending ? (
-        <LoadingSpinner type="page" />
+        <LoadingSpinner />
       ) : (
         <section className="flex flex-col gap-5 p-5">
           <h2 className="text-base font-semibold text-primary-dark01">

@@ -103,7 +103,7 @@ export default function ShortcutsEditorPage() {
       onSave={isLoading ? undefined : handleSave}
     >
       {isLoading ? (
-        <LoadingSpinner type="page" />
+        <LoadingSpinner />
       ) : (
         <>
           <section className="flex flex-col gap-1">

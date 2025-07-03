@@ -1,8 +1,8 @@
 import { Suspense } from "react";
 
 import PageLayout from "@/components/@shared/layout/page-layout";
-import NoticeList from "@/components/notice/NoticeList";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
+import NoticeList from "@/components/notice/NoticeList";
 import { URL_PATHS } from "@/constants/url-path";
 
 export default function NoticePage() {
@@ -16,7 +16,7 @@ export default function NoticePage() {
       wrapperBg="white"
       mainClassName="px-5 py-2.5 mt-14"
     >
-      <Suspense fallback={<LoadingSpinner type="page" />}>
+      <Suspense fallback={<LoadingSpinner />}>
         <NoticeList />
       </Suspense>
     </PageLayout>

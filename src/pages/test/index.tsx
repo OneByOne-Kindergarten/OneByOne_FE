@@ -1,14 +1,14 @@
 import { useState } from "react";
 
-import PageLayout from "@/components/@shared/layout/page-layout";
-import Toggle from "@/components/@shared/buttons/base-toggle";
-import Button from "@/components/@shared/buttons/base-button";
-import BarRating from "@/components/@shared/rating/bar-rating";
 import Badge from "@/components/@shared/badge";
-import PopupModal from "@/components/@shared/modal/pop-up";
-import BottomSheet from "@/components/@shared/modal/bottom-sheet";
+import Button from "@/components/@shared/buttons/base-button";
+import Toggle from "@/components/@shared/buttons/base-toggle";
 import Dropdown from "@/components/@shared/drop-down/base-drop-down";
+import PageLayout from "@/components/@shared/layout/page-layout";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
+import BottomSheet from "@/components/@shared/modal/bottom-sheet";
+import PopupModal from "@/components/@shared/modal/pop-up";
+import BarRating from "@/components/@shared/rating/bar-rating";
 import { SVG_PATHS } from "@/constants/assets-path";
 import { URL_PATHS } from "@/constants/url-path";
 
@@ -231,7 +231,7 @@ export default function TEST() {
         <h2 className="mb-2 bg-gray-200 p-1">진행도</h2>
         <div className="flex flex-wrap gap-2">
           <BarRating value={4} className="h-2 w-12" />
-          <LoadingSpinner />
+          <LoadingSpinner type="element" />
         </div>
       </section>
 

@@ -1,15 +1,15 @@
 import { Suspense } from "react";
-import { useParams, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
+import PostButton from "@/components/@shared/buttons/post-button";
 import PageLayout from "@/components/@shared/layout/page-layout";
+import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
+import NavBar from "@/components/@shared/nav/nav-bar";
 import ReviewList from "@/components/review/ReviewList";
 import ReviewSummary from "@/components/review/ReviewSummary";
-import NavBar from "@/components/@shared/nav/nav-bar";
-import PostButton from "@/components/@shared/buttons/post-button";
-import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import { REVIEW_TYPES } from "@/constants/review";
-import { useReviewPage } from "@/hooks/useReviewPage";
 import { useKindergartenName } from "@/hooks/useKindergartenName";
+import { useReviewPage } from "@/hooks/useReviewPage";
 import { SortType } from "@/types/reviewDTO";
 
 const SCHOOL_DEFAULT_NAME = "유치원";
@@ -77,7 +77,7 @@ export default function ReviewPage() {
       mainBg="gray"
       mainClassName="gap-0 mt-14 mb-28"
     >
-      <Suspense fallback={<LoadingSpinner type="page" />}>
+      <Suspense fallback={<LoadingSpinner />}>
         <ReviewContent />
       </Suspense>
     </PageLayout>

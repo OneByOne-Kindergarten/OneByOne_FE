@@ -2,12 +2,12 @@ import { useNavigate } from "react-router-dom";
 
 import Empty from "@/components/@shared/layout/empty";
 import Error from "@/components/@shared/layout/error";
-import SchoolCard from "@/components/school/school-card";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
+import SchoolCard from "@/components/school/school-card";
 
-import { useFavorites } from "@/hooks/useFavorites";
 import { URL_PATHS } from "@/constants/url-path";
+import { useFavorites } from "@/hooks/useFavorites";
 
 export default function Bookmarks() {
   const navigate = useNavigate();
@@ -25,19 +25,19 @@ export default function Bookmarks() {
       headerLogo={true}
       mainBg="gray"
       hasBackButton={false}
-      mainClassName={favorites.length === 0 ? "pb-0 mb-0" : "mt-14"}
+      mainClassName={favorites.length === 0 ? "pb-0 mb-0 mt-14" : "mt-14"}
       showAlarmButton={true}
     >
       {isLoading ? (
-        <LoadingSpinner type="page" />
+        <LoadingSpinner />
       ) : isError ? (
         <Error type="page">{error?.message}</Error>
       ) : favorites.length === 0 ? (
         <Empty
           type="page"
           title="관심있는 유치원을 추가해보세요."
-          subTitle="유치원 상세 페이지에서 상단바의 북마크 아이콘을 클릭해보세요."
-        ></Empty>
+          subTitle="유치원 상단바의 북마크 아이콘을 클릭해보세요."
+        />
       ) : (
         <ul className="my-3 flex flex-col gap-2">
           {favorites.map((favorite) => (
