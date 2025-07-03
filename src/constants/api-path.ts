@@ -7,14 +7,14 @@ export const API_PATHS = {
     NEARBY: "/kindergarten/nearby",
   },
   INTERNSHIP: {
-    BASE: "/internship/review",
+    BASE: "/internship/review", // 실습 리뷰 생성, 수정
     GET_ALL: (kindergartenId: number) =>
       `/internship/reviews/${kindergartenId}`,
     LIKE: (internshipReviewId: number) =>
       `/internship/review/${internshipReviewId}/like`,
   },
   WORK: {
-    BASE: "/work/review",
+    BASE: "/work/review", // 근무 리뷰 생성, 수정
     GET_ALL: (kindergartenId: number) => `/work/reviews/${kindergartenId}`,
     LIKE: (workReviewId: number) => `/work/review/${workReviewId}/like`,
   },
@@ -60,7 +60,8 @@ export const API_PATHS = {
   },
   USER: {
     BASE: "/users",
-    MY_POST: "/users/user/community-comments",
+    MY_WORK_REVIEW: "/users/user/work-reviews",
+    MY_INTERNSHIP_REVIEW: "/users/user/internship-reviews",
     REISSUE: "/users/reissue",
     SIGN_IN: "/users/sign-in",
     SIGN_UP: "/users/sign-up",

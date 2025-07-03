@@ -1,32 +1,48 @@
-import { ReviewFieldConfig } from "@/components/review/ReviewContent";
-import TotalRatingCard from "@/components/review/TotalRatingCard";
+import { StarRating } from "@/components/@shared/rating/star-rating";
+import { cn } from "@/utils/cn";
+import { formatDate } from "@/utils/dateUtils";
 
 interface ReviewSummaryProps {
-  reviewCount: number;
-  totalRating: number;
-  scoreData: Record<string, number>;
-  fieldConfigs: ReviewFieldConfig[];
+  rating: number;
+  title: string;
+  workType: string;
+  createdAt: string;
+  workYear: string;
+  className?: string;
 }
 
 export default function ReviewSummary({
-  reviewCount,
-  totalRating,
-  scoreData,
-  fieldConfigs,
+  rating,
+  title,
+  workType,
+  createdAt,
+  workYear,
+  className,
 }: ReviewSummaryProps) {
   return (
-    <section className="flex flex-col gap-3 bg-white px-5 pb-5 pt-6">
-      <div className="flex flex-col gap-2">
-        <div className="flex gap-1 text-lg font-bold">
-          <p>리뷰</p>
-          <span className="text-tertiary-3">{reviewCount}</span>
-        </div>
-        <TotalRatingCard
-          total={totalRating}
-          scoreData={scoreData}
-          fieldConfigs={fieldConfigs}
-        />
+    <div className={cn("flex flex-col gap-3", className)}>
+      <div className="flex items-center gap-2">
+        <StarRating value={rating} />
+        <span className="text-sm font-semibold">
+          {Number(rating).toFixed(1)}
+        </span>
       </div>
-    </section>
+      <div className="flex flex-col gap-1">
+        <h2 className="text-pretty font-semibold">{title}</h2>
+        <p className="text-xxs text-primary-normal03">
+          {workType && (
+            <>
+              {workType} <span aria-hidden="true">│</span>
+            </>
+          )}
+          {formatDate(createdAt)} 작성
+          {workYear && (
+            <>
+              <span aria-hidden="true">│</span> {workYear}
+            </>
+          )}
+        </p>
+      </div>
+    </div>
   );
 }

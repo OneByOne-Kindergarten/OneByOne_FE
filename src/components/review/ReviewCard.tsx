@@ -1,18 +1,15 @@
 import { useState } from "react";
 
+import ReportDropDown from "@/components/@shared/drop-down/report-drop-down";
 import ReviewActions from "@/components/review/ReviewActions";
 import ReviewContent, {
   ReviewFieldConfig,
 } from "@/components/review/ReviewContent";
-import ReviewRating from "@/components/review/ReviewRating";
-import { REVIEW_TYPES } from "@/constants/review";
+import ReviewSummary from "@/components/review/ReviewSummary";
 import { useReviewLike } from "@/hooks/useReviewLike";
-import type { InternshipReview, WorkReview } from "@/types/reviewDTO";
-import { formatDate } from "@/utils/dateUtils";
+import { getTotalRating, getWorkYear, ReviewData } from "@/utils/reviewUtils";
 
-import ReportDropDown from "../@shared/drop-down/report-drop-down";
-
-export type ReviewData = InternshipReview | WorkReview;
+export type { ReviewData };
 
 export interface ReviewCardProps {
   review: ReviewData | ReviewData[];
@@ -35,52 +32,14 @@ function ReviewCardItem({
     "workReviewId" in review ? review.workReviewId : review.internshipReviewId
   );
 
-  // 타입에 따른 총점 계산
-  const getTotalRating = (review: ReviewData, type: string): number => {
-    if (type === REVIEW_TYPES.WORK && "workReviewId" in review) {
-      return (
-        (review.benefitAndSalaryScore +
-          review.workLifeBalanceScore +
-          review.workEnvironmentScore +
-          review.managerScore +
-          review.customerScore) /
-        5
-      );
-    } else if ("internshipReviewId" in review) {
-      return (
-        (review.workEnvironmentScore +
-          review.learningSupportScore +
-          review.instructionTeacherScore) /
-        3
-      );
-    }
-    return 0;
-  };
-
-  const getWorkYear = (review: ReviewData, type: string): string => {
-    if (type === REVIEW_TYPES.WORK && "workReviewId" in review) {
-      switch (review.workYear) {
-        case 1:
-          return "2년 이내 근무";
-        case 2:
-          return "2-5년 전 근무";
-        case 3:
-          return "근무한지 오래됨";
-        default:
-          return "";
-      }
-    }
-    return "";
-  };
-
   return (
     <div className="flex flex-col gap-7">
       <div className="flex items-start justify-between">
-        <ReviewRating
+        <ReviewSummary
           rating={getTotalRating(review, type)}
           title={review.oneLineComment}
           workType={review.workType}
-          createdAt={formatDate(review.createdAt || new Date().toISOString())}
+          createdAt={review.createdAt || ""}
           workYear={getWorkYear(review, type)}
         />
         <ReportDropDown

@@ -6,7 +6,7 @@ import PageLayout from "@/components/@shared/layout/page-layout";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import NavBar from "@/components/@shared/nav/nav-bar";
 import ReviewList from "@/components/review/ReviewList";
-import ReviewSummary from "@/components/review/ReviewSummary";
+import TotalRatingSection from "@/components/review/TotalRatingSection";
 import { REVIEW_TYPES } from "@/constants/review";
 import { useKindergartenName } from "@/hooks/useKindergartenName";
 import { useReviewPage } from "@/hooks/useReviewPage";
@@ -37,7 +37,7 @@ function ReviewContent() {
         options={schoolOptions}
         currentPath={currentPath}
       />
-      <ReviewSummary
+      <TotalRatingSection
         reviewCount={reviewData.reviews.length}
         totalRating={reviewData.rating.total}
         scoreData={reviewData.scores}

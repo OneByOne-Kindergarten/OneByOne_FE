@@ -48,7 +48,7 @@ export default function SchoolDetailPage() {
     ...SCHOOL_QUERY_CONFIG,
   });
 
-  const CATEGORY_OPTIONS = [
+  const REVIEW_CATEGORY_OPTIONS = [
     { href: `/school/${safeId}`, label: "기관정보" },
     {
       href: `/school/${safeId}/review?type=${REVIEW_TYPES.WORK}`,
@@ -129,7 +129,7 @@ export default function SchoolDetailPage() {
       <>
         <NavBar
           id={safeId}
-          options={CATEGORY_OPTIONS}
+          options={REVIEW_CATEGORY_OPTIONS}
           currentPath={URL_PATHS.SCHOOL_DETAIL.replace(":id", safeId)}
         />
         <section className="px-5 py-5 pb-28">
