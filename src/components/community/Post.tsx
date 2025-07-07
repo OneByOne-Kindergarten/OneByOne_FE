@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import AlertCard from "@/components/@shared/alert/alert-card";
 import Badge from "@/components/@shared/badge";
 import LikeToggle from "@/components/@shared/buttons/like-toggle";
-import ShareButton from "@/components/@shared/buttons/share-button";
 import ActionDropDown from "@/components/@shared/drop-down/report-drop-down";
 import ChatCount from "@/components/community/ChatCount";
 import { SVG_PATHS } from "@/constants/assets-path";
@@ -98,22 +97,22 @@ export default function Post({
         </AlertCard>
       </section>
       <section className="flex justify-between">
+        <ChatCount
+          count={
+            commentsCount !== undefined ? commentsCount : post.commentCount
+          }
+          className="w-1/2"
+        />
         <LikeToggle
           count={likeStatus?.likeCount || 0}
           onToggle={handleLikeToggle}
           disabled={isLiking}
           isLiked={likeStatus?.liked || false}
-          className="w-1/3"
+          className="w-1/2"
         >
           좋아요
         </LikeToggle>
-        <ChatCount
-          count={
-            commentsCount !== undefined ? commentsCount : post.commentCount
-          }
-          className="w-1/3"
-        />
-        <ShareButton size="xs" className="w-1/3" />
+        {/* <ShareButton size="xs" className="w-1/3" /> */}
       </section>
     </article>
   );

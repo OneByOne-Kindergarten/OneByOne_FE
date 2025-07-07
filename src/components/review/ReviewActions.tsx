@@ -1,5 +1,4 @@
 import LikeToggle from "@/components/@shared/buttons/like-toggle";
-import ShareButton from "@/components/@shared/buttons/share-button";
 
 interface ReviewActionsProps {
   likeCount: number;
@@ -25,7 +24,7 @@ export default function ReviewActions({
       >
         도움돼요
       </LikeToggle>
-      <ShareButton variant="secondary" size="xs" />
+      {/* <ShareButton variant="secondary" size="xs" /> */}
     </div>
   );
 }
