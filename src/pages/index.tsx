@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Button from "@/components/@shared/buttons/base-button";
 import PageLayout from "@/components/@shared/layout/page-layout";
 import OauthButton from "@/components/sign-in/OauthButton";
-import { SVG_PATHS, IMAGE_PATHS } from "@/constants/assets-path";
+import { IMAGE_PATHS, SVG_PATHS } from "@/constants/assets-path";
 import { URL_PATHS } from "@/constants/url-path";
 import {
   isFlutterWebView,
@@ -63,16 +63,6 @@ export default function RootPage() {
                 className="absolute left-4"
               />
               Email로 시작하기
-            </Button>
-          </Link>
-
-          {/* 권한 테스트 페이지 링크 */}
-          <Link to={URL_PATHS.PERMISSION_TEST}>
-            <Button
-              font="md"
-              className="relative mt-4 w-full bg-blue-500 text-white"
-            >
-              Flutter 권한 테스트 페이지
             </Button>
           </Link>
         </div>

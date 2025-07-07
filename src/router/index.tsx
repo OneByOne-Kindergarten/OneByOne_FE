@@ -4,7 +4,6 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import { URL_PATHS } from "@/constants/url-path";
 
-const TestPage = lazy(() => import("../pages/test"));
 const RootPage = lazy(() => import("../pages"));
 const HomePage = lazy(() => import("../pages/home"));
 const ShortcutsEditorPage = lazy(
@@ -40,14 +39,9 @@ const NoticePage = lazy(() => import("../pages/notice"));
 const NoticeDetailPage = lazy(() => import("../pages/notice/notice-detail"));
 const AlarmPage = lazy(() => import("../pages/alarm"));
 const ReportPage = lazy(() => import("../pages/report"));
-// 테스트 페이지
-const PermissionTestPage = lazy(
-  () => import("../components/example/PermissionExample")
-);
 
 const routes = {
   direct: [
-    { path: URL_PATHS.TEST, element: <TestPage /> },
     { path: URL_PATHS.ROOT, element: <RootPage /> },
     { path: URL_PATHS.HOME, element: <HomePage /> },
     { path: URL_PATHS.SHORTCUTS_EDITOR, element: <ShortcutsEditorPage /> },
@@ -88,8 +82,6 @@ const routes = {
     { path: URL_PATHS.ALARM, element: <AlarmPage /> },
     // 신고
     { path: URL_PATHS.REPORT, element: <ReportPage /> },
-    // 테스트
-    { path: URL_PATHS.PERMISSION_TEST, element: <PermissionTestPage /> },
   ],
 
   redirect: [
