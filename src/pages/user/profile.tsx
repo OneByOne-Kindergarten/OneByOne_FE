@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import PageLayout from "@/components/@shared/layout/page-layout";
 import { Switch } from "@/components/@shared/switch";
@@ -12,7 +12,6 @@ import { userAtom } from "@/stores/userStore";
 
 export default function ProfilePage() {
   const [user] = useAtom(userAtom);
-  const navigate = useNavigate();
 
   return (
     <PageLayout
