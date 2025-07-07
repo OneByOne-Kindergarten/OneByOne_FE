@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { UseFormSetValue } from "react-hook-form";
 
-const RANDOM_STRING_LENGTH = 7;
+const RANDOM_STRING_LENGTH = 8;
 const RANDOM_STRING_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-const RANDOM_NICKNAME_PREFIX = "익명_";
 
 interface UseRandomNicknameProps {
   setValue: UseFormSetValue<any>;
@@ -35,7 +34,7 @@ export const useRandomNickname = ({
 
   const handleRandomNickname = (): void => {
     const randomString = getRandomString(RANDOM_STRING_LENGTH);
-    const randomNickname = `${RANDOM_NICKNAME_PREFIX}${randomString}`;
+    const randomNickname = `${randomString}`;
     setValue("nickname", randomNickname, { shouldValidate: true });
     setIsRandomNickname(true);
   };
