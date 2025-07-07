@@ -22,7 +22,7 @@ export default function NoticeDetailPage() {
       currentPath={URL_PATHS.USER}
       hasBackButton={true}
       wrapperBg="white"
-      mainClassName="px-5 py-5 mt-14"
+      mainClassName="px-5 py-5 mt-14 mb-14"
     >
       <Suspense fallback={<LoadingSpinner />}>
         <NoticeDetail id={Number(id)} />
