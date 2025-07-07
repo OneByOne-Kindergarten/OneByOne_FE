@@ -5,8 +5,9 @@ import * as z from "zod";
 
 import Button from "@/components/@shared/buttons/base-button";
 import { Form } from "@/components/@shared/form";
-import { NicknameField } from "@/components/sign-up/NicknameField";
-import { RoleField } from "@/components/sign-up/RoleField";
+import NicknameField from "@/components/sign-up/NicknameField";
+import PolicyField from "@/components/sign-up/PolicyField";
+import RoleField from "@/components/sign-up/RoleField";
 import { CommunityCategoryType } from "@/constants/community";
 
 const step4Schema = z.object({
@@ -16,6 +17,12 @@ const step4Schema = z.object({
     .max(10, "닉네임은 최대 10자까지 가능합니다."),
   role: z.enum(["TEACHER", "PROSPECTIVE_TEACHER"], {
     errorMap: () => ({ message: "회원 유형을 선택해주세요." }),
+  }),
+  termsOfService: z.boolean().refine((value) => value === true, {
+    message: "서비스 이용약관에 동의해주세요.",
+  }),
+  privacyPolicy: z.boolean().refine((value) => value === true, {
+    message: "개인정보 수집 및 이용에 동의해주세요.",
   }),
 });
 
@@ -29,7 +36,12 @@ interface UserInfoFormProps {
 export function UserInfoForm({ onSubmit, isLoading }: UserInfoFormProps) {
   const form = useForm<UserInfoFormValues>({
     resolver: zodResolver(step4Schema),
-    defaultValues: { nickname: "", role: "TEACHER" },
+    defaultValues: {
+      nickname: "",
+      role: "TEACHER",
+      termsOfService: false,
+      privacyPolicy: false,
+    },
     mode: "onChange",
   });
 
@@ -59,6 +71,7 @@ export function UserInfoForm({ onSubmit, isLoading }: UserInfoFormProps) {
             onRoleChange={handleRoleChange}
             error={form.formState.errors.role?.message}
           />
+          <PolicyField control={form.control} errors={form.formState.errors} />
         </div>
         <Button
           variant="secondary"

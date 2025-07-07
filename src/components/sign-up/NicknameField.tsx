@@ -24,7 +24,7 @@ interface NicknameFieldProps<T extends FieldValues> {
   placeholder?: string;
 }
 
-export function NicknameField<T extends FieldValues>({
+export default function NicknameField<T extends FieldValues>({
   control,
   name,
   setValue,

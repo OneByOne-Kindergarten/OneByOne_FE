@@ -79,7 +79,7 @@ export default function User() {
             <MenuItem
               iconPath={SVG_PATHS.POLICY}
               iconAlt="설정 아이콘"
-              to="?policy"
+              to="https://abounding-leather-799.notion.site/229a1b804ebf80d9968addf0c2733f36?source=copy_link"
               label="운영 정책"
             />
           </menu>

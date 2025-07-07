@@ -10,7 +10,7 @@ interface RoleFieldProps {
   error?: string;
 }
 
-export function RoleField({
+export default function RoleField({
   selectedRole,
   onRoleChange,
   label = "해당되는 역할을 선택해주세요.",
