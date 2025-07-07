@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from "react";
+import { useCallback, useRef, useState } from "react";
 
 import { SVG_PATHS } from "@/constants/assets-path";
 
@@ -35,7 +35,7 @@ export default function ToolTip({ children }: { children: React.ReactNode }) {
         aria-expanded={isOpen}
       />
       <div
-        className={`absolute top-5 text-nowrap rounded-lg bg-tertiary-3 px-2.5 py-1 transition-all duration-100 ease-in-out ${
+        className={`absolute left-0 top-6 z-50 min-w-max rounded-lg bg-tertiary-3 px-2.5 py-1 transition-all duration-100 ease-in-out ${
           isOpen
             ? "translate-y-0 opacity-100"
             : "pointer-events-none -translate-y-1 opacity-0"
@@ -43,7 +43,7 @@ export default function ToolTip({ children }: { children: React.ReactNode }) {
         role="tooltip"
         aria-hidden={!isOpen}
       >
-        <p className="text-xs text-white">{children}</p>
+        <p className="max-w-48 break-words text-xs text-white">{children}</p>
       </div>
     </div>
   );

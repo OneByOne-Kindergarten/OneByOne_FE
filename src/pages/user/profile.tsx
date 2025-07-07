@@ -1,6 +1,5 @@
 import { useAtom } from "jotai";
-import { useNavigate } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
 
 import PageLayout from "@/components/@shared/layout/page-layout";
 import { Switch } from "@/components/@shared/switch";
@@ -27,12 +26,12 @@ export default function ProfilePage() {
       <section className="flex flex-col items-center gap-2.5 py-5">
         <div className="flex w-full items-center justify-between">
           <h2 className="font-semibold text-primary-dark01">프로필</h2>
-          <button
+          <Link
+            to={URL_PATHS.USER_PROFILE_EDITOR}
             className="text-sm text-primary-normal03"
-            onClick={() => navigate(URL_PATHS.USER_PROFILE_EDITOR)}
           >
             편집
-          </button>
+          </Link>
         </div>
         <ProfileImage role={user?.role} />
         <ProfileDetail user={user} className="items-center" />
@@ -41,7 +40,9 @@ export default function ProfilePage() {
         <div className="flex gap-4">
           <div className="flex items-center gap-2.5">
             <h2 className="font-semibold text-primary-dark01">근무지역</h2>
-            <ToolTip>최근 근무했던 지역으로 자동 설정됩니다.</ToolTip>
+            <ToolTip>
+              교사 인증 시 최근 근무했던 지역으로 자동 설정됩니다.
+            </ToolTip>
           </div>
           {user?.career ? (
             <p className="font-semibold text-primary-normal03">
@@ -53,7 +54,10 @@ export default function ProfilePage() {
         </div>
         <div className="flex justify-between">
           <div className="flex gap-4">
-            <h2 className="font-semibold text-primary-dark01">경력</h2>
+            <div className="flex items-center gap-2.5">
+              <h2 className="font-semibold text-primary-dark01">경력</h2>
+              <ToolTip>교사 인증 시 자동 설정됩니다.</ToolTip>
+            </div>
             {user?.career ? (
               <p className="font-semibold text-primary-normal03">
                 {user?.career}
@@ -62,9 +66,6 @@ export default function ProfilePage() {
               <p className="font-semibold text-primary-normal03">N년차</p>
             )}
           </div>
-          <button>
-            <span className="text-sm text-primary-normal03">편집</span>
-          </button>
         </div>
         <div className="flex flex-col gap-3">
           <h2 className="font-semibold text-primary-dark01">
