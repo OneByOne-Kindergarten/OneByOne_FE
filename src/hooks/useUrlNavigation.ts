@@ -93,6 +93,8 @@ export const SESSION_STORAGE_BASED_URL_KEYS: UrlKeys[] = [
   ...EDITOR_URL_KEYS,
   "COMMUNITY_POST",
   "ALARM",
+  "NOTICE",
+  "NOTICE_DETAIL",
 ];
 
 /**
@@ -166,7 +168,12 @@ export function useUrlNavigation(
       }
 
       // 직전으로 이동하는 페이지
-      if (currentUrlKey === "COMMUNITY_POST" || currentUrlKey === "ALARM") {
+      if (
+        currentUrlKey === "COMMUNITY_POST" ||
+        currentUrlKey === "ALARM" ||
+        currentUrlKey === "NOTICE" ||
+        currentUrlKey === "NOTICE_DETAIL"
+      ) {
         navigate(-1);
         return;
       }

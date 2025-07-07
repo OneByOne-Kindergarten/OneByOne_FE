@@ -265,7 +265,6 @@ export default function OAuthCallbackPage() {
     };
 
     const cookieStatus = checkCookies();
-    console.log("상세 쿠키 상태:", cookieStatus);
 
     const providerName = provider === "naver" ? "네이버" : "카카오";
 

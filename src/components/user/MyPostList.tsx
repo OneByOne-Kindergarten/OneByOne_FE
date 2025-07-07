@@ -63,8 +63,6 @@ export default function MyPostList() {
     error,
   } = useMyPosts();
 
-  console.log(data);
-
   const listRef = useRef<List>(null);
 
   // 모든 페이지의 리뷰 데이터를 평탄화하고 MyReviewData 타입으로 캐스팅
