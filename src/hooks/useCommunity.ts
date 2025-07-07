@@ -117,13 +117,13 @@ export const useCreatePost = () => {
       });
 
       toast({
-        title: "게시글 등록 완료",
+        title: "게시글이 등록되었습니다.",
         variant: "default",
       });
     },
     onError: () => {
       toast({
-        title: "게시글 등록 실패",
+        title: "게시글 등록에 실패했습니다.",
         variant: "destructive",
       });
     },
@@ -201,7 +201,7 @@ export const useCreateComment = () => {
     },
     onError: () => {
       toast({
-        title: "댓글 작성 실패",
+        title: "댓글 작성에 실패했습니다.",
         variant: "destructive",
       });
     },
@@ -225,13 +225,13 @@ export const useDeletePost = () => {
       });
 
       toast({
-        title: "게시글 삭제 완료",
+        title: "게시글이 삭제되었습니다.",
         variant: "default",
       });
     },
     onError: () => {
       toast({
-        title: "게시글 삭제 실패",
+        title: "게시글 삭제에 실패했습니다.",
         variant: "destructive",
       });
     },
@@ -253,7 +253,7 @@ export const useDeleteComment = () => {
     },
     onError: () => {
       toast({
-        title: "댓글 삭제 실패",
+        title: "댓글 삭제에 실패했습니다.",
         variant: "destructive",
       });
     },

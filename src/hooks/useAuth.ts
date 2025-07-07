@@ -83,8 +83,8 @@ export const useUpdateNickname = () => {
     mutationFn: (newNickname: string) => updateNickname(newNickname),
     onSuccess: () => {
       toast({
-        title: "닉네임 변경 성공",
-        description: "닉네임이 성공적으로 변경되었습니다.",
+        title: "닉네임 설정 완료",
+        description: "새로운 닉네임으로 활동해보세요. 🤗",
         variant: "default",
       });
     },
@@ -125,8 +125,8 @@ export const useUpdatePassword = () => {
     onSuccess: (success) => {
       if (success) {
         toast({
-          title: "비밀번호 변경 성공",
-          description: "비밀번호가 성공적으로 변경되었습니다.",
+          title: "비밀번호 변경 완료",
+          description: "새로운 비밀번호로 로그인해보세요. 🔓",
           variant: "default",
         });
       } else {
@@ -407,7 +407,7 @@ export const useResetPassword = () => {
     onSuccess: () => {
       toast({
         title: "임시 비밀번호 발송 완료",
-        description: "임시 비밀번호로 로그인 후 비밀번호를 변경해주세요.",
+        description: "로그인 후 비밀번호를 변경해주세요.",
         variant: "default",
       });
       navigate(URL_PATHS.SIGNIN);

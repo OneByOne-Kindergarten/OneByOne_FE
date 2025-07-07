@@ -178,7 +178,8 @@ export const useCreateInternshipReview = () => {
       });
 
       toast({
-        title: "실습 리뷰 등록 완료",
+        title: "실습 리뷰 작성 완료",
+        description: "게시된 리뷰를 확인해보세요. 🧐",
         variant: "default",
       });
     },
@@ -223,7 +224,8 @@ export const useCreateWorkReview = () => {
       });
 
       toast({
-        title: "근무 리뷰 등록 완료",
+        title: "근무 리뷰 작성 완료",
+        description: "게시된 리뷰를 확인해보세요. 🧐",
         variant: "default",
       });
     },
