@@ -3,7 +3,6 @@ import { useSearchParams } from "react-router-dom";
 
 import Toggle from "@/components/@shared/buttons/base-toggle";
 import Empty from "@/components/@shared/layout/empty";
-import RatingFilter from "@/components/review/RatingFilter";
 import ReviewCard, { ReviewData } from "@/components/review/ReviewCard";
 import { ReviewFieldConfig } from "@/components/review/ReviewContent";
 import { REVIEW_TYPES } from "@/constants/review";
@@ -69,7 +68,7 @@ export default function ReviewList({
             </Toggle>
           ))}
         </div>
-        <RatingFilter />
+        {/* <RatingFilter /> */}
       </div>
       {displayReviews.length > 0 ? (
         <ReviewCard
