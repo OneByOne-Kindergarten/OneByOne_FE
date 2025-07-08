@@ -1,7 +1,7 @@
 import { getDefaultStore } from "jotai/vanilla";
 
 import { API_PATHS } from "@/constants/api-path";
-import { getAccessToken } from "@/services/authService";
+import { getAccessToken, signOut } from "@/services/authService";
 import { userAtom } from "@/stores/userStore";
 import {
   Shortcut,
@@ -138,7 +138,7 @@ export const withdrawUser = async (): Promise<boolean> => {
       withCredentials: true,
     });
 
-    clearUserInfo(); // 탈퇴 성공 시 유저 정보 초기화
+    await signOut();
 
     return true;
   } catch (error) {
