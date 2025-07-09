@@ -107,9 +107,9 @@ export default function SchoolHeader({
             />
           </button>
         )}
-        <button onClick={handleMap} aria-label="지도">
+        {/* <button onClick={handleMap} aria-label="지도">
           <img src={SVG_PATHS.MAP} alt="지도" width={24} height={24} />
-        </button>
+        </button> */}
         <button onClick={handleSearch} aria-label="검색">
           <img src={SVG_PATHS.SEARCH} alt="검색" width={24} height={24} />
         </button>
