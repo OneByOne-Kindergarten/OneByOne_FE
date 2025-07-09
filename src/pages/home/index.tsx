@@ -11,9 +11,13 @@ export default function HomePage() {
   return (
     <PageLayout
       title="원바원 | 홈"
-      description="원바원 홈"
+      description="유치원 교사들을 위한 유치원 리뷰 및 커뮤니티 서비스 홈"
+      ogImage={IMAGE_PATHS.OPEN_GRAPH}
+      ogUrl={window.location.href}
+      headerType="base"
       headerLogo={true}
       currentPath={URL_PATHS.HOME}
+      hasBackButton={false}
       wrapperBg="white"
       mainClassName="flex flex-col gap-9 px-5 py-4 mt-14 mb-24"
       showAlarmButton={true}

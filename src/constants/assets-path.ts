@@ -77,6 +77,7 @@ import certificationImg from "@/assets/images/certification.webp";
 import guideProfile from "@/assets/images/guide-profile.webp";
 import logoInactive from "@/assets/images/logo-inactive.webp";
 import logoMain from "@/assets/images/logo-main.webp";
+import openGraph from "@/assets/images/open-graph.png";
 
 export const SVG_PATHS = {
   FAVICON: favicon,
@@ -203,4 +204,5 @@ export const IMAGE_PATHS = {
   GUIDE: {
     PROFILE: guideProfile,
   },
+  OPEN_GRAPH: openGraph,
 };
