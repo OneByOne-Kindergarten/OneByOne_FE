@@ -75,9 +75,9 @@ export default function SchoolHeader({
     navigate(URL_PATHS.SEARCH_SCHOOL);
   };
 
-  const handleMap = () => {
-    // TODO: 맵 기능
-  };
+  // const handleMap = () => {
+  //   // TODO: 맵 기능
+  // };
 
   return (
     <Header
