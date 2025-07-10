@@ -128,7 +128,7 @@
     </tr>
       <tr align="center" >
         <td>FE</td>
-        <td>APP & BE</td>
+        <td>APP, BE, FE</td>
         <td>BE</td>
         <td>DESIGN</td>
     </tr>
