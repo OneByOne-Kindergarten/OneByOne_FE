@@ -123,7 +123,7 @@
     <tr align="center">
         <td><a href="https://github.com/0zuth">김영주</a></td>
         <td><a href="https://github.com/Pinkippo">한승완</a></td>
-        <td><a href="https://github.com/wngns1101">최지훈</a></td>
+        <td><a href="https://github.com/wngns1101">이주훈</a></td>
         <td>박가영</td>
     </tr>
       <tr align="center" >
