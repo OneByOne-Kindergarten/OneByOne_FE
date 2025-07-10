@@ -12,9 +12,8 @@
 <br>
 
 
-<div align="right">
-    <strong>https://one-by-one-fe.vercel.app/ 🔗</strong><br>
-</div>
+
+<strong>🔗 [원바원 바로가기](https://one-by-one-fe.vercel.app/) </strong>
 
 <br>
 <br>
