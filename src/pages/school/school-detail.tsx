@@ -105,7 +105,7 @@ export default function SchoolDetailPage() {
       const searchPath = `${URL_PATHS.SEARCH_SCHOOL}?query=${encodeURIComponent(searchQuery)}`;
       navigate(searchPath, { replace: true });
     } else {
-      navigate(-1);
+      navigate(URL_PATHS.SCHOOL);
     }
   };
 

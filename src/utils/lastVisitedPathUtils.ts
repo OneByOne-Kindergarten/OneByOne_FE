@@ -36,20 +36,15 @@ export function getLastVisitedPaths(): LastVisitedPaths {
       if (parsedState.community) {
         const community = parsedState.community;
 
-        // 1. type -> category 마이그레이션
         if (community.type && !community.category) {
           community.category = community.type;
           delete community.type;
         }
 
-        // 2. 이전 데이터에서 type과 category가 모두 있는 경우
-        // (잘못된 상태) -> type 삭제하고 category 유지
         if (community.type && community.category) {
           delete community.type;
         }
 
-        // 3. category가 문자열이지만 허용된 값('teacher', 'pre-teacher')이 아닌 경우
-        // => communityCategoryName으로 이동하고 category는 기본값으로 설정
         if (
           community.category &&
           typeof community.category === "string" &&
@@ -59,7 +54,7 @@ export function getLastVisitedPaths(): LastVisitedPaths {
           if (!community.communityCategoryName) {
             community.communityCategoryName = community.category;
           }
-          community.category = "teacher"; // 기본값으로 설정
+          community.category = "teacher"; // 기본값
         }
       }
 
@@ -172,7 +167,7 @@ export function setCategoryType(category: string): void {
   setCommunityCategoryName(category);
 }
 
-// 커뮤니티 경로 상태
+// 리뷰 경로 상태
 export function getReviewState(): LastVisitedPaths["review"] {
   return getState("review");
 }
@@ -191,7 +186,7 @@ export function setReviewPath(path: string): void {
   setPath("review", path);
 }
 
-// 스쿨 경로 상태
+// 유치원 경로 상태
 export function getSchoolState(): LastVisitedPaths["school"] {
   return getState("school");
 }
@@ -208,4 +203,32 @@ export function getSchoolPath(): string {
 
 export function setSchoolPath(path: string): void {
   setPath("school", path);
+}
+
+/**
+ * school 탭 클릭 시 이동할 경로 반환
+ * - school 페이지를 마지막에 방문했으면 school 경로 우선
+ * - review 페이지를 마지막에 방문했으면 review 경로 반환
+ */
+export function getSchoolTabPath(): string {
+  const schoolState = getSchoolState();
+  const reviewState = getReviewState();
+
+  // school 경로가 있고, review 경로에 "/review"가 포함되어 있지 않으면 school 우선
+  if (schoolState?.path && !schoolState.path.includes("/review")) {
+    return schoolState.path;
+  }
+
+  // review 경로가 있으면 review 반환
+  if (reviewState?.path) {
+    return reviewState.path;
+  }
+
+  // school 경로가 있으면 반환 (review 포함)
+  if (schoolState?.path) {
+    return schoolState.path;
+  }
+
+  // 둘 다 없으면 기본 경로
+  return "/school";
 }
