@@ -7,17 +7,17 @@ export interface ValidationHelpers {
 // 영문, 숫자, 특수문자만 허용 (한글, 이모지, 공백 제외)
 const PASSWORD_PATTERN = /^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]*$/;
 
-// 완전한 한글 문자, 영문, 숫자만 허용 (불완전한 조합형 한글 제외)
-const NICKNAME_PATTERN = /^[가-힣a-zA-Z0-9]+$/;
+// 완전한 한글 문자, 영문, 숫자, 언더스코어 허용 (불완전한 조합형 한글 제외)
+const NICKNAME_PATTERN = /^[가-힣a-zA-Z0-9_]+$/;
 
 // 닉네임 스키마
 export const nicknameSchema = z
   .string()
   .min(2, "닉네임은 최소 2자 이상이어야 합니다.")
-  .max(10, "닉네임은 최대 10자까지 가능합니다.")
+  .max(15, "닉네임은 최대 15자까지 가능합니다.")
   .regex(
     NICKNAME_PATTERN,
-    "닉네임은 완전한 한글, 영문, 숫자만 사용 가능합니다."
+    "닉네임은 완전한 한글, 영문, 숫자, _만 사용 가능합니다."
   );
 
 export const passwordSchema = z

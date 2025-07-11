@@ -5,7 +5,7 @@ const RANDOM_STRING_LENGTH = 8;
 const RANDOM_STRING_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 interface UseRandomNicknameProps {
-  setValue: UseFormSetValue<any>;
+  setValue: UseFormSetValue<Record<string, unknown>>;
 }
 
 interface UseRandomNicknameReturn {
