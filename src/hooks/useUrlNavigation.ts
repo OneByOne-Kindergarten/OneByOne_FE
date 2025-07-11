@@ -155,9 +155,15 @@ export function useUrlNavigation(
     const currentUrlKey = getCurrentUrlKey(location.pathname);
 
     if (!currentUrlKey) {
+      // 커뮤니티 게시글 페이지 제외
       if (isCommunityPost(location.pathname)) {
-        saveCurrentPath("community", location.pathname);
+        return;
       }
+      return;
+    }
+
+    // 커뮤니티 게시글 페이지 제외
+    if (currentUrlKey === "COMMUNITY_POST") {
       return;
     }
 
