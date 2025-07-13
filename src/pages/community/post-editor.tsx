@@ -173,7 +173,6 @@ export default function PostEditorPage() {
     <PageLayout
       title="원바원 | 커뮤니티"
       headerTitle=" "
-      headerType="save"
       description="커뮤니티 게시글 작성"
       currentPath={URL_PATHS.COMMUNITY_POST_EDITOR}
       mainClassName="flex flex-col gap-6 pb-0 mt-14 mb-28"

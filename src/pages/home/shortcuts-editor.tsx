@@ -96,7 +96,6 @@ export default function ShortcutsEditorPage() {
     <PageLayout
       headerLogo={true}
       currentPath={URL_PATHS.HOME}
-      headerType="save"
       headerTitle="바로가기 편집"
       wrapperBg="white"
       mainClassName="flex flex-col gap-4 px-5 py-4 mt-16 mb-24"
