@@ -19,7 +19,7 @@ type PathKey = keyof LastVisitedPaths;
 
 const DEFAULT_LAST_VISITED_PATHS: LastVisitedPaths = {
   community: {
-    path: "/community?type=teacher&communityCategoryName=top10",
+    path: "/community?type=teacher&category=top10",
     category: "teacher",
     communityCategoryName: "top10",
   },

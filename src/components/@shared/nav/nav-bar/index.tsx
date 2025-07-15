@@ -33,12 +33,26 @@ function Option({
     const [path, params] = currentPath.split("?");
     const [targetPath, targetParams] = resolvedHref.split("?");
 
-    if (!currentPath.startsWith(targetPath) && !targetPath.startsWith(path)) {
+    if (path !== targetPath) {
       return false;
     }
 
+    // 타겟에 쿼리 파라미터가 없으면 경로만 비교
+    if (!targetParams) {
+      return true;
+    }
+
+    // 타겟의 모든 쿼리 파라미터가 현재 경로에 포함되어 있는지 확인
     if (params && targetParams) {
-      return currentPath === resolvedHref;
+      const currentParams = new URLSearchParams(params);
+      const targetParamsObj = new URLSearchParams(targetParams);
+
+      for (const [key, value] of targetParamsObj.entries()) {
+        if (currentParams.get(key) !== value) {
+          return false;
+        }
+      }
+      return true;
     }
 
     return path === targetPath;

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import SearchPageLayout from "@/components/@shared/layout/search-page-layout";
 import RecentSearches from "@/components/@shared/search/recent-searches";
-import SchoolSearchResult from "@/components/school/school-search-result";
+import SchoolSearchResult from "@/components/school/SchoolSearchResult";
 import { URL_PATHS } from "@/constants/url-path";
 import { useSearchKindergartens } from "@/hooks/useSearchKindergartens";
 import { useSearchPage } from "@/hooks/useSearchPage";

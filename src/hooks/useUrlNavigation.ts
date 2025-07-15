@@ -132,30 +132,54 @@ export function useUrlNavigation(
   /**
    * 탭별 이동할 URL 계산 함수
    */
-  const getTabUrl = useCallback((urlKey: UrlKeys): string => {
-    switch (urlKey) {
-      case "SCHOOL": {
-        const schoolPath = getSchoolTabPath();
-        return schoolPath;
+  const getTabUrl = useCallback(
+    (urlKey: UrlKeys): string => {
+      switch (urlKey) {
+        case "SCHOOL": {
+          const schoolPath = getSchoolTabPath();
+          return schoolPath;
+        }
+        case "COMMUNITY": {
+          const communityState = getCommunityState();
+
+          // 현재 URL에서 type 파라미터 추출
+          const currentUrlParams = new URLSearchParams(location.search);
+          const currentType = currentUrlParams.get("type");
+
+          // type이 있으면 현재 컨텍스트 유지
+          if (location.pathname === "/community" && currentType) {
+            const categoryName =
+              communityState?.communityCategoryName || "top10";
+            const contextualPath = `${URL_PATHS.COMMUNITY}?type=${currentType}&category=${categoryName}`;
+
+            return contextualPath;
+          }
+
+          // type이 없으면 세션 스토리지 사용
+          if (
+            communityState?.category &&
+            communityState?.communityCategoryName
+          ) {
+            const dynamicPath = `${URL_PATHS.COMMUNITY}?type=${communityState.category}&category=${communityState.communityCategoryName}`;
+
+            return dynamicPath;
+          }
+
+          // 세션 스토리지가 없으면 기본값
+          return `${URL_PATHS.COMMUNITY}?type=teacher&category=top10`;
+        }
+        default:
+          return URL_PATHS[urlKey] || "/";
       }
-      case "COMMUNITY": {
-        const communityState = getCommunityState();
-        return (
-          communityState?.path ||
-          `${URL_PATHS.COMMUNITY}?type=teacher&category=top10`
-        );
-      }
-      default:
-        return URL_PATHS[urlKey] || "/";
-    }
-  }, []);
+    },
+    [location.pathname, location.search]
+  );
 
   // 페이지 방문 기록을 세션스토리지에 저장
   useEffect(() => {
     const currentUrlKey = getCurrentUrlKey(location.pathname);
 
     if (!currentUrlKey) {
-      // 커뮤니티 게시글 페이지 제외
       if (isCommunityPost(location.pathname)) {
         return;
       }

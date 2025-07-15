@@ -52,11 +52,13 @@ export default function CommunityPage() {
 
   // 세션 스토리지에 위치 정보 저장
   useEffect(() => {
-    setCommunityState({
+    const newState = {
       path: `/community?type=${communityType}&category=${categoryName}`,
-      category: communityType,
+      category: communityType as "teacher" | "pre-teacher",
       communityCategoryName: categoryName,
-    });
+    };
+
+    setCommunityState(newState);
   }, [communityType, categoryName]);
 
   return (
@@ -73,7 +75,7 @@ export default function CommunityPage() {
     >
       <NavBar
         options={communityTypeOptions}
-        currentPath={`/community?type=${communityType}`}
+        currentPath={`/community?type=${communityType}&category=${categoryName}`}
       />
 
       <div className="flex w-full flex-col gap-9 px-5">
