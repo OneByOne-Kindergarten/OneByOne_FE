@@ -117,7 +117,7 @@ const SizePopupDemo = () => {
   return (
     <>
       <div className="flex gap-2">
-        {sizes.map(({ key, label, size }) => (
+        {sizes.map(({ key, label }) => (
           <button
             key={key}
             onClick={() => setOpenModal(key)}

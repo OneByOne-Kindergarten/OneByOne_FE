@@ -197,20 +197,6 @@ export const Interactive: Story = {
 };
 
 const RealWorldStarRatingForm = () => {
-  const [ratings, setRatings] = useState({
-    quality: 0,
-    facility: 0,
-    teacher: 0,
-    food: 0,
-  });
-
-  const handleRatingChange = (
-    category: keyof typeof ratings,
-    value: number
-  ) => {
-    setRatings((prev) => ({ ...prev, [category]: value }));
-  };
-
   return (
     <div className="w-96 space-y-6 rounded-lg border p-6">
       <div className="space-y-4">

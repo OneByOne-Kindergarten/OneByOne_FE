@@ -154,7 +154,7 @@ const PositionModalsDemo = () => {
   return (
     <>
       <div className="flex gap-2">
-        {positions.map(({ key, label, position }) => (
+        {positions.map(({ key, label }) => (
           <button
             key={key}
             onClick={() => setOpenModal(key)}
@@ -221,7 +221,7 @@ const SizeModalsDemo = () => {
   return (
     <>
       <div className="flex gap-2">
-        {sizes.map(({ key, label, size }) => (
+        {sizes.map(({ key, label }) => (
           <button
             key={key}
             onClick={() => setOpenModal(key)}

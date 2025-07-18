@@ -113,7 +113,7 @@ const OptionMenuDemo = () => {
     { id: "delete", label: "삭제하기", icon: "🗑️", danger: true },
   ];
 
-  const handleOptionClick = (optionId: string, label: string) => {
+  const handleOptionClick = (_optionId: string, label: string) => {
     setSelectedOption(label);
     setIsOpen(false);
   };
