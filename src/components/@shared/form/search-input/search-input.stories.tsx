@@ -5,7 +5,7 @@ import SearchInput from "./index";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: "Form/SearchInput",
+  title: "UI/Form/SearchInput",
   component: SearchInput,
   tags: ["autodocs"],
   parameters: {
@@ -13,7 +13,9 @@ const meta = {
     docs: {
       description: {
         component: `
-검색 기능이 내장된 입력 컴포넌트입니다. React Hook Form과 통합되어 있습니다.
+검색 기능이 내장된 입력 컴포넌트입니다. 
+
+React Hook Form과 통합되어 있습니다.
 
 **Props:**
 - \`placeholder\`: 플레이스홀더 텍스트
@@ -22,7 +24,7 @@ const meta = {
 - \`onClear\`: 검색어 클리어 핸들러
 - \`autoFocus\`: 자동 포커스 여부
 
-**특징:**
+**기능:**
 - 내장된 검색/클리어 아이콘
 - React Hook Form 통합
 - 자동 포커스 지원
@@ -31,8 +33,6 @@ const meta = {
 **사용 시나리오:**
 - 유치원 검색
 - 게시글 검색
-- 사용자 검색
-- 실시간 필터링
         `,
       },
     },
@@ -46,7 +46,6 @@ const meta = {
   ],
   argTypes: {
     placeholder: {
-      description: "플레이스홀더 텍스트",
       control: "text",
     },
     initialValue: {
@@ -71,16 +70,9 @@ export const Default: Story = {
     onSubmit: action("검색 제출"),
     onClear: action("검색어 클리어"),
   },
-  parameters: {
-    docs: {
-      description: {
-        story: "기본 검색 입력 필드입니다.",
-      },
-    },
-  },
 };
 
-export const WithInitialValue: Story = {
+export const InitialValue: Story = {
   args: {
     placeholder: "검색어를 입력하세요",
     initialValue: "유치원",
@@ -114,29 +106,20 @@ export const AutoFocus: Story = {
   },
 };
 
-export const DifferentPlaceholders: Story = {
+export const UserScenario: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="mb-2 text-sm font-semibold">유치원 검색</h3>
         <SearchInput
-          placeholder="유치원 이름으로 검색"
+          placeholder="유치원 이름으로 검색해보세요"
           onSubmit={action("유치원 검색")}
           onClear={action("유치원 검색어 클리어")}
         />
       </div>
+
       <div>
-        <h3 className="mb-2 text-sm font-semibold">지역 검색</h3>
         <SearchInput
-          placeholder="지역명을 입력하세요"
-          onSubmit={action("지역 검색")}
-          onClear={action("지역 검색어 클리어")}
-        />
-      </div>
-      <div>
-        <h3 className="mb-2 text-sm font-semibold">게시글 검색</h3>
-        <SearchInput
-          placeholder="제목, 내용으로 검색"
+          placeholder="게시물 제목으로 검색해보세요"
           onSubmit={action("게시글 검색")}
           onClear={action("게시글 검색어 클리어")}
         />
@@ -149,7 +132,7 @@ export const DifferentPlaceholders: Story = {
   parameters: {
     docs: {
       description: {
-        story: "다양한 용도의 검색 필드 예시입니다.",
+        story: "게시글 검색, 유치원 검색 사용 예시입니다.",
       },
     },
   },

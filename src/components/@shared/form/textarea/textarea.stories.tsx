@@ -5,7 +5,7 @@ import Textarea from "./index";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: "Form/Textarea",
+  title: "UI/Form/Textarea",
   component: Textarea,
   tags: ["autodocs"],
   parameters: {
@@ -13,25 +13,22 @@ const meta = {
     docs: {
       description: {
         component: `
-다양한 스타일과 크기를 지원하는 텍스트 영역 컴포넌트입니다.
+고정 높이 또는 자동 확장을 지원하는 텍스트 입력 컴포넌트입니다.
 
 **Props:**
 - \`font\`: 폰트 크기 (xs, sm, md, lg + semibold 옵션)
-- \`padding\`: 패딩 크기 (default, sm, xs)
+- \`padding\`: default, sm, xs
 - \`size\`: 높이 설정 (fixed, auto)
 - \`error\`: 에러 상태 여부
 - \`disabled\`: 비활성화 상태
+- \`placeholder\`
 
-**특징:**
+**기능:**
 - 고정 높이 또는 자동 확장 지원
-- 다양한 폰트 크기와 패딩 옵션
-- 에러 상태 스타일링
-- 반응형 디자인
 
 **사용 시나리오:**
 - 리뷰 작성
 - 댓글 입력
-- 자기소개 작성
 - 긴 텍스트 입력
         `,
       },
@@ -65,11 +62,9 @@ const meta = {
       control: "boolean",
     },
     disabled: {
-      description: "비활성화 상태",
       control: "boolean",
     },
     placeholder: {
-      description: "플레이스홀더 텍스트",
       control: "text",
     },
   },
@@ -78,19 +73,42 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const Interactive: Story = {
+  render: () => {
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      action("값 변경")(e.target.value);
+    };
+
+    const handleFocus = () => {
+      action("포커스")();
+    };
+
+    const handleBlur = () => {
+      action("블러")();
+    };
+
+    return (
+      <div className="space-y-4">
+        <div>
+          <Textarea
+            placeholder="입력해보세요"
+            onChange={handleChange}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            size="auto"
+          />
+        </div>
+      </div>
+    );
+  },
   args: {
-    placeholder: "내용을 입력하세요",
-    font: "sm_sb",
-    padding: "default",
-    size: "fixed",
-    error: false,
-    disabled: false,
+    placeholder: "",
   },
   parameters: {
     docs: {
       description: {
-        story: "기본 텍스트 영역입니다.",
+        story:
+          "상호작용할 수 있는 인터랙티브 텍스트 영역입니다.  Actions 패널에서 이벤트를 확인할 수 있습니다.",
       },
     },
   },
@@ -100,7 +118,7 @@ export const Sizes: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="mb-2 text-sm font-semibold">Fixed Size (기본)</h3>
+        <h3 className="mb-2 text-sm font-semibold">Fixed Size (default)</h3>
         <Textarea placeholder="고정 높이 텍스트 영역" size="fixed" />
       </div>
       <div>
@@ -124,20 +142,20 @@ export const Sizes: Story = {
   },
 };
 
-export const PaddingSizes: Story = {
+export const Paddings: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
         <h3 className="mb-2 text-sm font-semibold">Default Padding</h3>
-        <Textarea placeholder="기본 패딩" padding="default" />
+        <Textarea placeholder="기본 패딩" padding="default" size="auto" />
       </div>
       <div>
         <h3 className="mb-2 text-sm font-semibold">Small Padding</h3>
-        <Textarea placeholder="작은 패딩" padding="sm" />
+        <Textarea placeholder="작은 패딩" padding="sm" size="auto" />
       </div>
       <div>
         <h3 className="mb-2 text-sm font-semibold">Extra Small Padding</h3>
-        <Textarea placeholder="아주 작은 패딩" padding="xs" />
+        <Textarea placeholder="아주 작은 패딩" padding="xs" size="auto" />
       </div>
     </div>
   ),
@@ -147,36 +165,36 @@ export const PaddingSizes: Story = {
   parameters: {
     docs: {
       description: {
-        story: "다양한 패딩 크기를 보여줍니다.",
+        story: "default, sm, xs 패딩 크기를 지원합니다.",
       },
     },
   },
 };
 
-export const FontSizes: Story = {
+export const Fonts: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
         <h3 className="mb-2 text-sm font-semibold">Extra Small</h3>
-        <Textarea placeholder="Extra Small 폰트" font="xs" />
+        <Textarea placeholder="Extra Small 폰트" font="xs" size="auto" />
       </div>
       <div>
         <h3 className="mb-2 text-sm font-semibold">Small</h3>
-        <Textarea placeholder="Small 폰트" font="sm" />
+        <Textarea placeholder="Small 폰트" font="sm" size="auto" />
       </div>
       <div>
         <h3 className="mb-2 text-sm font-semibold">Medium</h3>
-        <Textarea placeholder="Medium 폰트" font="md" />
+        <Textarea placeholder="Medium 폰트" font="md" size="auto" />
       </div>
       <div>
         <h3 className="mb-2 text-sm font-semibold">Large</h3>
-        <Textarea placeholder="Large 폰트" font="lg" />
+        <Textarea placeholder="Large 폰트" font="lg" size="auto" />
       </div>
       <div>
         <h3 className="mb-2 text-sm font-semibold">Semibold Variations</h3>
         <div className="space-y-2">
-          <Textarea placeholder="Small Semibold" font="sm_sb" />
-          <Textarea placeholder="Medium Semibold" font="md_sb" />
+          <Textarea placeholder="Small Semibold" font="sm_sb" size="auto" />
+          <Textarea placeholder="Medium Semibold" font="md_sb" size="auto" />
         </div>
       </div>
     </div>
@@ -187,7 +205,7 @@ export const FontSizes: Story = {
   parameters: {
     docs: {
       description: {
-        story: "다양한 폰트 크기와 굵기 옵션을 보여줍니다.",
+        story: "xs, sm, md, lg 폰트 크기와 굵기 옵션을 지원합니다.",
       },
     },
   },
@@ -198,20 +216,16 @@ export const States: Story = {
     <div className="space-y-4">
       <div>
         <h3 className="mb-2 text-sm font-semibold">Normal State</h3>
-        <Textarea placeholder="정상 상태" />
+        <Textarea placeholder="정상 상태" size="auto" />
       </div>
       <div>
         <h3 className="mb-2 text-sm font-semibold">Error State</h3>
-        <Textarea placeholder="에러 상태" error />
+        <Textarea placeholder="에러 상태" error size="auto" />
         <p className="mt-1 text-xs text-red-600">내용을 입력해주세요</p>
       </div>
       <div>
         <h3 className="mb-2 text-sm font-semibold">Disabled State</h3>
-        <Textarea placeholder="비활성화 상태" disabled />
-      </div>
-      <div>
-        <h3 className="mb-2 text-sm font-semibold">With Content</h3>
-        <Textarea defaultValue="이미 입력된 텍스트가 있는 상태입니다. 여러 줄에 걸쳐 내용이 작성되어 있을 때의 모습을 확인할 수 있습니다." />
+        <Textarea placeholder="비활성화 상태" disabled size="auto" />
       </div>
     </div>
   ),
@@ -221,120 +235,7 @@ export const States: Story = {
   parameters: {
     docs: {
       description: {
-        story: "텍스트 영역의 다양한 상태를 보여줍니다.",
-      },
-    },
-  },
-};
-
-export const Interactive: Story = {
-  render: () => {
-    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      action("값 변경")(e.target.value);
-    };
-
-    const handleFocus = () => {
-      action("포커스")();
-    };
-
-    const handleBlur = () => {
-      action("블러")();
-    };
-
-    return (
-      <div className="space-y-4">
-        <div>
-          <h3 className="mb-2 text-sm font-semibold">Interactive Textarea</h3>
-          <Textarea
-            placeholder="입력해보세요"
-            onChange={handleChange}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            size="auto"
-          />
-          <p className="mt-1 text-xs text-gray-500">
-            Actions 패널에서 이벤트를 확인할 수 있습니다
-          </p>
-        </div>
-      </div>
-    );
-  },
-  args: {
-    placeholder: "",
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "실제로 입력하고 상호작용할 수 있는 인터랙티브 텍스트 영역입니다.",
-      },
-    },
-  },
-};
-
-export const UseCaseExamples: Story = {
-  render: () => (
-    <div className="space-y-6">
-      <div>
-        <h3 className="mb-4 text-sm font-semibold">리뷰 작성</h3>
-        <div className="space-y-3">
-          <Textarea
-            placeholder="유치원에서의 경험을 자세히 들려주세요"
-            size="fixed"
-            font="sm_sb"
-          />
-          <p className="text-xs text-gray-500">최소 50자 이상 작성해주세요</p>
-        </div>
-      </div>
-
-      <div>
-        <h3 className="mb-4 text-sm font-semibold">댓글 입력</h3>
-        <Textarea
-          placeholder="댓글을 입력하세요"
-          size="auto"
-          padding="sm"
-          font="sm"
-        />
-      </div>
-
-      <div>
-        <h3 className="mb-4 text-sm font-semibold">자기소개</h3>
-        <Textarea
-          placeholder="자신을 소개해주세요"
-          size="fixed"
-          font="md"
-          padding="default"
-        />
-      </div>
-
-      <div>
-        <h3 className="mb-4 text-sm font-semibold">문의사항</h3>
-        <Textarea
-          placeholder="문의하실 내용을 상세히 적어주세요"
-          size="fixed"
-          font="sm_sb"
-          error={false}
-        />
-      </div>
-
-      <div>
-        <h3 className="mb-4 text-sm font-semibold">간단한 메모</h3>
-        <Textarea
-          placeholder="간단한 메모를 적어보세요"
-          size="auto"
-          padding="xs"
-          font="xs"
-        />
-      </div>
-    </div>
-  ),
-  args: {
-    placeholder: "",
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "실제 서비스에서 사용되는 다양한 텍스트 영역 사용 사례입니다.",
+        story: "정상, 에러, 비활성화 상태를 지원합니다.",
       },
     },
   },

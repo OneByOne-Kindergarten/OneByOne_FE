@@ -5,7 +5,7 @@ import Input from "./index";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: "Form/Input",
+  title: "UI/Form/Input",
   component: Input,
   tags: ["autodocs"],
   parameters: {
@@ -16,17 +16,15 @@ const meta = {
 다양한 스타일과 크기를 지원하는 입력 컴포넌트입니다.
 
 **Props:**
-- \`variant\`: 스타일 변형 (default, outline)
+- \`variant\`: 스타일 (default, outline)
 - \`font\`: 폰트 크기 (xs, sm, md, lg + semibold 옵션)
 - \`inputSize\`: 입력 필드 크기 (default, sm, xs)
 - \`error\`: 에러 상태 여부
 - \`disabled\`: 비활성화 상태
 
 **사용 시나리오:**
-- 회원가입/로그인 폼
-- 설정 페이지 입력
+- 닉네임/비밀번호 입력 필드
 - 검색 필드
-- 데이터 입력 폼
         `,
       },
     },
@@ -40,7 +38,7 @@ const meta = {
   ],
   argTypes: {
     variant: {
-      description: "입력 필드 스타일 변형",
+      description: "입력 필드 스타일",
       control: { type: "select" },
       options: ["default", "outline"],
     },
@@ -63,7 +61,6 @@ const meta = {
       control: "boolean",
     },
     placeholder: {
-      description: "플레이스홀더 텍스트",
       control: "text",
     },
   },
@@ -72,19 +69,39 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  args: {
-    placeholder: "텍스트를 입력하세요",
-    variant: "default",
-    font: "sm",
-    inputSize: "default",
-    error: false,
-    disabled: false,
+export const Interactive: Story = {
+  render: () => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      action("값 변경")(e.target.value);
+    };
+
+    const handleFocus = () => {
+      action("포커스")();
+    };
+
+    const handleBlur = () => {
+      action("블러")();
+    };
+
+    return (
+      <div className="space-y-4">
+        <div>
+          <Input
+            placeholder="입력해보세요"
+            onChange={handleChange}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+          />
+        </div>
+      </div>
+    );
   },
+  args: {},
   parameters: {
     docs: {
       description: {
-        story: "기본 입력 필드입니다.",
+        story:
+          "상호작용할 수 있는 인터랙티브 입력 필드입니다. Actions 패널에서 이벤트를 확인할 수 있습니다.",
       },
     },
   },
@@ -107,7 +124,7 @@ export const Variants: Story = {
   parameters: {
     docs: {
       description: {
-        story: "다양한 variant 스타일을 보여줍니다.",
+        story: "outline, default 스타일을 지원합니다.",
       },
     },
   },
@@ -134,7 +151,7 @@ export const Sizes: Story = {
   parameters: {
     docs: {
       description: {
-        story: "다양한 크기의 입력 필드를 보여줍니다.",
+        story: "default, sm, xs 크기를 지원합니다.",
       },
     },
   },
@@ -172,7 +189,7 @@ export const FontSizes: Story = {
   parameters: {
     docs: {
       description: {
-        story: "다양한 폰트 크기와 굵기 옵션을 보여줍니다.",
+        story: "xs, sm, md, lg 폰트 크기와 굵기 옵션을 지원합니다.",
       },
     },
   },
@@ -204,13 +221,13 @@ export const States: Story = {
   parameters: {
     docs: {
       description: {
-        story: "입력 필드의 다양한 상태를 보여줍니다.",
+        story: "정상, 에러, 비활성화 상태를 지원합니다.",
       },
     },
   },
 };
 
-export const InputTypes: Story = {
+export const Types: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
@@ -239,92 +256,7 @@ export const InputTypes: Story = {
   parameters: {
     docs: {
       description: {
-        story: "다양한 input type을 보여줍니다.",
-      },
-    },
-  },
-};
-
-export const Interactive: Story = {
-  render: () => {
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      action("값 변경")(e.target.value);
-    };
-
-    const handleFocus = () => {
-      action("포커스")();
-    };
-
-    const handleBlur = () => {
-      action("블러")();
-    };
-
-    return (
-      <div className="space-y-4">
-        <div>
-          <h3 className="mb-2 text-sm font-semibold">Interactive Input</h3>
-          <Input
-            placeholder="입력해보세요"
-            onChange={handleChange}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-          />
-          <p className="mt-1 text-xs text-gray-500">
-            Actions 패널에서 이벤트를 확인할 수 있습니다
-          </p>
-        </div>
-      </div>
-    );
-  },
-  args: {},
-  parameters: {
-    docs: {
-      description: {
-        story: "실제로 입력하고 상호작용할 수 있는 인터랙티브 입력 필드입니다.",
-      },
-    },
-  },
-};
-
-export const FormExamples: Story = {
-  render: () => (
-    <div className="space-y-6">
-      <div>
-        <h3 className="mb-4 text-sm font-semibold">회원가입 폼 예시</h3>
-        <div className="space-y-3">
-          <Input variant="outline" placeholder="이메일 주소" type="email" />
-          <Input variant="outline" placeholder="닉네임" />
-          <Input variant="outline" placeholder="비밀번호" type="password" />
-        </div>
-      </div>
-
-      <div>
-        <h3 className="mb-4 text-sm font-semibold">설정 폼 예시</h3>
-        <div className="space-y-3">
-          <Input inputSize="sm" placeholder="표시 이름" />
-          <Input inputSize="sm" placeholder="소개글" />
-          <Input inputSize="sm" placeholder="웹사이트 URL" type="url" />
-        </div>
-      </div>
-
-      <div>
-        <h3 className="mb-4 text-sm font-semibold">검색 폼 예시</h3>
-        <div className="space-y-3">
-          <Input
-            font="md"
-            placeholder="유치원 이름으로 검색"
-            className="border-2"
-          />
-          <Input font="sm" inputSize="sm" placeholder="지역으로 검색" />
-        </div>
-      </div>
-    </div>
-  ),
-  args: {},
-  parameters: {
-    docs: {
-      description: {
-        story: "실제 서비스에서 사용되는 다양한 폼 시나리오 예시입니다.",
+        story: "text, email, password, number, tel 타입을 지원합니다.",
       },
     },
   },
