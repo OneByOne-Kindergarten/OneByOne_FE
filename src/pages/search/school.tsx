@@ -57,10 +57,11 @@ export default function SchoolSearchPage() {
   const handleBackClick = () => {
     const lastSchoolPath = getSchoolPath();
 
-    if (lastSchoolPath) {
-      navigate(lastSchoolPath);
-    } else {
+    // 저장된 경로가 검색 페이지이거나 없으면 기본 학교 페이지로 이동
+    if (!lastSchoolPath || lastSchoolPath.includes("/search/")) {
       navigate(URL_PATHS.SCHOOL);
+    } else {
+      navigate(lastSchoolPath);
     }
   };
 
@@ -78,7 +79,7 @@ export default function SchoolSearchPage() {
   return (
     <SearchPageLayout
       title="유치원 검색"
-      placeholder="유치원명으로 검색"
+      placeholder="유치원 이름으로 검색해보세요"
       searchValue={searchQuery}
       onSearchSubmit={handleSearchSubmit}
       onSearchClear={handleClearSearch}

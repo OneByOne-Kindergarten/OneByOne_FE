@@ -186,8 +186,12 @@ export function useUrlNavigation(
       return;
     }
 
-    // 커뮤니티 게시글 페이지 제외
-    if (currentUrlKey === "COMMUNITY_POST") {
+    // 커뮤니티 게시글 페이지 및 검색 페이지 제외
+    if (
+      currentUrlKey === "COMMUNITY_POST" ||
+      currentUrlKey === "SEARCH_SCHOOL" ||
+      currentUrlKey === "SEARCH_COMMUNITY"
+    ) {
       return;
     }
 

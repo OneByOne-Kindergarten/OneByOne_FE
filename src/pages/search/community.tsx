@@ -65,10 +65,11 @@ export default function CommunitySearchPage() {
   const handleBackClick = () => {
     const lastCommunityPath = getCommunityPath();
 
-    if (lastCommunityPath) {
-      navigate(lastCommunityPath);
-    } else {
+    // 저장된 경로가 검색 페이지이거나 없으면 기본 커뮤니티 페이지로 이동
+    if (!lastCommunityPath || lastCommunityPath.includes("/search/")) {
       navigate(URL_PATHS.COMMUNITY);
+    } else {
+      navigate(lastCommunityPath);
     }
   };
 

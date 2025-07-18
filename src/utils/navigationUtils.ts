@@ -109,14 +109,14 @@ export const PAGE_NAVIGATION_CONFIG: Record<string, NavigationStrategy> = {
   ALARM: "browser_history",
   NOTICE: "browser_history",
   NOTICE_DETAIL: "browser_history",
+  SEARCH_SCHOOL: "browser_history",
+  SEARCH_COMMUNITY: "browser_history",
 
   // === 계층 구조 이동 ===
   COMMUNITY_POST_EDITOR: "hierarchical",
   USER_PROFILE_EDITOR: "hierarchical",
   USER_PASSWORD_EDITOR: "hierarchical",
   SCHOOL_DETAIL: "hierarchical",
-  SEARCH_SCHOOL: "hierarchical",
-  SEARCH_COMMUNITY: "hierarchical",
 };
 
 export type StorageStrategy = "community" | "school" | "none";
