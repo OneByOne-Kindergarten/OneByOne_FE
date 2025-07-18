@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-import { sendToFlutter, MessageType } from "@/utils/webViewCommunication";
+import { MessageType, sendToFlutter } from "@/utils/webViewCommunication";
 export interface GeolocationState {
   loading: boolean;
   error: string | null;

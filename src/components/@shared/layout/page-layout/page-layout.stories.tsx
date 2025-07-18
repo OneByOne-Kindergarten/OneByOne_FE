@@ -1,6 +1,5 @@
 import { Provider } from "jotai";
 import { HelmetProvider } from "react-helmet-async";
-import { BrowserRouter } from "react-router-dom";
 
 import QueryProvider from "@/components/@shared/providers/QueryProvider";
 
@@ -25,9 +24,7 @@ const meta = {
       <Provider>
         <QueryProvider>
           <HelmetProvider>
-            <BrowserRouter>
-              <Story />
-            </BrowserRouter>
+            <Story />
           </HelmetProvider>
         </QueryProvider>
       </Provider>

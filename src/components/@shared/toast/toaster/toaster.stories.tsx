@@ -1,17 +1,26 @@
 import { useToast } from "@/hooks/useToast";
 
+import {
+  Toast,
+  ToastAction,
+  ToastClose,
+  ToastDescription,
+  ToastProvider,
+  ToastTitle,
+  ToastViewport,
+} from "../index";
+
 import { Toaster } from "./index";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: "Feedback/Toast/Toaster",
+  title: "UI/Feedback/Toaster",
   component: Toaster,
   parameters: {
     docs: {
       description: {
-        component:
-          "토스트 메시지들을 관리하고 표시하는 컨테이너 컴포넌트입니다.",
+        component: "토스트 메시지들을 관리하고 표시하는 컴포넌트입니다.",
       },
     },
   },
@@ -21,28 +30,59 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+// 정적 토스트 UI 표시용 컴포넌트들
+const StaticToastContainer = ({ children }: { children: React.ReactNode }) => (
+  <ToastProvider>
+    <div className="mt-16">{children}</div>
+    <ToastViewport />
+  </ToastProvider>
+);
+
+const StaticToast = ({
+  title,
+  description,
+  variant = "default",
+  action,
+  open = true,
+}: {
+  title: string;
+  description?: string;
+  variant?: "default" | "destructive";
+  action?: React.ReactNode;
+  open?: boolean;
+}) => (
+  <Toast variant={variant} open={open} onOpenChange={() => {}}>
+    <div className="flex flex-col gap-1">
+      <ToastTitle variant={variant}>{title}</ToastTitle>
+      {description && <ToastDescription>{description}</ToastDescription>}
+    </div>
+    {action}
+    <ToastClose />
+  </Toast>
+);
+
 const ToasterDemo = () => {
   const { toast } = useToast();
 
   const showSuccessToast = () => {
     toast({
-      title: "성공!",
-      description: "작업이 완료되었습니다.",
+      title: "성공",
+      description: "완료된 작업을 확인해보세요.",
     });
   };
 
   const showErrorToast = () => {
     toast({
-      title: "오류 발생",
-      description: "문제가 발생했습니다. 다시 시도해주세요.",
+      title: "오류",
+      description: "잠시 후 다시 시도해주세요.",
       variant: "destructive",
     });
   };
 
   const showActionToast = () => {
     toast({
-      title: "새 메시지",
-      description: "새로운 알림이 도착했습니다.",
+      title: "새로운 알림 도착",
+      description: "확인 버튼을 눌러 알림을 처리하세요.",
       action: (
         <button
           onClick={() => alert("확인됨")}
@@ -54,27 +94,38 @@ const ToasterDemo = () => {
     });
   };
 
+  const showTitleOnlyToast = () => {
+    toast({
+      title: "북마크 추가 완료",
+    });
+  };
+
   return (
-    <div className="space-y-4">
-      <h3 className="text-lg font-semibold">토스트 테스트</h3>
-      <div className="flex gap-4">
+    <div className="mb-28 space-y-4">
+      <div className="grid grid-cols-2 gap-4">
         <button
           onClick={showSuccessToast}
-          className="rounded-lg bg-green-500 px-4 py-2 text-white"
+          className="bg-tertiary-3 p-4 text-white transition-colors"
         >
           성공 토스트
         </button>
         <button
           onClick={showErrorToast}
-          className="rounded-lg bg-red-500 px-4 py-2 text-white"
+          className="bg-destructive p-4 text-white transition-colors"
         >
           에러 토스트
         </button>
         <button
           onClick={showActionToast}
-          className="rounded-lg bg-blue-500 px-4 py-2 text-white"
+          className="bg-secondary-main p-4 text-primary transition-colors"
         >
           액션 토스트
+        </button>
+        <button
+          onClick={showTitleOnlyToast}
+          className="bg-primary-normal03 p-4 text-white transition-colors"
+        >
+          타이틀 토스트
         </button>
       </div>
       <Toaster />
@@ -82,53 +133,90 @@ const ToasterDemo = () => {
   );
 };
 
-export const Default: Story = {
+export const Interaction: Story = {
   render: () => <ToasterDemo />,
   parameters: {
     docs: {
       description: {
-        story: "useToast 훅과 함께 사용되는 토스터의 기본 예시입니다.",
+        story: "버튼을 클릭하여 토스트의 인터렉션을 확인할 수 있습니다.",
       },
     },
   },
 };
 
-const MultipleToastsDemo = () => {
-  const { toast } = useToast();
-
-  const showMultipleToasts = () => {
-    toast({ title: "첫 번째 알림", description: "첫 번째 메시지입니다." });
-    setTimeout(() => {
-      toast({ title: "두 번째 알림", description: "두 번째 메시지입니다." });
-    }, 500);
-    setTimeout(() => {
-      toast({
-        title: "세 번째 알림",
-        description: "세 번째 메시지입니다.",
-        variant: "destructive",
-      });
-    }, 1000);
-  };
-
-  return (
-    <div className="space-y-4">
-      <button
-        onClick={showMultipleToasts}
-        className="rounded-lg bg-purple-500 px-4 py-2 text-white"
-      >
-        여러 토스트 연속 표시
-      </button>
-      <Toaster />
-    </div>
-  );
-};
-
-export const MultipleToasts: Story = {
-  render: () => <MultipleToastsDemo />,
+// 개별 토스트 타입 스토리들
+export const SuccessToast: Story = {
+  render: () => (
+    <StaticToastContainer>
+      <StaticToast title="성공" description="완료된 작업을 확인해보세요." />
+    </StaticToastContainer>
+  ),
   parameters: {
     docs: {
       description: {
-        story: "여러 토스트가 순차적으로 표시되는 예시입니다.",
+        story:
+          "성공 상태를 나타내는 토스트입니다. 체크 아이콘과 함께 표시됩니다.",
+      },
+    },
+  },
+};
+
+export const ErrorToast: Story = {
+  render: () => (
+    <StaticToastContainer>
+      <StaticToast
+        title="오류"
+        description="잠시 후 다시 시도해주세요."
+        variant="destructive"
+      />
+    </StaticToastContainer>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "오류 상태를 나타내는 토스트입니다. 에러 아이콘과 함께 표시됩니다.",
+      },
+    },
+  },
+};
+
+export const ActionToast: Story = {
+  render: () => (
+    <StaticToastContainer>
+      <StaticToast
+        title="새로운 알림 도착"
+        description="확인 버튼을 눌러 알림을 처리하세요."
+        action={
+          <ToastAction asChild altText="알림 확인">
+            <button className="rounded bg-white px-3 py-1 text-sm text-primary-dark01">
+              확인
+            </button>
+          </ToastAction>
+        }
+      />
+    </StaticToastContainer>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "액션 버튼이 포함된 토스트입니다. 사용자가 추가 작업을 수행할 수 있습니다.",
+      },
+    },
+  },
+};
+
+export const TitleOnlyToast: Story = {
+  render: () => (
+    <StaticToastContainer>
+      <StaticToast title="북마크 추가 완료" />
+    </StaticToastContainer>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: "제목만 있는 간단한 토스트입니다. 짧은 알림에 적합합니다.",
       },
     },
   },

@@ -6,7 +6,7 @@ import Toggle from "./index";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: "Interactive/Buttons/BaseToggle",
+  title: "UI/Buttons/BaseToggle",
   component: Toggle,
   tags: ["autodocs"],
   parameters: {
@@ -14,19 +14,17 @@ const meta = {
     docs: {
       description: {
         component: `
-토글 버튼 컴포넌트입니다. Radix UI Toggle을 기반으로 한 on/off 상태를 가진 버튼입니다.
+Radix UI Toggle을 기반으로 한 on/off 상태를 가진 버튼입니다.
 
-**주요 특징:**
+**기능:**
 - Radix UI Toggle Primitive 기반
-- 눌린 상태(pressed)와 일반 상태 구분
+- 활성화 상태와 비활성화 상태 구분
 - CVA를 통한 다양한 스타일 변형
-- 접근성 기본 지원 (aria attributes)
+- 접근성 기본 지원 (aria)
 
 **사용 시나리오:**
 - 필터 토글 (선택/미선택)
-- 설정 옵션 토글
-- 카테고리 선택 버튼
-- 즐겨찾기 토글
+- 정렬 토글 (최신순/인기순)
         `,
       },
     },
@@ -90,100 +88,7 @@ export const Default: Story = {
   },
 };
 
-// 카테고리 필터 토글
-export const CategoryFilter: Story = {
-  render: () => {
-    const FilterToggle = ({
-      children,
-      isActive,
-    }: {
-      children: string;
-      isActive?: boolean;
-    }) => {
-      const [pressed, setPressed] = useState(isActive || false);
-
-      return (
-        <Toggle
-          variant="primary"
-          size="sm"
-          shape="rounded"
-          border="gray"
-          font="sm_sb"
-          pressed={pressed}
-          onPressedChange={(newPressed) => {
-            setPressed(newPressed);
-            fn()(newPressed);
-          }}
-        >
-          {children}
-        </Toggle>
-      );
-    };
-
-    return (
-      <div className="flex flex-wrap gap-2">
-        <FilterToggle isActive>전체</FilterToggle>
-        <FilterToggle>선생님</FilterToggle>
-        <FilterToggle>학부모</FilterToggle>
-        <FilterToggle>원장님</FilterToggle>
-      </div>
-    );
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "카테고리 필터에 사용되는 토글 버튼들입니다. 선택된 카테고리는 활성화 상태로 표시됩니다.",
-      },
-    },
-  },
-};
-
-// 설정 옵션 토글
-export const SettingsOptions: Story = {
-  render: () => {
-    const SettingToggle = ({ children }: { children: string }) => {
-      const [pressed, setPressed] = useState(false);
-
-      return (
-        <div className="flex w-48 items-center justify-between rounded-lg border p-2">
-          <span className="text-sm">{children}</span>
-          <Toggle
-            variant="primary"
-            size="xs"
-            shape="full"
-            pressed={pressed}
-            onPressedChange={(newPressed) => {
-              setPressed(newPressed);
-              fn()(newPressed);
-            }}
-          >
-            {pressed ? "ON" : "OFF"}
-          </Toggle>
-        </div>
-      );
-    };
-
-    return (
-      <div className="flex flex-col gap-2">
-        <SettingToggle>알림 수신</SettingToggle>
-        <SettingToggle>자동 로그인</SettingToggle>
-        <SettingToggle>마케팅 수신</SettingToggle>
-      </div>
-    );
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "설정 페이지에서 사용되는 토글 버튼들입니다. 각종 옵션의 활성화/비활성화 상태를 나타냅니다.",
-      },
-    },
-  },
-};
-
-// 크기별 토글 비교
-export const SizeComparison: Story = {
+export const Sizes: Story = {
   render: () => {
     const SizeToggle = ({
       size,
@@ -227,8 +132,7 @@ export const SizeComparison: Story = {
   },
 };
 
-// 모양별 토글 비교
-export const ShapeComparison: Story = {
+export const Shapes: Story = {
   render: () => {
     const ShapeToggle = ({
       shape,
@@ -272,8 +176,7 @@ export const ShapeComparison: Story = {
   },
 };
 
-// 상태별 토글 (Interactive)
-export const InteractiveStates: Story = {
+export const UserScenario: Story = {
   render: () => {
     const StateToggle = ({
       children,
@@ -290,8 +193,7 @@ export const InteractiveStates: Story = {
         <Toggle
           variant="primary"
           size="md"
-          shape="rounded"
-          border="gray"
+          shape="full"
           pressed={pressed}
           disabled={disabled}
           onPressedChange={(newPressed) => {
@@ -306,9 +208,10 @@ export const InteractiveStates: Story = {
 
     return (
       <div className="flex gap-3">
-        <StateToggle>일반</StateToggle>
-        <StateToggle initialState>활성화됨</StateToggle>
-        <StateToggle disabled>비활성화</StateToggle>
+        <StateToggle initialState>자유</StateToggle>
+        <StateToggle>월급/취업</StateToggle>
+        <StateToggle>유아지도</StateToggle>
+        <StateToggle>환경구성</StateToggle>
       </div>
     );
   },
@@ -316,7 +219,7 @@ export const InteractiveStates: Story = {
     docs: {
       description: {
         story:
-          "토글의 다양한 상태를 확인할 수 있습니다. 클릭하여 상태 변화를 테스트해보세요.",
+          "교사 커뮤니티 시나리오에서의 사용 예시입니다. 클릭하여 상태 변화를 테스트해보세요.",
       },
     },
   },

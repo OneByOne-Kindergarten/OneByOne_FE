@@ -1,11 +1,9 @@
-import { BrowserRouter } from "react-router-dom";
-
 import GlobalNavBar from "./index";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: "Layout/Navigation/GlobalNavBar",
+  title: "Layout/Navigations/GlobalNavBar",
   component: GlobalNavBar,
   tags: ["autodocs"],
   parameters: {
@@ -39,13 +37,11 @@ const meta = {
   },
   decorators: [
     (Story) => (
-      <BrowserRouter>
-        <div className="relative h-screen bg-gray-50">
-          <div className="absolute bottom-0 w-full">
-            <Story />
-          </div>
+      <div className="relative h-screen bg-gray-50">
+        <div className="absolute bottom-0 w-full">
+          <Story />
         </div>
-      </BrowserRouter>
+      </div>
     ),
   ],
   argTypes: {

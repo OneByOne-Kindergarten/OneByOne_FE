@@ -5,7 +5,7 @@ import Button from "./index";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: "Interactive/Buttons/BaseButton",
+  title: "UI/Buttons/BaseButton",
   component: Button,
   tags: ["autodocs"],
   parameters: {
@@ -13,18 +13,19 @@ const meta = {
     docs: {
       description: {
         component: `
-기본 버튼 컴포넌트입니다. CVA(Class Variance Authority)를 사용하여 다양한 스타일 변형을 지원합니다.
+기본 버튼 컴포넌트입니다. 
 
-**주요 특징:**
-- 8가지 variant (primary, secondary, tertiary, destructive, transparent, transparent_gray, link, default)
-- 4가지 size (xs, sm, md, lg)
-- 3가지 shape (default, rounded, full)
-- 4가지 border 옵션 (gray, blue, black, none)
-- 3가지 shadow 옵션 (sm, md, lg)
-- 8가지 font 크기/굵기 조합
+**Props:**
+- variant: 스타일 (primary, secondary, tertiary, destructive, transparent, transparent_gray, link, default)
+- size: 패딩 크기 (xs, sm, md, lg)
+- shape: 모서리 형태 (default, rounded, full)
+- border: 테두리 스타일 (gray, blue, black, none)
+- shadow: 그림자 효과 (sm, md, lg)
+- font: 폰트 크기/굵기 조합 (xs, xs_sb, sm, sm_sb, md, md_sb, lg, lg_sb)
+- disabled: 버튼 비활성화 여부
+- onClick: 클릭 이벤트 핸들러
 
-**타입 안전성:**
-- TypeScript 완전 지원
+**기능:**
 - Radix UI Slot 기반 polymorphic 컴포넌트
         `,
       },
@@ -90,13 +91,6 @@ export const Default: Story = {
     children: "기본 버튼",
     onClick: fn(),
   },
-  parameters: {
-    docs: {
-      description: {
-        story: "기본 스타일의 버튼입니다.",
-      },
-    },
-  },
 };
 
 // 주요 액션 버튼 (로그인, 가입 등)
@@ -118,7 +112,7 @@ export const Submit: Story = {
     docs: {
       description: {
         story:
-          "주요 액션에 사용되는 버튼들입니다. 로그인, 회원가입 등의 중요한 작업에 사용됩니다.",
+          "메인 액션 버튼입니다. 로그인, 회원가입 등의 중요한 작업에 사용됩니다.",
       },
     },
   },
@@ -143,7 +137,7 @@ export const Secondary: Story = {
     docs: {
       description: {
         story:
-          "보조 액션에 사용되는 버튼들입니다. 취소, 확인 등의 부가적인 작업에 사용됩니다.",
+          "보조 액션 버튼입니다. 취소, 확인 등의 부가적인 작업에 사용됩니다.",
       },
     },
   },
@@ -183,7 +177,7 @@ export const CategoryTags: Story = {
     docs: {
       description: {
         story:
-          "카테고리나 태그 선택에 사용되는 버튼들입니다. 선택 상태에 따라 다른 스타일을 적용합니다.",
+          "카테고리, 태그 선택에 사용되는 버튼들입니다. 선택 상태에 따라 다른 스타일을 적용합니다.",
       },
     },
   },
@@ -251,8 +245,7 @@ export const WithShadows: Story = {
   parameters: {
     docs: {
       description: {
-        story:
-          "그림자 효과가 적용된 버튼들입니다. 시각적 깊이감이 필요한 경우 사용됩니다.",
+        story: "그림자 효과가 적용된 버튼들입니다. Floating 버튼에 사용됩니다.",
       },
     },
   },

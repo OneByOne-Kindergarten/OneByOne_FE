@@ -4,9 +4,9 @@ import { cn } from "@/utils/cn";
 
 import {
   BaseModal,
-  ModalHeader,
   ModalContent,
   ModalFooter,
+  ModalHeader,
 } from "../base-modal";
 
 interface PopupModalProps {
