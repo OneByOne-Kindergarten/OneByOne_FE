@@ -101,9 +101,16 @@ export default function SchoolDetailPage() {
 
   const handleBackClick = () => {
     if (location.state?.fromSearch) {
-      const { searchQuery } = location.state;
-      const searchPath = `${URL_PATHS.SEARCH_SCHOOL}?query=${encodeURIComponent(searchQuery)}`;
-      navigate(searchPath);
+      const { searchPath } = location.state;
+      if (searchPath) {
+        // 저장된 검색 페이지 경로로 이동
+        navigate(searchPath);
+      } else {
+        // 기본 검색 페이지로 이동
+        const { searchQuery } = location.state;
+        const searchPath = `${URL_PATHS.SEARCH_SCHOOL}?query=${encodeURIComponent(searchQuery)}`;
+        navigate(searchPath);
+      }
     } else {
       navigate(-1);
     }

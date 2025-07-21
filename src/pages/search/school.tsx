@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import SearchPageLayout from "@/components/@shared/layout/search-page-layout";
 import RecentSearches from "@/components/@shared/search/recent-searches";
@@ -15,6 +15,7 @@ import { getSchoolPath } from "@/utils/lastVisitedPathUtils";
 
 export default function SchoolSearchPage() {
   const navigate = useNavigate();
+  const location = useLocation();
   // const [searchParams] = useSearchParams();
 
   const {
@@ -66,11 +67,23 @@ export default function SchoolSearchPage() {
   };
 
   const handleSchoolClick = (id: string) => {
+    // 현재 히스토리를 학교 상세 페이지로 완전히 대체
+    window.history.replaceState(
+      {
+        fromSearch: true,
+        searchQuery: searchQuery,
+        searchPath: location.pathname + location.search,
+      },
+      "",
+      URL_PATHS.SCHOOL_DETAIL.replace(":id", id)
+    );
+
     navigate(URL_PATHS.SCHOOL_DETAIL.replace(":id", id), {
       replace: true,
       state: {
         fromSearch: true,
         searchQuery: searchQuery,
+        searchPath: location.pathname + location.search,
       },
     });
   };

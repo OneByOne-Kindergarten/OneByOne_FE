@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 import SearchPageLayout from "@/components/@shared/layout/search-page-layout";
 import RecentSearches from "@/components/@shared/search/recent-searches";
@@ -13,6 +13,7 @@ import { getCommunityPath } from "@/utils/lastVisitedPathUtils";
 export default function CommunitySearchPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const {
     searchQuery,
@@ -74,12 +75,26 @@ export default function CommunitySearchPage() {
   };
 
   const handlePostClick = (id: string) => {
+    // 현재 히스토리를 게시글 상세 페이지로 완전히 대체
+    window.history.replaceState(
+      {
+        fromSearch: true,
+        searchQuery: searchQuery,
+        category: category,
+        searchPath: location.pathname + location.search,
+      },
+      "",
+      URL_PATHS.COMMUNITY_POST.replace(":id", id)
+    );
+
+    // 페이지 이동
     navigate(URL_PATHS.COMMUNITY_POST.replace(":id", id), {
       replace: true,
       state: {
         fromSearch: true,
         searchQuery: searchQuery,
         category: category,
+        searchPath: location.pathname + location.search,
       },
     });
   };

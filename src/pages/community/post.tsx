@@ -43,9 +43,16 @@ export default function CommunityPostPage() {
   const handleBackClick = () => {
     // 검색 페이지에서 온 경우 검색 페이지로 직접 이동
     if (location.state?.fromSearch) {
-      const { searchQuery, category } = location.state;
-      const searchPath = `${URL_PATHS.SEARCH_COMMUNITY}?query=${encodeURIComponent(searchQuery)}${category ? `&category=${category}` : ""}`;
-      navigate(searchPath);
+      const { searchPath } = location.state;
+      if (searchPath) {
+        // 저장된 검색 페이지 경로로 이동
+        navigate(searchPath);
+      } else {
+        // 기본 검색 페이지로 이동
+        const { searchQuery, category } = location.state;
+        const searchPath = `${URL_PATHS.SEARCH_COMMUNITY}?query=${encodeURIComponent(searchQuery)}${category ? `&category=${category}` : ""}`;
+        navigate(searchPath);
+      }
     } else {
       navigate(-1);
     }
