@@ -10,6 +10,10 @@ const PASSWORD_PATTERN = /^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]*$/;
 // 완전한 한글 문자, 영문, 숫자, 언더스코어 허용 (불완전한 조합형 한글 제외)
 const NICKNAME_PATTERN = /^[가-힣a-zA-Z0-9_]+$/;
 
+// 글자수 제한 상수
+export const POST_TITLE_MAX_LENGTH = 20;
+export const POST_CONTENT_MAX_LENGTH = 200;
+
 // 닉네임 스키마
 export const nicknameSchema = z
   .string()
@@ -49,6 +53,26 @@ export const passwordChangeSchema = z.object({
 // 프로필 스키마 (닉네임)
 export const profileSchema = z.object({
   nickname: nicknameSchema,
+});
+
+// 커뮤니티 게시글 작성 스키마
+export const postSchema = z.object({
+  title: z
+    .string()
+    .min(1, "제목을 입력해주세요")
+    .max(
+      POST_TITLE_MAX_LENGTH,
+      `제목은 ${POST_TITLE_MAX_LENGTH}자 이내로 입력해주세요`
+    ),
+  content: z
+    .string()
+    .min(1, "내용을 입력해주세요")
+    .max(
+      POST_CONTENT_MAX_LENGTH,
+      `내용은 ${POST_CONTENT_MAX_LENGTH}자 이내로 입력해주세요`
+    ),
+  category: z.enum(["TEACHER", "PROSPECTIVE_TEACHER"]),
+  communityCategoryName: z.string(),
 });
 
 // 비밀번호 입력 필터링

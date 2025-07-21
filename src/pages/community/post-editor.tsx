@@ -11,8 +11,8 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@/components/@shared/form";
+import ErrorMessage from "@/components/@shared/form/error-message";
 import Input from "@/components/@shared/form/input";
 import Textarea from "@/components/@shared/form/textarea";
 import PageLayout from "@/components/@shared/layout/page-layout";
@@ -30,13 +30,11 @@ import {
   setCommunityCategory,
   setCommunityCategoryName,
 } from "@/utils/lastVisitedPathUtils";
-
-const postSchema = z.object({
-  title: z.string().min(1, "제목을 입력해주세요"),
-  content: z.string().min(1, "내용을 입력해주세요"),
-  category: z.enum(["TEACHER", "PROSPECTIVE_TEACHER"]),
-  communityCategoryName: z.string(),
-});
+import {
+  POST_CONTENT_MAX_LENGTH,
+  POST_TITLE_MAX_LENGTH,
+  postSchema,
+} from "@/utils/validationSchemas";
 
 type PostFormData = z.infer<typeof postSchema>;
 
@@ -68,32 +66,30 @@ export default function PostEditorPage() {
       category: selectedCategory,
       communityCategoryName: selectedCategoryName,
     },
-    mode: "onBlur",
+    mode: "onChange",
   });
+
+  const { formState } = form;
+  const titleValue = form.watch("title");
+  const contentValue = form.watch("content");
 
   // 상위 카테고리 변경 시 하위 카테고리 업데이트
   useEffect(() => {
     const currentCategoryName = form.getValues("communityCategoryName");
 
-    // 하위 카테고리 유효성 검증
     const newCategoryName = getValidCategoryName(
       currentCategoryName,
       selectedCategory
     );
 
-    // 새 카테고리가 선택된 경우에만 업데이트
     if (newCategoryName !== currentCategoryName) {
       setSelectedCategoryName(newCategoryName);
       form.setValue("communityCategoryName", newCategoryName);
     }
 
-    // 메인 카테고리는 항상 업데이트
     form.setValue("category", selectedCategory);
-
-    // 세션 스토리지 업데이트
     setCommunityCategory(selectedCategory);
 
-    // 카테고리명은 변경된 경우에만 업데이트
     if (newCategoryName !== currentCategoryName) {
       setCommunityCategoryName(newCategoryName);
     }
@@ -104,14 +100,12 @@ export default function PostEditorPage() {
       e.preventDefault();
       e.stopPropagation();
 
-      // 선택된 하위 카테고리 업데이트
       setSelectedCategoryName(categoryName);
       form.setValue("communityCategoryName", categoryName, {
         shouldDirty: true,
         shouldValidate: false,
       });
 
-      // 메인 카테고리 유지
       if (form.getValues("category") !== selectedCategory) {
         form.setValue("category", selectedCategory, {
           shouldDirty: true,
@@ -119,7 +113,6 @@ export default function PostEditorPage() {
         });
       }
 
-      // 세션 스토리지 업데이트
       setCommunityCategory(selectedCategory);
       setCommunityCategoryName(categoryName);
     },
@@ -166,7 +159,6 @@ export default function PostEditorPage() {
     });
   };
 
-  // 현재 카테고리에 해당하는 하위 카테고리 옵션
   const categoryOptions = getCategoryOptions(selectedCategory);
 
   return (
@@ -219,7 +211,7 @@ export default function PostEditorPage() {
                         제목
                       </FormLabel>
                       <span className="text-xs font-semibold text-primary-normal02">
-                        *200자 이내
+                        *{titleValue.length}/{POST_TITLE_MAX_LENGTH}자
                       </span>
                     </div>
                     <FormControl>
@@ -227,13 +219,12 @@ export default function PostEditorPage() {
                         font="md"
                         placeholder="제목을 입력해주세요"
                         {...field}
-                        value={field.value || ""}
-                        onChange={(e) => field.onChange(e.target.value)}
-                        onBlur={field.onBlur}
                         error={!!fieldState.error}
                       />
                     </FormControl>
-                    <FormMessage />
+                    {fieldState.error?.message && (
+                      <ErrorMessage error={fieldState.error.message} />
+                    )}
                   </FormItem>
                 )}
               />
@@ -248,7 +239,7 @@ export default function PostEditorPage() {
                         내용
                       </FormLabel>
                       <span className="text-xs font-semibold text-primary-normal02">
-                        *200자 이내
+                        *{contentValue.length}/{POST_CONTENT_MAX_LENGTH}자
                       </span>
                     </div>
                     <FormControl>
@@ -261,13 +252,12 @@ export default function PostEditorPage() {
 • 상세하고 유익한 정보 공유는 좋지만, 사생활 침해나 명예훼손이 없도록 조심해주세요. 
 • 커뮤니티 에티켓을 지키지 않으면 글이 삭제될 수 있어요."
                         {...field}
-                        value={field.value || ""}
-                        onChange={(e) => field.onChange(e.target.value)}
-                        onBlur={field.onBlur}
                         error={!!fieldState.error}
                       />
                     </FormControl>
-                    <FormMessage />
+                    {fieldState.error?.message && (
+                      <ErrorMessage error={fieldState.error.message} />
+                    )}
                   </FormItem>
                 )}
               />
@@ -278,7 +268,9 @@ export default function PostEditorPage() {
                   size="md"
                   type="button"
                   onClick={handleSubmitClick}
-                  disabled={isPending || isSubmitting.current}
+                  disabled={
+                    isPending || isSubmitting.current || !formState.isValid
+                  }
                 >
                   {isPending ? "등록 중..." : "등록"}
                 </Button>
