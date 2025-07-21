@@ -24,7 +24,7 @@ export default function Bookmarks() {
       headerLogo={true}
       mainBg="gray"
       hasBackButton={false}
-      mainClassName={favorites.length === 0 ? "pb-0 mb-0 mt-14" : "mt-14"}
+      mainClassName={favorites.length === 0 ? "pb-0 mb-0 mt-14" : "mb-14 mt-14"}
       showAlarmButton={true}
     >
       {isLoading ? (
