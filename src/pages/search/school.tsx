@@ -67,6 +67,7 @@ export default function SchoolSearchPage() {
 
   const handleSchoolClick = (id: string) => {
     navigate(URL_PATHS.SCHOOL_DETAIL.replace(":id", id), {
+      replace: true,
       state: {
         fromSearch: true,
         searchQuery: searchQuery,

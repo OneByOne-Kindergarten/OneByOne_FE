@@ -45,7 +45,7 @@ export default function CommunityPostPage() {
     if (location.state?.fromSearch) {
       const { searchQuery, category } = location.state;
       const searchPath = `${URL_PATHS.SEARCH_COMMUNITY}?query=${encodeURIComponent(searchQuery)}${category ? `&category=${category}` : ""}`;
-      navigate(searchPath, { replace: true });
+      navigate(searchPath);
     } else {
       navigate(-1);
     }

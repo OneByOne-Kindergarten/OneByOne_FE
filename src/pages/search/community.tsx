@@ -75,6 +75,7 @@ export default function CommunitySearchPage() {
 
   const handlePostClick = (id: string) => {
     navigate(URL_PATHS.COMMUNITY_POST.replace(":id", id), {
+      replace: true,
       state: {
         fromSearch: true,
         searchQuery: searchQuery,

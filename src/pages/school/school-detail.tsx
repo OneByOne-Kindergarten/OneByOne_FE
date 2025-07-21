@@ -103,9 +103,9 @@ export default function SchoolDetailPage() {
     if (location.state?.fromSearch) {
       const { searchQuery } = location.state;
       const searchPath = `${URL_PATHS.SEARCH_SCHOOL}?query=${encodeURIComponent(searchQuery)}`;
-      navigate(searchPath, { replace: true });
+      navigate(searchPath);
     } else {
-      navigate(URL_PATHS.SCHOOL);
+      navigate(-1);
     }
   };
 
