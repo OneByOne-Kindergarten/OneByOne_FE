@@ -98,6 +98,7 @@ export default function ShortcutsEditorPage() {
       currentPath={URL_PATHS.HOME}
       headerTitle="바로가기 편집"
       wrapperBg="white"
+      headerType="save"
       mainClassName="flex flex-col gap-4 px-5 py-4 mt-16 mb-24"
       onSave={isLoading ? undefined : handleSave}
     >
