@@ -19,13 +19,21 @@ export default function ProgressBar({ value, max }: ProgressBarProps) {
         {/* 도트 오버레이 */}
         <div className="absolute left-0 top-0 flex h-full w-full items-center pr-3">
           <div className="relative h-full w-full">
-            {dots.map((dot) => (
-              <div
-                key={dot}
-                className="absolute top-1/2 h-1 w-1 -translate-y-1/2 rounded-full bg-tertiary-2"
-                style={{ left: `${(dot / max) * 100}%` }}
-              />
-            ))}
+            {dots.map((dot) => {
+              const leftPosition =
+                max === 1 ? 50 : ((dot - 1) / (max - 1)) * 100;
+
+              return (
+                <div
+                  key={dot}
+                  className="absolute top-1/2 h-1 w-1 rounded-full bg-tertiary-2"
+                  style={{
+                    left: `${leftPosition}%`,
+                    transform: "translateY(-50%) translateX(-50%)",
+                  }}
+                />
+              );
+            })}
           </div>
         </div>
       </div>

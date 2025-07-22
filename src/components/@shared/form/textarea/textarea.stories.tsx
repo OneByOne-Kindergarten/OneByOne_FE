@@ -1,4 +1,13 @@
 import { action } from "@storybook/addon-actions";
+import { useState } from "react";
+
+import {
+  GuidelineGrid,
+  SpecCard,
+  SpecGrid,
+  SpecTable,
+  VariantGrid,
+} from "@/components/@shared/layout/storybook-layout";
 
 import Textarea from "./index";
 
@@ -12,25 +21,7 @@ const meta = {
     layout: "centered",
     docs: {
       description: {
-        component: `
-고정 높이 또는 자동 확장을 지원하는 텍스트 입력 컴포넌트입니다.
-
-**Props:**
-- \`font\`: 폰트 크기 (xs, sm, md, lg + semibold 옵션)
-- \`padding\`: default, sm, xs
-- \`size\`: 높이 설정 (fixed, auto)
-- \`error\`: 에러 상태 여부
-- \`disabled\`: 비활성화 상태
-- \`placeholder\`
-
-**기능:**
-- 고정 높이 또는 자동 확장 지원
-
-**사용 시나리오:**
-- 리뷰 작성
-- 댓글 입력
-- 긴 텍스트 입력
-        `,
+        component: "텍스트 입력 컴포넌트",
       },
     },
   },
@@ -62,9 +53,11 @@ const meta = {
       control: "boolean",
     },
     disabled: {
+      description: "비활성화 상태",
       control: "boolean",
     },
     placeholder: {
+      description: "플레이스홀더 텍스트",
       control: "text",
     },
   },
@@ -73,139 +66,188 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Interactive: Story = {
-  render: () => {
-    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      action("값 변경")(e.target.value);
-    };
+const PlaygroundDemo = () => {
+  const [value, setValue] = useState("");
 
-    const handleFocus = () => {
-      action("포커스")();
-    };
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setValue(e.target.value);
+    action("값 변경")(e.target.value);
+  };
 
-    const handleBlur = () => {
-      action("블러")();
-    };
+  const handleFocus = () => {
+    action("포커스")();
+  };
 
-    return (
+  const handleBlur = () => {
+    action("블러")();
+  };
+
+  return (
+    <Textarea
+      placeholder="입력해보세요"
+      value={value}
+      onChange={handleChange}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+      size="auto"
+    />
+  );
+};
+
+export const Playground: Story = {
+  render: () => <PlaygroundDemo />,
+  args: {},
+};
+
+export const Specs: Story = {
+  render: () => (
+    <div className="space-y-6">
       <div className="space-y-4">
-        <div>
-          <Textarea
-            placeholder="입력해보세요"
-            onChange={handleChange}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            size="auto"
+        <SpecGrid>
+          <SpecTable
+            title="Props"
+            headers={["prop", "type", "description"]}
+            data={[
+              ["font", "string", "폰트 크기와 굵기 (기본: sm_sb)"],
+              [
+                "padding",
+                "'default' | 'sm' | 'xs'",
+                "패딩 크기 (기본: default)",
+              ],
+              ["size", "'fixed' | 'auto'", "높이 설정 (기본: fixed)"],
+              ["error", "boolean", "에러 상태 표시 (선택)"],
+              ["disabled", "boolean", "비활성화 상태 (선택)"],
+              ["placeholder", "string", "플레이스홀더 텍스트 (선택)"],
+            ]}
+            codeColumns={[0, 1]}
           />
-        </div>
+
+          <SpecTable
+            title="Size Variants"
+            headers={["size", "default height", "focus height", "behavior"]}
+            data={[
+              ["fixed", "320px", "320px", "고정 높이 유지"],
+              ["auto", "96px", "320px", "포커스 시 자동 확장"],
+            ]}
+            codeColumns={[0, 1, 2]}
+          />
+
+          <SpecTable
+            title="Padding Variants"
+            headers={["padding", "value", "token"]}
+            data={[
+              ["default", "20px", "p-5"],
+              ["sm", "16px", "p-4"],
+              ["xs", "12px", "p-3"],
+            ]}
+            codeColumns={[0, 1, 2]}
+          />
+
+          <SpecTable
+            title="Font Variants"
+            headers={["font", "size", "weight", "usage"]}
+            data={[
+              ["xs", "12px", "400", "작은 메모"],
+              ["xs_sb", "12px", "600", "작은 강조 텍스트"],
+              ["sm", "14px", "400", "일반 입력"],
+              ["sm_sb", "14px", "600", "기본 권장"],
+              ["md", "16px", "400", "긴 내용"],
+              ["lg", "18px", "400", "제목급 입력"],
+            ]}
+            codeColumns={[0, 1, 2]}
+          />
+        </SpecGrid>
+
+        <SpecCard title="Usage Guidelines">
+          <GuidelineGrid
+            columns={2}
+            sections={[
+              {
+                title: "자동 확장 기능 조작",
+                items: [
+                  "size='auto' 사용으로 확장 가능",
+                  "기본 높이 96px에서 시작",
+                  "포커스 시 320px로 자동 확장",
+                  "포커스 해제 시 다시 축소",
+                  "사용자 친화적 공간 활용",
+                ],
+              },
+              {
+                title: "크기 선택 기준",
+                items: [
+                  { label: "fixed", description: "정해진 긴 내용 입력" },
+                  { label: "auto", description: "가변적 내용 길이 (권장)" },
+                  { label: "default padding", description: "일반적인 사용" },
+                  { label: "sm padding", description: "조밀한 레이아웃" },
+                  { label: "xs padding", description: "최소 공간 활용" },
+                ],
+              },
+              {
+                title: "사용 시나리오",
+                items: [
+                  "게시글 본문 작성",
+                  "댓글 및 답글 입력",
+                  "리뷰 상세 내용 작성",
+                  "문의사항 상세 입력",
+                  "긴 텍스트가 필요한 모든 폼",
+                ],
+              },
+              {
+                title: "UX 고려사항",
+                items: [
+                  "auto 크기로 공간 효율성 확보",
+                  "적절한 폰트 크기로 가독성 향상",
+                  "placeholder로 입력 가이드 제공",
+                  "에러 상태 명확한 시각적 표시",
+                  "resize 비활성화로 레이아웃 안정성",
+                ],
+              },
+            ]}
+          />
+        </SpecCard>
       </div>
-    );
-  },
-  args: {
-    placeholder: "",
-  },
+    </div>
+  ),
   parameters: {
     docs: {
       description: {
-        story:
-          "상호작용할 수 있는 인터랙티브 텍스트 영역입니다.  Actions 패널에서 이벤트를 확인할 수 있습니다.",
+        story: "컴포넌트의 상세 스펙과 사용 가이드라인",
       },
     },
   },
 };
 
-export const Sizes: Story = {
+export const Gallery: Story = {
   render: () => (
-    <div className="space-y-4">
-      <div>
-        <h3 className="mb-2 text-sm font-semibold">Fixed Size (default)</h3>
-        <Textarea placeholder="고정 높이 텍스트 영역" size="fixed" />
-      </div>
-      <div>
-        <h3 className="mb-2 text-sm font-semibold">Auto Expand</h3>
-        <Textarea
-          placeholder="포커스 시 확장되는 텍스트 영역 - 클릭해보세요!"
-          size="auto"
-        />
-      </div>
-    </div>
+    <VariantGrid
+      sections={[
+        {
+          title: "Size",
+          prop: "size",
+          values: ["fixed", "auto"],
+          direction: "column",
+        },
+        {
+          title: "Padding",
+          prop: "padding",
+          values: ["xs", "sm", "default"],
+          direction: "column",
+        },
+        {
+          title: "Font",
+          prop: "font",
+          values: ["xs", "sm", "md", "lg"],
+          direction: "column",
+        },
+      ]}
+      component={Textarea}
+      commonProps={{ placeholder: "텍스트를 입력하세요" }}
+    />
   ),
-  args: {
-    placeholder: "",
-  },
   parameters: {
     docs: {
       description: {
-        story: "고정 높이와 자동 확장 텍스트 영역을 비교합니다.",
-      },
-    },
-  },
-};
-
-export const Paddings: Story = {
-  render: () => (
-    <div className="space-y-4">
-      <div>
-        <h3 className="mb-2 text-sm font-semibold">Default Padding</h3>
-        <Textarea placeholder="기본 패딩" padding="default" size="auto" />
-      </div>
-      <div>
-        <h3 className="mb-2 text-sm font-semibold">Small Padding</h3>
-        <Textarea placeholder="작은 패딩" padding="sm" size="auto" />
-      </div>
-      <div>
-        <h3 className="mb-2 text-sm font-semibold">Extra Small Padding</h3>
-        <Textarea placeholder="아주 작은 패딩" padding="xs" size="auto" />
-      </div>
-    </div>
-  ),
-  args: {
-    placeholder: "",
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "default, sm, xs 패딩 크기를 지원합니다.",
-      },
-    },
-  },
-};
-
-export const Fonts: Story = {
-  render: () => (
-    <div className="space-y-4">
-      <div>
-        <h3 className="mb-2 text-sm font-semibold">Extra Small</h3>
-        <Textarea placeholder="Extra Small 폰트" font="xs" size="auto" />
-      </div>
-      <div>
-        <h3 className="mb-2 text-sm font-semibold">Small</h3>
-        <Textarea placeholder="Small 폰트" font="sm" size="auto" />
-      </div>
-      <div>
-        <h3 className="mb-2 text-sm font-semibold">Medium</h3>
-        <Textarea placeholder="Medium 폰트" font="md" size="auto" />
-      </div>
-      <div>
-        <h3 className="mb-2 text-sm font-semibold">Large</h3>
-        <Textarea placeholder="Large 폰트" font="lg" size="auto" />
-      </div>
-      <div>
-        <h3 className="mb-2 text-sm font-semibold">Semibold Variations</h3>
-        <div className="space-y-2">
-          <Textarea placeholder="Small Semibold" font="sm_sb" size="auto" />
-          <Textarea placeholder="Medium Semibold" font="md_sb" size="auto" />
-        </div>
-      </div>
-    </div>
-  ),
-  args: {
-    placeholder: "",
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "xs, sm, md, lg 폰트 크기와 굵기 옵션을 지원합니다.",
+        story: "옵션 별 컴포넌트 스타일 프리뷰",
       },
     },
   },
@@ -215,16 +257,16 @@ export const States: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="mb-2 text-sm font-semibold">Normal State</h3>
+        <h3 className="mb-2 text-sm font-semibold">Default</h3>
         <Textarea placeholder="정상 상태" size="auto" />
       </div>
       <div>
-        <h3 className="mb-2 text-sm font-semibold">Error State</h3>
+        <h3 className="mb-2 text-sm font-semibold">Error</h3>
         <Textarea placeholder="에러 상태" error size="auto" />
         <p className="mt-1 text-xs text-red-600">내용을 입력해주세요</p>
       </div>
       <div>
-        <h3 className="mb-2 text-sm font-semibold">Disabled State</h3>
+        <h3 className="mb-2 text-sm font-semibold">Disabled</h3>
         <Textarea placeholder="비활성화 상태" disabled size="auto" />
       </div>
     </div>
@@ -235,7 +277,68 @@ export const States: Story = {
   parameters: {
     docs: {
       description: {
-        story: "정상, 에러, 비활성화 상태를 지원합니다.",
+        story: "상태 별 컴포넌트 스타일 프리뷰",
+      },
+    },
+  },
+};
+
+export const UseCases: Story = {
+  render: () => (
+    <div className="space-y-8">
+      <div>
+        <div className="space-y-4 rounded-lg border p-4">
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-700">게시글</label>
+            <Textarea
+              placeholder="게시글 내용을 입력하세요"
+              size="auto"
+              font="sm"
+              defaultValue="서울시 강남구에 위치한 유치원에서 경력 3년 이상의 담임교사를 모집합니다. 아이들을 사랑하고 책임감 있는 선생님을 찾고 있습니다."
+            />
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div className="space-y-4 rounded-lg border p-4">
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-700">댓글</label>
+            <Textarea
+              placeholder="댓글을 입력하세요"
+              size="auto"
+              font="xs"
+              padding="sm"
+              defaultValue="좋은 정보 감사합니다!"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div className="space-y-4 rounded-lg border p-4">
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-700">
+              문의 내용
+            </label>
+            <Textarea
+              placeholder="문의하실 내용을 상세히 작성해주세요"
+              size="fixed"
+              font="sm"
+              defaultValue="서비스 개선안 말씀드립니다."
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  ),
+  args: {
+    placeholder: "",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "실제 애플리케이션에서의 사용 예시",
       },
     },
   },

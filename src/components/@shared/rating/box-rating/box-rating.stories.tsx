@@ -1,6 +1,14 @@
 import { fn } from "@storybook/test";
 import { useState } from "react";
 
+import {
+  GuidelineGrid,
+  Section,
+  SpecCard,
+  SpecGrid,
+  SpecTable,
+} from "@/components/@shared/layout/storybook-layout";
+
 import { BoxRatingGroup } from "./index";
 
 import type { Meta, StoryObj } from "@storybook/react";
@@ -13,24 +21,7 @@ const meta = {
     layout: "centered",
     docs: {
       description: {
-        component: `
-박스 형태의 인터랙티브 컴포넌트입니다.
-
-**구성 요소:**
-- RatingBox: 개별 박스 컴포넌트
-- BoxRatingGroup: 박스들을 그룹화한 평점 시스템
-
-**기능:**
-- 클릭 가능한 박스 컴포넌트
-- 박스 개수 설정
-- 박스 크기 설정 (xs, sm, md, lg)
-- 박스 선택 상태에 따른 색상 변화
-- 접근성 지원 (aria-label)
-
-**사용 시나리오:**
-- 평점 입력
-- 평점 표시
-        `,
+        component: "박스 형태 인터랙티브 평점 컴포넌트",
       },
     },
   },
@@ -56,9 +47,9 @@ const meta = {
 } satisfies Meta<typeof BoxRatingGroup>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj;
 
-export const Default: Story = {
+export const Playground: Story = {
   args: {
     value: 3,
     max: 5,
@@ -67,87 +58,193 @@ export const Default: Story = {
   },
 };
 
-export const Sizes: Story = {
+export const Specs: Story = {
   render: () => (
     <div className="space-y-6">
-      <div className="space-y-2">
-        <span className="text-sm text-gray-600">Extra Small (xs)</span>
-        <BoxRatingGroup value={3} max={5} size="xs" />
-      </div>
-
-      <div className="space-y-2">
-        <span className="text-sm text-gray-600">Small (sm)</span>
-        <BoxRatingGroup value={3} max={5} size="sm" />
-      </div>
-
-      <div className="space-y-2">
-        <span className="text-sm text-gray-600">Medium (md)</span>
-        <BoxRatingGroup value={3} max={5} size="md" />
-      </div>
-
-      <div className="space-y-2">
-        <span className="text-sm text-gray-600">Large (lg)</span>
-        <BoxRatingGroup value={3} max={5} size="lg" />
+      <div className="space-y-4">
+        <SpecGrid>
+          <SpecTable
+            title="Props"
+            headers={["prop", "type", "description"]}
+            data={[
+              ["value", "number", "현재 선택된 박스 수 (필수)"],
+              ["max", "number", "최대 박스 수 (기본: 5)"],
+              ["size", "'xs' | 'sm' | 'md' | 'lg'", "박스 크기 (기본: md)"],
+              ["onChange", "function", "값 변경 핸들러 (선택)"],
+              ["className", "string", "추가 CSS 클래스 (선택)"],
+            ]}
+            codeColumns={[0, 1]}
+          />
+          <SpecTable
+            title="Size Variants"
+            headers={["size", "width", "height", "gap"]}
+            data={[
+              ["xs", "20px", "20px", "4px"],
+              ["sm", "24px", "24px", "6px"],
+              ["md", "32px", "32px", "8px"],
+              ["lg", "40px", "40px", "10px"],
+            ]}
+            codeColumns={[0, 1, 2, 3]}
+          />
+          <SpecTable
+            title="Visual Design"
+            headers={["state", "background", "border"]}
+            data={[
+              ["unselected", "gray-100", "gray-300"],
+              ["selected", "primary-normal01", "primary-normal01"],
+              ["hover", "gray-200", "gray-400"],
+              ["focus", "outline", "primary-dark01"],
+            ]}
+            codeColumns={[0, 1, 2]}
+          />
+          <SpecTable
+            title="Interaction"
+            headers={["action", "behavior", "accessibility"]}
+            data={[
+              ["click", "값 설정 (1-max)", "role='radiogroup'"],
+              ["keyboard", "화살표키 네비게이션", "aria-label 지원"],
+              ["hover", "시각적 피드백", "focus-visible"],
+              ["change", "onChange 콜백 호출", "aria-valuenow 업데이트"],
+            ]}
+            codeColumns={[0]}
+          />
+        </SpecGrid>
+        <SpecCard title="Usage Guidelines">
+          <GuidelineGrid
+            columns={2}
+            sections={[
+              {
+                title: "크기 선택 기준",
+                items: [
+                  { label: "xs", description: "좁은 공간, 인라인 표시" },
+                  { label: "sm", description: "테이블, 카드 내부" },
+                  { label: "md", description: "폼, 상세 페이지 (기본)" },
+                  { label: "lg", description: "메인 평점, 강조 표시" },
+                ],
+              },
+              {
+                title: "사용 시나리오",
+                items: [
+                  "사용자 평점 입력 (1-5점)",
+                  "만족도 조사 응답",
+                  "제품/서비스 평가",
+                  "리뷰 작성 시 세부 항목 평점",
+                  "설문조사 척도 응답",
+                ],
+              },
+              {
+                title: "UX 고려사항",
+                items: [
+                  "명확한 시각적 피드백 제공",
+                  "터치 영역 충분히 확보",
+                  "선택 상태 명확히 구분",
+                  "키보드 네비게이션 지원",
+                  "적절한 간격으로 오조작 방지",
+                ],
+              },
+              {
+                title: "접근성 최적화",
+                items: [
+                  "role='radiogroup' 명시",
+                  "aria-label로 평점 설명",
+                  "키보드 화살표 키 지원",
+                  "스크린 리더 호환",
+                  "충분한 색상 대비",
+                ],
+              },
+            ]}
+          />
+        </SpecCard>
       </div>
     </div>
   ),
-  args: {
-    value: 3,
-    max: 5,
-  },
   parameters: {
     docs: {
       description: {
-        story: "xs, sm, md, lg 크기를 지원합니다.",
+        story: "컴포넌트의 상세 스펙과 사용 가이드라인",
       },
     },
   },
 };
 
-export const Values: Story = {
+export const Gallery: Story = {
   render: () => (
-    <div className="space-y-4">
-      <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <span className="text-sm">평점 없음</span>
-          <span className="text-xs text-gray-500">0/5</span>
-        </div>
-        <BoxRatingGroup value={0} max={5} size="md" />
-      </div>
+    <main className="flex flex-col gap-6">
+      <Section title="Size">
+        <div className="space-y-6">
+          <div className="space-y-2">
+            <span className="text-sm text-gray-600">Extra Small (xs)</span>
+            <BoxRatingGroup value={3} max={5} size="xs" />
+          </div>
 
-      <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <span className="text-sm">낮은 평점</span>
-          <span className="text-xs text-gray-500">1/5</span>
-        </div>
-        <BoxRatingGroup value={1} max={5} size="md" />
-      </div>
+          <div className="space-y-2">
+            <span className="text-sm text-gray-600">Small (sm)</span>
+            <BoxRatingGroup value={3} max={5} size="sm" />
+          </div>
 
-      <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <span className="text-sm">보통 평점</span>
-          <span className="text-xs text-gray-500">3/5</span>
-        </div>
-        <BoxRatingGroup value={3} max={5} size="md" />
-      </div>
+          <div className="space-y-2">
+            <span className="text-sm text-gray-600">Medium (md)</span>
+            <BoxRatingGroup value={3} max={5} size="md" />
+          </div>
 
-      <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <span className="text-sm">높은 평점</span>
-          <span className="text-xs text-gray-500">5/5</span>
+          <div className="space-y-2">
+            <span className="text-sm text-gray-600">Large (lg)</span>
+            <BoxRatingGroup value={3} max={5} size="lg" />
+          </div>
         </div>
-        <BoxRatingGroup value={5} max={5} size="md" />
-      </div>
-    </div>
+      </Section>
+    </main>
   ),
-  args: {
-    value: 3,
-    max: 5,
-  },
   parameters: {
     docs: {
       description: {
-        story: "현재 선택된 박스의 개수에 따른 상태를 확인할 수 있습니다.",
+        story: "옵션 별 컴포넌트 스타일 프리뷰",
+      },
+    },
+  },
+};
+
+export const States: Story = {
+  render: () => (
+    <div className="space-y-8">
+      <div>
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-sm">평점 없음</span>
+              <span className="text-xs text-gray-500">0/5</span>
+            </div>
+            <BoxRatingGroup value={0} max={5} size="md" />
+          </div>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-sm">낮은 평점</span>
+              <span className="text-xs text-gray-500">1/5</span>
+            </div>
+            <BoxRatingGroup value={1} max={5} size="md" />
+          </div>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-sm">보통 평점</span>
+              <span className="text-xs text-gray-500">3/5</span>
+            </div>
+            <BoxRatingGroup value={3} max={5} size="md" />
+          </div>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-sm">높은 평점</span>
+              <span className="text-xs text-gray-500">5/5</span>
+            </div>
+            <BoxRatingGroup value={5} max={5} size="md" />
+          </div>
+        </div>
+      </div>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: "상태 별 컴포넌트 스타일 프리뷰",
       },
     },
   },
@@ -230,16 +327,12 @@ const RealWorldRatingForm = () => {
   );
 };
 
-export const UserScenario: Story = {
+export const UseCases: Story = {
   render: () => <RealWorldRatingForm />,
-  args: {
-    value: 0,
-    max: 5,
-  },
   parameters: {
     docs: {
       description: {
-        story: "유치원 리뷰 작성 시나리오에서의 사용 예시입니다.",
+        story: "실제 애플리케이션에서의 사용 예시",
       },
     },
   },

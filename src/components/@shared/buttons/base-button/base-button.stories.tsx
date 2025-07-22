@@ -1,5 +1,14 @@
 import { fn } from "@storybook/test";
 
+import {
+  ColorSwatch,
+  GuidelineGrid,
+  SpecCard,
+  SpecGrid,
+  SpecTable,
+  VariantGrid,
+} from "@/components/@shared/layout/storybook-layout";
+
 import Button from "./index";
 
 import type { Meta, StoryObj } from "@storybook/react";
@@ -12,28 +21,13 @@ const meta = {
     layout: "centered",
     docs: {
       description: {
-        component: `
-기본 버튼 컴포넌트입니다. 
-
-**Props:**
-- variant: 스타일 (primary, secondary, tertiary, destructive, transparent, transparent_gray, link, default)
-- size: 패딩 크기 (xs, sm, md, lg)
-- shape: 모서리 형태 (default, rounded, full)
-- border: 테두리 스타일 (gray, blue, black, none)
-- shadow: 그림자 효과 (sm, md, lg)
-- font: 폰트 크기/굵기 조합 (xs, xs_sb, sm, sm_sb, md, md_sb, lg, lg_sb)
-- disabled: 버튼 비활성화 여부
-- onClick: 클릭 이벤트 핸들러
-
-**기능:**
-- Radix UI Slot 기반 polymorphic 컴포넌트
-        `,
+        component: "기본 버튼 컴포넌트",
       },
     },
   },
   argTypes: {
     variant: {
-      description: "버튼의 시각적 스타일",
+      description: "스타일",
       options: [
         "default",
         "primary",
@@ -47,17 +41,17 @@ const meta = {
       control: { type: "select" },
     },
     size: {
-      description: "버튼의 패딩 크기",
+      description: "패딩 크기",
       options: ["xs", "sm", "md", "lg"],
       control: { type: "select" },
     },
     shape: {
-      description: "버튼의 모서리 형태",
+      description: "모서리 형태",
       options: ["default", "rounded", "full"],
       control: { type: "select" },
     },
     border: {
-      description: "테두리 스타일",
+      description: "테두리",
       options: ["none", "gray", "blue", "black"],
       control: { type: "select" },
     },
@@ -85,241 +79,200 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// 기본 버튼
-export const Default: Story = {
+export const Playground: Story = {
   args: {
-    children: "기본 버튼",
+    children: "BaseButton",
     onClick: fn(),
   },
 };
 
-// 주요 액션 버튼 (로그인, 가입 등)
-export const Submit: Story = {
+export const Specs: Story = {
   render: () => (
-    <div className="flex w-48 flex-col gap-4">
-      <Button variant="primary" size="lg" onClick={fn()}>
-        로그인
-      </Button>
-      <Button variant="primary" size="lg" disabled onClick={fn()}>
-        로그인 (비활성화)
-      </Button>
-      <Button variant="secondary" size="lg" onClick={fn()}>
-        회원가입
-      </Button>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "메인 액션 버튼입니다. 로그인, 회원가입 등의 중요한 작업에 사용됩니다.",
-      },
-    },
-  },
-};
-
-// 보조 액션 버튼
-export const Secondary: Story = {
-  render: () => (
-    <div className="flex gap-3">
-      <Button variant="transparent" size="sm" onClick={fn()}>
-        취소
-      </Button>
-      <Button variant="transparent_gray" size="sm" onClick={fn()}>
-        뒤로가기
-      </Button>
-      <Button variant="tertiary" size="sm" border="blue" onClick={fn()}>
-        확인
-      </Button>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "보조 액션 버튼입니다. 취소, 확인 등의 부가적인 작업에 사용됩니다.",
-      },
-    },
-  },
-};
-
-// 카테고리/태그 버튼
-export const CategoryTags: Story = {
-  render: () => (
-    <div className="flex flex-wrap gap-2">
-      <Button variant="secondary" size="sm" shape="rounded" onClick={fn()}>
-        선생님
-      </Button>
-      <Button
-        variant="default"
-        size="sm"
-        shape="rounded"
-        border="gray"
-        onClick={fn()}
-      >
-        학부모
-      </Button>
-      <Button variant="secondary" size="xs" shape="full" onClick={fn()}>
-        공립
-      </Button>
-      <Button
-        variant="default"
-        size="xs"
-        shape="full"
-        border="gray"
-        onClick={fn()}
-      >
-        사립
-      </Button>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "카테고리, 태그 선택에 사용되는 버튼들입니다. 선택 상태에 따라 다른 스타일을 적용합니다.",
-      },
-    },
-  },
-};
-
-// 위험한 액션 버튼
-export const Destructive: Story = {
-  render: () => (
-    <div className="flex gap-3">
-      <Button variant="destructive" size="md" onClick={fn()}>
-        삭제
-      </Button>
-      <Button variant="destructive" size="sm" shape="rounded" onClick={fn()}>
-        탈퇴하기
-      </Button>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "위험한 액션에 사용되는 버튼들입니다. 삭제, 탈퇴 등 신중한 결정이 필요한 작업에 사용됩니다.",
-      },
-    },
-  },
-};
-
-// 링크 스타일 버튼
-export const LinkStyle: Story = {
-  render: () => (
-    <div className="flex flex-col gap-2">
-      <Button variant="link" font="sm" onClick={fn()}>
-        더 보기
-      </Button>
-      <Button variant="link" font="xs" onClick={fn()}>
-        이용약관 보기
-      </Button>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "링크처럼 보이는 버튼들입니다. 부가 정보나 외부 링크 이동에 사용됩니다.",
-      },
-    },
-  },
-};
-
-// 그림자 효과 버튼
-export const WithShadows: Story = {
-  render: () => (
-    <div className="flex gap-4 p-4">
-      <Button variant="primary" shadow="sm" onClick={fn()}>
-        Shadow SM
-      </Button>
-      <Button variant="secondary" shadow="md" onClick={fn()}>
-        Shadow MD
-      </Button>
-      <Button variant="tertiary" shadow="lg" border="blue" onClick={fn()}>
-        Shadow LG
-      </Button>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "그림자 효과가 적용된 버튼들입니다. Floating 버튼에 사용됩니다.",
-      },
-    },
-  },
-};
-
-// 모든 크기 비교
-export const SizeComparison: Story = {
-  render: () => (
-    <div className="flex items-end gap-3">
-      <Button variant="primary" size="xs" onClick={fn()}>
-        XS
-      </Button>
-      <Button variant="primary" size="sm" onClick={fn()}>
-        SM
-      </Button>
-      <Button variant="primary" size="md" onClick={fn()}>
-        MD
-      </Button>
-      <Button variant="primary" size="lg" onClick={fn()}>
-        LG
-      </Button>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "모든 크기 옵션을 비교해볼 수 있습니다.",
-      },
-    },
-  },
-};
-
-// 폰트 크기 비교
-export const FontComparison: Story = {
-  render: () => (
-    <div className="flex flex-col gap-2">
-      <div className="flex gap-2">
-        <Button variant="secondary" font="xs" onClick={fn()}>
-          XS
-        </Button>
-        <Button variant="secondary" font="xs_sb" onClick={fn()}>
-          XS Bold
-        </Button>
-      </div>
-      <div className="flex gap-2">
-        <Button variant="secondary" font="sm" onClick={fn()}>
-          SM
-        </Button>
-        <Button variant="secondary" font="sm_sb" onClick={fn()}>
-          SM Bold
-        </Button>
-      </div>
-      <div className="flex gap-2">
-        <Button variant="secondary" font="md" onClick={fn()}>
-          MD
-        </Button>
-        <Button variant="secondary" font="md_sb" onClick={fn()}>
-          MD Bold
-        </Button>
-      </div>
-      <div className="flex gap-2">
-        <Button variant="secondary" font="lg" onClick={fn()}>
-          LG
-        </Button>
-        <Button variant="secondary" font="lg_sb" onClick={fn()}>
-          LG Bold
-        </Button>
+    <div className="space-y-6">
+      <div className="space-y-4">
+        <SpecGrid>
+          <SpecTable
+            title="Size (Padding)"
+            headers={["option", "padding", "height"]}
+            data={[
+              ["xs", "8px 12px", "~32px"],
+              ["sm", "12px 16px", "~40px"],
+              ["md", "16px 20px", "~48px"],
+              ["lg", "20px 24px", "~56px"],
+            ]}
+            codeColumns={[0, 1, 2]}
+          />
+          <SpecTable
+            title="Font"
+            headers={["option", "size", "weight"]}
+            data={[
+              ["xs", "12px", "400"],
+              ["xs_sb", "12px", "600"],
+              ["sm", "14px", "400"],
+              ["md", "16px", "400"],
+              ["lg", "18px", "400"],
+            ]}
+            codeColumns={[0, 1, 2]}
+          />
+          <SpecTable
+            title="Shape"
+            headers={["option", "radius", "token"]}
+            data={[
+              ["default", "8px", "rounded-lg"],
+              ["rounded", "12px", "rounded-xl"],
+              ["full", "9999px", "rounded-full"],
+            ]}
+            codeColumns={[0, 1, 2]}
+          />
+          <SpecTable
+            title="Variant"
+            headers={["option", "background", "text"]}
+            data={[
+              [
+                "primary",
+                <ColorSwatch
+                  color="bg-primary-normal01"
+                  label="primary-normal01"
+                />,
+                "white",
+              ],
+              [
+                "secondary",
+                <ColorSwatch
+                  color="bg-secondary-normal01"
+                  label="secondary-normal01"
+                />,
+                "primary-dark01",
+              ],
+              [
+                "tertiary",
+                <ColorSwatch color="bg-tertiary-1" label="tertiary-1" />,
+                "white",
+              ],
+              [
+                "destructive",
+                <ColorSwatch color="bg-destructive" label="destructive" />,
+                "white",
+              ],
+            ]}
+            codeColumns={[0, 2]}
+          />
+        </SpecGrid>
+        <SpecCard title="Usage Guidelines">
+          <GuidelineGrid
+            columns={2}
+            sections={[
+              {
+                title: "스타일 선택 기준",
+                items: [
+                  { label: "primary", description: "주요 액션, CTA 버튼" },
+                  { label: "secondary", description: "보조 액션, 서브 버튼" },
+                  { label: "tertiary", description: "추가 옵션, 서브 액션" },
+                  {
+                    label: "destructive",
+                    description: "삭제, 취소 등 위험한 액션",
+                  },
+                  {
+                    label: "transparent",
+                    description: "아이콘 버튼, 인라인 액션",
+                  },
+                  { label: "link", description: "외부 링크, 텍스트 링크" },
+                ],
+              },
+              {
+                title: "크기 선택 기준",
+                items: [
+                  { label: "xs", description: "인라인 액션, 아이콘 버튼" },
+                  { label: "sm", description: "카드, 테이블 내부" },
+                  { label: "md", description: "일반적인 버튼 (권장)" },
+                  { label: "lg", description: "주요 CTA, 폼 제출" },
+                ],
+              },
+              {
+                title: "접근성",
+                items: [
+                  "최소 터치 영역: 44px × 44px",
+                  "색상 대비율: AA 등급 준수",
+                  "키보드 포커스 지원",
+                  "aria-label 권장",
+                ],
+              },
+              {
+                title: "성능",
+                items: [
+                  "Radix UI 기반",
+                  "Polymorphic 컴포넌트",
+                  "최적화된 CSS 클래스",
+                  "Tree-shaking 지원",
+                ],
+              },
+            ]}
+          />
+        </SpecCard>
       </div>
     </div>
   ),
   parameters: {
     docs: {
       description: {
-        story: "모든 폰트 크기와 굵기 옵션을 비교해볼 수 있습니다.",
+        story: "컴포넌트 스펙과 사용 가이드라인",
+      },
+    },
+  },
+};
+
+export const Gallery: Story = {
+  render: () => (
+    <VariantGrid
+      sections={[
+        {
+          title: "Variant",
+          prop: "variant",
+          values: [
+            "default",
+            "primary",
+            "secondary",
+            "tertiary",
+            "destructive",
+            "transparent",
+            "transparent_gray",
+            "link",
+          ],
+        },
+        {
+          title: "Size",
+          prop: "size",
+          values: ["xs", "sm", "md", "lg"],
+        },
+        {
+          title: "Shape",
+          prop: "shape",
+          values: ["default", "rounded", "full"],
+        },
+        {
+          title: "Border",
+          prop: "border",
+          values: ["none", "gray", "blue", "black"],
+        },
+        {
+          title: "Shadow",
+          prop: "shadow",
+          values: ["sm", "md", "lg"],
+        },
+        {
+          title: "Font",
+          prop: "font",
+          values: ["xs", "xs_sb", "sm", "sm_sb", "md", "lg", "lg_sb"],
+        },
+      ]}
+      component={Button}
+      commonProps={{ onClick: fn() }}
+    />
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: "옵션 별 컴포넌트 스타일 프리뷰",
       },
     },
   },

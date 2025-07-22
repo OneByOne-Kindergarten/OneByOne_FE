@@ -13,6 +13,12 @@ import {
 } from "@/components/@shared/form";
 import Input from "@/components/@shared/form/input";
 import ToggleInput from "@/components/@shared/form/toggle-input";
+import {
+  GuidelineGrid,
+  SpecCard,
+  SpecGrid,
+  SpecTable,
+} from "@/components/@shared/layout/storybook-layout";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -23,23 +29,7 @@ const meta = {
     layout: "centered",
     docs: {
       description: {
-        component: `
-React Hook Form을 사용한 Radix UI 기반 폼 컴포넌트입니다.
-
-**구성요소:**
-- Form: React Hook Form 통합
-- Input: 기본 텍스트 입력
-- Textarea: 긴 텍스트 입력
-- ToggleInput: 가시성 토글 포함
-- Label: 접근성을 고려한 라벨
-- ErrorMessage
-
-**기능:**
-- 실시간 유효성 검사
-- 접근성 지원 (aria-label, aria-describedby)
-- 다양한 스타일 변형
-- 반응형 디자인
-        `,
+        component: "React Hook Form 기반 폼 컴포넌트",
       },
     },
   },
@@ -55,7 +45,6 @@ React Hook Form을 사용한 Radix UI 기반 폼 컴포넌트입니다.
 export default meta;
 type Story = StoryObj;
 
-// Interactive Default Form
 const InteractiveFormDemo = () => {
   const form = useForm({
     defaultValues: {
@@ -193,13 +182,133 @@ const InteractiveFormDemo = () => {
   );
 };
 
-export const Interactive: Story = {
+export const Playground: Story = {
   render: () => <InteractiveFormDemo />,
+};
+
+export const Specs: Story = {
+  render: () => (
+    <div className="space-y-6">
+      <div className="space-y-4">
+        <SpecGrid>
+          <SpecTable
+            title="Component Structure"
+            headers={["component", "purpose", "required"]}
+            data={[
+              ["Form", "React Hook Form Provider", "Yes"],
+              ["FormField", "필드 래퍼 + 검증", "Yes"],
+              ["FormItem", "필드 컨테이너", "Yes"],
+              ["FormLabel", "접근성 라벨", "Yes"],
+              ["FormControl", "입력 컨트롤 래퍼", "Yes"],
+              ["FormMessage", "에러 메시지 표시", "No"],
+            ]}
+            codeColumns={[0, 2]}
+          />
+          <SpecTable
+            title="Validation Types"
+            headers={["rule", "usage", "example"]}
+            data={[
+              ["required", "필수 입력", "required: '필수 필드입니다'"],
+              [
+                "minLength",
+                "최소 길이",
+                "minLength: { value: 8, message: '8자 이상' }",
+              ],
+              [
+                "maxLength",
+                "최대 길이",
+                "maxLength: { value: 50, message: '50자 이하' }",
+              ],
+              [
+                "pattern",
+                "정규식 검증",
+                "pattern: { value: /regex/, message: 'error' }",
+              ],
+              [
+                "validate",
+                "커스텀 검증",
+                "validate: (value) => condition || 'error'",
+              ],
+            ]}
+            codeColumns={[0, 2]}
+          />
+          <SpecTable
+            title="Layout"
+            headers={["property", "value", "purpose"]}
+            data={[
+              ["form spacing", "space-y-8", "폼 요소간 간격"],
+              ["field spacing", "space-y-3", "개별 필드간 간격"],
+              ["label margin", "mb-2", "라벨과 입력 사이 간격"],
+              ["error margin", "mt-1", "에러 메시지 위 간격"],
+            ]}
+            codeColumns={[0, 1]}
+          />
+          <SpecTable
+            title="Accessibility"
+            headers={["feature", "implementation", "purpose"]}
+            data={[
+              ["Label Association", "id + htmlFor", "스크린 리더 지원"],
+              ["Error Description", "aria-describedby", "에러 메시지 연결"],
+              ["Required Fields", "aria-required", "필수 필드 표시"],
+              ["Invalid State", "aria-invalid", "검증 실패 상태"],
+            ]}
+            codeColumns={[0, 1]}
+          />
+        </SpecGrid>
+        <SpecCard title="Usage Guidelines">
+          <GuidelineGrid
+            columns={2}
+            sections={[
+              {
+                title: "폼 구조 설계",
+                items: [
+                  "논리적 순서로 필드 배치",
+                  "관련 필드들을 그룹화",
+                  "필수/선택 필드 명확히 구분",
+                  "진행 단계가 긴 경우 단계 분할",
+                  "제출 버튼을 폼 하단에 배치",
+                ],
+              },
+              {
+                title: "검증 전략",
+                items: [
+                  "실시간 검증으로 즉각적 피드백",
+                  "명확하고 도움이 되는 에러 메시지",
+                  "성공 상태도 적절히 표시",
+                  "서버 검증과 클라이언트 검증 병행",
+                  "검증 실패 시 포커스 이동",
+                ],
+              },
+              {
+                title: "사용 시나리오",
+                items: [
+                  "회원가입 (이메일, 비밀번호, 프로필)",
+                  "로그인 (아이디, 비밀번호)",
+                  "게시글 작성 (제목, 내용, 카테고리)",
+                  "댓글 작성 (내용)",
+                  "설정 변경 (알림, 프로필 정보)",
+                ],
+              },
+              {
+                title: "UX 최적화",
+                items: [
+                  "자동완성 속성 활용",
+                  "적절한 키보드 타입 설정",
+                  "탭 순서 최적화",
+                  "모바일에서 입력 편의성 고려",
+                  "로딩 상태 표시",
+                ],
+              },
+            ]}
+          />
+        </SpecCard>
+      </div>
+    </div>
+  ),
   parameters: {
     docs: {
       description: {
-        story:
-          "입력하고 제출할 수 있는 인터랙티브 폼입니다. 모든 유효성 검사와 에러 메시지가 동작합니다.",
+        story: "컴포넌트의 상세 스펙과 사용 가이드라인",
       },
     },
   },

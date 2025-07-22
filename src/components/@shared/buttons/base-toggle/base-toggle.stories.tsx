@@ -1,6 +1,15 @@
 import { fn } from "@storybook/test";
 import { useState } from "react";
 
+import {
+  ColorSwatch,
+  GuidelineGrid,
+  Section,
+  SpecCard,
+  SpecGrid,
+  SpecTable,
+} from "@/components/@shared/layout/storybook-layout";
+
 import Toggle from "./index";
 
 import type { Meta, StoryObj } from "@storybook/react";
@@ -13,40 +22,28 @@ const meta = {
     layout: "centered",
     docs: {
       description: {
-        component: `
-Radix UI Toggle을 기반으로 한 on/off 상태를 가진 버튼입니다.
-
-**기능:**
-- Radix UI Toggle Primitive 기반
-- 활성화 상태와 비활성화 상태 구분
-- CVA를 통한 다양한 스타일 변형
-- 접근성 기본 지원 (aria)
-
-**사용 시나리오:**
-- 필터 토글 (선택/미선택)
-- 정렬 토글 (최신순/인기순)
-        `,
+        component: "기본 토글 컴포넌트",
       },
     },
   },
   argTypes: {
     variant: {
-      description: "토글 버튼의 시각적 스타일",
+      description: "스타일",
       options: ["default", "primary"],
       control: { type: "select" },
     },
     size: {
-      description: "토글 버튼의 크기",
+      description: "패딩 크기",
       options: ["xs", "sm", "md", "lg"],
       control: { type: "select" },
     },
     shape: {
-      description: "토글 버튼의 모서리 형태",
+      description: "모서리 형태",
       options: ["default", "rounded", "full"],
       control: { type: "select" },
     },
     border: {
-      description: "테두리 스타일",
+      description: "테두리",
       options: ["none", "gray"],
       control: { type: "select" },
     },
@@ -55,12 +52,12 @@ Radix UI Toggle을 기반으로 한 on/off 상태를 가진 버튼입니다.
       options: ["xs", "xs_sb", "sm", "sm_sb", "md", "md_sb", "lg", "lg_sb"],
       control: { type: "select" },
     },
-    pressed: {
-      description: "토글 상태 (눌림/안눌림)",
-      control: "boolean",
-    },
     disabled: {
       description: "비활성화 상태",
+      control: "boolean",
+    },
+    pressed: {
+      description: "토글 상태 (눌림/안 눌림)",
       control: "boolean",
     },
     onPressedChange: {
@@ -73,104 +70,229 @@ Radix UI Toggle을 기반으로 한 on/off 상태를 가진 버튼입니다.
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// 기본 토글
-export const Default: Story = {
+// Interactive Toggle Component
+const InteractiveToggle = ({
+  children,
+  initialPressed = false,
+  ...props
+}: {
+  children: string;
+  initialPressed?: boolean;
+} & Omit<
+  React.ComponentProps<typeof Toggle>,
+  "children" | "pressed" | "onPressedChange"
+>) => {
+  const [pressed, setPressed] = useState(initialPressed);
+
+  return (
+    <Toggle
+      {...props}
+      pressed={pressed}
+      onPressedChange={(newPressed) => {
+        setPressed(newPressed);
+        fn()(newPressed);
+      }}
+    >
+      {children}
+    </Toggle>
+  );
+};
+
+export const Playground: Story = {
   args: {
-    children: "토글",
+    children: "BaseToggle",
     onPressedChange: fn(),
   },
+};
+
+export const Specs: Story = {
+  render: () => (
+    <div className="space-y-6">
+      <div className="space-y-4">
+        <SpecGrid>
+          <SpecTable
+            title="Variant"
+            headers={["option", "background", "text", "active"]}
+            data={[
+              [
+                "default",
+                <ColorSwatch color="bg-gray-100" label="gray-100" />,
+                "gray-700",
+                <ColorSwatch color="bg-gray-200" label="gray-200" />,
+              ],
+              [
+                "primary",
+                <ColorSwatch
+                  color="bg-primary-normal01"
+                  label="primary-normal01"
+                />,
+                "white",
+                <ColorSwatch
+                  color="bg-primary-dark01"
+                  label="primary-dark01"
+                />,
+              ],
+            ]}
+            codeColumns={[0, 2]}
+          />
+          <SpecTable
+            title="Size"
+            headers={["option", "padding", "height", "min-width"]}
+            data={[
+              ["xs", "6px 10px", "28px", "48px"],
+              ["sm", "8px 14px", "32px", "56px"],
+              ["md", "12px 16px", "40px", "64px"],
+              ["lg", "16px 20px", "48px", "72px"],
+            ]}
+            codeColumns={[0, 1, 2, 3]}
+          />
+          <SpecTable
+            title="Shape"
+            headers={["option", "radius", "token"]}
+            data={[
+              ["default", "8px", "rounded-lg"],
+              ["rounded", "12px", "rounded-xl"],
+              ["full", "9999px", "rounded-full"],
+            ]}
+            codeColumns={[0, 1, 2]}
+          />
+          <SpecTable
+            title="States"
+            headers={["state", "appearance", "interaction"]}
+            data={[
+              ["default", "기본 배경색", "클릭하여 활성화"],
+              ["pressed", "진한 배경색", "클릭하여 비활성화"],
+              ["hover", "약간 진한 배경", "마우스 오버 상태"],
+              ["disabled", "회색 처리", "클릭 불가능"],
+            ]}
+            codeColumns={[0]}
+          />
+        </SpecGrid>
+        <SpecCard title="Usage Guidelines">
+          <GuidelineGrid
+            columns={2}
+            sections={[
+              {
+                title: "스타일 선택 기준",
+                items: [
+                  { label: "default", description: "보조적인 필터, 옵션 토글" },
+                  {
+                    label: "primary",
+                    description: "중요한 상태 변경, 메인 필터",
+                  },
+                ],
+              },
+              {
+                title: "크기 선택 기준",
+                items: [
+                  { label: "xs", description: "작은 UI, 인라인 옵션" },
+                  { label: "sm", description: "카드 내부 토글" },
+                  { label: "md", description: "일반적인 필터 (권장)" },
+                  { label: "lg", description: "강조가 필요한 주요 토글" },
+                ],
+              },
+              {
+                title: "사용 시나리오",
+                items: [
+                  "게시글 카테고리 필터 (자유, 월급/취업)",
+                  "정렬 옵션 (최신순, 인기순)",
+                  "검색 필터 (지역, 유형)",
+                  "설정 온/오프 (알림, 공개/비공개)",
+                  "다중 선택 태그",
+                ],
+              },
+              {
+                title: "접근성 & UX",
+                items: [
+                  "명확한 on/off 상태 표시",
+                  "키보드 포커스 지원",
+                  "스크린 리더 지원 (aria-pressed)",
+                  "적절한 터치 영역 (최소 44px)",
+                  "상태 변화 시 즉각적 피드백",
+                ],
+              },
+            ]}
+          />
+        </SpecCard>
+      </div>
+    </div>
+  ),
   parameters: {
     docs: {
       description: {
-        story: "기본 스타일의 토글 버튼입니다.",
+        story: "실제 적용되는 CSS 값과 디자인 토큰 정보를 확인할 수 있습니다.",
       },
     },
   },
 };
 
-export const Sizes: Story = {
+export const Gallery: Story = {
   render: () => {
-    const SizeToggle = ({
-      size,
-      children,
-    }: {
-      size: "xs" | "sm" | "md" | "lg";
-      children: string;
-    }) => {
-      const [pressed, setPressed] = useState(false);
-
-      return (
-        <Toggle
-          variant="primary"
-          size={size}
-          pressed={pressed}
-          onPressedChange={(newPressed) => {
-            setPressed(newPressed);
-            fn()(newPressed);
-          }}
-        >
-          {children}
-        </Toggle>
-      );
-    };
-
     return (
-      <div className="flex items-end gap-3">
-        <SizeToggle size="xs">XS</SizeToggle>
-        <SizeToggle size="sm">SM</SizeToggle>
-        <SizeToggle size="md">MD</SizeToggle>
-        <SizeToggle size="lg">LG</SizeToggle>
-      </div>
+      <main className="flex flex-col gap-6">
+        <Section title="Variant">
+          <InteractiveToggle variant="default">default</InteractiveToggle>
+          <InteractiveToggle variant="primary" initialPressed>
+            primary
+          </InteractiveToggle>
+        </Section>
+
+        <Section title="Size">
+          <InteractiveToggle variant="primary" size="xs">
+            xs
+          </InteractiveToggle>
+          <InteractiveToggle variant="primary" size="sm" initialPressed>
+            sm
+          </InteractiveToggle>
+          <InteractiveToggle variant="primary" size="md">
+            md
+          </InteractiveToggle>
+          <InteractiveToggle variant="primary" size="lg" initialPressed>
+            lg
+          </InteractiveToggle>
+        </Section>
+
+        <Section title="Shape">
+          <InteractiveToggle variant="primary" shape="default">
+            default
+          </InteractiveToggle>
+          <InteractiveToggle variant="primary" shape="rounded" initialPressed>
+            rounded
+          </InteractiveToggle>
+          <InteractiveToggle variant="primary" shape="full">
+            full
+          </InteractiveToggle>
+        </Section>
+
+        <Section title="Border">
+          <InteractiveToggle border="none">none</InteractiveToggle>
+          <InteractiveToggle border="gray" initialPressed>
+            gray
+          </InteractiveToggle>
+        </Section>
+
+        <Section title="Font">
+          <InteractiveToggle font="xs">xs</InteractiveToggle>
+          <InteractiveToggle font="xs_sb" initialPressed>
+            xs_sb
+          </InteractiveToggle>
+          <InteractiveToggle font="sm">sm</InteractiveToggle>
+          <InteractiveToggle font="sm_sb" initialPressed>
+            sm_sb
+          </InteractiveToggle>
+          <InteractiveToggle font="md">md</InteractiveToggle>
+          <InteractiveToggle font="lg" initialPressed>
+            lg
+          </InteractiveToggle>
+          <InteractiveToggle font="lg_sb">lg_sb</InteractiveToggle>
+        </Section>
+      </main>
     );
   },
   parameters: {
     docs: {
       description: {
-        story: "모든 크기 옵션의 토글 버튼을 비교해볼 수 있습니다.",
-      },
-    },
-  },
-};
-
-export const Shapes: Story = {
-  render: () => {
-    const ShapeToggle = ({
-      shape,
-      children,
-    }: {
-      shape: "default" | "rounded" | "full";
-      children: string;
-    }) => {
-      const [pressed, setPressed] = useState(false);
-
-      return (
-        <Toggle
-          variant="primary"
-          shape={shape}
-          border="gray"
-          pressed={pressed}
-          onPressedChange={(newPressed) => {
-            setPressed(newPressed);
-            fn()(newPressed);
-          }}
-        >
-          {children}
-        </Toggle>
-      );
-    };
-
-    return (
-      <div className="flex gap-3">
-        <ShapeToggle shape="default">Default</ShapeToggle>
-        <ShapeToggle shape="rounded">Rounded</ShapeToggle>
-        <ShapeToggle shape="full">Full</ShapeToggle>
-      </div>
-    );
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "모든 모양 옵션의 토글 버튼을 비교해볼 수 있습니다.",
+        story: "옵션 별 컴포넌트 스타일 프리뷰",
       },
     },
   },
@@ -218,8 +340,7 @@ export const UserScenario: Story = {
   parameters: {
     docs: {
       description: {
-        story:
-          "교사 커뮤니티 시나리오에서의 사용 예시입니다. 클릭하여 상태 변화를 테스트해보세요.",
+        story: "실제 애플리케이션에서의 사용 예시",
       },
     },
   },

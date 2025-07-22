@@ -1,4 +1,14 @@
 import { action } from "@storybook/addon-actions";
+import { useState } from "react";
+
+import {
+  ColorSwatch,
+  GuidelineGrid,
+  SpecCard,
+  SpecGrid,
+  SpecTable,
+  VariantGrid,
+} from "@/components/@shared/layout/storybook-layout";
 
 import Input from "./index";
 
@@ -13,14 +23,7 @@ const meta = {
     docs: {
       description: {
         component: `
-다양한 스타일과 크기를 지원하는 입력 컴포넌트입니다.
-
-**Props:**
-- \`variant\`: 스타일 (default, outline)
-- \`font\`: 폰트 크기 (xs, sm, md, lg + semibold 옵션)
-- \`inputSize\`: 입력 필드 크기 (default, sm, xs)
-- \`error\`: 에러 상태 여부
-- \`disabled\`: 비활성화 상태
+Radix UI 기반 입력 컴포넌트
 
 **사용 시나리오:**
 - 닉네임/비밀번호 입력 필드
@@ -69,127 +72,182 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Interactive: Story = {
-  render: () => {
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      action("값 변경")(e.target.value);
-    };
+// Interactive Playground Component
+const PlaygroundDemo = () => {
+  const [value, setValue] = useState("");
 
-    const handleFocus = () => {
-      action("포커스")();
-    };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+    action("값 변경")(e.target.value);
+  };
 
-    const handleBlur = () => {
-      action("블러")();
-    };
+  const handleFocus = () => {
+    action("포커스")();
+  };
 
-    return (
+  const handleBlur = () => {
+    action("블러")();
+  };
+
+  return (
+    <Input
+      placeholder="입력해보세요"
+      value={value}
+      onChange={handleChange}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+    />
+  );
+};
+
+export const Playground: Story = {
+  render: () => <PlaygroundDemo />,
+  args: {},
+};
+
+export const Specs: Story = {
+  render: () => (
+    <div className="space-y-6">
       <div className="space-y-4">
-        <div>
-          <Input
-            placeholder="입력해보세요"
-            onChange={handleChange}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
+        <SpecGrid>
+          <SpecTable
+            title="Variant"
+            headers={["option", "border", "background", "focus"]}
+            data={[
+              [
+                "default",
+                "1px solid #e5e7eb",
+                <ColorSwatch color="bg-white" label="white" />,
+                "ring-2 ring-primary-normal01",
+              ],
+              [
+                "outline",
+                "2px solid #d1d5db",
+                <ColorSwatch color="bg-transparent" label="transparent" />,
+                "ring-2 ring-primary-normal01",
+              ],
+            ]}
+            codeColumns={[0, 1, 3]}
           />
-        </div>
+          <SpecTable
+            title="Size"
+            headers={["option", "height", "padding", "font-size"]}
+            data={[
+              ["xs", "32px", "8px 12px", "12px"],
+              ["sm", "36px", "10px 14px", "14px"],
+              ["default", "40px", "12px 16px", "16px"],
+            ]}
+            codeColumns={[0, 1, 2, 3]}
+          />
+          <SpecTable
+            title="Font"
+            headers={["option", "size", "weight", "line-height"]}
+            data={[
+              ["xs", "12px", "400", "16px"],
+              ["xs_sb", "12px", "600", "16px"],
+              ["sm", "14px", "400", "20px"],
+              ["sm_sb", "14px", "600", "20px"],
+              ["md", "16px", "400", "24px"],
+              ["md_sb", "16px", "600", "24px"],
+              ["lg", "18px", "400", "28px"],
+              ["lg_sb", "18px", "600", "28px"],
+            ]}
+            codeColumns={[0, 1, 2, 3]}
+          />
+          <SpecTable
+            title="States"
+            headers={["state", "appearance", "interaction"]}
+            data={[
+              ["default", "일반 테두리", "입력 가능"],
+              ["focus", "파란색 링", "키보드 입력 활성"],
+              ["error", "빨간색 테두리", "오류 상태 표시"],
+              ["disabled", "회색 배경", "입력 불가능"],
+            ]}
+            codeColumns={[0]}
+          />
+        </SpecGrid>
+        <SpecCard title="Usage Guidelines">
+          <GuidelineGrid
+            columns={2}
+            sections={[
+              {
+                title: "스타일 선택 기준",
+                items: [
+                  { label: "default", description: "일반적인 폼 입력 필드" },
+                  { label: "outline", description: "강조가 필요한 검색 필드" },
+                ],
+              },
+              {
+                title: "크기 선택 기준",
+                items: [
+                  { label: "xs", description: "컴팩트한 필터 입력" },
+                  { label: "sm", description: "카드 내부 입력 필드" },
+                  { label: "default", description: "일반적인 폼 필드 (권장)" },
+                ],
+              },
+              {
+                title: "사용 시나리오",
+                items: [
+                  "회원가입 폼 (이메일, 비밀번호)",
+                  "로그인 폼 (아이디, 비밀번호)",
+                  "검색 기능 (유치원 검색)",
+                  "댓글 작성 (텍스트 입력)",
+                  "설정 페이지 (닉네임 변경)",
+                ],
+              },
+              {
+                title: "접근성 & UX",
+                items: [
+                  "placeholder 텍스트 명확하게 작성",
+                  "에러 메시지와 함께 사용",
+                  "라벨과 연결하여 스크린 리더 지원",
+                  "키보드 네비게이션 지원",
+                  "적절한 input type 사용",
+                ],
+              },
+            ]}
+          />
+        </SpecCard>
       </div>
-    );
-  },
-  args: {},
+    </div>
+  ),
   parameters: {
     docs: {
       description: {
-        story:
-          "상호작용할 수 있는 인터랙티브 입력 필드입니다. Actions 패널에서 이벤트를 확인할 수 있습니다.",
+        story: "컴포넌트의 상세 스펙과 사용 가이드라인",
       },
     },
   },
 };
 
-export const Variants: Story = {
+export const Gallery: Story = {
   render: () => (
-    <div className="space-y-4">
-      <div>
-        <h3 className="mb-2 text-sm font-semibold">Default Variant</h3>
-        <Input placeholder="기본 스타일" variant="default" />
-      </div>
-      <div>
-        <h3 className="mb-2 text-sm font-semibold">Outline Variant</h3>
-        <Input placeholder="아웃라인 스타일" variant="outline" />
-      </div>
-    </div>
+    <VariantGrid
+      sections={[
+        {
+          title: "Variant",
+          prop: "variant",
+          values: ["default", "outline"],
+        },
+        {
+          title: "Size",
+          prop: "inputSize",
+          values: ["xs", "sm", "default"],
+        },
+        {
+          title: "Font",
+          prop: "font",
+          values: ["xs", "sm", "md", "lg"],
+        },
+      ]}
+      component={Input}
+      commonProps={{ placeholder: "입력해보세요" }}
+    />
   ),
-  args: {},
   parameters: {
     docs: {
       description: {
-        story: "outline, default 스타일을 지원합니다.",
-      },
-    },
-  },
-};
-
-export const Sizes: Story = {
-  render: () => (
-    <div className="space-y-4">
-      <div>
-        <h3 className="mb-2 text-sm font-semibold">Default Size</h3>
-        <Input placeholder="기본 크기" inputSize="default" />
-      </div>
-      <div>
-        <h3 className="mb-2 text-sm font-semibold">Small Size</h3>
-        <Input placeholder="작은 크기" inputSize="sm" />
-      </div>
-      <div>
-        <h3 className="mb-2 text-sm font-semibold">Extra Small Size</h3>
-        <Input placeholder="아주 작은 크기" inputSize="xs" />
-      </div>
-    </div>
-  ),
-  args: {},
-  parameters: {
-    docs: {
-      description: {
-        story: "default, sm, xs 크기를 지원합니다.",
-      },
-    },
-  },
-};
-
-export const FontSizes: Story = {
-  render: () => (
-    <div className="space-y-4">
-      <div>
-        <h3 className="mb-2 text-sm font-semibold">Extra Small</h3>
-        <Input placeholder="Extra Small 폰트" font="xs" />
-      </div>
-      <div>
-        <h3 className="mb-2 text-sm font-semibold">Small</h3>
-        <Input placeholder="Small 폰트" font="sm" />
-      </div>
-      <div>
-        <h3 className="mb-2 text-sm font-semibold">Medium</h3>
-        <Input placeholder="Medium 폰트" font="md" />
-      </div>
-      <div>
-        <h3 className="mb-2 text-sm font-semibold">Large</h3>
-        <Input placeholder="Large 폰트" font="lg" />
-      </div>
-      <div>
-        <h3 className="mb-2 text-sm font-semibold">Semibold Variations</h3>
-        <div className="space-y-2">
-          <Input placeholder="Small Semibold" font="sm_sb" />
-          <Input placeholder="Medium Semibold" font="md_sb" />
-        </div>
-      </div>
-    </div>
-  ),
-  args: {},
-  parameters: {
-    docs: {
-      description: {
-        story: "xs, sm, md, lg 폰트 크기와 굵기 옵션을 지원합니다.",
+        story: "옵션 별 컴포넌트 스타일 프리뷰",
       },
     },
   },
@@ -221,42 +279,7 @@ export const States: Story = {
   parameters: {
     docs: {
       description: {
-        story: "정상, 에러, 비활성화 상태를 지원합니다.",
-      },
-    },
-  },
-};
-
-export const Types: Story = {
-  render: () => (
-    <div className="space-y-4">
-      <div>
-        <h3 className="mb-2 text-sm font-semibold">Text Input</h3>
-        <Input type="text" placeholder="일반 텍스트" />
-      </div>
-      <div>
-        <h3 className="mb-2 text-sm font-semibold">Email Input</h3>
-        <Input type="email" placeholder="이메일 주소" />
-      </div>
-      <div>
-        <h3 className="mb-2 text-sm font-semibold">Password Input</h3>
-        <Input type="password" placeholder="비밀번호" />
-      </div>
-      <div>
-        <h3 className="mb-2 text-sm font-semibold">Number Input</h3>
-        <Input type="number" placeholder="숫자만 입력" />
-      </div>
-      <div>
-        <h3 className="mb-2 text-sm font-semibold">Tel Input</h3>
-        <Input type="tel" placeholder="전화번호" />
-      </div>
-    </div>
-  ),
-  args: {},
-  parameters: {
-    docs: {
-      description: {
-        story: "text, email, password, number, tel 타입을 지원합니다.",
+        story: "상태 별 컴포넌트 스타일 프리뷰",
       },
     },
   },
