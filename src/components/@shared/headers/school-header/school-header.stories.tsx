@@ -31,14 +31,23 @@ const meta = {
     headerLogo: {
       description: "원바원 로고 표시 여부",
       control: "boolean",
+      table: {
+        defaultValue: { summary: "false" },
+      },
     },
     hasBackButton: {
       description: "뒤로가기 버튼 표시 여부",
       control: "boolean",
+      table: {
+        defaultValue: { summary: "false" },
+      },
     },
     showBookmark: {
       description: "즐겨찾기 버튼 표시 여부",
       control: "boolean",
+      table: {
+        defaultValue: { summary: "false" },
+      },
     },
     kindergartenId: {
       description: "유치원 ID (즐겨찾기 기능용)",
@@ -47,6 +56,9 @@ const meta = {
     hasBorder: {
       description: "하단 경계선 표시 여부",
       control: "boolean",
+      table: {
+        defaultValue: { summary: "true" },
+      },
     },
     onBackButtonClick: {
       description: "뒤로가기 버튼 클릭 핸들러",

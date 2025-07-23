@@ -22,6 +22,20 @@ const meta = {
     layout: "fullscreen",
   },
   tags: ["autodocs"],
+  argTypes: {
+    bg: {
+      description: "배경색",
+      control: { type: "select" },
+      options: ["white", "gray"],
+      table: {
+        defaultValue: { summary: "gray" },
+      },
+    },
+    children: {
+      description: "페이지 콘텐츠",
+      control: false,
+    },
+  },
 } satisfies Meta<typeof PageWrapper>;
 
 export default meta;

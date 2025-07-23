@@ -42,28 +42,46 @@ const meta = {
       description: "드롭다운 메뉴 위치",
       control: { type: "select" },
       options: ["top", "bottom", "left", "right"],
+      table: {
+        defaultValue: { summary: "bottom" },
+      },
     },
     align: {
       description: "드롭다운 메뉴 정렬",
       control: { type: "select" },
       options: ["start", "center", "end"],
+      table: {
+        defaultValue: { summary: "start" },
+      },
     },
     width: {
       description: "드롭다운 메뉴 너비",
       control: { type: "select" },
       options: ["auto", "full"],
+      table: {
+        defaultValue: { summary: "auto" },
+      },
     },
     fullWidth: {
       description: "컨테이너 전체 너비 사용",
       control: "boolean",
+      table: {
+        defaultValue: { summary: "false" },
+      },
     },
     closeOnClick: {
       description: "옵션 클릭 시 드롭다운 닫기",
       control: "boolean",
+      table: {
+        defaultValue: { summary: "true" },
+      },
     },
     closeOnOutsideClick: {
       description: "외부 클릭 시 드롭다운 닫기",
       control: "boolean",
+      table: {
+        defaultValue: { summary: "true" },
+      },
     },
   },
   tags: ["autodocs"],

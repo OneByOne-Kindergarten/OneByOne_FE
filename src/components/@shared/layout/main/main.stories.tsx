@@ -21,6 +21,24 @@ const meta = {
     layout: "fullscreen",
   },
   tags: ["autodocs"],
+  argTypes: {
+    bg: {
+      description: "배경색",
+      control: { type: "select" },
+      options: ["white", "gray"],
+      table: {
+        defaultValue: { summary: "gray" },
+      },
+    },
+    children: {
+      description: "메인 콘텐츠",
+      control: false,
+    },
+    className: {
+      description: "추가 CSS 클래스",
+      control: "text",
+    },
+  },
 } satisfies Meta<typeof Main>;
 
 export default meta;

@@ -29,10 +29,16 @@ const meta = {
     checked: {
       description: "스위치 상태 (on/off)",
       control: "boolean",
+      table: {
+        defaultValue: { summary: "false" },
+      },
     },
     disabled: {
       description: "비활성화 상태",
       control: "boolean",
+      table: {
+        defaultValue: { summary: "false" },
+      },
     },
     onCheckedChange: {
       description: "상태 변경 핸들러",
@@ -59,9 +65,12 @@ const InteractiveSwitch = ({
 };
 
 export const Playground: Story = {
-  render: () => <InteractiveSwitch />,
+  render: (args) => (
+    <InteractiveSwitch initialChecked={args.checked} disabled={args.disabled} />
+  ),
   args: {
     checked: false,
+    disabled: false,
   },
 };
 

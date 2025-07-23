@@ -31,21 +31,33 @@ const meta = {
       description: "스타일",
       options: ["default", "primary"],
       control: { type: "select" },
+      table: {
+        defaultValue: { summary: "default" },
+      },
     },
     size: {
       description: "패딩 크기",
       options: ["xs", "sm", "md", "lg"],
       control: { type: "select" },
+      table: {
+        defaultValue: { summary: "md" },
+      },
     },
     shape: {
       description: "모서리 형태",
       options: ["default", "rounded", "full"],
       control: { type: "select" },
+      table: {
+        defaultValue: { summary: "default" },
+      },
     },
     border: {
       description: "테두리",
       options: ["none", "gray"],
       control: { type: "select" },
+      table: {
+        defaultValue: { summary: "none" },
+      },
     },
     font: {
       description: "폰트 크기와 굵기",
@@ -55,10 +67,16 @@ const meta = {
     disabled: {
       description: "비활성화 상태",
       control: "boolean",
+      table: {
+        defaultValue: { summary: "false" },
+      },
     },
     pressed: {
       description: "토글 상태 (눌림/안 눌림)",
       control: "boolean",
+      table: {
+        defaultValue: { summary: "false" },
+      },
     },
     onPressedChange: {
       description: "토글 상태 변경 핸들러",
@@ -102,6 +120,12 @@ export const Playground: Story = {
   args: {
     children: "BaseToggle",
     onPressedChange: fn(),
+    variant: "default",
+    size: "md",
+    border: "none",
+    shape: "default",
+    pressed: false,
+    disabled: false,
   },
 };
 

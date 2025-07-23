@@ -33,29 +33,47 @@ const meta = {
       description: "모달 위치",
       control: "select",
       options: ["center", "bottom", "top"],
+      table: {
+        defaultValue: { summary: "center" },
+      },
     },
     size: {
       description: "모달 크기",
       control: "select",
       options: ["sm", "md", "lg", "full"],
+      table: {
+        defaultValue: { summary: "md" },
+      },
     },
     rounded: {
       description: "모서리 둥글기",
       control: "select",
       options: ["none", "sm", "md", "lg", "xl", "bottom", "top"],
+      table: {
+        defaultValue: { summary: "lg" },
+      },
     },
     overlay: {
       description: "오버레이 블러 효과",
       control: "select",
       options: ["none", "sm", "md", "lg"],
+      table: {
+        defaultValue: { summary: "none" },
+      },
     },
     hasCloseButton: {
       description: "닫기 버튼 표시 여부",
       control: "boolean",
+      table: {
+        defaultValue: { summary: "true" },
+      },
     },
     closeOnOverlayClick: {
       description: "오버레이 클릭 시 닫기",
       control: "boolean",
+      table: {
+        defaultValue: { summary: "true" },
+      },
     },
     onClose: {
       description: "모달 닫기 핸들러",

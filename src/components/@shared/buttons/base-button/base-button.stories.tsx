@@ -39,21 +39,33 @@ const meta = {
         "link",
       ],
       control: { type: "select" },
+      table: {
+        defaultValue: { summary: "default" },
+      },
     },
     size: {
       description: "패딩 크기",
       options: ["xs", "sm", "md", "lg"],
       control: { type: "select" },
+      table: {
+        defaultValue: { summary: "md" },
+      },
     },
     shape: {
       description: "모서리 형태",
       options: ["default", "rounded", "full"],
       control: { type: "select" },
+      table: {
+        defaultValue: { summary: "default" },
+      },
     },
     border: {
       description: "테두리",
       options: ["none", "gray", "blue", "black"],
       control: { type: "select" },
+      table: {
+        defaultValue: { summary: "none" },
+      },
     },
     shadow: {
       description: "그림자 효과",
@@ -64,10 +76,16 @@ const meta = {
       description: "폰트 크기와 굵기",
       options: ["xs", "xs_sb", "sm", "sm_sb", "md", "md_sb", "lg", "lg_sb"],
       control: { type: "select" },
+      table: {
+        defaultValue: { summary: "md_sb" },
+      },
     },
     disabled: {
       description: "비활성화 상태",
       control: "boolean",
+      table: {
+        defaultValue: { summary: "false" },
+      },
     },
     onClick: {
       description: "클릭 이벤트 핸들러",
@@ -83,6 +101,12 @@ export const Playground: Story = {
   args: {
     children: "BaseButton",
     onClick: fn(),
+    variant: "default",
+    size: "md",
+    shape: "default",
+    border: "none",
+    font: "md_sb",
+    disabled: false,
   },
 };
 

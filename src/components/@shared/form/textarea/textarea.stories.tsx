@@ -37,24 +37,39 @@ const meta = {
       description: "폰트 크기 및 굵기",
       control: { type: "select" },
       options: ["xs", "xs_sb", "sm", "sm_sb", "md", "md_sb", "lg", "lg_sb"],
+      table: {
+        defaultValue: { summary: "sm_sb" },
+      },
     },
     padding: {
       description: "패딩 크기",
       control: { type: "select" },
       options: ["default", "sm", "xs"],
+      table: {
+        defaultValue: { summary: "default" },
+      },
     },
     size: {
       description: "높이 설정",
       control: { type: "select" },
       options: ["fixed", "auto"],
+      table: {
+        defaultValue: { summary: "fixed" },
+      },
     },
     error: {
       description: "에러 상태",
       control: "boolean",
+      table: {
+        defaultValue: { summary: "false" },
+      },
     },
     disabled: {
       description: "비활성화 상태",
       control: "boolean",
+      table: {
+        defaultValue: { summary: "false" },
+      },
     },
     placeholder: {
       description: "플레이스홀더 텍스트",

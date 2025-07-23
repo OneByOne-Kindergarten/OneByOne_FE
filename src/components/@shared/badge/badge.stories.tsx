@@ -28,6 +28,9 @@ const meta = {
       description: "배지의 스타일 변형",
       control: "select",
       options: ["primary", "secondary", "tertiary"],
+      table: {
+        defaultValue: { summary: "primary" },
+      },
     },
     children: {
       description: "배지에 표시될 텍스트",
@@ -55,7 +58,6 @@ export const Specs: Story = {
     <div className="space-y-6">
       <div className="space-y-4">
         <SpecGrid>
-          {/* Variant Specifications */}
           <SpecTable
             title="Variant"
             headers={["option", "background", "text", "border"]}
@@ -88,7 +90,6 @@ export const Specs: Story = {
             codeColumns={[0, 2, 3]}
           />
 
-          {/* Typography Specifications */}
           <SpecTable
             title="Typography"
             headers={["property", "value", "token"]}
@@ -101,7 +102,6 @@ export const Specs: Story = {
             codeColumns={[0, 1, 2]}
           />
 
-          {/* Layout Specifications */}
           <SpecTable
             title="Layout"
             headers={["property", "value", "token"]}
@@ -114,7 +114,6 @@ export const Specs: Story = {
             codeColumns={[0, 1, 2]}
           />
 
-          {/* States */}
           <SpecTable
             title="States"
             headers={["state", "behavior", "use case"]}
@@ -128,7 +127,6 @@ export const Specs: Story = {
           />
         </SpecGrid>
 
-        {/* Usage Guidelines */}
         <SpecCard title="Usage Guidelines">
           <GuidelineGrid
             columns={3}
@@ -190,7 +188,7 @@ export const Gallery: Story = {
   parameters: {
     docs: {
       description: {
-        story: "3가지 변형을 지원합니다.",
+        story: "옵션 별 모든 컴포넌트 스타일",
       },
     },
   },

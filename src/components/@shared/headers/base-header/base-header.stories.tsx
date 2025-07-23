@@ -32,18 +32,30 @@ const meta = {
     headerLogo: {
       description: "원바원 로고 표시 여부",
       control: "boolean",
+      table: {
+        defaultValue: { summary: "false" },
+      },
     },
     hasBackButton: {
       description: "뒤로가기 버튼 표시 여부",
       control: "boolean",
+      table: {
+        defaultValue: { summary: "false" },
+      },
     },
     showAlarmButton: {
       description: "알림 버튼 표시 여부",
       control: "boolean",
+      table: {
+        defaultValue: { summary: "false" },
+      },
     },
     hasBorder: {
       description: "하단 경계선 표시 여부",
       control: "boolean",
+      table: {
+        defaultValue: { summary: "true" },
+      },
     },
     onBackButtonClick: {
       description: "뒤로가기 버튼 클릭 핸들러",

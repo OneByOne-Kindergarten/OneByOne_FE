@@ -38,6 +38,9 @@ const meta = {
       description: "박스 크기",
       control: "select",
       options: ["xs", "sm", "md", "lg"],
+      table: {
+        defaultValue: { summary: "md" },
+      },
     },
     onChange: {
       description: "값 변경 이벤트 핸들러",

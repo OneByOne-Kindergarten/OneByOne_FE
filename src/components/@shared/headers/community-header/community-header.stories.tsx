@@ -29,23 +29,38 @@ const meta = {
     headerLogo: {
       description: "원바원 로고 표시 여부",
       control: "boolean",
+      table: {
+        defaultValue: { summary: "false" },
+      },
     },
     hasBackButton: {
       description: "뒤로가기 버튼 표시 여부",
       control: "boolean",
+      table: {
+        defaultValue: { summary: "false" },
+      },
     },
     hasWriteButton: {
       description: "글쓰기 버튼 표시 여부",
       control: "boolean",
+      table: {
+        defaultValue: { summary: "false" },
+      },
     },
     category: {
       description: "커뮤니티 카테고리",
       options: ["TEACHER", "PROSPECTIVE_TEACHER"],
       control: { type: "select" },
+      table: {
+        defaultValue: { summary: "TEACHER" },
+      },
     },
     hasBorder: {
       description: "하단 경계선 표시 여부",
       control: "boolean",
+      table: {
+        defaultValue: { summary: "true" },
+      },
     },
   },
 } satisfies Meta<typeof CommunityHeader>;

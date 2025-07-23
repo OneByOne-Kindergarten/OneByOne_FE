@@ -36,10 +36,16 @@ const meta = {
     hasCloseButton: {
       description: "닫기 버튼 표시 여부",
       control: "boolean",
+      table: {
+        defaultValue: { summary: "true" },
+      },
     },
     closeOnOverlayClick: {
       description: "오버레이 클릭 시 닫기",
       control: "boolean",
+      table: {
+        defaultValue: { summary: "true" },
+      },
     },
     size: {
       description: "팝업 크기",

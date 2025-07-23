@@ -35,12 +35,16 @@ const meta = {
     value: {
       description: "현재 진행 값",
       control: { type: "number", min: 0, max: 10, step: 0.1 },
-      defaultValue: 3,
+      table: {
+        defaultValue: { summary: "3" },
+      },
     },
     max: {
       description: "최대값",
       control: { type: "number", min: 1, max: 20 },
-      defaultValue: 5,
+      table: {
+        defaultValue: { summary: "5" },
+      },
     },
   },
 } satisfies Meta<typeof ProgressBar>;

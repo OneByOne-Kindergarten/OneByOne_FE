@@ -44,24 +44,39 @@ Radix UI 기반 입력 컴포넌트
       description: "입력 필드 스타일",
       control: { type: "select" },
       options: ["default", "outline"],
+      table: {
+        defaultValue: { summary: "default" },
+      },
     },
     font: {
       description: "폰트 크기 및 굵기",
       control: { type: "select" },
       options: ["xs", "xs_sb", "sm", "sm_sb", "md", "md_sb", "lg", "lg_sb"],
+      table: {
+        defaultValue: { summary: "sm" },
+      },
     },
     inputSize: {
       description: "입력 필드 크기",
       control: { type: "select" },
       options: ["default", "sm", "xs"],
+      table: {
+        defaultValue: { summary: "default" },
+      },
     },
     error: {
       description: "에러 상태",
       control: "boolean",
+      table: {
+        defaultValue: { summary: "false" },
+      },
     },
     disabled: {
       description: "비활성화 상태",
       control: "boolean",
+      table: {
+        defaultValue: { summary: "false" },
+      },
     },
     placeholder: {
       control: "text",
@@ -72,8 +87,7 @@ Radix UI 기반 입력 컴포넌트
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// Interactive Playground Component
-const PlaygroundDemo = () => {
+const PlaygroundWithArgs = (args: React.ComponentProps<typeof Input>) => {
   const [value, setValue] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -91,6 +105,7 @@ const PlaygroundDemo = () => {
 
   return (
     <Input
+      {...args}
       placeholder="입력해보세요"
       value={value}
       onChange={handleChange}
@@ -101,8 +116,14 @@ const PlaygroundDemo = () => {
 };
 
 export const Playground: Story = {
-  render: () => <PlaygroundDemo />,
-  args: {},
+  render: (args) => <PlaygroundWithArgs {...args} />,
+  args: {
+    variant: "default",
+    font: "sm",
+    inputSize: "default",
+    error: false,
+    disabled: false,
+  },
 };
 
 export const Specs: Story = {
