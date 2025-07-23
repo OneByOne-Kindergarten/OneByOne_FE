@@ -1,0 +1,42 @@
+name: Deploy Storybook for PR Review
+
+on:
+  pull_request:
+    branches:
+      - develop # develop 브랜치 PR 생성 시 스토리북 배포
+
+jobs:
+  deploy-storybook-for-review:
+    runs-on: ubuntu-latest
+    outputs:
+      status: ${{ job.status }}
+    steps:
+      - name: Checkout repository with full git history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Cache node_modules for faster builds
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-storybook
+
+      - name: Install npm dependencies if cache missed
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Build and deploy Storybook to Chromatic for visual testing
+        id: chromatic
+        uses: chromaui/action@v11
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Comment PR with deployed Storybook URL for review
+        uses: thollander/actions-comment-pull-request@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          message: "🚀storybook: ${{ steps.chromatic.outputs.storybookUrl }}"
