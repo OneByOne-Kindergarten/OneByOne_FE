@@ -1,0 +1,30 @@
+name: Sync to Forked Repository for Development Environment
+
+on:
+  push:
+    branches: [dev] # 조직 레포 dev 브랜치 업데이트 시 포크 레포 dev와 동기화하여 개발 환경 배포
+
+jobs:
+  sync-to-fork-for-development:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout organization repository dev branch
+        uses: actions/checkout@v4
+
+      - name: Remove .github directory # CI/CD not needed in develop repo
+        run: rm -rf .github
+
+      - name: Sync source code to forked repository dev branch (0zuth/OneByOne_FE)
+        id: sync_to_fork_dev
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.ZERO_GITHUB_KEY }}
+        with:
+          destination-github-username: 0zuth
+          destination-repository-name: OneByOne_FE
+          user-email: ${{ secrets.ZERO_ACCOUNT_EMAIL }}
+          commit-message: "🛠️ Auto sync from organization dev: ${{ github.event.commits[0].message }}"
+          target-branch: dev
+
+      - name: Confirm successful sync to forked repository dev branch
+        run: echo "✅ Successfully synced to forked repository dev branch (0zuth/OneByOne_FE)"

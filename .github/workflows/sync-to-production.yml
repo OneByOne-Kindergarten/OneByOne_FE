@@ -1,0 +1,30 @@
+name: Sync to Forked Repository for Production Deployment
+
+on:
+  push:
+    branches: [main] # 조직 레포 main 브랜치 업데이트 시 포크 레포와 동기화하여 프로덕션 배포
+
+jobs:
+  sync-to-fork-for-production:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout organization repository main branch
+        uses: actions/checkout@v4
+
+      - name: Remove .github directory # CI/CD not needed in deploy repo
+        run: rm -rf .github
+
+      - name: Sync source code to forked repository main branch (0zuth/OneByOne_FE)
+        id: sync_to_fork_main
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.ZERO_GITHUB_KEY }}
+        with:
+          destination-github-username: 0zuth
+          destination-repository-name: OneByOne_FE
+          user-email: ${{ secrets.ZERO_ACCOUNT_EMAIL }}
+          commit-message: "🚀 Auto sync from organization main: ${{ github.event.commits[0].message }}"
+          target-branch: main
+
+      - name: Confirm successful sync to forked repository for production deployment
+        run: echo "✅ Successfully synced to forked repository main branch (0zuth/OneByOne_FE)"
