@@ -23,7 +23,7 @@ jobs:
           destination-github-username: 0zuth
           destination-repository-name: OneByOne_FE
           user-email: ${{ secrets.ZERO_ACCOUNT_EMAIL }}
-          commit-message: "🚀 Auto sync from organization main: ${{ github.event.commits[0].message }}"
+          commit-message: "${{ github.event.commits[0].message }}"
           target-branch: main
 
       - name: Confirm successful sync to forked repository for production deployment
