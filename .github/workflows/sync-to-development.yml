@@ -32,11 +32,11 @@ jobs:
 
       - name: Push built files to forked repository (0zuth/OneByOne_FE)
         run: |
-          # 기존 파일들 제거 (빌드된 파일만 유지)
-          rm -rf target-repo/*
-          # 빌드된 파일들 복사
+          # 빌드된 파일들만 복사 (기존 소스코드는 유지)
           cp -r dist/* target-repo/
           cd target-repo
+          # .github 디렉토리 제거 (CI/CD 설정은 타겟 저장소에서 불필요)
+          rm -rf .github
           git add -A
           git status
           git commit -m "${{ github.event.commits[0].message }}" || echo "No changes to commit"
