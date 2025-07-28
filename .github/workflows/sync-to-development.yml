@@ -1,9 +1,8 @@
 name: Sync to Forked Repository for Development Environment
 
 on:
-  # push:
-  #   branches: [dev] # 조직 레포 dev 브랜치 업데이트 시 포크 레포 dev와 동기화하여 개발 환경 배포
-  workflow_dispatch: # 임시로 수동 실행만 가능하도록 변경
+  push:
+    branches: [dev] # 조직 레포 dev 브랜치 업데이트 시 포크 레포 dev와 동기화하여 개발 환경 배포
 
 jobs:
   sync-to-fork-for-development:
@@ -12,12 +11,31 @@ jobs:
       - name: Checkout organization repository dev branch
         uses: actions/checkout@v4
 
-      - name: Remove .github directory # CI/CD not needed in develop repo
+      - name: Remove .github directory # CI/CD not needed in deploy repo
         run: rm -rf .github
+
+      - name: Debug sync action parameters
+        run: |
+          echo "=== Sync Action Debug Info ==="
+          echo "Source repository: ${{ github.repository }}"
+          echo "Source branch: ${{ github.ref_name }}"
+          echo "Commit SHA: ${{ github.sha }}"
+          echo "Commit message: ${{ github.event.commits[0].message }}"
+          echo "Destination: 0zuth/OneByOne_FE"
+          echo "Target branch: dev"
+          echo "Action version: v1.0.15"
+          echo "Create branch if needed: true"
+          echo "================================"
+
+      - name: Check current directory structure
+        run: |
+          echo "=== Current Directory Structure ==="
+          ls -la
+          echo "================================"
 
       - name: Sync source code to forked repository dev branch (0zuth/OneByOne_FE)
         id: sync_to_fork_dev
-        uses: cpina/github-action-push-to-another-repository@main
+        uses: cpina/github-action-push-to-another-repository@v1.0.15
         env:
           API_TOKEN_GITHUB: ${{ secrets.ZERO_GITHUB_KEY }}
         with:
@@ -26,6 +44,22 @@ jobs:
           user-email: ${{ secrets.ZERO_ACCOUNT_EMAIL }}
           commit-message: "${{ github.event.commits[0].message }}"
           target-branch: dev
+          create-target-branch-if-needed: true
+        continue-on-error: true
+
+      - name: Check sync result
+        if: steps.sync_to_fork_dev.outcome == 'failure'
+        run: |
+          echo "❌ Sync action failed!"
+          echo "Check the logs above for detailed error information."
+          echo "Common issues:"
+          echo "1. Target repository doesn't exist"
+          echo "2. Insufficient permissions to push to target repository"
+          echo "3. Target branch is protected"
+          echo "4. Network connectivity issues"
+          echo "5. Action version compatibility issues"
+          exit 1
 
       - name: Confirm successful sync to forked repository dev branch
+        if: steps.sync_to_fork_dev.outcome == 'success'
         run: echo "✅ Successfully synced to forked repository dev branch (0zuth/OneByOne_FE)"
