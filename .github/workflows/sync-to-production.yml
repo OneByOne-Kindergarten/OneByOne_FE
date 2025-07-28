@@ -11,27 +11,17 @@ jobs:
       - name: Checkout organization repository main branch
         uses: actions/checkout@v4
 
-      - name: Remove .github directory # CI/CD not needed in deploy repo
-        run: rm -rf .github
+      - name: Setup Node.js environment for React build
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
 
-      - name: Debug sync action parameters
-        run: |
-          echo "=== Sync Action Debug Info ==="
-          echo "Source repository: ${{ github.repository }}"
-          echo "Source branch: ${{ github.ref_name }}"
-          echo "Commit SHA: ${{ github.sha }}"
-          echo "Commit message: ${{ github.event.commits[0].message }}"
-          echo "Destination: 0zuth/OneByOne_FE"
-          echo "Target branch: main"
-          echo "Action version: actions/checkout@v4 + manual git operations"
-          echo "Create branch if needed: true"
-          echo "================================"
+      - name: Install npm dependencies
+        run: npm ci
 
-      - name: Check current directory structure
-        run: |
-          echo "=== Current Directory Structure ==="
-          ls -la
-          echo "================================"
+      - name: Build React application for production
+        run: npm run build
 
       - name: Clone target repository
         run: |
@@ -40,9 +30,12 @@ jobs:
           git config user.name "0zuth"
           git config user.email "${{ secrets.ZERO_ACCOUNT_EMAIL }}"
 
-      - name: Copy files to target repository
+      - name: Push built files to forked repository (0zuth/OneByOne_FE)
         run: |
-          cp -r . target-repo/
+          # 기존 파일들 제거 (빌드된 파일만 유지)
+          rm -rf target-repo/*
+          # 빌드된 파일들 복사
+          cp -r dist/* target-repo/
           cd target-repo
           git add -A
           git status
@@ -55,19 +48,5 @@ jobs:
           GIT_COMMITTER_EMAIL: "${{ secrets.ZERO_ACCOUNT_EMAIL }}"
         continue-on-error: true
 
-      - name: Check sync result
-        if: failure()
-        run: |
-          echo "❌ Sync action failed!"
-          echo "Check the logs above for detailed error information."
-          echo "Common issues:"
-          echo "1. Target repository doesn't exist"
-          echo "2. Insufficient permissions to push to target repository"
-          echo "3. Target branch is protected"
-          echo "4. Network connectivity issues"
-          echo "5. Action version compatibility issues"
-          exit 1
-
-      - name: Confirm successful sync to forked repository for production deployment
-        if: success()
-        run: echo "✅ Successfully synced to forked repository main branch (0zuth/OneByOne_FE)"
+      - name: Confirm successful sync to forked repository for Vercel deployment
+        run: echo "✅ Successfully synced to forked repository (0zuth/OneByOne_FE)"
