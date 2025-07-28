@@ -32,8 +32,32 @@ jobs:
 
       - name: Push built files to forked repository (0zuth/OneByOne_FE)
         run: |
-          # 빌드된 파일들만 복사 (기존 소스코드는 유지)
+          # 기존 파일들 제거
+          rm -rf target-repo/*
+
+          # 빌드된 파일들만 복사 (이미 assets 포함됨)
           cp -r dist/* target-repo/
+
+          # 소스코드 복사 (개발자가 수정 가능하도록)
+          cp -r src target-repo/
+
+          # 설정 파일들 복사
+          cp package.json target-repo/
+          cp package-lock.json target-repo/
+          cp vite.config.ts target-repo/
+          cp tailwind.config.ts target-repo/
+          cp tsconfig.json target-repo/
+          cp tsconfig.app.json target-repo/
+          cp tsconfig.node.json target-repo/
+          cp postcss.config.ts target-repo/
+          cp eslint.config.js target-repo/
+          cp components.json target-repo/
+          cp .prettierrc target-repo/
+          cp .gitignore target-repo/
+          cp vercel.json target-repo/
+          cp index.html target-repo/
+          cp README.md target-repo/
+
           cd target-repo
           # .github 디렉토리 제거 (CI/CD 설정은 타겟 저장소에서 불필요)
           rm -rf .github
