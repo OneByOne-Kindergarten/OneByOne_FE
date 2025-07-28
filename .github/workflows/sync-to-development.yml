@@ -23,7 +23,7 @@ jobs:
           echo "Commit message: ${{ github.event.commits[0].message }}"
           echo "Destination: 0zuth/OneByOne_FE"
           echo "Target branch: dev"
-          echo "Action version: v1.0.15"
+          echo "Action version: main"
           echo "Create branch if needed: true"
           echo "================================"
 
@@ -35,7 +35,7 @@ jobs:
 
       - name: Sync source code to forked repository dev branch (0zuth/OneByOne_FE)
         id: sync_to_fork_dev
-        uses: cpina/github-action-push-to-another-repository@v1.0.15
+        uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.ZERO_GITHUB_KEY }}
         with:
