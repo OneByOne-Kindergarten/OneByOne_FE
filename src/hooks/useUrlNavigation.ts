@@ -118,7 +118,7 @@ const handleFallback = (
  * - 뒤로가기 버튼 표시/숨김 관리
  */
 export function useUrlNavigation(
-  customBackHandler?: () => void,
+  customBackHandler?: () => boolean | void,
   shouldShowBackButtonOverride?: boolean
 ) {
   const navigate = useNavigate();
@@ -254,8 +254,10 @@ export function useUrlNavigation(
    */
   const handleBackNavigation = useCallback(() => {
     if (customBackHandler) {
-      customBackHandler();
-      return;
+      const handled = customBackHandler();
+      if (handled) {
+        return; // 커스텀 핸들러가 처리 완료
+      }
     }
 
     const currentUrlKey = getUrlKey();

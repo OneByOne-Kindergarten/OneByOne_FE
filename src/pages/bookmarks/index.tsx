@@ -13,7 +13,11 @@ export default function Bookmarks() {
   const { favorites, isLoading, isError, error } = useFavorites();
 
   const handleKindergartenClick = (id: string) => {
-    navigate(`/school/${id}`);
+    navigate(`/school/${id}`, {
+      state: {
+        fromBookmarks: true,
+      },
+    });
   };
 
   return (

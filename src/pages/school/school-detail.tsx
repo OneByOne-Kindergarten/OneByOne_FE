@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { useCallback } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 
 import Error from "@/components/@shared/layout/error";
@@ -11,6 +12,7 @@ import SchoolMap from "@/components/school/SchoolMap";
 import { SVG_PATHS } from "@/constants/assets-path";
 import { REVIEW_TYPES } from "@/constants/review";
 import { URL_PATHS } from "@/constants/url-path";
+import { useUrlNavigation } from "@/hooks/useUrlNavigation";
 import { getKindergartenDetail } from "@/services/kindergartenService";
 import { Kindergarten } from "@/types/kindergartenDTO";
 
@@ -36,6 +38,17 @@ export default function SchoolDetailPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const safeId = id || "unknown";
+
+  // 즐겨찾기 페이지에서 접근했을 경우
+  const customBackHandler = useCallback(() => {
+    if (location.state?.fromBookmarks) {
+      navigate(URL_PATHS.BOOKMARKS);
+      return true;
+    }
+    return false; // 기본 네비게이션 로직 사용
+  }, [location.state?.fromBookmarks, navigate]);
+
+  const { handleBackNavigation } = useUrlNavigation(customBackHandler);
 
   const {
     data: kindergarten,
@@ -112,7 +125,8 @@ export default function SchoolDetailPage() {
         navigate(searchPath);
       }
     } else {
-      navigate(-1);
+      // useUrlNavigation 훅 사용
+      handleBackNavigation();
     }
   };
 
