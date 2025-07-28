@@ -45,13 +45,19 @@ jobs:
         run: |
           cp -r . target-repo/
           cd target-repo
-          git config user.name "0zuth"
-          git config user.email "${{ secrets.ZERO_ACCOUNT_EMAIL }}"
-          git add .
+          git config --global user.name "0zuth"
+          git config --global user.email "${{ secrets.ZERO_ACCOUNT_EMAIL }}"
+          git config --global init.defaultBranch dev
+          git add -A
+          git status
           git commit -m "${{ github.event.commits[0].message }}" || echo "No changes to commit"
           git push origin dev
         env:
           GITHUB_TOKEN: ${{ secrets.ZERO_GITHUB_KEY }}
+          GIT_AUTHOR_NAME: "0zuth"
+          GIT_AUTHOR_EMAIL: "${{ secrets.ZERO_ACCOUNT_EMAIL }}"
+          GIT_COMMITTER_NAME: "0zuth"
+          GIT_COMMITTER_EMAIL: "${{ secrets.ZERO_ACCOUNT_EMAIL }}"
         continue-on-error: true
 
       - name: Check sync result
