@@ -1,1 +1,0 @@
-const a=n=>{const s=new Date,r=new Date(n),t=new Date(r.getTime()+540*60*1e3),e=Math.floor((s.getTime()-t.getTime())/1e3);return e<60?`${e}초 전`:e<3600?`${Math.floor(e/60)}분 전`:e<86400?`${Math.floor(e/3600)}시간 전`:e<2592e3?`${Math.floor(e/86400)}일 전`:t.toLocaleDateString("ko-KR",{year:"2-digit",month:"2-digit",day:"2-digit"})};export{a as f};
