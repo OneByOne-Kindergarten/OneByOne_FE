@@ -1,8 +1,9 @@
 name: Sync to Forked Repository for Development Environment
 
 on:
-  push:
-    branches: [dev] # 조직 레포 dev 브랜치 업데이트 시 포크 레포 dev와 동기화하여 개발 환경 배포
+  # push:
+  #   branches: [dev] # 조직 레포 dev 브랜치 업데이트 시 포크 레포 dev와 동기화하여 개발 환경 배포
+  workflow_dispatch: # 임시로 수동 실행만 가능하도록 변경
 
 jobs:
   sync-to-fork-for-development:

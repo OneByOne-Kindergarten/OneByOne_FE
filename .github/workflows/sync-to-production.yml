@@ -1,8 +1,9 @@
 name: Sync to Forked Repository for Production Deployment
 
 on:
-  push:
-    branches: [main] # 조직 레포 main 브랜치 업데이트 시 포크 레포와 동기화하여 프로덕션 배포
+  # push:
+  #   branches: [main] # 조직 레포 main 브랜치 업데이트 시 포크 레포와 동기화하여 프로덕션 배포
+  workflow_dispatch: # 임시로 수동 실행만 가능하도록 변경
 
 jobs:
   sync-to-fork-for-production:
