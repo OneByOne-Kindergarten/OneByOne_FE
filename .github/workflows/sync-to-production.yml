@@ -23,7 +23,7 @@ jobs:
           echo "Commit message: ${{ github.event.commits[0].message }}"
           echo "Destination: 0zuth/OneByOne_FE"
           echo "Target branch: main"
-          echo "Action version: main"
+          echo "Action version: dmnemec/copy-file-action@main"
           echo "Create branch if needed: true"
           echo "================================"
 
@@ -35,41 +35,24 @@ jobs:
 
       - name: Sync source code to forked repository main branch (0zuth/OneByOne_FE)
         id: sync_to_fork_main
-        uses: cpina/github-action-push-to-another-repository@main
+        uses: dmnemec/copy-file-action@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.ZERO_GITHUB_KEY }}
         with:
-          destination-github-username: 0zuth
-          destination-repository-name: OneByOne_FE
+          source-repo: ${{ github.repository }}
+          source-path: .
+          destination-repo: 0zuth/OneByOne_FE
+          destination-path: .
           user-email: ${{ secrets.ZERO_ACCOUNT_EMAIL }}
+          user-name: 0zuth
           commit-message: "${{ github.event.commits[0].message }}"
-          target-branch: main
-          create-target-branch-if-needed: true
-          source-directory: "."
-          target-directory: "."
+          destination-branch: main
         continue-on-error: true
 
       - name: Check sync result
         if: steps.sync_to_fork_main.outcome == 'failure'
         run: |
           echo "❌ Sync action failed!"
-          echo "=== Detailed Error Analysis ==="
-          echo "1. Checking target repository existence..."
-          curl -s -H "Authorization: token ${{ secrets.ZERO_GITHUB_KEY }}" \
-               -H "Accept: application/vnd.github.v3+json" \
-               https://api.github.com/repos/0zuth/OneByOne_FE
-          echo ""
-          echo "2. Checking target branch status..."
-          curl -s -H "Authorization: token ${{ secrets.ZERO_GITHUB_KEY }}" \
-               -H "Accept: application/vnd.github.v3+json" \
-               https://api.github.com/repos/0zuth/OneByOne_FE/branches/main
-          echo ""
-          echo "3. Checking user permissions..."
-          curl -s -H "Authorization: token ${{ secrets.ZERO_GITHUB_KEY }}" \
-               -H "Accept: application/vnd.github.v3+json" \
-               https://api.github.com/user
-          echo ""
-          echo "=== End Analysis ==="
           echo "Check the logs above for detailed error information."
           echo "Common issues:"
           echo "1. Target repository doesn't exist"
@@ -78,8 +61,6 @@ jobs:
           echo "4. Network connectivity issues"
           echo "5. Action version compatibility issues"
           exit 1
-        env:
-          ZERO_GITHUB_KEY: ${{ secrets.ZERO_GITHUB_KEY }}
 
       - name: Confirm successful sync to forked repository for production deployment
         if: steps.sync_to_fork_main.outcome == 'success'
