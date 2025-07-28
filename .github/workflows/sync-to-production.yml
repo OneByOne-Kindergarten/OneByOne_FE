@@ -23,7 +23,7 @@ jobs:
           echo "Commit message: ${{ github.event.commits[0].message }}"
           echo "Destination: 0zuth/OneByOne_FE"
           echo "Target branch: main"
-          echo "Action version: dmnemec/copy-file-action@main"
+          echo "Action version: actions/checkout@v4 + manual git operations"
           echo "Create branch if needed: true"
           echo "================================"
 
@@ -33,24 +33,29 @@ jobs:
           ls -la
           echo "================================"
 
-      - name: Sync source code to forked repository main branch (0zuth/OneByOne_FE)
-        id: sync_to_fork_main
-        uses: dmnemec/copy-file-action@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.ZERO_GITHUB_KEY }}
+      - name: Checkout target repository
+        uses: actions/checkout@v4
         with:
-          source-repo: ${{ github.repository }}
-          source-path: .
-          destination-repo: 0zuth/OneByOne_FE
-          destination-path: .
-          user-email: ${{ secrets.ZERO_ACCOUNT_EMAIL }}
-          user-name: 0zuth
-          commit-message: "${{ github.event.commits[0].message }}"
-          destination-branch: main
+          token: ${{ secrets.ZERO_GITHUB_KEY }}
+          repository: 0zuth/OneByOne_FE
+          path: target-repo
+          ref: main
+
+      - name: Copy files to target repository
+        run: |
+          cp -r . target-repo/
+          cd target-repo
+          git config user.name "0zuth"
+          git config user.email "${{ secrets.ZERO_ACCOUNT_EMAIL }}"
+          git add .
+          git commit -m "${{ github.event.commits[0].message }}" || echo "No changes to commit"
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.ZERO_GITHUB_KEY }}
         continue-on-error: true
 
       - name: Check sync result
-        if: steps.sync_to_fork_main.outcome == 'failure'
+        if: failure()
         run: |
           echo "❌ Sync action failed!"
           echo "Check the logs above for detailed error information."
@@ -63,5 +68,5 @@ jobs:
           exit 1
 
       - name: Confirm successful sync to forked repository for production deployment
-        if: steps.sync_to_fork_main.outcome == 'success'
+        if: success()
         run: echo "✅ Successfully synced to forked repository main branch (0zuth/OneByOne_FE)"
