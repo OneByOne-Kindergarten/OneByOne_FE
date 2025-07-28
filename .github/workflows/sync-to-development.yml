@@ -45,12 +45,31 @@ jobs:
           commit-message: "${{ github.event.commits[0].message }}"
           target-branch: dev
           create-target-branch-if-needed: true
+          source-directory: "."
+          target-directory: "."
         continue-on-error: true
 
       - name: Check sync result
         if: steps.sync_to_fork_dev.outcome == 'failure'
         run: |
           echo "❌ Sync action failed!"
+          echo "=== Detailed Error Analysis ==="
+          echo "1. Checking target repository existence..."
+          curl -s -H "Authorization: token ${{ secrets.ZERO_GITHUB_KEY }}" \
+               -H "Accept: application/vnd.github.v3+json" \
+               https://api.github.com/repos/0zuth/OneByOne_FE
+          echo ""
+          echo "2. Checking target branch status..."
+          curl -s -H "Authorization: token ${{ secrets.ZERO_GITHUB_KEY }}" \
+               -H "Accept: application/vnd.github.v3+json" \
+               https://api.github.com/repos/0zuth/OneByOne_FE/branches/dev
+          echo ""
+          echo "3. Checking user permissions..."
+          curl -s -H "Authorization: token ${{ secrets.ZERO_GITHUB_KEY }}" \
+               -H "Accept: application/vnd.github.v3+json" \
+               https://api.github.com/user
+          echo ""
+          echo "=== End Analysis ==="
           echo "Check the logs above for detailed error information."
           echo "Common issues:"
           echo "1. Target repository doesn't exist"
@@ -59,6 +78,8 @@ jobs:
           echo "4. Network connectivity issues"
           echo "5. Action version compatibility issues"
           exit 1
+        env:
+          ZERO_GITHUB_KEY: ${{ secrets.ZERO_GITHUB_KEY }}
 
       - name: Confirm successful sync to forked repository dev branch
         if: steps.sync_to_fork_dev.outcome == 'success'
