@@ -52,9 +52,8 @@ jobs:
           git add -A
           git status
           git commit -m "${{ github.event.commits[0].message }}" || echo "No changes to commit"
-          git push origin dev
+          git push https://x-access-token:${{ secrets.ZERO_GITHUB_KEY }}@github.com/0zuth/OneByOne_FE.git dev
         env:
-          GITHUB_TOKEN: ${{ secrets.ZERO_GITHUB_KEY }}
           GIT_AUTHOR_NAME: "0zuth"
           GIT_AUTHOR_EMAIL: "${{ secrets.ZERO_ACCOUNT_EMAIL }}"
           GIT_COMMITTER_NAME: "0zuth"
