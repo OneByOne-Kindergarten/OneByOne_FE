@@ -1,0 +1,1 @@
+const e={staleTime:9e5,gcTime:36e5},C={staleTime:1e3*60*5,gcTime:1e3*60*15},s={staleTime:1e3*60*2,gcTime:1e3*60*8},T={staleTime:1e3*60*10,gcTime:1e3*60*30},I={staleTime:1e3*60*3,gcTime:1e3*60*12};export{C as D,I,s as R,e as S,T as a};

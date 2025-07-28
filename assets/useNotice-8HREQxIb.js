@@ -1,0 +1,1 @@
+import{b as t}from"./useMetadata-D7nd75QV.js";import{S as e}from"./query-config-BQJB0S96.js";import{C as o,D as s}from"./index-C8JFuZlv.js";const a=async()=>{try{return await o({method:"GET",path:s.NOTICE.BASE,withAuth:!0,withCredentials:!0})}catch(r){throw console.error("공지사항 조회 실패:",r),r}},c=()=>t({queryKey:["notices"],queryFn:a,...e});export{c as u};
