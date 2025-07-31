@@ -16,10 +16,10 @@ export default function InquiryPage() {
       headerTitle="문의"
       currentPath={URL_PATHS.USER}
       hasBackButton={true}
-      mainBg="gray"
+      mainBg="white"
     >
-      <section className="flex flex-col gap-4 bg-white p-5 font-bold">
-        <menu className="flex flex-col gap-6 text-primary-dark01">
+      <section className="flex flex-col gap-4 px-5 pt-5">
+        <menu className="flex flex-col gap-6 font-bold text-primary-dark01">
           {user?.role === "ADMIN" && (
             <MenuItem
               iconPath={SVG_PATHS.QUESTION.GLOBAL}

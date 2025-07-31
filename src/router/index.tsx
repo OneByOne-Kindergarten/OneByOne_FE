@@ -38,36 +38,38 @@ const InquiryMyPage = lazy(() => import("../pages/inquiry/inquiry-my"));
 const NoticePage = lazy(() => import("../pages/notice"));
 const NoticeDetailPage = lazy(() => import("../pages/notice/notice-detail"));
 const AlarmPage = lazy(() => import("../pages/alarm"));
+const AlarmSettingPage = lazy(() => import("../pages/alarm/alarm-setting"));
 const ReportPage = lazy(() => import("../pages/report"));
 
 const routes = {
   direct: [
     { path: URL_PATHS.ROOT, element: <RootPage /> },
-    { path: URL_PATHS.HOME, element: <HomePage /> },
-    { path: URL_PATHS.SHORTCUTS_EDITOR, element: <ShortcutsEditorPage /> },
-    { path: URL_PATHS.BOOKMARKS, element: <BookmarksPage /> },
-    { path: URL_PATHS.USER, element: <UserPage /> },
+    // auth
     { path: URL_PATHS.SIGNIN, element: <SignInPage /> },
     { path: URL_PATHS.SIGNUP, element: <SignUpPage /> },
     { path: URL_PATHS.FIND_PASSWORD, element: <FindPasswordPage /> },
-    // Oauth
     { path: URL_PATHS.KAKAO_CALLBACK, element: <KakaoCallbackPage /> },
     { path: URL_PATHS.NAVER_CALLBACK, element: <NaverCallbackPage /> },
     { path: URL_PATHS.APPLE_CALLBACK, element: <AppleCallbackPage /> },
+    // 홈
+    { path: URL_PATHS.HOME, element: <HomePage /> },
+    { path: URL_PATHS.SHORTCUTS_EDITOR, element: <ShortcutsEditorPage /> },
     // 검색
     { path: URL_PATHS.SEARCH_SCHOOL, element: <SchoolSearchPage /> },
     { path: URL_PATHS.SEARCH_COMMUNITY, element: <CommunitySearchPage /> },
-    // 기관
+    // 유치원
     { path: URL_PATHS.SCHOOL, element: <SchoolPage /> },
     { path: URL_PATHS.SCHOOL_DETAIL, element: <SchoolDetailPage /> },
-    // 리뷰
     { path: URL_PATHS.REVIEW, element: <ReviewPage /> },
     { path: URL_PATHS.REVIEW_EDITOR, element: <ReviewEditorPage /> },
     // 커뮤니티
     { path: URL_PATHS.COMMUNITY, element: <CommunityPage /> },
     { path: URL_PATHS.COMMUNITY_POST_EDITOR, element: <PostEditorPage /> },
     { path: URL_PATHS.COMMUNITY_POST, element: <CommunityPostPage /> },
+    // 즐겨찾기
+    { path: URL_PATHS.BOOKMARKS, element: <BookmarksPage /> },
     // 프로필
+    { path: URL_PATHS.USER, element: <UserPage /> },
     { path: URL_PATHS.USER_PROFILE, element: <ProfilePage /> },
     { path: URL_PATHS.USER_PROFILE_EDITOR, element: <ProfileEditorPage /> },
     { path: URL_PATHS.USER_PASSWORD_EDITOR, element: <PasswordEditorPage /> },
@@ -80,6 +82,7 @@ const routes = {
     { path: URL_PATHS.NOTICE, element: <NoticePage /> },
     { path: URL_PATHS.NOTICE_DETAIL, element: <NoticeDetailPage /> },
     { path: URL_PATHS.ALARM, element: <AlarmPage /> },
+    { path: URL_PATHS.ALARM_SETTING, element: <AlarmSettingPage /> },
     // 신고
     { path: URL_PATHS.REPORT, element: <ReportPage /> },
   ],

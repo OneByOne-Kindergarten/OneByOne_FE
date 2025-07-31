@@ -1,5 +1,10 @@
 // 알림 타입 (서버 기준)
-export type AlarmType = 'REVIEW' | 'COMMENT' | 'LIKE' | 'SYSTEM' | 'NOTICE';
+export type AlarmType = "REVIEW" | "COMMENT" | "LIKE" | "SYSTEM" | "NOTICE";
+
+export interface BaseResponse {
+  status: string;
+  message: string;
+}
 
 // 알림 아이템
 export interface Alarm {
@@ -16,25 +21,26 @@ export interface Alarm {
 }
 
 // 알림 목록 응답
-export interface AlarmResponse {
-  status: string;
-  message: string;
+export interface AlarmResponse extends BaseResponse {
   data: Alarm[];
 }
 
-// 알림 읽기 처리 요청
+// 알림 읽기 처리
 export interface ReadAlarmRequest {
   alarmId: number;
 }
 
-// 알림 읽기 처리 응답
-export interface ReadAlarmResponse {
-  status: string;
-  message: string;
+export type ReadAlarmResponse = BaseResponse;
+
+export type ReadAllAlarmsResponse = BaseResponse;
+
+// 알림 설정
+export interface AlarmSetting {
+  allNotificationsEnabled: boolean;
+  communityNotificationsEnabled: boolean;
+  eventNotificationsEnabled: boolean;
 }
 
-// 모든 알림 읽기 처리 응답
-export interface ReadAllAlarmsResponse {
-  status: string;
-  message: string;
-} 
+export interface AlarmSettingResponse extends BaseResponse {
+  data: AlarmSetting;
+}

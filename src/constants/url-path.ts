@@ -1,5 +1,4 @@
 export const URL_PATHS = {
-  TEST: "test",
   ROOT: "/",
   HOME: "/home",
   SHORTCUTS_EDITOR: "/home/shortcuts",
@@ -31,6 +30,9 @@ export const URL_PATHS = {
   COMMUNITY_POST_EDITOR: "/community/new",
   // 즐겨찾기
   BOOKMARKS: "/bookmarks",
+  // 알람
+  ALARM: "/user/alarm",
+  ALARM_SETTING: "/user/alarm-setting",
   // 프로필
   USER: "/user",
   USER_PROFILE: "/user/profile",
@@ -42,7 +44,6 @@ export const URL_PATHS = {
   // 프로필 - 공지사항
   NOTICE: "/user/notice",
   NOTICE_DETAIL: "/user/notice/:id",
-  ALARM: "/user/alarm",
   // 프로필 - 문의사항
   INQUIRY: "/user/inquiry",
   INQUIRY_PUBLIC: "/user/inquiry/public",

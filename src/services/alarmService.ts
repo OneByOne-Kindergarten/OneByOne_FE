@@ -1,5 +1,9 @@
 import { API_PATHS } from "@/constants/api-path";
-import type { AlarmResponse } from "@/types/alarmDTO";
+import type {
+  AlarmResponse,
+  AlarmSetting,
+  AlarmSettingResponse,
+} from "@/types/alarmDTO";
 import { apiCall } from "@/utils/apiUtils";
 
 /**
@@ -43,7 +47,9 @@ export const getUnreadAlarmCount = async (): Promise<{ data: number }> => {
  * @param alarmId 알림 ID
  * @returns 처리 결과
  */
-export const readAlarm = async (alarmId: number): Promise<{ message: string }> => {
+export const readAlarm = async (
+  alarmId: number
+): Promise<{ message: string }> => {
   try {
     return await apiCall<null, { message: string }>({
       method: "PATCH",
@@ -73,4 +79,44 @@ export const readAllAlarms = async (): Promise<{ message: string }> => {
     console.error("모든 알림 읽기 처리 실패:", error);
     throw error;
   }
-}; 
+};
+
+/**
+ * 알림 설정 조회
+ * @returns 알림 설정
+ */
+export const getAlarmSettings = async (): Promise<AlarmSettingResponse> => {
+  try {
+    return await apiCall<null, AlarmSettingResponse>({
+      method: "GET",
+      path: API_PATHS.USER.ALARM,
+      withAuth: true,
+      withCredentials: true,
+    });
+  } catch (error) {
+    console.error("알림 설정 조회 실패:", error);
+    throw error;
+  }
+};
+
+/**
+ * 알림 설정 수정
+ * @param settings 알림 설정
+ * @returns 처리 결과
+ */
+export const updateAlarmSettings = async (
+  settings: AlarmSetting
+): Promise<AlarmSettingResponse> => {
+  try {
+    return await apiCall<AlarmSetting, AlarmSettingResponse>({
+      method: "PUT",
+      path: API_PATHS.USER.ALARM,
+      data: settings,
+      withAuth: true,
+      withCredentials: true,
+    });
+  } catch (error) {
+    console.error("알림 설정 수정 실패:", error);
+    throw error;
+  }
+};

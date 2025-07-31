@@ -58,6 +58,12 @@ export default function User() {
               to={URL_PATHS.USER_ACCOUNT_SETTING}
               label="계정 설정"
             />
+            <MenuItem
+              iconPath={SVG_PATHS.ALARM}
+              iconAlt="알림 아이콘"
+              to={URL_PATHS.ALARM_SETTING}
+              label="알림 설정"
+            />
           </menu>
         </section>
 
