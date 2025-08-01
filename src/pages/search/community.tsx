@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import SearchPageLayout from "@/components/@shared/layout/search-page-layout";
 import RecentSearches from "@/components/@shared/search/recent-searches";
@@ -8,12 +8,10 @@ import { URL_PATHS } from "@/constants/url-path";
 import { useCommunityPosts } from "@/hooks/useCommunity";
 import { useSearchPage } from "@/hooks/useSearchPage";
 import { CommunityPostItem } from "@/types/communityDTO";
-import { getCommunityPath } from "@/utils/lastVisitedPathUtils";
 
 export default function CommunitySearchPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const location = useLocation();
 
   const {
     searchQuery,
@@ -63,39 +61,10 @@ export default function CommunitySearchPage() {
     );
   }, [communityPostsData]);
 
-  const handleBackClick = () => {
-    const lastCommunityPath = getCommunityPath();
-
-    // 저장된 경로가 검색 페이지이거나 없으면 기본 커뮤니티 페이지로 이동
-    if (!lastCommunityPath || lastCommunityPath.includes("/search/")) {
-      navigate(URL_PATHS.COMMUNITY);
-    } else {
-      navigate(lastCommunityPath);
-    }
-  };
-
+  // 검색 페이지에서 접근한 경우 이동 처리
   const handlePostClick = (id: string) => {
-    // 현재 히스토리를 게시글 상세 페이지로 완전히 대체
-    window.history.replaceState(
-      {
-        fromSearch: true,
-        searchQuery: searchQuery,
-        category: category,
-        searchPath: location.pathname + location.search,
-      },
-      "",
-      URL_PATHS.COMMUNITY_POST.replace(":id", id)
-    );
-
-    // 페이지 이동
     navigate(URL_PATHS.COMMUNITY_POST.replace(":id", id), {
-      replace: true,
-      state: {
-        fromSearch: true,
-        searchQuery: searchQuery,
-        category: category,
-        searchPath: location.pathname + location.search,
-      },
+      state: { fromSearch: true },
     });
   };
 
@@ -108,7 +77,6 @@ export default function CommunitySearchPage() {
       searchValue={searchQuery}
       onSearchSubmit={handleSearchSubmit}
       onSearchClear={handleClearSearch}
-      onBackButtonClick={handleBackClick}
     >
       <div className="flex flex-1 flex-col overflow-hidden">
         {uniquePosts.length > 0 ? (

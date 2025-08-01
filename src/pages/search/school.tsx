@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import SearchPageLayout from "@/components/@shared/layout/search-page-layout";
 import RecentSearches from "@/components/@shared/search/recent-searches";
@@ -11,11 +11,9 @@ import type {
   Kindergarten,
   KindergartenSearchParams,
 } from "@/types/kindergartenDTO";
-import { getSchoolPath } from "@/utils/lastVisitedPathUtils";
 
 export default function SchoolSearchPage() {
   const navigate = useNavigate();
-  const location = useLocation();
   // const [searchParams] = useSearchParams();
 
   const {
@@ -55,36 +53,10 @@ export default function SchoolSearchPage() {
     isFetchingNextPage,
   } = useSearchKindergartens(kindergartenSearchParams);
 
-  const handleBackClick = () => {
-    const lastSchoolPath = getSchoolPath();
-
-    // 저장된 경로가 검색 페이지이거나 없으면 기본 학교 페이지로 이동
-    if (!lastSchoolPath || lastSchoolPath.includes("/search/")) {
-      navigate(URL_PATHS.SCHOOL);
-    } else {
-      navigate(lastSchoolPath);
-    }
-  };
-
+  // 검색 페이지에서 접근한 경우 이동 처리
   const handleSchoolClick = (id: string) => {
-    // 현재 히스토리를 학교 상세 페이지로 완전히 대체
-    window.history.replaceState(
-      {
-        fromSearch: true,
-        searchQuery: searchQuery,
-        searchPath: location.pathname + location.search,
-      },
-      "",
-      URL_PATHS.SCHOOL_DETAIL.replace(":id", id)
-    );
-
     navigate(URL_PATHS.SCHOOL_DETAIL.replace(":id", id), {
-      replace: true,
-      state: {
-        fromSearch: true,
-        searchQuery: searchQuery,
-        searchPath: location.pathname + location.search,
-      },
+      state: { fromSearch: true },
     });
   };
 
@@ -97,7 +69,6 @@ export default function SchoolSearchPage() {
       searchValue={searchQuery}
       onSearchSubmit={handleSearchSubmit}
       onSearchClear={handleClearSearch}
-      onBackButtonClick={handleBackClick}
     >
       <div className="flex flex-1 flex-col overflow-hidden">
         {results.length > 0 ? (

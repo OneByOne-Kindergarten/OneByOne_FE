@@ -51,7 +51,14 @@ export default function Header({
   return (
     <header className={cn(headerVariants({ hasBorder }))}>
       {shouldShowBackButton && (
-        <button onClick={handleBackNavigation} aria-label="뒤로 가기">
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            handleBackNavigation();
+          }}
+          aria-label="뒤로 가기"
+        >
           <img src={SVG_PATHS.ARROW.left} alt="뒤로 가기" className="h-6 w-6" />
         </button>
       )}

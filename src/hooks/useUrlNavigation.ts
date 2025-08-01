@@ -8,115 +8,45 @@ import {
   setCommunityState,
   setSchoolState,
 } from "@/utils/lastVisitedPathUtils";
-import {
-  findParentUrlKey,
-  getCurrentUrlKey,
-  getNavigationStrategy,
-  getStorageStrategy,
-  isCommunityPost,
-  isRootPage,
-  NavigationStrategy,
-  StorageStrategy,
-} from "@/utils/navigationUtils";
-import { getParentPath, getPathSegments, UrlKeys } from "@/utils/urlUtils";
+import { getUrlKeyFromPath, UrlKeys } from "@/utils/urlUtils";
 
-// 세션스토리지 기반 이동 페이지 경로 저장
-const saveCurrentPath = (
-  strategy: StorageStrategy,
-  currentPath: string
-): void => {
-  switch (strategy) {
-    case "community":
-      setCommunityState({ path: currentPath });
-      break;
-    case "school":
-      setSchoolState({ path: currentPath });
-      break;
-    case "none":
-      break;
+const ROOT_PAGES = [
+  "/",
+  "/home",
+  "/school",
+  "/community",
+  "/bookmarks",
+  "/user",
+];
+
+// 세션스토리지에 페이지 방문 기록 저장
+const saveCurrentPath = (currentPath: string): void => {
+  const urlKey = getUrlKeyFromPath(currentPath);
+
+  if (!urlKey) return;
+
+  // 저장 제외 페이지
+  if (
+    urlKey === "SEARCH_SCHOOL" ||
+    urlKey === "SEARCH_COMMUNITY" ||
+    urlKey === "COMMUNITY_POST"
+  ) {
+    return;
+  }
+
+  if (urlKey === "COMMUNITY" || currentPath.startsWith("/community")) {
+    setCommunityState({ path: currentPath });
+  }
+
+  if (
+    urlKey === "SCHOOL" ||
+    urlKey === "SCHOOL_DETAIL" ||
+    urlKey === "REVIEW"
+  ) {
+    setSchoolState({ path: currentPath });
   }
 };
 
-/**
- * 세션스토리지 기반 이동 처리 함수
- */
-const handleSessionStorage = (
-  urlKey: UrlKeys,
-  navigate: ReturnType<typeof useNavigate>
-): boolean => {
-  switch (urlKey) {
-    case "SCHOOL": {
-      const schoolPath = getSchoolTabPath();
-      if (schoolPath !== "/school") {
-        navigate(schoolPath);
-        return true;
-      }
-      break;
-    }
-    case "COMMUNITY": {
-      const communityState = getCommunityState();
-      if (communityState?.path && communityState.path !== "/community") {
-        navigate(communityState.path);
-        return true;
-      }
-      break;
-    }
-  }
-  return false;
-};
-
-/**
- * 브라우저 히스토리 기반 이동 처리 함수
- */
-const handleBrowserHistory = (
-  navigate: ReturnType<typeof useNavigate>
-): boolean => {
-  navigate(-1);
-  return true;
-};
-
-/**
- * 계층 구조 기반 이동 처리 함수
- */
-const handleHierarchical = (
-  urlKey: UrlKeys,
-  navigate: ReturnType<typeof useNavigate>
-): boolean => {
-  const parentUrlKey = findParentUrlKey(urlKey);
-
-  if (parentUrlKey && parentUrlKey in URL_PATHS) {
-    navigate(URL_PATHS[parentUrlKey]);
-    return true;
-  }
-
-  return false;
-};
-
-/**
- * 루트 페이지 이동 처리 함수
- */
-const handleRoot = (navigate: ReturnType<typeof useNavigate>): boolean => {
-  navigate("/");
-  return true;
-};
-
-/**
- * 기본 이동 처리 함수 (fallback)
- */
-const handleFallback = (
-  pathname: string,
-  navigate: ReturnType<typeof useNavigate>
-): boolean => {
-  navigate(getParentPath(pathname));
-  return true;
-};
-
-/**
- * URL 네비게이션 및 뒤로가기 버튼 관리 훅
- *
- * - 모든 이동 로직 담당
- * - 뒤로가기 버튼 표시/숨김 관리
- */
 export function useUrlNavigation(
   customBackHandler?: () => boolean | void,
   shouldShowBackButtonOverride?: boolean
@@ -124,10 +54,6 @@ export function useUrlNavigation(
   const navigate = useNavigate();
   const location = useLocation();
   const [shouldShowBackButton, setShouldShowBackButton] = useState(false);
-
-  const getUrlKey = useCallback((): UrlKeys | undefined => {
-    return getCurrentUrlKey(location.pathname);
-  }, [location.pathname]);
 
   /**
    * 탭별 이동할 URL 계산 함수
@@ -150,22 +76,18 @@ export function useUrlNavigation(
           if (location.pathname === "/community" && currentType) {
             const categoryName =
               communityState?.communityCategoryName || "top10";
-            const contextualPath = `${URL_PATHS.COMMUNITY}?type=${currentType}&category=${categoryName}`;
-
-            return contextualPath;
+            return `${URL_PATHS.COMMUNITY}?type=${currentType}&category=${categoryName}`;
           }
 
-          // type이 없으면 세션 스토리지 사용
+          // 세션 스토리지 사용
           if (
             communityState?.category &&
             communityState?.communityCategoryName
           ) {
-            const dynamicPath = `${URL_PATHS.COMMUNITY}?type=${communityState.category}&category=${communityState.communityCategoryName}`;
-
-            return dynamicPath;
+            return `${URL_PATHS.COMMUNITY}?type=${communityState.category}&category=${communityState.communityCategoryName}`;
           }
 
-          // 세션 스토리지가 없으면 기본값
+          // 기본값
           return `${URL_PATHS.COMMUNITY}?type=teacher&category=top10`;
         }
         default:
@@ -175,32 +97,11 @@ export function useUrlNavigation(
     [location.pathname, location.search]
   );
 
-  // 페이지 방문 기록을 세션스토리지에 저장
+  // 페이지 경로 저장
   useEffect(() => {
-    const currentUrlKey = getCurrentUrlKey(location.pathname);
-
-    if (!currentUrlKey) {
-      if (isCommunityPost(location.pathname)) {
-        return;
-      }
-      return;
-    }
-
-    // 커뮤니티 게시글 페이지 및 검색 페이지 제외
-    if (
-      currentUrlKey === "COMMUNITY_POST" ||
-      currentUrlKey === "SEARCH_SCHOOL" ||
-      currentUrlKey === "SEARCH_COMMUNITY"
-    ) {
-      return;
-    }
-
-    const parentUrlKey = findParentUrlKey(currentUrlKey);
-    if (parentUrlKey) {
-      const storageStrategy = getStorageStrategy(parentUrlKey);
-      saveCurrentPath(storageStrategy, location.pathname);
-    }
-  }, [location.pathname]);
+    const currentPath = location.pathname + location.search;
+    saveCurrentPath(currentPath);
+  }, [location.pathname, location.search]);
 
   // 뒤로가기 버튼 표시 여부 결정
   useEffect(() => {
@@ -209,85 +110,40 @@ export function useUrlNavigation(
       return;
     }
 
-    const segments = getPathSegments(location.pathname);
+    // 루트 페이지 확인
+    const isRootPage = ROOT_PAGES.includes(location.pathname);
+    setShouldShowBackButton(!isRootPage);
+  }, [shouldShowBackButtonOverride, location.pathname]);
 
-    if (segments.length === 0) {
-      setShouldShowBackButton(false);
-      return;
-    }
-
-    const currentUrlKey = getUrlKey();
-
-    if (currentUrlKey && isRootPage(currentUrlKey)) {
-      setShouldShowBackButton(false);
-      return;
-    }
-
-    setShouldShowBackButton(segments.length >= 1);
-  }, [shouldShowBackButtonOverride, location.pathname, getUrlKey]);
-
-  /**
-   * 전략 기반 이동 실행 함수
-   */
-  const executeNavigationStrategy = useCallback(
-    (strategy: NavigationStrategy, urlKey: UrlKeys): boolean => {
-      switch (strategy) {
-        case "session_storage":
-          return handleSessionStorage(urlKey, navigate);
-        case "browser_history":
-          return handleBrowserHistory(navigate);
-        case "hierarchical":
-          return handleHierarchical(urlKey, navigate);
-        case "root":
-          return handleRoot(navigate);
-        case "fallback":
-          return handleFallback(location.pathname, navigate);
-        default:
-          return false;
-      }
-    },
-    [navigate, location.pathname]
-  );
-
-  /**
-   * 메인 뒤로가기 핸들러
-   */
   const handleBackNavigation = useCallback(() => {
-    if (customBackHandler) {
-      const handled = customBackHandler();
-      if (handled) {
-        return; // 커스텀 핸들러가 처리 완료
+    try {
+      // 커스텀 핸들러 우선 실행
+      if (customBackHandler) {
+        const handled = customBackHandler();
+
+        if (handled === true) {
+          return; // 처리 완료, 추가 네비게이션 없음
+        } else if (handled === false) {
+          // false 반환 시 기본 네비게이션 계속 진행
+        } else {
+          return; // void 반환 시 처리 완료로 간주
+        }
       }
-    }
 
-    const currentUrlKey = getUrlKey();
-    if (!currentUrlKey) {
-      handleFallback(location.pathname, navigate);
-      return;
+      // 커스텀 핸들러가 없거나 false를 반환한 경우
+      navigate(-1);
+    } catch {
+      navigate("/");
     }
-
-    const strategy = getNavigationStrategy(currentUrlKey);
-    const success = executeNavigationStrategy(strategy, currentUrlKey);
-
-    if (!success && strategy !== "fallback") {
-      handleFallback(location.pathname, navigate);
-    }
-  }, [
-    customBackHandler,
-    getUrlKey,
-    executeNavigationStrategy,
-    navigate,
-    location.pathname,
-  ]);
+  }, [customBackHandler, navigate, location.pathname]);
 
   return {
     shouldShowBackButton,
     handleBackNavigation,
-    getCurrentUrlKey: getUrlKey,
+    getCurrentUrlKey: useCallback(
+      () => getUrlKeyFromPath(location.pathname),
+      [location.pathname]
+    ),
     getTabUrl,
-    getNavigationStrategy: useCallback(() => {
-      const urlKey = getUrlKey();
-      return urlKey ? getNavigationStrategy(urlKey) : "fallback";
-    }, [getUrlKey]),
   };
 }

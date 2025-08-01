@@ -1,16 +1,9 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import { UrlKeys } from "@/utils/urlUtils";
 
 import { useUrlNavigation } from "./useUrlNavigation";
-
-/**
- * 뒤로가기 버튼 표시 여부 및 버튼 클릭 시 상호작용 설정
- * @param hasBackButton 뒤로가기 버튼 표시 여부
- * @param onBackButtonClick 뒤로가기 버튼 클릭 시 처리할 커스텀 함수
- * @param shouldShowBackButtonCondition 뒤로가기 버튼 표시 여부를 결정하는 추가 조건 함수
- */
 
 interface HeaderNavigationOptions {
   hasBackButton?: boolean;
@@ -21,14 +14,33 @@ interface HeaderNavigationOptions {
   ) => boolean;
 }
 
+/**
+ * 헤더의 네비게이션 로직을 관리하는 커스텀 훅
+ *
+ * 1. 뒤로가기 버튼 표시 여부
+ * 2. 뒤로가기 버튼 클릭 시 상호작용 설정
+ * 3. 페이지에 따라 네비게이션 동작 결정
+ *
+ * @param {HeaderNavigationOptions} [options={}] - 네비게이션 설정 옵션
+ * @param {boolean} [options.hasBackButton] - 뒤로가기 버튼 강제 표시/숨김 설정
+ * @param {() => void} [options.onBackButtonClick] - 뒤로가기 버튼 클릭 시 실행될 커스텀 핸들러
+ * @param {(currentPath: string, currentUrlKey?: UrlKeys) => boolean} [options.shouldShowBackButtonCondition] - 뒤로가기 버튼 표시 조건 결정
+ *
+ * @returns {object} 네비게이션 관련 상태와 핸들러
+ * @returns {boolean} returns.shouldShowBackButton
+ * @returns {() => void} returns.handleBackNavigation
+ * @returns {() => UrlKeys | undefined} returns.getCurrentUrlKey
+ *
+ * @since 1.0.0
+ * @see {@link useUrlNavigation} URL 네비게이션 로직
+ */
 export function useHeaderNavigation(options: HeaderNavigationOptions = {}) {
   const { hasBackButton, onBackButtonClick, shouldShowBackButtonCondition } =
     options;
 
-  // URL 탐색 훅 활용
   const {
     shouldShowBackButton: baseShowBackButton,
-    handleBackNavigation: baseHandleBackNavigation,
+    handleBackNavigation,
     getCurrentUrlKey,
   } = useUrlNavigation(onBackButtonClick, hasBackButton);
 
@@ -36,7 +48,7 @@ export function useHeaderNavigation(options: HeaderNavigationOptions = {}) {
   const [shouldShowBackButton, setShouldShowBackButton] =
     useState(baseShowBackButton);
 
-  // 조건부 뒤로가기 버튼 표시
+  // 뒤로가기 버튼 표시 여부 결정
   useEffect(() => {
     let shouldShow = baseShowBackButton;
 
@@ -60,7 +72,7 @@ export function useHeaderNavigation(options: HeaderNavigationOptions = {}) {
 
   return {
     shouldShowBackButton,
-    handleBackNavigation: baseHandleBackNavigation,
+    handleBackNavigation,
     getCurrentUrlKey,
   };
 }

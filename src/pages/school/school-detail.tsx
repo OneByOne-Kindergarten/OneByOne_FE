@@ -1,10 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { useCallback } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 
 import Error from "@/components/@shared/layout/error";
 import PageLayout from "@/components/@shared/layout/page-layout";
-import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import NavBar from "@/components/@shared/nav/nav-bar";
 import SchoolInfoChart from "@/components/school/SchoolInfoChart";
 import SchoolInfoItem from "@/components/school/SchoolInfoItem";
@@ -12,7 +10,6 @@ import SchoolMap from "@/components/school/SchoolMap";
 import { SVG_PATHS } from "@/constants/assets-path";
 import { REVIEW_TYPES } from "@/constants/review";
 import { URL_PATHS } from "@/constants/url-path";
-import { useUrlNavigation } from "@/hooks/useUrlNavigation";
 import { getKindergartenDetail } from "@/services/kindergartenService";
 import { Kindergarten } from "@/types/kindergartenDTO";
 
@@ -39,22 +36,21 @@ export default function SchoolDetailPage() {
   const location = useLocation();
   const safeId = id || "unknown";
 
-  // 즐겨찾기 페이지에서 접근했을 경우
-  const customBackHandler = useCallback(() => {
+  const handleBackClick = () => {
     if (location.state?.fromBookmarks) {
       navigate(URL_PATHS.BOOKMARKS);
-      return true;
+      return;
     }
-    return false; // 기본 네비게이션 로직 사용
-  }, [location.state?.fromBookmarks, navigate]);
 
-  const { handleBackNavigation } = useUrlNavigation(customBackHandler);
+    if (location.state?.fromSearch) {
+      navigate(URL_PATHS.SCHOOL);
+      return;
+    }
 
-  const {
-    data: kindergarten,
-    isLoading,
-    error,
-  } = useQuery<Kindergarten, Error>({
+    navigate(-1);
+  };
+
+  const { data: kindergarten, error } = useQuery<Kindergarten, Error>({
     queryKey: ["kindergarten", "detail", safeId],
     queryFn: () => getKindergartenDetail(Number(safeId)),
     enabled: !!id && id !== "unknown",
@@ -112,29 +108,7 @@ export default function SchoolDetailPage() {
     return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
   };
 
-  const handleBackClick = () => {
-    if (location.state?.fromSearch) {
-      const { searchPath } = location.state;
-      if (searchPath) {
-        // 저장된 검색 페이지 경로로 이동
-        navigate(searchPath);
-      } else {
-        // 기본 검색 페이지로 이동
-        const { searchQuery } = location.state;
-        const searchPath = `${URL_PATHS.SEARCH_SCHOOL}?query=${encodeURIComponent(searchQuery)}`;
-        navigate(searchPath);
-      }
-    } else {
-      // useUrlNavigation 훅 사용
-      handleBackNavigation();
-    }
-  };
-
   const renderContent = () => {
-    if (isLoading) {
-      return <LoadingSpinner />;
-    }
-
     if (error || !kindergarten) {
       return (
         <Error type="page">

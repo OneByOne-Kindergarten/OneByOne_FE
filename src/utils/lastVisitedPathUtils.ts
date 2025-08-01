@@ -1,4 +1,5 @@
 const LAST_VISITED_PATHS_KEY = "lastVisitedPaths";
+const NAVIGATION_HISTORY_KEY = "navigationHistory";
 
 interface LastVisitedPaths {
   community: {
@@ -12,6 +13,9 @@ interface LastVisitedPaths {
   review?: {
     path: string;
     type: "work" | "learning";
+  };
+  search?: {
+    path: string;
   };
 }
 
@@ -229,6 +233,42 @@ export function getSchoolTabPath(): string {
     return schoolState.path;
   }
 
-  // 둘 다 없으면 기본 경로
   return "/school";
+}
+
+// 네비게이션 히스토리 관리
+export function saveNavigationHistory(path: string): void {
+  const history = getNavigationHistory();
+
+  // 검색 페이지는 히스토리에 추가하지 않음
+  if (path.includes("/search/")) {
+    return;
+  }
+
+  // 같은 페이지 연속 방문 방지
+  if (history.length > 0 && history[history.length - 1] === path) {
+    return;
+  }
+
+  // 최대 10개까지만 유지
+  const newHistory = [...history, path].slice(-10);
+  sessionStorage.setItem(NAVIGATION_HISTORY_KEY, JSON.stringify(newHistory));
+}
+
+export function getNavigationHistory(): string[] {
+  const history = sessionStorage.getItem(NAVIGATION_HISTORY_KEY);
+  return history ? JSON.parse(history) : [];
+}
+
+export function getLastNonSearchPage(): string | null {
+  const history = getNavigationHistory();
+
+  // 뒤에서부터 검색이 아닌 페이지 찾기
+  for (let i = history.length - 1; i >= 0; i--) {
+    const page = history[i];
+    if (!page.includes("/search/")) {
+      return page;
+    }
+  }
+  return null;
 }

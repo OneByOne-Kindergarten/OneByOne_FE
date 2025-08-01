@@ -1,4 +1,4 @@
-import { Suspense, useState } from "react";
+import { Suspense, useCallback, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import Error from "@/components/@shared/layout/error";
@@ -14,12 +14,25 @@ import {
   useLikeStatus,
   useToggleLike,
 } from "@/hooks/useCommunity";
+import { useUrlNavigation } from "@/hooks/useUrlNavigation";
 
 export default function CommunityPostPage() {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
   const location = useLocation();
+  const navigate = useNavigate();
   const postId = id ? Number(id) : 0;
+
+  const customBackHandler = useCallback(() => {
+    if (location.state?.fromSearch) {
+      navigate(URL_PATHS.COMMUNITY);
+      return true;
+    }
+
+    // 브라우저 기본 뒤로가기
+    return false;
+  }, [location.state?.fromSearch, navigate]);
+
+  const { handleBackNavigation } = useUrlNavigation(customBackHandler);
 
   const [replyToUser, setReplyToUser] = useState<string | undefined>(undefined);
   const [replyParentId, setReplyParentId] = useState<number | undefined>(
@@ -41,21 +54,7 @@ export default function CommunityPostPage() {
   const post = postData?.data;
 
   const handleBackClick = () => {
-    // 검색 페이지에서 온 경우 검색 페이지로 직접 이동
-    if (location.state?.fromSearch) {
-      const { searchPath } = location.state;
-      if (searchPath) {
-        // 저장된 검색 페이지 경로로 이동
-        navigate(searchPath);
-      } else {
-        // 기본 검색 페이지로 이동
-        const { searchQuery, category } = location.state;
-        const searchPath = `${URL_PATHS.SEARCH_COMMUNITY}?query=${encodeURIComponent(searchQuery)}${category ? `&category=${category}` : ""}`;
-        navigate(searchPath);
-      }
-    } else {
-      navigate(-1);
-    }
+    handleBackNavigation();
   };
 
   const handleLikeToggle = async () => {
@@ -98,10 +97,11 @@ export default function CommunityPostPage() {
 
   return (
     <PageLayout
+      headerType="community"
       isGlobalNavBar={false}
       title={`원바원 | ${post?.title || "게시글"}`}
       description={`원바원 커뮤니티 게시글 - ${post?.title || ""}`}
-      headerTitle={post?.title || "게시글"}
+      headerTitle="커뮤니티"
       currentPath={`/community/${id}`}
       mainBg="gray"
       mainClassName="flex flex-1 flex-col gap-2 mb-16 mt-14"
