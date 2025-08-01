@@ -39,6 +39,7 @@ export default function CommentCard({
           <ActionDropDown
             targetId={comment.id}
             targetType="COMMENT"
+            targetUserEmail={comment.email}
             authorNickname={nickName}
             postId={postId}
           />

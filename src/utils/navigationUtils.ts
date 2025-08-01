@@ -12,7 +12,7 @@ export const MAIN_TAB_KEYS: UrlKeys[] = [
   "USER",
 ];
 
-// 필요한 헬퍼 함수들 (GNB에서 사용)
+// GNB에서 사용하는 함수
 export const getCurrentUrlKey = (currentPath: string): UrlKeys | undefined => {
   return getUrlKeyFromPath(currentPath);
 };
@@ -80,6 +80,7 @@ export const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
   NOTICE_DETAIL: [],
   ALARM: [],
   ALARM_SETTING: [],
+  BLOCK: [],
   USER_PROFILE_EDITOR: [],
   USER_PASSWORD_EDITOR: [],
   PERMISSION_TEST: [],

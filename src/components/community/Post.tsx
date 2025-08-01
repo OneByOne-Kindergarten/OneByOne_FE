@@ -68,6 +68,7 @@ export default function Post({
           <ActionDropDown
             targetId={post.id}
             targetType="POST"
+            targetUserEmail={post.userEmail}
             authorNickname={post.userNickname}
             onDeleteSuccess={handleDeleteSuccess}
           />

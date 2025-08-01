@@ -1,6 +1,5 @@
 import clsx from "clsx";
 
-
 import { SVG_PATHS } from "@/constants/assets-path";
 import type { UserRole } from "@/types/userDTO";
 import { cn } from "@/utils/cn";
@@ -36,10 +35,10 @@ const PROFILE_CONFIG: Record<
 };
 
 export default function ProfileImage({
-  size = "md",
+  size = "lg",
   role,
 }: {
-  size?: "md" | "sm";
+  size?: "lg" | "md" | "sm";
   role?: UserRole;
 }) {
   const profileData = PROFILE_CONFIG[role || "GENERAL"];
@@ -50,7 +49,8 @@ export default function ProfileImage({
         "flex items-center justify-center overflow-hidden rounded-full",
         profileData.className,
         clsx({
-          "h-20 w-20": size === "md",
+          "h-20 w-20": size === "lg",
+          "h-12 w-12": size === "md",
           "h-7 w-7": size === "sm",
         })
       )}
@@ -58,8 +58,8 @@ export default function ProfileImage({
       <img
         src={profileData.image}
         alt={profileData.altText}
-        width={size === "md" ? 38 : 15}
-        height={size === "md" ? 47 : 19}
+        width={size === "lg" ? 38 : size === "md" ? 24 : 15}
+        height={size === "lg" ? 47 : size === "md" ? 33 : 19}
         className="object-cover"
       />
     </div>

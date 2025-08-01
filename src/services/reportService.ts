@@ -8,9 +8,9 @@ export const reportService = {
     return await apiCall<ReportRequest, ReportResponse>({
       method: "POST",
       path: API_PATHS.REPORT.BASE,
-      data,
       withAuth: true,
       withCredentials: true,
+      data,
     });
   },
 

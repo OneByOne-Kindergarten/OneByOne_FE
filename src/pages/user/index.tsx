@@ -64,6 +64,12 @@ export default function User() {
               to={URL_PATHS.ALARM_SETTING}
               label="알림 설정"
             />
+            <MenuItem
+              iconPath={SVG_PATHS.LEAVE}
+              iconAlt="차단 아이콘"
+              to={URL_PATHS.BLOCK}
+              label="차단 설정"
+            />
           </menu>
         </section>
 

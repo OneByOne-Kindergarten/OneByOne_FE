@@ -40,6 +40,7 @@ const NoticeDetailPage = lazy(() => import("../pages/notice/notice-detail"));
 const AlarmPage = lazy(() => import("../pages/alarm"));
 const AlarmSettingPage = lazy(() => import("../pages/alarm/alarm-setting"));
 const ReportPage = lazy(() => import("../pages/report"));
+const BlockPage = lazy(() => import("../pages/block"));
 
 const routes = {
   direct: [
@@ -83,6 +84,7 @@ const routes = {
     { path: URL_PATHS.NOTICE_DETAIL, element: <NoticeDetailPage /> },
     { path: URL_PATHS.ALARM, element: <AlarmPage /> },
     { path: URL_PATHS.ALARM_SETTING, element: <AlarmSettingPage /> },
+    { path: URL_PATHS.BLOCK, element: <BlockPage /> },
     // 신고
     { path: URL_PATHS.REPORT, element: <ReportPage /> },
   ],

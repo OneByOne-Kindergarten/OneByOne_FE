@@ -24,13 +24,16 @@ export default function HomePage() {
     >
       <section className="flex flex-col gap-4">
         <NoticeCard />
-        <Link to={URL_PATHS.SCHOOL}>
+        <Link
+          to={URL_PATHS.SCHOOL}
+          className="block overflow-hidden rounded-3xl"
+        >
           <img
             src={IMAGE_PATHS.BANNER.SCHOOL}
             alt="유치원 찾기 배너"
             width={335}
             height={190}
-            className="h-full w-full rounded-lg object-cover"
+            className="h-full w-full object-cover transition-all duration-300 ease-out hover:scale-110 active:scale-110"
           />
         </Link>
       </section>

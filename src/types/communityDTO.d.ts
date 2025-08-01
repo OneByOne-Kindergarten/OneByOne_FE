@@ -30,6 +30,7 @@ export interface CommunityPostItem {
   userNickname: string;
   categoryDescription: string;
   userRole: "TEACHER" | "PROSPECTIVE_TEACHER" | "ADMIN";
+  userEmail: string;
   career: string | null;
   viewCount: number;
   likeCount: number;
@@ -113,6 +114,7 @@ export interface CommentItem {
   career: string | null;
   id: number;
   content: string;
+  email: string;
   nickName: string;
   userRole: UserRole;
   createdAt: string;

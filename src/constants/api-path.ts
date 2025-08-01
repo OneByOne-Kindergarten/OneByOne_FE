@@ -78,6 +78,11 @@ export const API_PATHS = {
     ALARM: "/users/notification-settings", // 알림 설정 조회, 수정
     WITHDRAW: "/users/withdraw",
   },
+  BLOCK: {
+    BASE: "/blocks",
+    GET: "/blocks/list",
+    DELETE: (targetUserEmail: string) => `/blocks/${targetUserEmail}`,
+  },
   REPORT: {
     BASE: "/report",
     MY_REPORT: "/report/my",

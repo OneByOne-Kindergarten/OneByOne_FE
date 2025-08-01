@@ -41,6 +41,8 @@ export const URL_PATHS = {
   // 프로필 - 계정 설정
   USER_PASSWORD_EDITOR: "/user/account-setting/password",
   USER_ACCOUNT_SETTING: "/user/account-setting",
+  // 프로필 - 차단 설정
+  BLOCK: "/user/block",
   // 프로필 - 공지사항
   NOTICE: "/user/notice",
   NOTICE_DETAIL: "/user/notice/:id",
