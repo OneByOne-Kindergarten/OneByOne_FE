@@ -26,6 +26,7 @@ export default function PostButton({
         onClick: handleClick,
         border: isDisabled ? "gray" : "black",
         shadow: "lg",
+        disabled: isDisabled,
       }}
     >
       <img

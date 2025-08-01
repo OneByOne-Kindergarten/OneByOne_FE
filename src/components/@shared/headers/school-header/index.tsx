@@ -100,6 +100,7 @@ export default function SchoolHeader({
               alt="북마크"
               width={24}
               height={24}
+              className="duration-200 hover:opacity-80 active:opacity-70"
             />
           </button>
         )}
@@ -107,7 +108,13 @@ export default function SchoolHeader({
           <img src={SVG_PATHS.MAP} alt="지도" width={24} height={24} />
         </button> */}
         <button onClick={handleSearch} aria-label="검색">
-          <img src={SVG_PATHS.SEARCH} alt="검색" width={24} height={24} />
+          <img
+            src={SVG_PATHS.SEARCH}
+            alt="검색"
+            width={24}
+            height={24}
+            className="duration-200 hover:opacity-80 active:opacity-70"
+          />
         </button>
       </div>
     </Header>

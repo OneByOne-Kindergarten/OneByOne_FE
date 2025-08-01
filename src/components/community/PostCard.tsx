@@ -43,7 +43,10 @@ export default function PostCard({
             />
           )}
         </div>
-        <Link to={`/community/${post.id}`}>
+        <Link
+          to={`/community/${post.id}`}
+          className="duration-200 ease-out hover:brightness-75 active:brightness-75"
+        >
           <p className="line-clamp-1 font-semibold text-primary-dark01">
             {post.title}
           </p>

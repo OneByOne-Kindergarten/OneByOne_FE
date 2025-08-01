@@ -37,7 +37,7 @@ export default function MenuItem({
   );
 
   return (
-    <li className="flex flex-1 items-center justify-between">
+    <li className="flex flex-1 items-center justify-between duration-200 active:brightness-75">
       {to ? (
         <Link to={to} className="flex flex-1 items-center justify-between">
           {content}

@@ -30,7 +30,10 @@ export default function User() {
             <ProfileImage role={user?.role} />
             <ProfileDetail user={user} />
           </div>
-          <Link to={URL_PATHS.USER_PROFILE}>
+          <Link
+            to={URL_PATHS.USER_PROFILE}
+            className="duration-200 active:brightness-75"
+          >
             <img
               src={SVG_PATHS.ARROW.right}
               alt="오른쪽 방향 화살표 아이콘"

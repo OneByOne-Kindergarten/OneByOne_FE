@@ -42,12 +42,7 @@ export default function SchoolDetailPage() {
       return;
     }
 
-    if (location.state?.fromSearch) {
-      navigate(URL_PATHS.SCHOOL);
-      return;
-    }
-
-    navigate(-1);
+    navigate(URL_PATHS.SCHOOL);
   };
 
   const { data: kindergarten, error } = useQuery<Kindergarten, Error>({

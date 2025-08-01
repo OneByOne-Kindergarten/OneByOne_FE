@@ -71,9 +71,18 @@ function Option({
           alt={icon.alt || label}
           width={icon.width || "20"}
           height={icon.height || "18"}
+          className="p-1"
         />
       )}
-      <span className={isActive ? "font-bold" : ""}>{label}</span>
+      <span
+        className={
+          isActive
+            ? "font-bold"
+            : "duration-200 ease-out hover:brightness-75 active:brightness-75"
+        }
+      >
+        {label}
+      </span>
     </div>
   );
 

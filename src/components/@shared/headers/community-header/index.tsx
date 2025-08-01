@@ -40,7 +40,13 @@ export default function CommunityHeader({
     >
       <div className="flex items-center gap-4">
         <button onClick={handleSearch} aria-label="검색">
-          <img src={SVG_PATHS.SEARCH} alt="검색" width={24} height={24} />
+          <img
+            src={SVG_PATHS.SEARCH}
+            alt="검색"
+            width={24}
+            height={24}
+            className="duration-200 hover:opacity-80 active:opacity-70"
+          />
         </button>
         {hasWriteButton && (
           <Link

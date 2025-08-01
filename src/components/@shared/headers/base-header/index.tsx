@@ -59,7 +59,11 @@ export default function Header({
           }}
           aria-label="뒤로 가기"
         >
-          <img src={SVG_PATHS.ARROW.left} alt="뒤로 가기" className="h-6 w-6" />
+          <img
+            src={SVG_PATHS.ARROW.left}
+            alt="뒤로 가기"
+            className="h-6 w-6 duration-200 hover:opacity-80 active:opacity-70"
+          />
         </button>
       )}
       <div className="flex w-full items-center justify-between">

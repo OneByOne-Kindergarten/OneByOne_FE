@@ -108,7 +108,7 @@ export default function GlobalNavBar({ currentPath }: GlobalNavBarProps) {
             aria-label={item.ariaLabel}
             data-button-name={item.dataButtonName}
             data-section-name="gnb"
-            className={`flex flex-col items-center text-xxs transition-colors duration-200 ${
+            className={`flex flex-col items-center text-xxs transition-colors duration-200 active:brightness-90 ${
               isActive
                 ? "text-primary"
                 : "text-primary-normal03 hover:text-primary-normal02"
