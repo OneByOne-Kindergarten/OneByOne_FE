@@ -43,7 +43,7 @@ export default function SchoolCard({
     <div className="bg-white px-5 py-4">
       <Link
         to={`${URL_PATHS.SCHOOL}/${id}`}
-        className="flex w-full items-center justify-between"
+        className="flex w-full items-center justify-between duration-200 ease-out hover:opacity-80 active:opacity-70"
       >
         <div className="flex flex-col gap-2.5">
           <Badge variant="tertiary">{establishment}</Badge>

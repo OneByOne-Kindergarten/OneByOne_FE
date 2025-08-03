@@ -27,7 +27,7 @@ export default function RecentSearches({ onSelectQuery }: RecentSearchesProps) {
           <button
             onClick={clearAllRecentSearches}
             aria-label="검색어 전체 삭제"
-            className="font-semibold text-primary-normal03 hover:opacity-70"
+            className="font-semibold text-primary-normal03 hover:opacity-70 focus:outline-none active:scale-95"
           >
             전체삭제
           </button>
@@ -47,14 +47,14 @@ export default function RecentSearches({ onSelectQuery }: RecentSearchesProps) {
             >
               <button
                 onClick={() => handleRecentSearchClick(query)}
-                className="text-sm text-primary-dark01 hover:opacity-70"
+                className="text-sm text-primary-dark01 hover:brightness-50 focus:outline-none active:brightness-50"
                 aria-label={`${query} 검색`}
               >
                 {query}
               </button>
               <button
                 onClick={(e) => handleRemoveSearch(query, e)}
-                className="ml-1 text-xs text-gray-400 hover:text-gray-600"
+                className="ml-1 text-xs text-gray-400 hover:brightness-50 focus:outline-none active:scale-95"
                 aria-label="검색어 삭제"
               >
                 <img

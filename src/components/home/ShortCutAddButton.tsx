@@ -4,10 +4,10 @@ export default function ShortCutAddButton({
   navigateToEdit: () => void;
 }) {
   return (
-    <li className="flex flex-col items-center gap-1.5">
+    <li className="flex flex-col items-center gap-1.5 duration-100 ease-out hover:opacity-80 active:scale-95">
       <button
         onClick={navigateToEdit}
-        className="ho flex h-14 w-14 items-center justify-center rounded-full bg-primary-foreground duration-100 ease-out active:brightness-105"
+        className="ho flex h-14 w-14 items-center justify-center rounded-full bg-primary-foreground"
       >
         <span className="my-auto text-4xl font-light text-primary-normal02">
           +

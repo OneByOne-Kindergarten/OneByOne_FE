@@ -24,7 +24,7 @@ export default function PostCard({
   showDropdown = false,
 }: PostCardProps) {
   return (
-    <li className="flex flex-1 items-center gap-3 border-b border-primary-light02 pb-4">
+    <div className="flex flex-1 items-center gap-3 border-b border-primary-light02 pb-4">
       <div className="flex flex-1 flex-col gap-1.5">
         <div className="flex justify-between gap-2">
           <div className="flex gap-2">
@@ -45,7 +45,7 @@ export default function PostCard({
         </div>
         <Link
           to={`/community/${post.id}`}
-          className="duration-200 ease-out hover:brightness-75 active:brightness-75"
+          className="duration-200 ease-out hover:brightness-50 active:brightness-50"
         >
           <p className="line-clamp-1 font-semibold text-primary-dark01">
             {post.title}
@@ -91,6 +91,6 @@ export default function PostCard({
           </div>
         </div>
       </div>
-    </li>
+    </div>
   );
 }

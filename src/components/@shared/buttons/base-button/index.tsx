@@ -5,16 +5,16 @@ import * as React from "react";
 import { cn } from "@/utils/cn";
 
 const buttonVariants = cva(
-  "inline-flex h-fit items-center justify-center gap-2 whitespace-nowrap transition-all duration-200 ease-out active:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 disabled:scale-100 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex h-fit items-center justify-center gap-2 whitespace-nowrap transition-all hover:opacity-80 active:scale-95 duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 disabled:scale-100 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
-        default: "bg-primary-foreground text-primary-normal03 hover:opacity-80",
-        primary: "bg-primary text-white disabled:opacity-50 hover:opacity-80",
+        default: "bg-primary-foreground text-primary-normal03 ",
+        primary: "bg-primary text-white disabled:opacity-50",
         secondary:
           "bg-secondary-main text-primary disabled:bg-primary-normal01 disabled:opacity-40",
         tertiary:
-          "bg-transparent border border-tertiary-3 text-tertiary-3 disabled:text-primary-normal03 hover:opacity-80 active:border-tertiary-3 active:text-tertiary-3",
+          "bg-transparent border border-tertiary-3 text-tertiary-3 disabled:text-primary-normal03 active:border-tertiary-3 active:text-tertiary-3",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         transparent:

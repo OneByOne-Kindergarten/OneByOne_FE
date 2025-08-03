@@ -6,11 +6,11 @@ export default function ShortCutButton({ shortcut }: { shortcut: Shortcut }) {
   return (
     <li
       key={shortcut.name}
-      className="flex flex-col items-center gap-1.5 duration-200 ease-out"
+      className="flex flex-col items-center gap-1.5 duration-200 ease-out hover:opacity-80 active:scale-95"
     >
       <Link
         to={shortcut.link}
-        className="relative flex h-14 w-14 items-center justify-center rounded-full bg-primary-light01 active:brightness-105"
+        className="relative flex h-14 w-14 items-center justify-center rounded-full bg-primary-light01"
       >
         <img
           src={shortcut.iconName}

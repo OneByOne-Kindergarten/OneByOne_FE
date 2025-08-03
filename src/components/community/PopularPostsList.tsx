@@ -1,17 +1,34 @@
+import { useEffect, useRef, useState } from "react";
+
 import Empty from "@/components/@shared/layout/empty";
-import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import PostCard from "@/components/community/PostCard";
 import { SVG_PATHS } from "@/constants/assets-path";
 import { usePopularPosts } from "@/hooks/useCommunity";
 import { getCategoryLabel } from "@/utils/categoryUtils";
 
 export default function PopularPostsList() {
-  const { data: popularPostsData, isLoading } = usePopularPosts();
+  const { data: popularPostsData } = usePopularPosts();
   const posts = popularPostsData?.data || [];
+  const [isAnimationStarted, setIsAnimationStarted] = useState(false);
+  const firstCardRef = useRef<HTMLLIElement | null>(null);
 
-  if (isLoading) {
-    return <LoadingSpinner type="element" />;
-  }
+  // 게시글 카드 애니메이션 시작
+  useEffect(() => {
+    if (!firstCardRef.current || posts.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsAnimationStarted(true);
+        }
+      },
+      { threshold: 0.1, rootMargin: "50px" }
+    );
+
+    observer.observe(firstCardRef.current);
+
+    return () => observer.disconnect();
+  }, [posts.length]);
 
   return (
     <section className="mb-12 flex flex-col gap-9 pb-1.5">
@@ -28,13 +45,25 @@ export default function PopularPostsList() {
       ) : (
         <ul className="flex flex-col gap-5">
           {posts.map((post, index) => (
-            <PostCard
+            <li
               key={`post-${post.id}-${index}`}
-              post={post}
-              index={index}
-              currentCategory="top10"
-              getCategoryLabel={getCategoryLabel}
-            />
+              ref={index === 0 ? firstCardRef : null}
+              className={`transform transition-all duration-500 ease-out ${
+                isAnimationStarted
+                  ? "translate-x-0 scale-100 opacity-100"
+                  : "translate-x-8 scale-95 opacity-0"
+              }`}
+              style={{
+                transitionDelay: `${index * 150}ms`,
+              }}
+            >
+              <PostCard
+                post={post}
+                index={index}
+                currentCategory="top10"
+                getCategoryLabel={getCategoryLabel}
+              />
+            </li>
           ))}
         </ul>
       )}

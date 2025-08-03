@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import PostButton from "@/components/@shared/buttons/post-button";
 import PageLayout from "@/components/@shared/layout/page-layout";
+import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import NavBar from "@/components/@shared/nav/nav-bar";
 import CategorySelector from "@/components/community/CategorySelector";
 import PopularPostsList from "@/components/community/PopularPostsList";
@@ -85,7 +86,9 @@ export default function CommunityPage() {
         />
 
         {categoryName === "top10" ? (
-          <PopularPostsList />
+          <Suspense fallback={<LoadingSpinner type="element" />}>
+            <PopularPostsList />
+          </Suspense>
         ) : (
           <CommunityPostsList
             type={communityType as "teacher" | "pre-teacher"}
