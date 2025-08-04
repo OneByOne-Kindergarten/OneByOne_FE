@@ -151,6 +151,7 @@ export const getComments = async (
   return apiCall<void, CommentListResponse>({
     method: "GET",
     path: `${API_PATHS.COMMUNITY.COMMENT.ALL(params.postId)}?${queryParams}`,
+    withAuth: true,
   });
 };
 
