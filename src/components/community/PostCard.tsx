@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 import Badge from "@/components/@shared/badge";
-import ActionDropDown from "@/components/@shared/drop-down/report-drop-down";
+import UserActionDropDown from "@/components/@shared/drop-down/report-drop-down";
 import { SVG_PATHS } from "@/constants/assets-path";
 import type { CommunityPostItem } from "@/types/communityDTO";
 import { formatDate } from "@/utils/dateUtils";
@@ -36,7 +36,7 @@ export default function PostCard({
             </Badge>
           </div>
           {showDropdown && (
-            <ActionDropDown
+            <UserActionDropDown
               targetId={post.id}
               targetType="POST"
               authorNickname={post.userNickname}

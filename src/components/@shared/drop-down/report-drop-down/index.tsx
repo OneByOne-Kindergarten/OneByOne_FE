@@ -9,7 +9,7 @@ import { userAtom } from "@/stores/userStore";
 
 type ReportTargetType = "REVIEW" | "POST" | "COMMENT";
 
-interface ActionDropDownProps {
+interface UserActionDropDownProps {
   targetId: number;
   targetType: ReportTargetType;
   authorNickname?: string;
@@ -18,14 +18,14 @@ interface ActionDropDownProps {
   onDeleteSuccess?: () => void;
 }
 
-export default function ActionDropDown({
+export default function UserActionDropDown({
   targetId,
   targetType,
   authorNickname,
   targetUserEmail,
   postId,
   onDeleteSuccess,
-}: ActionDropDownProps) {
+}: UserActionDropDownProps) {
   const navigate = useNavigate();
   const currentUser = useAtomValue(userAtom);
   const deletePost = useDeletePost();

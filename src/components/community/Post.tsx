@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import AlertCard from "@/components/@shared/alert/alert-card";
 import Badge from "@/components/@shared/badge";
 import LikeToggle from "@/components/@shared/buttons/like-toggle";
-import ActionDropDown from "@/components/@shared/drop-down/report-drop-down";
+import UserActionDropDown from "@/components/@shared/drop-down/report-drop-down";
 import ChatCount from "@/components/community/ChatCount";
 import { SVG_PATHS } from "@/constants/assets-path";
 import { CATEGORY_LABELS } from "@/constants/community";
@@ -65,7 +65,7 @@ export default function Post({
               </ul>
             </div>
           </div>
-          <ActionDropDown
+          <UserActionDropDown
             targetId={post.id}
             targetType="POST"
             targetUserEmail={post.userEmail}

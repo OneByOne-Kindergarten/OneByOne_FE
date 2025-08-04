@@ -1,4 +1,4 @@
-import ActionDropDown from "@/components/@shared/drop-down/report-drop-down";
+import UserActionDropDown from "@/components/@shared/drop-down/report-drop-down";
 import CommentUserInfo from "@/components/community/CommentUserInfo";
 import { SVG_PATHS } from "@/constants/assets-path";
 import type { CommentItem } from "@/types/communityDTO";
@@ -27,10 +27,11 @@ export default function ReplyCard({
         <div className="flex flex-1 flex-col gap-2">
           <div className="flex justify-between">
             <CommentUserInfo reply={reply} postAuthor={postAuthor} />
-            <ActionDropDown
+            <UserActionDropDown
               targetId={reply.id}
               targetType="COMMENT"
               authorNickname={reply.nickName}
+              targetUserEmail={reply.email}
               postId={postId}
             />
           </div>
