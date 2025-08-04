@@ -1,4 +1,5 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import NavBar from "@/components/@shared/nav/nav-bar";
@@ -29,9 +30,13 @@ type StatsType = keyof typeof SCHOOL_STATS_COLORS;
 
 interface SchoolInfoOverViewProps {
   safeId: string;
+  onKindergartenLoad?: (name: string) => void;
 }
 
-export default function SchoolInfoOverView({ safeId }: SchoolInfoOverViewProps) {
+export default function SchoolInfoOverView({
+  safeId,
+  onKindergartenLoad,
+}: SchoolInfoOverViewProps) {
   const { data: kindergarten } = useSuspenseQuery<Kindergarten, Error>({
     queryKey: ["kindergarten", "detail", safeId],
     queryFn: () => getKindergartenDetail(Number(safeId)),
@@ -91,6 +96,13 @@ export default function SchoolInfoOverView({ safeId }: SchoolInfoOverViewProps) 
 
   const classStats = calculateStats(kindergarten);
   const studentStats = calculateStudentStats(kindergarten);
+
+  // 부모 컴포넌트에 유치원 이름 전달 (useEffect 사용)
+  useEffect(() => {
+    if (onKindergartenLoad && kindergarten.name) {
+      onKindergartenLoad(kindergarten.name);
+    }
+  }, [onKindergartenLoad, kindergarten.name]);
 
   return (
     <>
