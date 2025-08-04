@@ -65,6 +65,7 @@ export const getCommunityPosts = async (
   return apiCall<void, CommunityPostData>({
     method: "GET",
     path: `${API_PATHS.COMMUNITY.BASE}?${queryParams.toString()}`,
+    withAuth: true,
   });
 };
 
