@@ -10,7 +10,9 @@ import { useFavorites } from "@/hooks/useFavorites";
 
 export default function Bookmarks() {
   const navigate = useNavigate();
-  const { favorites, isLoading, isError, error } = useFavorites();
+  const { favorites, isLoading, isError, error } = useFavorites({
+    enabled: true,
+  });
 
   const handleKindergartenClick = (id: string) => {
     navigate(`/school/${id}`, {

@@ -32,7 +32,7 @@ export default function SchoolHeader({
   const navigate = useNavigate();
   const [isFavorite, setIsFavorite] = useState(false);
   const [favoriteLoading, setFavoriteLoading] = useState(false);
-  const { refetch } = useFavorites();
+  const { refetch } = useFavorites({ enabled: showBookmark });
 
   // 즐겨찾기 상태 확인
   useEffect(() => {
