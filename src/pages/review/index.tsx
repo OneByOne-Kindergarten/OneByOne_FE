@@ -1,3 +1,4 @@
+import { useAtom } from "jotai";
 import { Suspense } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
@@ -10,9 +11,10 @@ import TotalRatingSection from "@/components/review/TotalRatingSection";
 import { REVIEW_TYPES } from "@/constants/review";
 import { useKindergartenName } from "@/hooks/useKindergartenName";
 import { useReviewPage } from "@/hooks/useReviewPage";
+import { userAtom } from "@/stores/userStore";
 import { SortType } from "@/types/reviewDTO";
 
-const SCHOOL_DEFAULT_NAME = "유치원";
+const SCHOOL_DEFAULT_NAME = "";
 
 function ReviewContent() {
   const { id: kindergartenId } = useParams<{ id: string }>();
@@ -21,6 +23,7 @@ function ReviewContent() {
   const sortType =
     (searchParams.get("sortType") as SortType) || SortType.LATEST;
   const navigate = useNavigate();
+  const [user] = useAtom(userAtom);
 
   const safeKindergartenId = kindergartenId || "unknown";
   const { data: kindergartenData } = useKindergartenName(safeKindergartenId);
@@ -29,6 +32,16 @@ function ReviewContent() {
     useReviewPage(safeKindergartenId, type, sortType);
 
   const kindergartenName = kindergartenData?.name || SCHOOL_DEFAULT_NAME;
+
+  const handleWriteReview = () => {
+    if (safeKindergartenId && user && safeKindergartenId !== "unknown") {
+      if (user.role === "TEACHER") {
+        navigate(`/school/${safeKindergartenId}/review/new?type=work`);
+      } else if (user.role === "PROSPECTIVE_TEACHER") {
+        navigate(`/school/${safeKindergartenId}/review/new?type=learning`);
+      }
+    }
+  };
 
   return (
     <>
@@ -50,9 +63,7 @@ function ReviewContent() {
         initialSortType={sortType}
       />
       <PostButton
-        onClick={() =>
-          navigate(`/school/${safeKindergartenId}/review/new?type=${type}`)
-        }
+        onClick={handleWriteReview}
         label="리뷰쓰기"
         isDisabled={isDisabled}
       />

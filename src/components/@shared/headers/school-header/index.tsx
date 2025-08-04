@@ -9,6 +9,7 @@ import {
   checkFavoriteStatus,
   toggleFavorite as toggleFavoriteService,
 } from "@/services/favoriteService";
+import { isValidId, safeParseId } from "@/utils/idValidation";
 
 interface SchoolHeaderProps {
   title?: string;
@@ -36,16 +37,19 @@ export default function SchoolHeader({
 
   // 즐겨찾기 상태 확인
   useEffect(() => {
-    if (showBookmark && kindergartenId) {
+    if (showBookmark && kindergartenId && isValidId(kindergartenId)) {
       fetchFavoriteStatus();
     }
   }, [showBookmark, kindergartenId]);
 
   const fetchFavoriteStatus = async () => {
-    if (!kindergartenId) return;
+    if (!kindergartenId || !isValidId(kindergartenId)) return;
+
+    const numericId = safeParseId(kindergartenId);
+    if (!numericId) return;
 
     try {
-      const response = await checkFavoriteStatus(Number(kindergartenId));
+      const response = await checkFavoriteStatus(numericId);
       setIsFavorite(response.data);
     } catch (error) {
       console.error("즐겨찾기 상태 확인 실패:", error);
@@ -54,11 +58,15 @@ export default function SchoolHeader({
 
   // 즐겨찾기 토글
   const handleToggleFavorite = useCallback(async () => {
-    if (!kindergartenId || favoriteLoading) return;
+    if (!kindergartenId || favoriteLoading || !isValidId(kindergartenId))
+      return;
+
+    const numericId = safeParseId(kindergartenId);
+    if (!numericId) return;
 
     try {
       setFavoriteLoading(true);
-      const result = await toggleFavoriteService(Number(kindergartenId));
+      const result = await toggleFavoriteService(numericId);
 
       if (result.success) {
         setIsFavorite(result.data.favorite);
@@ -104,9 +112,6 @@ export default function SchoolHeader({
             />
           </button>
         )}
-        {/* <button onClick={handleMap} aria-label="지도">
-          <img src={SVG_PATHS.MAP} alt="지도" width={24} height={24} />
-        </button> */}
         <button onClick={handleSearch} aria-label="검색">
           <img
             src={SVG_PATHS.SEARCH}

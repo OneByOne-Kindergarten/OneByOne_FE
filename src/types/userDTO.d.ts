@@ -10,6 +10,9 @@ export interface User {
   profileImageUrl: string | null;
   role: UserRole;
   career: string;
+  hasWrittenReview: boolean;
+  restoredUser: boolean;
+  AlarmSetting;
   homeShortcut?: HomeShortcut;
   kindergarten?: {
     name: string;

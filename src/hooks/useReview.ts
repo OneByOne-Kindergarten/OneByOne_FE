@@ -20,6 +20,7 @@ import type {
   WorkReview,
 } from "@/types/reviewDTO";
 import { SortType } from "@/types/reviewDTO";
+import { safeParseId } from "@/utils/idValidation";
 
 type ReviewData = InternshipReview | WorkReview;
 
@@ -46,9 +47,16 @@ const EMPTY_REVIEW_RESPONSE: ReviewResponse = {
  * @returns 근무 리뷰 데이터
  */
 export const useWorkReviews = (kindergartenId: string, sortType?: SortType) => {
+  const numericId = safeParseId(kindergartenId);
+
   return useSuspenseQuery({
     queryKey: ["workReviews", kindergartenId, sortType],
-    queryFn: () => getWorkReviews(Number(kindergartenId), sortType),
+    queryFn: () => {
+      if (!numericId) {
+        return Promise.resolve({ content: [], totalPages: 0 });
+      }
+      return getWorkReviews(numericId, sortType);
+    },
   });
 };
 
@@ -62,9 +70,16 @@ export const useInternshipReviews = (
   kindergartenId: string,
   sortType?: SortType
 ) => {
+  const numericId = safeParseId(kindergartenId);
+
   return useSuspenseQuery({
     queryKey: ["internshipReviews", kindergartenId, sortType],
-    queryFn: () => getInternshipReviews(Number(kindergartenId), sortType),
+    queryFn: () => {
+      if (!numericId) {
+        return Promise.resolve({ content: [], totalPages: 0 });
+      }
+      return getInternshipReviews(numericId, sortType);
+    },
   });
 };
 
@@ -80,14 +95,26 @@ export function useReview(
   type: string,
   sortType: SortType
 ): ReviewResponse {
+  const numericId = safeParseId(id);
+
   const { data: workReviews } = useSuspenseQuery({
     queryKey: ["workReviews", id, sortType],
-    queryFn: () => getWorkReviews(Number(id), sortType),
+    queryFn: () => {
+      if (!numericId) {
+        return Promise.resolve({ content: [], totalElements: 0 });
+      }
+      return getWorkReviews(numericId, sortType);
+    },
   });
 
   const { data: internshipReviews } = useSuspenseQuery({
     queryKey: ["internshipReviews", id, sortType],
-    queryFn: () => getInternshipReviews(Number(id), sortType),
+    queryFn: () => {
+      if (!numericId) {
+        return Promise.resolve({ content: [], totalElements: 0 });
+      }
+      return getInternshipReviews(numericId, sortType);
+    },
   });
 
   if (!workReviews && !internshipReviews) {
