@@ -55,6 +55,7 @@ export default function SchoolCard({
                 alt="위치 아이콘"
                 width="18"
                 height="18"
+                className="h-[18px] w-[18px] flex-shrink-0"
               />
               <address className="text-sm font-light not-italic text-primary-normal03">
                 {location}
@@ -68,6 +69,7 @@ export default function SchoolCard({
             alt="별점 아이콘"
             width="24"
             height="24"
+            className="h-6 w-6 flex-shrink-0"
           />
           <span className="text-base font-bold">{score}</span>
         </div>

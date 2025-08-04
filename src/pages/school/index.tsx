@@ -17,7 +17,7 @@ export default function SchoolPage() {
     () => ({
       enableHighAccuracy: true,
       timeout: 10000, // 10초
-      maximumAge: 600000, // 10분
+      maximumAge: 3600000, // 1시간
     }),
     []
   );
@@ -45,8 +45,8 @@ export default function SchoolPage() {
         longitude: userLocation!.longitude,
       }),
     enabled: !!userLocation, // 위치 정보가 있을 때 실행
-    staleTime: 1000 * 60 * 10, // 10분
-    gcTime: 1000 * 60 * 30, // 30분
+    staleTime: 1000 * 60 * 60, // 1시간
+    gcTime: 1000 * 60 * 120, // 2시간
   });
 
   // 데이터 정제

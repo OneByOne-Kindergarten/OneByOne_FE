@@ -1,35 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-import { MessageType, sendToFlutter } from "@/utils/webViewCommunication";
-export interface GeolocationState {
-  loading: boolean;
-  error: string | null;
-  position: {
-    latitude: number;
-    longitude: number;
-  } | null;
-}
-
-interface LocationResponse {
-  status: string;
-  lat: string;
-  long: string;
-  message?: string;
-  error?: string;
-}
-
-function getPositionErrorMessage(error: GeolocationPositionError): string {
-  switch (error.code) {
-    case error.PERMISSION_DENIED:
-      return "위치 정보 접근 권한이 거부되었습니다. 위치 권한을 확인해주세요.";
-    case error.POSITION_UNAVAILABLE:
-      return "현재 위치 정보를 사용할 수 없습니다.";
-    case error.TIMEOUT:
-      return "요청 시간이 초과되었습니다.";
-    default:
-      return "알 수 없는 오류가 발생했습니다.";
-  }
-}
+import { requestCurrentLocation } from "@/services/locationService";
+import type { GeolocationState } from "@/types/geolocation";
+import { getCachedLocation, setCachedLocation } from "@/utils/locationCache";
 
 /**
  * 위치 정보 조회
@@ -37,103 +10,69 @@ function getPositionErrorMessage(error: GeolocationPositionError): string {
  * @returns 위치 정보 상태
  */
 export function useGeolocation(options?: PositionOptions): GeolocationState {
-  const [state, setState] = useState<GeolocationState>({
-    loading: true,
-    error: null,
-    position: null,
+  const [state, setState] = useState<GeolocationState>(() => {
+    const cached = getCachedLocation();
+
+    return {
+      loading: !cached,
+      error: null,
+      position: cached,
+    };
   });
 
+  const hasRequestedLocation = useRef(false);
+
+  const optionsRef = useRef(options);
+  optionsRef.current = options;
+
   useEffect(() => {
-    const isFlutterWebView = /OneByOne/i.test(navigator.userAgent);
+    // 캐시된 위치 정보가 있으면 재요청하지 않음
+    const cached = getCachedLocation();
 
-    if (isFlutterWebView) {
-      // Flutter WebView 환경
-      let isMounted = true;
-      setState((prev) => ({ ...prev, loading: true }));
-
-      sendToFlutter<Record<string, never>, LocationResponse>(
-        MessageType.REQUEST_LAT_LONG,
-        {}
-      )
-        .then((result) => {
-          if (!isMounted) return;
-          if (result.status === "true" && result.lat && result.long) {
-            setState({
-              loading: false,
-              error: null,
-              position: {
-                latitude: parseFloat(result.lat),
-                longitude: parseFloat(result.long),
-              },
-            });
-          } else {
-            setState({
-              loading: false,
-              error:
-                result.error ||
-                result.message ||
-                "위치 정보를 가져오는데 실패했습니다.",
-              position: null,
-            });
-          }
-        })
-        .catch((error) => {
-          if (!isMounted) return;
-          setState({
-            loading: false,
-            error:
-              error instanceof Error
-                ? error.message
-                : "위치 정보를 가져오는데 실패했습니다.",
-            position: null,
-          });
-        });
-
-      return () => {
-        isMounted = false;
-      };
-    } else {
-      // 일반 웹 브라우저 환경 (watchPosition 사용)
-      if (!navigator.geolocation) {
-        setState({
-          loading: false,
-          error: "이 브라우저에서는 위치 정보를 지원하지 않습니다.",
-          position: null,
-        });
-        return;
-      }
-
-      const onSuccess = (position: GeolocationPosition) => {
+    if (cached || hasRequestedLocation.current) {
+      if (cached && !state.position) {
         setState({
           loading: false,
           error: null,
-          position: {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          },
+          position: cached,
         });
-      };
+      }
+      return;
+    }
 
-      const onError = (error: GeolocationPositionError) => {
+    // 위치 정보 요청 시작
+    hasRequestedLocation.current = true;
+    setState((prev) => ({ ...prev, loading: true }));
+
+    let isMounted = true;
+
+    // 환경에 맞는 위치 정보 요청
+    requestCurrentLocation(optionsRef.current)
+      .then((location) => {
+        if (!isMounted) return;
+
+        setCachedLocation(location.latitude, location.longitude);
+
         setState({
           loading: false,
-          error: getPositionErrorMessage(error),
+          error: null,
+          position: location,
+        });
+      })
+      .catch((error) => {
+        if (!isMounted) return;
+
+        setState({
+          loading: false,
+          error: error.message,
           position: null,
         });
-      };
+      });
 
-      const watchId = navigator.geolocation.watchPosition(
-        onSuccess,
-        onError,
-        options
-      );
-
-      // 언마운트 시 위치 감시 해제
-      return () => {
-        navigator.geolocation.clearWatch(watchId);
-      };
-    }
-  }, [options]);
+    return () => {
+      isMounted = false;
+    };
+  }, []); // 한 번만 실행, options는 ref로 처리
 
   return state;
 }
