@@ -40,9 +40,9 @@ const meta = {
       control: { type: "number", step: 0.000001 },
       description: "지도 중심의 경도",
     },
-    mapError: {
-      control: { type: "text" },
-      description: "에러 메시지",
+    error: {
+      control: { type: "object" },
+      description: "에러 객체",
     },
   },
 } satisfies Meta<typeof MapError>;
@@ -55,7 +55,7 @@ export const Playground: Story = {
     height: "h-72",
     latitude: SEOUL_CITY.latitude,
     longitude: SEOUL_CITY.longitude,
-    mapError: "카카오맵 키가 설정되지 않았습니다",
+    error: new Error("카카오맵 키가 설정되지 않았습니다"),
   },
 };
 
@@ -178,7 +178,7 @@ export const Specs: Story = {
     height: "h-72",
     latitude: SEOUL_CITY.latitude,
     longitude: SEOUL_CITY.longitude,
-    mapError: "카카오맵 키가 설정되지 않았습니다",
+    error: new Error("카카오맵 키가 설정되지 않았습니다"),
   },
   parameters: {
     docs: {
@@ -206,7 +206,7 @@ export const States: Story = {
             height="h-64"
             latitude={SEOUL_CITY.latitude}
             longitude={SEOUL_CITY.longitude}
-            mapError="카카오맵 키가 설정되지 않았습니다"
+            error={new Error("카카오맵 키가 설정되지 않았습니다")}
           />
         </div>
         <p className="mt-2 text-sm text-gray-600">
@@ -221,7 +221,7 @@ export const States: Story = {
             height="h-64"
             latitude={SEOUL_CITY.latitude}
             longitude={SEOUL_CITY.longitude}
-            mapError="네트워크 연결을 확인해주세요"
+            error={new Error("네트워크 연결을 확인해주세요")}
           />
         </div>
         <p className="mt-2 text-sm text-gray-600">
@@ -236,7 +236,7 @@ export const States: Story = {
             height="h-64"
             latitude={SEOUL_CITY.latitude}
             longitude={SEOUL_CITY.longitude}
-            mapError="지도를 불러올 수 없습니다"
+            error={new Error("지도를 불러올 수 없습니다")}
           />
         </div>
         <p className="mt-2 text-sm text-gray-600">
@@ -249,7 +249,7 @@ export const States: Story = {
     height: "h-72",
     latitude: SEOUL_CITY.latitude,
     longitude: SEOUL_CITY.longitude,
-    mapError: "카카오맵 키가 설정되지 않았습니다",
+    error: new Error("카카오맵 키가 설정되지 않았습니다"),
   },
   parameters: {
     docs: {
@@ -273,7 +273,9 @@ export const UseCases: Story = {
                 height="h-64"
                 latitude={37.5665}
                 longitude={126.978}
-                mapError="카카오맵 서비스에 일시적인 문제가 발생했습니다"
+                error={
+                  new Error("카카오맵 서비스에 일시적인 문제가 발생했습니다")
+                }
               />
             </div>
             <p className="text-sm text-gray-600">
@@ -285,10 +287,10 @@ export const UseCases: Story = {
     </div>
   ),
   args: {
-    height: "h-72",
+    height: "h-80",
     latitude: SEOUL_CITY.latitude,
     longitude: SEOUL_CITY.longitude,
-    mapError: "카카오맵 키가 설정되지 않았습니다",
+    error: new Error("카카오맵 서비스에 일시적인 문제가 발생했습니다"),
   },
   parameters: {
     docs: {
