@@ -1,3 +1,5 @@
+import { useInView } from "@/hooks/useInView";
+
 interface CircleGraphProps {
   stats: Array<{
     age: number;
@@ -13,6 +15,10 @@ interface CircleGraphProps {
 const fixedColors = ["#FFD700", "#4CAF50", "#6CA6ED"];
 
 export default function CircleGraph({ stats, size = 100 }: CircleGraphProps) {
+  const [graphRef, isInView] = useInView({
+    threshold: 0.3,
+    triggerOnce: true,
+  });
   const radius = size / 2; // 외부 원 반지름
   const strokeWidth = size * 0.23; // 두께
   const innerRadius = radius - strokeWidth / 1.3; // 내부 원 반지름
@@ -66,7 +72,11 @@ export default function CircleGraph({ stats, size = 100 }: CircleGraphProps) {
         }));
 
   return (
-    <div className="relative" style={{ width: size, height: size }}>
+    <div
+      ref={graphRef as React.RefObject<HTMLDivElement>}
+      className={`relative transition-all duration-700 ease-out ${isInView ? "scale-100 opacity-100" : "scale-95 opacity-60"} `}
+      style={{ width: size, height: size }}
+    >
       <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
         {/* 배경 원 */}
         <circle
@@ -76,6 +86,7 @@ export default function CircleGraph({ stats, size = 100 }: CircleGraphProps) {
           fill="none"
           stroke="#F2F4F6"
           strokeWidth={strokeWidth}
+          className={`transition-opacity duration-500 ease-in-out ${isInView ? "opacity-100" : "opacity-30"} `}
         />
 
         {/* 그래프 조각 */}
@@ -106,6 +117,10 @@ export default function CircleGraph({ stats, size = 100 }: CircleGraphProps) {
             `A ${innerRadius} ${innerRadius} 0 ${largeArcFlag} 1 ${endX} ${endY}`, // 원호 그리기
           ].join(" ");
 
+          // 패스 길이 계산 (애니메이션용)
+          const circumference = 2 * Math.PI * innerRadius;
+          const pathLength = (angle / 360) * circumference;
+
           // 다음 조각의 시작 각도 업데이트
           startAngle = endAngle;
 
@@ -117,6 +132,12 @@ export default function CircleGraph({ stats, size = 100 }: CircleGraphProps) {
               stroke={stat.color || fixedColors[0]}
               strokeWidth={strokeWidth}
               strokeLinecap="butt"
+              className="transition-all duration-1000 ease-out"
+              style={{
+                strokeDasharray: `${pathLength}`,
+                strokeDashoffset: isInView ? 0 : pathLength,
+                transitionDelay: `${index * 200}ms`,
+              }}
             />
           );
         })}
