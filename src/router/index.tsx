@@ -31,16 +31,22 @@ const ProfileEditorPage = lazy(() => import("../pages/user/profile-editor"));
 const PasswordEditorPage = lazy(() => import("../pages/user/password-editor"));
 const MyPostPage = lazy(() => import("../pages/user/my-post"));
 const AccountSettingPage = lazy(() => import("../pages/user/account-setting"));
-const InquiryPage = lazy(() => import("../pages/inquiry"));
-const InquiryEditorPage = lazy(() => import("../pages/inquiry/inquiry-editor"));
-const InquiryAdminPage = lazy(() => import("../pages/inquiry/inquiry-admin"));
-const InquiryMyPage = lazy(() => import("../pages/inquiry/inquiry-my"));
-const NoticePage = lazy(() => import("../pages/notice"));
-const NoticeDetailPage = lazy(() => import("../pages/notice/notice-detail"));
+const InquiryPage = lazy(() => import("../pages/user/inquiry"));
+const InquiryEditorPage = lazy(
+  () => import("../pages/user/inquiry/inquiry-editor")
+);
+const InquiryAdminPage = lazy(
+  () => import("../pages/user/inquiry/inquiry-admin")
+);
+const InquiryMyPage = lazy(() => import("../pages/user/inquiry/inquiry-my"));
+const NoticePage = lazy(() => import("../pages/user/notice"));
+const NoticeDetailPage = lazy(
+  () => import("../pages/user/notice/notice-detail")
+);
 const AlarmPage = lazy(() => import("../pages/alarm"));
-const AlarmSettingPage = lazy(() => import("../pages/alarm/alarm-setting"));
-const ReportPage = lazy(() => import("../pages/report"));
-const BlockPage = lazy(() => import("../pages/block"));
+const AlarmSettingPage = lazy(() => import("../pages/user/alarm-setting"));
+const ReportPage = lazy(() => import("../pages/user/report"));
+const BlockPage = lazy(() => import("../pages/user/block"));
 
 const routes = {
   direct: [
