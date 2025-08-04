@@ -86,7 +86,7 @@ export default function GlobalNavBar({ currentPath }: GlobalNavBarProps) {
 
   return (
     <nav
-      className="fixed bottom-0 mx-auto flex h-14 w-full min-w-80 max-w-3xl items-center justify-between border-t border-opacity-5 bg-white px-8 py-3 text-xs font-bold"
+      className="fixed bottom-0 z-[9999] mx-auto flex h-14 w-full min-w-80 max-w-3xl items-center justify-between border-t border-opacity-5 bg-white px-8 py-3 text-xs font-bold"
       role="navigation"
       aria-label="글로벌 네비게이션"
     >
