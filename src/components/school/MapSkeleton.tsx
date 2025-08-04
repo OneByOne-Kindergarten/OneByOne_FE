@@ -1,8 +1,14 @@
 import { SVG_PATHS } from "@/constants/assets-path";
 
-export default function MapSkeleton() {
+interface MapSkeletonProps {
+  height?: string;
+}
+
+export default function MapSkeleton({ height = "h-full" }: MapSkeletonProps) {
   return (
-    <div className="relative h-full w-full overflow-hidden rounded-lg bg-primary-normal01">
+    <div
+      className={`relative ${height} w-full overflow-hidden rounded-lg border border-primary-normal01 bg-primary-normal01`}
+    >
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
         <div className="relative">
           <img

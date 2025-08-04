@@ -1,34 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Suspense } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import Error from "@/components/@shared/layout/error";
 import PageLayout from "@/components/@shared/layout/page-layout";
-import NavBar from "@/components/@shared/nav/nav-bar";
-import SchoolInfoChart from "@/components/school/SchoolInfoChart";
-import SchoolInfoItem from "@/components/school/SchoolInfoItem";
-import SchoolMap from "@/components/school/SchoolMap";
-import { SVG_PATHS } from "@/constants/assets-path";
-import { REVIEW_TYPES } from "@/constants/review";
+import SchoolInfoOverView from "@/components/school/SchoolInfoOverView";
 import { URL_PATHS } from "@/constants/url-path";
-import { getKindergartenDetail } from "@/services/kindergartenService";
-import { Kindergarten } from "@/types/kindergartenDTO";
 
-const SCHOOL_STATS_COLORS = {
-  AGE_3: "bg-star",
-  AGE_4: "bg-green",
-  AGE_5: "bg-tertiary-3",
-};
-
-const SCHOOL_STATS_AGES = [3, 4, 5];
 const SCHOOL_DEFAULT_NAME = "유치원";
-
-const SCHOOL_QUERY_CONFIG = {
-  staleTime: 1000 * 60 * 5, // 5분
-  gcTime: 1000 * 60 * 30, // 30분
-  refetchOnWindowFocus: false,
-};
-
-type StatsType = keyof typeof SCHOOL_STATS_COLORS;
 
 export default function SchoolDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -45,7 +23,11 @@ export default function SchoolDetailPage() {
     navigate(URL_PATHS.SCHOOL);
   };
 
-  const { data: kindergarten, error } = useQuery<Kindergarten, Error>({
+  const {
+    data: kindergarten,
+    error,
+    isLoading,
+  } = useQuery<Kindergarten, Error>({
     queryKey: ["kindergarten", "detail", safeId],
     queryFn: () => getKindergartenDetail(Number(safeId)),
     enabled: !!id && id !== "unknown",
@@ -104,6 +86,17 @@ export default function SchoolDetailPage() {
   };
 
   const renderContent = () => {
+    if (isLoading) {
+      return (
+        <div className="flex items-center justify-center py-20">
+          <div className="text-center">
+            <div className="mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-4 border-primary-normal01 border-t-transparent"></div>
+            <p className="text-gray-600">유치원 정보를 불러오는 중...</p>
+          </div>
+        </div>
+      );
+    }
+
     if (error || !kindergarten) {
       return (
         <Error type="page">

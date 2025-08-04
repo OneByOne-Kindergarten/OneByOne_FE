@@ -44,13 +44,18 @@ export function useGeolocation(options?: PositionOptions): GeolocationState {
     hasRequestedLocation.current = true;
     setState((prev) => ({ ...prev, loading: true }));
 
-    let isMounted = true;
+    // AbortController로 요청 취소 관리
+    const abortController = new AbortController();
+    let isRequestCompleted = false;
 
     // 환경에 맞는 위치 정보 요청
     requestCurrentLocation(optionsRef.current)
       .then((location) => {
-        if (!isMounted) return;
+        if (abortController.signal.aborted) {
+          return;
+        }
 
+        isRequestCompleted = true;
         setCachedLocation(location.latitude, location.longitude);
 
         setState({
@@ -60,8 +65,11 @@ export function useGeolocation(options?: PositionOptions): GeolocationState {
         });
       })
       .catch((error) => {
-        if (!isMounted) return;
+        if (abortController.signal.aborted) {
+          return;
+        }
 
+        isRequestCompleted = true;
         setState({
           loading: false,
           error: error.message,
@@ -70,7 +78,11 @@ export function useGeolocation(options?: PositionOptions): GeolocationState {
       });
 
     return () => {
-      isMounted = false;
+      if (!isRequestCompleted) {
+        abortController.abort();
+        // StrictMode에서 재실행 가능하도록 플래그 리셋
+        hasRequestedLocation.current = false;
+      }
     };
   }, []); // 한 번만 실행, options는 ref로 처리
 
