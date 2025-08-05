@@ -31,17 +31,13 @@ export default function KakaoMap({
 
   const [, loadError] = useKakaoLoader({
     appkey: apiKey || "",
-    libraries: ["services", "clusterer", "drawing"],
+    libraries: [],
   });
 
-  // 최소 1초 동안 스켈레톤 표시
+  // 지도 로딩 완료 즉시 스켈레톤 숨김
   useEffect(() => {
     if (!isMapLoading) {
-      const timer = setTimeout(() => {
-        setShowSkeleton(false);
-      }, 1000);
-
-      return () => clearTimeout(timer);
+      setShowSkeleton(false);
     }
   }, [isMapLoading]);
 
@@ -62,35 +58,38 @@ export default function KakaoMap({
       className={`${height} overflow-hidden rounded-lg border border-primary-normal01`}
     >
       <div className={`h-full w-full ${className}`}>
-        {showSkeleton && <MapSkeleton />}
-        <Map
-          center={{ lat: latitude, lng: longitude }}
-          style={{ width: "100%", height: "100%" }}
-          level={level}
-          onCreate={() => {
-            setIsMapLoading(false);
-            setRenderError(null);
-          }}
-          onLoad={() => {
-            setIsMapLoading(false);
-            setRenderError(null);
-          }}
-          onError={(e) => {
-            console.error("❌ 카카오맵 에러:", e);
-            setRenderError(e);
-            setIsMapLoading(false);
-          }}
-        >
-          {/* 사용자 위치 마커 */}
-          {showUserLocation && (
-            <MapMarker
-              position={{ lat: latitude, lng: longitude }}
-              title="현재 위치"
-            />
-          )}
-          {/* 추가 마커들 */}
-          {children}
-        </Map>
+        {showSkeleton ? (
+          <MapSkeleton />
+        ) : (
+          <Map
+            center={{ lat: latitude, lng: longitude }}
+            style={{ width: "100%", height: "100%" }}
+            level={level}
+            onCreate={() => {
+              setIsMapLoading(false);
+              setRenderError(null);
+            }}
+            onLoad={() => {
+              setIsMapLoading(false);
+              setRenderError(null);
+            }}
+            onError={(e) => {
+              console.error("❌ 카카오맵 에러:", e);
+              setRenderError(e);
+              setIsMapLoading(false);
+            }}
+          >
+            {/* 사용자 위치 마커 */}
+            {showUserLocation && (
+              <MapMarker
+                position={{ lat: latitude, lng: longitude }}
+                title="현재 위치"
+              />
+            )}
+            {/* 추가 마커들 */}
+            {children}
+          </Map>
+        )}
       </div>
     </div>
   );
