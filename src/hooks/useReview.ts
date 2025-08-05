@@ -101,7 +101,7 @@ export function useReview(
     queryKey: ["workReviews", id, sortType],
     queryFn: () => {
       if (!numericId) {
-        return Promise.resolve({ content: [], totalElements: 0 });
+        return Promise.resolve({ content: [], totalPages: 0 });
       }
       return getWorkReviews(numericId, sortType);
     },
@@ -111,7 +111,7 @@ export function useReview(
     queryKey: ["internshipReviews", id, sortType],
     queryFn: () => {
       if (!numericId) {
-        return Promise.resolve({ content: [], totalElements: 0 });
+        return Promise.resolve({ content: [], totalPages: 0 });
       }
       return getInternshipReviews(numericId, sortType);
     },
