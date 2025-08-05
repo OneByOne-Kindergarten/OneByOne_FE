@@ -1,10 +1,11 @@
+import { useAtom } from "jotai";
 import { ReactNode, useEffect, useState } from "react";
-import { Map, MapMarker, useKakaoLoader } from "react-kakao-maps-sdk";
+import { Map, MapMarker } from "react-kakao-maps-sdk";
+
+import { kakaoMapSDKLoadedAtom } from "@/stores/kakaoMapStore";
 
 import MapError from "./MapError";
 import MapSkeleton from "./MapSkeleton";
-
-const apiKey = import.meta.env.VITE_KAKAO_JAVASCRIPT_KEY;
 
 interface KakaoMapProps {
   latitude: number;
@@ -28,32 +29,31 @@ export default function KakaoMap({
   const [isMapLoading, setIsMapLoading] = useState<boolean>(true);
   const [showSkeleton, setShowSkeleton] = useState<boolean>(true);
   const [renderError, setRenderError] = useState<unknown>(null);
+  const [isSDKLoaded] = useAtom(kakaoMapSDKLoadedAtom);
 
-  const [, loadError] = useKakaoLoader({
-    appkey: apiKey || "",
-    libraries: [],
-  });
-
-  // 지도 로딩 완료 즉시 스켈레톤 숨김
+  // SDK가 로딩되지 않았거나 지도가 렌더링 중이면 스켈레톤 표시
   useEffect(() => {
-    if (!isMapLoading) {
-      setShowSkeleton(false);
-    }
-  }, [isMapLoading]);
+    setShowSkeleton(!isSDKLoaded || isMapLoading);
+  }, [isSDKLoaded, isMapLoading]);
 
-  // 에러메세지 출력
-  const finalError = !apiKey
-    ? "카카오맵 키가 설정되지 않았습니다"
-    : loadError || renderError;
+  const finalError = renderError;
 
-  return finalError ? (
-    <MapError
-      height={height}
-      latitude={latitude}
-      longitude={longitude}
-      error={finalError}
-    />
-  ) : (
+  if (showSkeleton) {
+    return <MapSkeleton height={height} />;
+  }
+
+  if (finalError) {
+    return (
+      <MapError
+        height={height}
+        latitude={latitude}
+        longitude={longitude}
+        error={finalError}
+      />
+    );
+  }
+
+  return (
     <div
       className={`${height} relative overflow-hidden rounded-lg border border-primary-normal01`}
     >
@@ -86,13 +86,6 @@ export default function KakaoMap({
           {/* 추가 마커들 */}
           {children}
         </Map>
-
-        {/* 스켈레톤을 오버레이로 표시 */}
-        {showSkeleton && (
-          <div className="absolute inset-0 z-10">
-            <MapSkeleton />
-          </div>
-        )}
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
+import KakaoMapWrapper from "@/components/@shared/providers/KakaoMapWrapper";
 import { calculateMapLevel } from "@/utils/mapUtils";
 
 import KakaoMap from "./KakaoMap";
@@ -31,28 +32,30 @@ export default function NearbySchoolMap({
 
   return (
     <section className="flex flex-col gap-3 p-5">
-      <KakaoMap
-        latitude={latitude}
-        longitude={longitude}
-        level={mapLevel}
-        height="h-80"
-        className={className}
-        showUserLocation={true}
-      >
-        {kindergartens.map((kindergarten) => (
-          <KindergartenMapMarker
-            key={kindergarten.id}
-            latitude={kindergarten.latitude}
-            longitude={kindergarten.longitude}
-            name={kindergarten.name}
-            establishment={kindergarten.establishment}
-            size="md"
-            onClick={() => {
-              window.location.href = `/school/${kindergarten.id}`;
-            }}
-          />
-        ))}
-      </KakaoMap>
+      <KakaoMapWrapper height="h-80">
+        <KakaoMap
+          latitude={latitude}
+          longitude={longitude}
+          level={mapLevel}
+          height="h-80"
+          className={className}
+          showUserLocation={true}
+        >
+          {kindergartens.map((kindergarten) => (
+            <KindergartenMapMarker
+              key={kindergarten.id}
+              latitude={kindergarten.latitude}
+              longitude={kindergarten.longitude}
+              name={kindergarten.name}
+              establishment={kindergarten.establishment}
+              size="md"
+              onClick={() => {
+                window.location.href = `/school/${kindergarten.id}`;
+              }}
+            />
+          ))}
+        </KakaoMap>
+      </KakaoMapWrapper>
     </section>
   );
 }

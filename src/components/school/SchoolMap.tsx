@@ -1,3 +1,5 @@
+import KakaoMapWrapper from "@/components/@shared/providers/KakaoMapWrapper";
+
 import KakaoMap from "./KakaoMap";
 import KindergartenMapMarker from "./KindergartenMapMarker";
 
@@ -17,22 +19,24 @@ export default function SchoolDetailMap({
   className = "",
 }: SchoolDetailMapProps) {
   return (
-    <KakaoMap
-      latitude={latitude}
-      longitude={longitude}
-      level={4}
-      height="h-64"
-      className={className}
-      showUserLocation={false}
-    >
-      <KindergartenMapMarker
+    <KakaoMapWrapper height="h-64">
+      <KakaoMap
         latitude={latitude}
         longitude={longitude}
-        name={schoolName}
-        establishment={establishment}
-        size="md"
-        showLabel={true}
-      />
-    </KakaoMap>
+        level={4}
+        height="h-64"
+        className={className}
+        showUserLocation={false}
+      >
+        <KindergartenMapMarker
+          latitude={latitude}
+          longitude={longitude}
+          name={schoolName}
+          establishment={establishment}
+          size="md"
+          showLabel={true}
+        />
+      </KakaoMap>
+    </KakaoMapWrapper>
   );
 }
