@@ -75,9 +75,10 @@ export async function requestLocationFromBrowser(
 
 /**
  * 현재 환경이 Flutter WebView인지 확인
+ * TODO 0806 한승완 : 추후 userAgent 변환 확인 필요
  */
 export function isFlutterWebView(): boolean {
-  return /OneByOne/i.test(navigator.userAgent);
+  return typeof window !== 'undefined' && !!window.flutter_inappwebview;
 }
 
 /**
