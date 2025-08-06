@@ -10,11 +10,6 @@ import MapSkeleton from "./MapSkeleton";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
-const SEOUL_CITY = {
-  latitude: 37.5663,
-  longitude: 126.9779,
-};
-
 const meta = {
   title: "Components/School/Map/Status",
   component: MapError,
@@ -32,14 +27,6 @@ const meta = {
       control: { type: "text" },
       description: "지도 높이 (Tailwind CSS 클래스)",
     },
-    latitude: {
-      control: { type: "number", step: 0.000001 },
-      description: "지도 중심의 위도",
-    },
-    longitude: {
-      control: { type: "number", step: 0.000001 },
-      description: "지도 중심의 경도",
-    },
     error: {
       control: { type: "object" },
       description: "에러 객체",
@@ -53,8 +40,6 @@ type Story = StoryObj<typeof meta>;
 export const Playground: Story = {
   args: {
     height: "h-72",
-    latitude: SEOUL_CITY.latitude,
-    longitude: SEOUL_CITY.longitude,
     error: new Error("카카오맵 키가 설정되지 않았습니다"),
   },
 };
@@ -176,8 +161,6 @@ export const Specs: Story = {
   ),
   args: {
     height: "h-72",
-    latitude: SEOUL_CITY.latitude,
-    longitude: SEOUL_CITY.longitude,
     error: new Error("카카오맵 키가 설정되지 않았습니다"),
   },
   parameters: {
@@ -204,8 +187,6 @@ export const States: Story = {
         <div className="w-96">
           <MapError
             height="h-64"
-            latitude={SEOUL_CITY.latitude}
-            longitude={SEOUL_CITY.longitude}
             error={new Error("카카오맵 키가 설정되지 않았습니다")}
           />
         </div>
@@ -219,8 +200,6 @@ export const States: Story = {
         <div className="w-96">
           <MapError
             height="h-64"
-            latitude={SEOUL_CITY.latitude}
-            longitude={SEOUL_CITY.longitude}
             error={new Error("네트워크 연결을 확인해주세요")}
           />
         </div>
@@ -234,8 +213,6 @@ export const States: Story = {
         <div className="w-96">
           <MapError
             height="h-64"
-            latitude={SEOUL_CITY.latitude}
-            longitude={SEOUL_CITY.longitude}
             error={new Error("지도를 불러올 수 없습니다")}
           />
         </div>
@@ -247,8 +224,6 @@ export const States: Story = {
   ),
   args: {
     height: "h-72",
-    latitude: SEOUL_CITY.latitude,
-    longitude: SEOUL_CITY.longitude,
     error: new Error("카카오맵 키가 설정되지 않았습니다"),
   },
   parameters: {
@@ -271,8 +246,6 @@ export const UseCases: Story = {
             <div className="w-full">
               <MapError
                 height="h-64"
-                latitude={37.5665}
-                longitude={126.978}
                 error={
                   new Error("카카오맵 서비스에 일시적인 문제가 발생했습니다")
                 }
@@ -288,8 +261,6 @@ export const UseCases: Story = {
   ),
   args: {
     height: "h-80",
-    latitude: SEOUL_CITY.latitude,
-    longitude: SEOUL_CITY.longitude,
     error: new Error("카카오맵 서비스에 일시적인 문제가 발생했습니다"),
   },
   parameters: {
