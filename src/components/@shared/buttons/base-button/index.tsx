@@ -10,7 +10,8 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: "bg-primary-foreground text-primary-normal03",
-        primary: "bg-primary-dark02 text-white  disabled:opacity-50",
+        primary: "bg-primary-dark02 text-white disabled:opacity-50",
+        primary_light: "bg-primary-dark01 text-white disabled:opacity-50",
         secondary:
           "bg-secondary-main text-primary disabled:bg-primary-normal01 disabled:opacity-40",
         tertiary:

@@ -1,4 +1,4 @@
-import DropDown from "@/components/@shared/drop-down/base-drop-down";
+import Button from "@/components/@shared/buttons/base-button";
 import ProfileImage from "@/components/user/ProfileImage";
 import { useBlock } from "@/hooks/useBlock";
 import type { BlockedUserDTO } from "@/types/blockDTO";
@@ -33,13 +33,13 @@ export default function BlockedUserList({
         {blockedUsers.map((user: BlockedUserDTO) => (
           <li
             key={user.email}
-            className="flex items-center justify-between rounded-lg border border-gray-200 p-4"
+            className="flex items-center justify-between rounded-xl border border-primary-light02 p-3"
           >
             <div className="flex-1">
-              <div className="flex items-center gap-3">
-                <ProfileImage size="md" role={mapUserRole(user.userRole)} />
-                <div className="flex flex-col gap-1">
-                  <span className="text-md font-bold text-primary-dark02">
+              <div className="flex items-center gap-2.5">
+                <ProfileImage size="sm" role={mapUserRole(user.userRole)} />
+                <div className="flex flex-col">
+                  <span className="text-sm font-semibold text-primary-dark02">
                     {user.nickname}
                   </span>
                   <p className="text-xs text-primary-normal03">
@@ -48,17 +48,14 @@ export default function BlockedUserList({
                 </div>
               </div>
             </div>
-            <DropDown
-              options={[
-                {
-                  label: "차단 해제",
-                  onClick: () => handleUnblock(user.email),
-                  variant: "default",
-                },
-              ]}
-              position="bottom"
-              align="end"
-            />
+            <Button
+              variant="primary_light"
+              font="xs_sb"
+              onClick={() => handleUnblock(user.email)}
+              className="px-4 py-1.5"
+            >
+              차단 해제
+            </Button>
           </li>
         ))}
       </ul>
