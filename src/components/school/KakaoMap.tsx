@@ -23,35 +23,27 @@ export default function KakaoMap({
   showUserLocation = false,
   children,
 }: KakaoMapProps) {
-  const [isMapLoaded, setIsMapLoaded] = useState<boolean>(false);
-  const [showSkeleton, setShowSkeleton] = useState<boolean>(true);
   const [renderError, setRenderError] = useState<unknown>(null);
+  const [showSkeleton, setShowSkeleton] = useState<boolean>(true);
+  const [isMapLoading, setIsMapLoading] = useState<boolean>(false);
 
   // 지도 로딩 완료 즉시 스켈레톤 숨김
   useEffect(() => {
-    if (isMapLoaded) {
+    if (!isMapLoading) {
       setShowSkeleton(false);
     }
-  }, [isMapLoaded]);
+  }, [isMapLoading]);
 
   const finalError = renderError;
 
-  if (showSkeleton) {
-    return <MapSkeleton height={height} />;
-  }
-
-  if (finalError) {
-    return (
-      <MapError
-        height={height}
-        latitude={latitude}
-        longitude={longitude}
-        error={finalError}
-      />
-    );
-  }
-
-  return (
+  return finalError ? (
+    <MapError
+      height={height}
+      latitude={latitude}
+      longitude={longitude}
+      error={finalError}
+    />
+  ) : (
     <div
       className={`${height} relative overflow-hidden rounded-lg border border-primary-normal01`}
     >
@@ -61,17 +53,17 @@ export default function KakaoMap({
           style={{ width: "100%", height: "100%" }}
           level={level}
           onCreate={() => {
-            setIsMapLoaded(true);
+            setIsMapLoading(false);
             setRenderError(null);
           }}
           onLoad={() => {
-            setIsMapLoaded(true);
+            setIsMapLoading(false);
             setRenderError(null);
           }}
           onError={(e) => {
             console.error("❌ 카카오맵 에러:", e);
             setRenderError(e);
-            setIsMapLoaded(false);
+            setIsMapLoading(false);
           }}
         >
           {/* 사용자 위치 마커 */}
@@ -84,6 +76,13 @@ export default function KakaoMap({
           {/* 추가 마커들 */}
           {children}
         </Map>
+
+        {/* 스켈레톤을 오버레이로 표시 */}
+        {showSkeleton && (
+          <div className="absolute inset-0 z-10">
+            <MapSkeleton />
+          </div>
+        )}
       </div>
     </div>
   );
