@@ -45,12 +45,15 @@ export interface ResetPasswordResponse {
 export interface NaverCallbackRequest {
   code: string;
   state: string;
+  fcmToken?: string;
 }
 
 export interface KakaoCallbackRequest {
   code: string;
+  fcmToken?: string;
 }
 
 export interface AppleCallbackRequest {
   id_token: string;
+  fcmToken?: string;
 }

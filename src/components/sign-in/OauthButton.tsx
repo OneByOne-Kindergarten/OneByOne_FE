@@ -1,6 +1,7 @@
 import Button from "@/components/@shared/buttons/base-button";
 import { SVG_PATHS } from "@/constants/assets-path";
 import { getSocialLoginUrl } from "@/hooks/useSocialAuth";
+import { getCookie } from "@/services/authService";
 
 interface OauthButtonProps {
   type: "kakao" | "naver" | "apple";
@@ -37,7 +38,8 @@ export default function OauthButton({ type }: OauthButtonProps) {
         const loginUrl = getSocialLoginUrl.kakao();
         window.location.href = loginUrl;
       } else if (type === "apple") {
-        const loginUrl = getSocialLoginUrl.apple();
+        const fcmToken = getCookie("fcmToken") || "";
+        const loginUrl = getSocialLoginUrl.apple(fcmToken);
         window.location.href = loginUrl;
       }
     } catch (error) {

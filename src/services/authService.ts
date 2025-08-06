@@ -162,9 +162,10 @@ export const naverCallback = async (
   data: NaverCallbackRequest
 ): Promise<SignInResponse> => {
   try {
+    const fcmTokenParam = data.fcmToken ? `&fcmToken=${encodeURIComponent(data.fcmToken)}` : '';
     const result = await apiCall<NaverCallbackRequest, SignInResponse>({
       method: "GET",
-      path: `${API_PATHS.USER.NAVER_CALLBACK}?code=${encodeURIComponent(data.code)}&state=${encodeURIComponent(data.state)}`,
+      path: `${API_PATHS.USER.NAVER_CALLBACK}?code=${encodeURIComponent(data.code)}&state=${encodeURIComponent(data.state)}${fcmTokenParam}`,
       withCredentials: true,
     });
 
@@ -189,9 +190,10 @@ export const kakaoCallback = async (
   data: KakaoCallbackRequest
 ): Promise<SignInResponse> => {
   try {
+    const fcmTokenParam = data.fcmToken ? `&fcmToken=${encodeURIComponent(data.fcmToken)}` : '';
     const result = await apiCall<KakaoCallbackRequest, SignInResponse>({
       method: "GET",
-      path: `${API_PATHS.USER.KAKAO_CALLBACK}?code=${encodeURIComponent(data.code)}`,
+      path: `${API_PATHS.USER.KAKAO_CALLBACK}?code=${encodeURIComponent(data.code)}${fcmTokenParam}`,
       withCredentials: true,
     });
 
@@ -216,9 +218,10 @@ export const appleCallback = async (
   data: AppleCallbackRequest
 ): Promise<SignInResponse> => {
   try {
+    const fcmTokenParam = data.fcmToken ? `&fcmToken=${encodeURIComponent(data.fcmToken)}` : '';
     const result = await apiCall<AppleCallbackRequest, SignInResponse>({
       method: "POST",
-      path: `${API_PATHS.USER.APPLE_CALLBACK}?id_token=${encodeURIComponent(data.id_token)}`,
+      path: `${API_PATHS.USER.APPLE_CALLBACK}?id_token=${encodeURIComponent(data.id_token)}${fcmTokenParam}`,
       withCredentials: true,
     });
 

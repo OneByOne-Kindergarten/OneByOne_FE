@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import Error from "@/components/@shared/layout/error";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import { extractAuthParams, useKakaoAuth } from "@/hooks/useSocialAuth";
+import { getCookie } from "@/services/authService";
 
 export default function KakaoCallbackPage() {
   const kakaoAuthMutation = useKakaoAuth();
@@ -30,7 +31,9 @@ export default function KakaoCallbackPage() {
 
       sessionStorage.setItem(sessionKey, "true");
 
-      kakaoAuthMutation.mutate({ code });
+      // FCM 토큰 포함해서 mutation 호출
+      const fcmToken = getCookie("fcmToken") || "";
+      kakaoAuthMutation.mutate({ code, fcmToken });
     };
 
     handleKakaoCallback();
