@@ -20,7 +20,9 @@ export default function CommentUserInfo({ reply, postAuthor }: ReplyCardProps) {
             <span className="text-sm font-semibold text-primary-dark02">
               {reply.nickName}
             </span>
-            {isAuthor && <Badge>작성자</Badge>}
+            {isAuthor && (
+              <Badge className="border border-primary-normal01">작성자</Badge>
+            )}
           </div>
         </div>
         <ul className="flex gap-1.5 text-xs text-primary-normal03">

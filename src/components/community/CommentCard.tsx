@@ -11,14 +11,6 @@ interface CommentCardProps {
   onReply: (author: string) => void;
 }
 
-/**
- * CommentCard Details
- *
- * @param comment - 댓글 데이터
- * @param postAuthor - 게시글 작성자
- * @param postId - 게시글 ID
- * @param onReply - 답글 작성 함수
- */
 export default function CommentCard({
   comment,
   postAuthor,
@@ -33,7 +25,7 @@ export default function CommentCard({
 
   return (
     <>
-      <div className="border-b px-4 py-5">
+      <div className="border-b px-5 py-4">
         <div className="flex flex-1 justify-between">
           <CommentUserInfo reply={comment} postAuthor={postAuthor} />
           <UserActionDropDown

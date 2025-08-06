@@ -5,6 +5,7 @@ import Badge from "@/components/@shared/badge";
 import LikeToggle from "@/components/@shared/buttons/like-toggle";
 import UserActionDropDown from "@/components/@shared/drop-down/report-drop-down";
 import ChatCount from "@/components/community/ChatCount";
+import ProfileImage from "@/components/user/ProfileImage";
 import { SVG_PATHS } from "@/constants/assets-path";
 import { CATEGORY_LABELS } from "@/constants/community";
 import { URL_PATHS } from "@/constants/url-path";
@@ -31,6 +32,8 @@ export default function Post({
     navigate(URL_PATHS.COMMUNITY);
   };
 
+  console.log(post.userRole);
+
   return (
     <article className="flex flex-col gap-7 bg-white px-5 pb-4 pt-7">
       <section className="flex flex-col gap-2.5">
@@ -39,14 +42,8 @@ export default function Post({
         </div>
         <div className="flex justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="relative h-7 w-7 rounded-full bg-primary-normal03">
-              <img
-                src={SVG_PATHS.CHARACTER.user}
-                alt="병아리 사용자 캐릭터"
-                className="absolute left-1/2 top-1/2 h-3/5 w-2/3 -translate-x-1/2 -translate-y-1/2"
-              />
-            </div>
-            <div>
+            <ProfileImage size="sm" role={post.userRole} />
+            <div className="flex flex-col">
               <span className="text-sm font-semibold text-primary-dark02">
                 {post.userNickname}
               </span>

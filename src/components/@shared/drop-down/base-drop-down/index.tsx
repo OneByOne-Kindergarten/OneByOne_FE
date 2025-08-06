@@ -1,5 +1,5 @@
 import { cva, type VariantProps } from "class-variance-authority";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { SVG_PATHS } from "@/constants/assets-path";
 import { cn } from "@/utils/cn";
@@ -17,12 +17,12 @@ const dropdownContainerVariants = cva("relative inline-block", {
 });
 
 const dropdownMenuVariants = cva(
-  "absolute z-50 bg-white border border-primary-normal02 shadow-md rounded-lg overflow-hidden min-w-[120px]",
+  "absolute z-50 bg-white border border-primary-normal02 shadow-md rounded-lg overflow-hidden min-w-[120px] transition-[opacity,transform] duration-100 ease-out",
   {
     variants: {
       isOpen: {
-        true: "block",
-        false: "hidden",
+        true: "opacity-100 scale-100",
+        false: "opacity-0 scale-95 pointer-events-none",
       },
       position: {
         top: "bottom-full mb-1",
@@ -44,32 +44,32 @@ const dropdownMenuVariants = cva(
       {
         position: "top",
         align: "start",
-        className: "left-0",
+        className: "left-0 origin-bottom-left",
       },
       {
         position: "top",
         align: "center",
-        className: "left-1/2 -translate-x-1/2",
+        className: "left-1/2 -translate-x-1/2 origin-bottom",
       },
       {
         position: "top",
         align: "end",
-        className: "right-0",
+        className: "right-0 origin-bottom-right",
       },
       {
         position: "bottom",
         align: "start",
-        className: "left-0",
+        className: "left-0 origin-top-left",
       },
       {
         position: "bottom",
         align: "center",
-        className: "left-1/2 -translate-x-1/2",
+        className: "left-1/2 -translate-x-1/2 origin-top",
       },
       {
         position: "bottom",
         align: "end",
-        className: "right-0",
+        className: "right-0 origin-top-right",
       },
     ],
     defaultVariants: {
@@ -85,8 +85,8 @@ const dropdownItemVariants = cva(
   {
     variants: {
       variant: {
-        default: "hover:bg-secondary-light03",
-        destructive: "text-red-600 hover:bg-red-50",
+        default: "hover:bg-secondary-light03 active:bg-secondary-light03",
+        destructive: "text-destructive hover:bg-destructive-foreground",
       },
     },
     defaultVariants: {
@@ -168,7 +168,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         <button
           onClick={toggleDropdown}
           aria-label="드롭다운 열기"
-          className="p-1"
+          className="rounded-full p-1 hover:bg-primary-foreground active:bg-primary-foreground"
         >
           <img src={SVG_PATHS.KEBAB} alt="메뉴" className="h-5 w-5" />
         </button>

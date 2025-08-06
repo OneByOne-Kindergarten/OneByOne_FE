@@ -1,3 +1,4 @@
+import Toggle from "@/components/@shared/buttons/base-toggle";
 import ShortCutAddButton from "@/components/home/ShortCutAddButton";
 import ShortCutButton from "@/components/home/ShortCutButton";
 import { useShortcuts } from "@/hooks/useShortcuts";
@@ -12,12 +13,13 @@ export default function ShortCutList() {
         <h1 className="text-lg font-bold text-primary-dark02">
           원바원 바로가기
         </h1>
-        <button
+        <Toggle
           onClick={navigateToEdit}
-          className="rounded-lg px-2 py-1 text-sm text-primary-normal03 hover:bg-gray-100"
+          font="sm"
+          className="px-2 py-1 text-primary-normal03"
         >
           편집하기
-        </button>
+        </Toggle>
       </div>
       <menu className="flex gap-6">
         {shortcuts?.map((shortcut: Shortcut) => (
