@@ -10,7 +10,7 @@ import {
   useNaverAuth,
 } from "@/hooks/useSocialAuth";
 import { useToast } from "@/hooks/useToast";
-import { setCookie } from "@/services/authService";
+import { getCookie, setCookie } from "@/services/authService";
 import { getUserInfo } from "@/services/userService";
 
 type SocialProvider = "naver" | "kakao";
@@ -181,7 +181,12 @@ export default function OAuthCallbackPage() {
           ? `${import.meta.env.VITE_API_URL}/users/naver/callback`
           : `${import.meta.env.VITE_API_URL}/users/kakao/callback`;
 
-      const requestBody = provider === "naver" ? { code, state } : { code };
+      // FCM 토큰 가져오기
+      const fcmToken = getCookie("fcmToken") || "";
+      
+      const requestBody = provider === "naver" 
+        ? { code, state, fcmToken } 
+        : { code, fcmToken };
 
       const response = await fetch(apiUrl, {
         method: "POST",

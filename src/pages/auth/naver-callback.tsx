@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import Error from "@/components/@shared/layout/error";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import { extractAuthParams, useNaverAuth } from "@/hooks/useSocialAuth";
+import { getCookie } from "@/services/authService";
 
 export default function NaverCallbackPage() {
   const naverAuthMutation = useNaverAuth();
@@ -25,7 +26,9 @@ export default function NaverCallbackPage() {
 
       sessionStorage.setItem(sessionKey, "true");
 
-      naverAuthMutation.mutate({ code, state });
+      // FCM 토큰 포함해서 mutation 호출
+      const fcmToken = getCookie("fcmToken") || "";
+      naverAuthMutation.mutate({ code, state, fcmToken });
     };
 
     handleNaverCallback();
