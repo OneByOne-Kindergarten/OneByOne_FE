@@ -41,6 +41,9 @@ jobs:
           # 소스코드 복사 
           cp -r src target-repo/
 
+          # public 폴더 복사 
+          cp -r public target-repo/
+
           # 설정 파일들 복사
           cp package.json target-repo/
           cp package-lock.json target-repo/
