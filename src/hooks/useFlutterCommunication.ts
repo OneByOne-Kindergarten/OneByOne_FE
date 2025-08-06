@@ -7,8 +7,9 @@ import {
   PermissionResult,
 } from "@/utils/webViewCommunication";
 
-/// Flutter Webivew인지 userAgent를 통해 확인
-export const isFlutterWebView = /OneByOne/i.test(navigator.userAgent);
+/// Flutter InAppWebView 객체 존재 여부로 Flutter 환경 감지
+/// TODO 0806 한승완 : 추후 userAgent 변환 확인 필요
+export const isFlutterWebView = typeof window !== 'undefined' && !!window.flutter_inappwebview;
 
 /**
  * FCM 토큰을 직접 요청하는 훅
