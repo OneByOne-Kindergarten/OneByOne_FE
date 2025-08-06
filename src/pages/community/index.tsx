@@ -6,8 +6,8 @@ import PageLayout from "@/components/@shared/layout/page-layout";
 import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
 import NavBar from "@/components/@shared/nav/nav-bar";
 import CategorySelector from "@/components/community/CategorySelector";
-import PopularPostsList from "@/components/community/PopularPostsList";
-import CommunityPostsList from "@/components/community/PostList";
+import PopularPostList from "@/components/community/PopularPostList";
+import PostList from "@/components/community/PostList";
 import { SVG_PATHS } from "@/constants/assets-path";
 import {
   PROSPECTIVE_TEACHER_CATEGORIES,
@@ -84,16 +84,23 @@ export default function CommunityPage() {
           type={communityType as "teacher" | "pre-teacher"}
           categoryOptions={categoryOptions}
         />
-
         {categoryName === "top10" ? (
-          <Suspense fallback={<LoadingSpinner type="element" />}>
-            <PopularPostsList />
-          </Suspense>
+          <section className="mb-12 flex flex-col gap-9 pb-1.5">
+            <div className="flex items-center gap-2">
+              <img src={SVG_PATHS.CHART} alt="그래프" width="20" height="18" />
+              <h2 className="text-lg font-semibold">실시간 인기 게시글</h2>
+            </div>
+            <Suspense fallback={<LoadingSpinner type="element" />}>
+              <PopularPostList />
+            </Suspense>
+          </section>
         ) : (
-          <CommunityPostsList
-            type={communityType as "teacher" | "pre-teacher"}
-            categoryName={categoryName}
-          />
+          <Suspense fallback={<LoadingSpinner type="element" />}>
+            <PostList
+              type={communityType as "teacher" | "pre-teacher"}
+              categoryName={categoryName}
+            />
+          </Suspense>
         )}
       </div>
 

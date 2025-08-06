@@ -3,6 +3,7 @@ import {
   useQuery,
   useQueryClient,
   useSuspenseInfiniteQuery,
+  useSuspenseQuery,
 } from "@tanstack/react-query";
 
 import {
@@ -36,7 +37,7 @@ import {
 } from "@/types/communityDTO";
 
 export const usePopularPosts = () => {
-  return useQuery<PopularPostsResponse>({
+  return useSuspenseQuery<PopularPostsResponse>({
     queryKey: ["popularPosts"],
     queryFn: getPopularPosts,
     ...DYNAMIC_CACHE_CONFIG,

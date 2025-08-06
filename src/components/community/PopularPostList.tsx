@@ -2,11 +2,10 @@ import { useEffect, useRef, useState } from "react";
 
 import Empty from "@/components/@shared/layout/empty";
 import PostCard from "@/components/community/PostCard";
-import { SVG_PATHS } from "@/constants/assets-path";
 import { usePopularPosts } from "@/hooks/useCommunity";
 import { getCategoryLabel } from "@/utils/categoryUtils";
 
-export default function PopularPostsList() {
+export default function PopularPostList() {
   const { data: popularPostsData } = usePopularPosts();
   const posts = popularPostsData?.data || [];
   const [isAnimationStarted, setIsAnimationStarted] = useState(false);
@@ -31,12 +30,7 @@ export default function PopularPostsList() {
   }, [posts.length]);
 
   return (
-    <section className="mb-12 flex flex-col gap-9 pb-1.5">
-      <div className="flex items-center gap-2">
-        <img src={SVG_PATHS.CHART} alt="그래프" width="20" height="18" />
-        <h2 className="text-lg font-semibold">실시간 인기 게시글</h2>
-      </div>
-
+    <>
       {posts.length === 0 ? (
         <Empty
           title="게시글이 없습니다."
@@ -67,6 +61,6 @@ export default function PopularPostsList() {
           ))}
         </ul>
       )}
-    </section>
+    </>
   );
 }
