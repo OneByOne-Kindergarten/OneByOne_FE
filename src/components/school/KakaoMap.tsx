@@ -37,12 +37,7 @@ export default function KakaoMap({
   const finalError = renderError;
 
   return finalError ? (
-    <MapError
-      height={height}
-      latitude={latitude}
-      longitude={longitude}
-      error={finalError}
-    />
+    <MapError height={height} error={finalError} />
   ) : (
     <div
       className={`${height} relative overflow-hidden rounded-lg border border-primary-normal01`}
