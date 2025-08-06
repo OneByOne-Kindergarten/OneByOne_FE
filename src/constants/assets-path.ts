@@ -16,6 +16,7 @@ import cancel from "@/assets/icons/cancel.svg";
 import certification from "@/assets/icons/certification-mark.svg";
 import characterChick from "@/assets/icons/character-chick.svg";
 import characterChicken from "@/assets/icons/character-chicken.svg";
+import characterCry from "@/assets/icons/character-cry.svg";
 import characterUser from "@/assets/icons/character-user.svg";
 import chart from "@/assets/icons/chart.svg";
 import chatColor from "@/assets/icons/chat-color.svg";
@@ -135,6 +136,7 @@ export const SVG_PATHS = {
     chicken: characterChicken,
     chick: characterChick,
     user: characterUser,
+    cry: characterCry,
   },
   SHORTCUT: {
     school: shortcutSchool,

@@ -42,9 +42,7 @@ export default function KakaoMapWrapper({
   }, [loadError, setIsSDKLoaded, setError]);
 
   if (error) {
-    return (
-      <MapError height={height} error={error} latitude={0} longitude={0} />
-    );
+    return <MapError height={height} error={error} />;
   }
 
   return <div className={`${height} relative w-full`}>{children}</div>;

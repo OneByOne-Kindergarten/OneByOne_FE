@@ -1,11 +1,9 @@
-import Button from "@/components/@shared/buttons/base-button";
 import { SVG_PATHS } from "@/constants/assets-path";
 
-// 에러 매핑 테이블
 const ERROR_MAPPINGS = [
   {
     keywords: ["network", "NetworkError"],
-    message: "네트워크 연결을 확인해주세요.",
+    message: "네트워크 연결이 끊겨 위치를 찾을 수 없습니다.",
   },
   {
     keywords: ["API", "key", "auth"],
@@ -25,31 +23,24 @@ const ERROR_MAPPINGS = [
   },
 ];
 
-const DEFAULT_ERROR_MESSAGE = "일시적인 오류가 발생했습니다.";
-const EMPTY_ERROR_MESSAGE = "위치 정보를 찾을 수 없습니다.";
+const DEFAULT_ERROR_MESSAGE = "지도에서 현재 위치를 찾을 수 없습니다.";
 
 // 에러 메시지 변환 함수
 const getErrorMessage = (error: unknown): string => {
   if (!error) {
-    return EMPTY_ERROR_MESSAGE;
+    return DEFAULT_ERROR_MESSAGE;
   }
 
-  // 문자열 에러인 경우 그대로 사용
   if (typeof error === "string") {
     return error;
   }
 
-  // 에러 메시지 추출
   const errorMessage =
     typeof error === "string"
       ? error
       : error instanceof Error
         ? error.message
         : String(error);
-
-  if (!errorMessage) {
-    return EMPTY_ERROR_MESSAGE;
-  }
 
   // 매핑 테이블에서 매칭되는 에러 찾기
   const matchedError = ERROR_MAPPINGS.find(({ keywords }) =>
@@ -63,61 +54,26 @@ const getErrorMessage = (error: unknown): string => {
 
 interface MapErrorProps {
   height: string;
-  latitude: number;
-  longitude: number;
   error: unknown; // 원시 에러 객체 또는 문자열
 }
 
-export default function MapError({
-  height,
-  latitude,
-  longitude,
-  error,
-}: MapErrorProps) {
+export default function MapError({ height, error }: MapErrorProps) {
   const errorMessage = getErrorMessage(error);
 
   return (
     <div
-      className={`${height} flex w-full flex-col items-center justify-center gap-6 rounded-lg border border-primary-light02 bg-primary-normal01 p-6`}
+      className={`${height} flex w-full flex-col items-center justify-center gap-3 rounded-lg border border-primary-normal01 bg-primary-light01 p-6`}
     >
-      <div className="text-center">
-        <img
-          src={SVG_PATHS.ALERT}
-          alt="경고"
-          className="mx-auto mb-2 h-6 w-6"
-        />
-        <p className="-mt-2 font-medium">{errorMessage}</p>
-      </div>
-
-      <div className="flex w-full flex-col gap-2 rounded-lg bg-white p-3 text-center opacity-80">
-        <div>
-          <img
-            src={SVG_PATHS.LOCATION}
-            alt="위치"
-            className="mx-auto mb-2 h-6 w-6"
-          />
-          <p className="mb-2 text-sm font-medium text-primary-dark02">
-            현재 위치
-          </p>
-          <p className="text-xs text-primary-normal03">
-            위도: {latitude.toFixed(2)}
-          </p>
-          <p className="text-xs text-primary-normal03">
-            경도: {longitude.toFixed(2)}
-          </p>
-        </div>
-        <Button
-          onClick={() => {
-            const googleMapsUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
-            window.open(googleMapsUrl, "_blank");
-          }}
-          variant="secondary"
-          size="md"
-          font="xs"
-        >
-          구글맵에서 보기
-        </Button>
-      </div>
+      <img
+        src={SVG_PATHS.CHARACTER.cry}
+        alt="경고"
+        width={46}
+        height={52}
+        className="mx-auto mb-2 h-16 w-14"
+      />
+      <p className="-mt-2 text-center text-xs font-medium text-primary-dark01">
+        {errorMessage} <br /> 검색으로 탐색해주세요.
+      </p>
     </div>
   );
 }
