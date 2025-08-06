@@ -1,8 +1,5 @@
-import { useAtom } from "jotai";
 import { ReactNode, useEffect, useState } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-
-import { kakaoMapSDKLoadedAtom } from "@/stores/kakaoMapStore";
 
 import MapError from "./MapError";
 import MapSkeleton from "./MapSkeleton";
@@ -26,15 +23,16 @@ export default function KakaoMap({
   showUserLocation = false,
   children,
 }: KakaoMapProps) {
-  const [isMapLoading, setIsMapLoading] = useState<boolean>(true);
+  const [isMapLoaded, setIsMapLoaded] = useState<boolean>(false);
   const [showSkeleton, setShowSkeleton] = useState<boolean>(true);
   const [renderError, setRenderError] = useState<unknown>(null);
-  const [isSDKLoaded] = useAtom(kakaoMapSDKLoadedAtom);
 
-  // SDK가 로딩되지 않았거나 지도가 렌더링 중이면 스켈레톤 표시
+  // 지도 로딩 완료 즉시 스켈레톤 숨김
   useEffect(() => {
-    setShowSkeleton(!isSDKLoaded || isMapLoading);
-  }, [isSDKLoaded, isMapLoading]);
+    if (isMapLoaded) {
+      setShowSkeleton(false);
+    }
+  }, [isMapLoaded]);
 
   const finalError = renderError;
 
@@ -63,17 +61,17 @@ export default function KakaoMap({
           style={{ width: "100%", height: "100%" }}
           level={level}
           onCreate={() => {
-            setIsMapLoading(false);
+            setIsMapLoaded(true);
             setRenderError(null);
           }}
           onLoad={() => {
-            setIsMapLoading(false);
+            setIsMapLoaded(true);
             setRenderError(null);
           }}
           onError={(e) => {
             console.error("❌ 카카오맵 에러:", e);
             setRenderError(e);
-            setIsMapLoading(false);
+            setIsMapLoaded(false);
           }}
         >
           {/* 사용자 위치 마커 */}
