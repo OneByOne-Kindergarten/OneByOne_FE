@@ -1,33 +1,16 @@
-import { useEffect, useRef, useState } from "react";
-
 import Empty from "@/components/@shared/layout/empty";
 import PostCard from "@/components/community/PostCard";
 import { usePopularPosts } from "@/hooks/useCommunity";
+import { useStaggeredAnimation } from "@/hooks/useStaggeredAnimation";
 import { getCategoryLabel } from "@/utils/categoryUtils";
 
 export default function PopularPostList() {
   const { data: popularPostsData } = usePopularPosts();
   const posts = popularPostsData?.data || [];
-  const [isAnimationStarted, setIsAnimationStarted] = useState(false);
-  const firstCardRef = useRef<HTMLLIElement | null>(null);
-
-  // 게시글 카드 애니메이션 시작
-  useEffect(() => {
-    if (!firstCardRef.current || posts.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsAnimationStarted(true);
-        }
-      },
-      { threshold: 0.1, rootMargin: "50px" }
-    );
-
-    observer.observe(firstCardRef.current);
-
-    return () => observer.disconnect();
-  }, [posts.length]);
+  const { getAnimationProps } = useStaggeredAnimation({
+    items: posts,
+    delay: 150,
+  });
 
   return (
     <>
@@ -39,18 +22,7 @@ export default function PopularPostList() {
       ) : (
         <ul className="flex flex-col gap-5">
           {posts.map((post, index) => (
-            <li
-              key={`post-${post.id}-${index}`}
-              ref={index === 0 ? firstCardRef : null}
-              className={`transform transition-all duration-500 ease-out ${
-                isAnimationStarted
-                  ? "translate-x-0 scale-100 opacity-100"
-                  : "translate-x-8 scale-95 opacity-0"
-              }`}
-              style={{
-                transitionDelay: `${index * 150}ms`,
-              }}
-            >
+            <li key={`post-${post.id}-${index}`} {...getAnimationProps(index)}>
               <PostCard
                 post={post}
                 index={index}

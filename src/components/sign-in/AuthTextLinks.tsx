@@ -29,7 +29,7 @@ export default function AuthTextLinks({ types }: AuthTextLinksProps) {
           <p className="text-primary-dark03">{authLinks[type].description}</p>
           <Link
             to={authLinks[type].to}
-            className="font-semibold text-tertiary-3"
+            className="font-semibold text-tertiary-3 active:opacity-70"
           >
             {type}
           </Link>
