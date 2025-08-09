@@ -1,12 +1,12 @@
 import { useState } from "react";
 
-import PageLayout from "@/components/@shared/layout/page-layout";
-import LogOutAlertModal from "@/components/user/LogOutAlertModal";
-import MenuItem from "@/components/user/MenuItem";
-import WithdrawAlertModal from "@/components/user/WithdrawAlertModal";
-import { SVG_PATHS } from "@/constants/assets-path";
-import { URL_PATHS } from "@/constants/url-path";
-import { useSignOut, useWithdrawUser } from "@/hooks/useAuth";
+import { SVG_PATHS } from "@/common/constants/assets-path";
+import { URL_PATHS } from "@/common/constants/url-path";
+import PageLayout from "@/common/ui/layout/page-layout";
+import { useSignOut, useWithdrawUser } from "@/entities/user/hooks";
+import LogOutAlertModal from "@/features/user/LogOutAlertModal";
+import MenuItem from "@/features/user/MenuItem";
+import WithdrawAlertModal from "@/features/user/WithdrawAlertModal";
 
 export default function AccountSettingPage() {
   const [isSignOutModalOpen, setIsSignOutModalOpen] = useState(false);

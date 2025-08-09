@@ -1,23 +1,17 @@
 import { useNavigate } from "react-router-dom";
 
-import PageLayout from "@/components/@shared/layout/page-layout";
-import AuthTextLinks from "@/components/sign-in/AuthTextLinks";
-import { EmailCertificationForm } from "@/components/sign-up/EmailCertificationForm";
-import { EmailForm, EmailFormValues } from "@/components/sign-up/EmailForm";
-import {
-  PasswordForm,
-  PasswordFormValues,
-} from "@/components/sign-up/PasswordForm";
-import {
-  UserInfoForm,
-  UserInfoFormValues,
-} from "@/components/sign-up/UserInfoForm";
-import { URL_PATHS } from "@/constants/url-path";
-import { useSignUp } from "@/hooks/useAuth";
-import { useFormData } from "@/hooks/useFormData";
-import { useStepNavigation } from "@/hooks/useStepNavigation";
-import { useStepRenderer } from "@/hooks/useStepRenderer";
-import { SignUpRequest } from "@/types/authDTO";
+import { URL_PATHS } from "@/common/constants/url-path";
+import useFormData from "@/common/hooks/useFormdata";
+import { useStepNavigation } from "@/common/hooks/useStepNavigation";
+import { useStepRenderer } from "@/common/hooks/useStepRenderer";
+import PageLayout from "@/common/ui/layout/page-layout";
+import { SignUpRequest } from "@/entities/auth/DTO.d";
+import { useSignUp } from "@/entities/auth/hooks";
+import AuthTextLinks from "@/features/auth/AuthTextLinks";
+import { EmailCertificationForm } from "@/features/auth/EmailCertificationForm";
+import { EmailForm, EmailFormValues } from "@/features/auth/EmailForm";
+import { PasswordForm, PasswordFormValues } from "@/features/auth/PasswordForm";
+import { UserInfoForm, UserInfoFormValues } from "@/features/auth/UserInfoForm";
 
 type SignUpFormData = {
   email: string;
@@ -52,7 +46,7 @@ const SIGNUP_STEP_CONFIG = {
   },
 };
 
-export default function SignUp() {
+export default function SignUpPage() {
   const navigate = useNavigate();
   const { mutate: signUpMutate, isPending } = useSignUp();
   const {

@@ -2,7 +2,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import Button from "@/components/@shared/buttons/base-button";
+import { URL_PATHS } from "@/common/constants/url-path";
+import Button from "@/common/ui/buttons/base-button";
 import {
   Form,
   FormControl,
@@ -10,15 +11,14 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/@shared/form";
-import Input from "@/components/@shared/form/input";
-import ToggleInput from "@/components/@shared/form/toggle-input";
-import PageLayout from "@/components/@shared/layout/page-layout";
-import AuthTextLinks from "@/components/sign-in/AuthTextLinks";
-import { URL_PATHS } from "@/constants/url-path";
-import { useSignIn } from "@/hooks/useAuth";
-import { getCookie } from "@/services/authService";
-import { SignInRequest } from "@/types/authDTO";
+} from "@/common/ui/form";
+import Input from "@/common/ui/form/input";
+import ToggleInput from "@/common/ui/form/toggle-input";
+import PageLayout from "@/common/ui/layout/page-layout";
+import { getCookie } from "@/entities/auth/api";
+import { SignInRequest } from "@/entities/auth/DTO.d";
+import { useSignIn } from "@/entities/auth/hooks";
+import AuthTextLinks from "@/features/auth/AuthTextLinks";
 
 const signInSchema = z.object({
   email: z
@@ -33,7 +33,7 @@ const signInSchema = z.object({
 
 type SignInFormValues = z.infer<typeof signInSchema>;
 
-export default function SignIn() {
+export default function SignInPage() {
   const { mutate: signInMutate, isPending } = useSignIn();
 
   const form = useForm<SignInFormValues>({

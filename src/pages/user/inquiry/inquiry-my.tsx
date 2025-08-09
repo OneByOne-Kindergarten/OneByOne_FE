@@ -2,13 +2,14 @@ import clsx from "clsx";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import Button from "@/components/@shared/buttons/base-button";
-import Toggle from "@/components/@shared/buttons/base-toggle";
-import InquiryList from "@/components/@shared/inquiry/InquiryList";
-import PageLayout from "@/components/@shared/layout/page-layout";
-import { INQUIRY_TAB_OPTIONS } from "@/constants/inquiry";
-import { URL_PATHS } from "@/constants/url-path";
-import { useMyInquiries } from "@/hooks/useInquiry";
+import AutoFetchSentinel from "@/common/components/AutoFetchSentinel";
+import { INQUIRY_TAB_OPTIONS } from "@/common/constants/inquiry";
+import { URL_PATHS } from "@/common/constants/url-path";
+import Button from "@/common/ui/buttons/base-button";
+import Toggle from "@/common/ui/buttons/base-toggle";
+import PageLayout from "@/common/ui/layout/page-layout";
+import { useInfiniteMyInquiries } from "@/entities/inquiry/hooks";
+import InquiryList from "@/features/inquiry/InquiryList";
 
 type InquiryTab = (typeof INQUIRY_TAB_OPTIONS)[number]["type"];
 
@@ -18,18 +19,20 @@ export default function InquiryMyPage() {
     null
   );
 
-  const { data: myInquiries } = useMyInquiries();
+  const { data, hasNextPage, fetchNextPage, isFetchingNextPage } =
+    useInfiniteMyInquiries({ pageSize: 10 });
+
+  const myInquiries = data?.pages.flatMap((p) => p.content) ?? [];
 
   const handleToggleExpand = (inquiryId: number) => {
     setExpandedInquiryId(expandedInquiryId === inquiryId ? null : inquiryId);
   };
 
   // 프론트엔드에서 status에 따라 문의 내역 필터링
-  const filteredInquiries = myInquiries?.content
-    ? activeTab === "ALL"
-      ? myInquiries.content
-      : myInquiries.content.filter((inquiry) => inquiry.status === activeTab)
-    : [];
+  const filteredInquiries =
+    activeTab === "ALL"
+      ? myInquiries
+      : myInquiries.filter((inquiry) => inquiry.status === activeTab);
 
   return (
     <PageLayout
@@ -72,6 +75,11 @@ export default function InquiryMyPage() {
           inquiries={filteredInquiries}
           onToggleExpand={handleToggleExpand}
           expandedInquiryId={expandedInquiryId}
+        />
+        <AutoFetchSentinel
+          hasNext={Boolean(hasNextPage)}
+          loading={Boolean(isFetchingNextPage)}
+          fetchNext={() => fetchNextPage()}
         />
       </div>
     </PageLayout>

@@ -1,11 +1,11 @@
 import { Suspense } from "react";
 import { useParams } from "react-router-dom";
 
-import Empty from "@/components/@shared/layout/empty";
-import PageLayout from "@/components/@shared/layout/page-layout";
-import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
-import NoticeDetail from "@/components/notice/NoticeDetail";
-import { URL_PATHS } from "@/constants/url-path";
+import { URL_PATHS } from "@/common/constants/url-path";
+import Empty from "@/common/ui/layout/empty";
+import PageLayout from "@/common/ui/layout/page-layout";
+import LoadingSpinner from "@/common/ui/loading/loading-spinner";
+import NoticeDetail from "@/widgets/noticeList/NoticeDetail";
 
 export default function NoticeDetailPage() {
   const { id } = useParams();

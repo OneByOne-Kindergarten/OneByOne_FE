@@ -1,18 +1,16 @@
-import { useAtom } from "jotai";
 import { Suspense } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
-import PostButton from "@/components/@shared/buttons/post-button";
-import PageLayout from "@/components/@shared/layout/page-layout";
-import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
-import NavBar from "@/components/@shared/nav/nav-bar";
-import ReviewList from "@/components/review/ReviewList";
-import TotalRatingSection from "@/components/review/TotalRatingSection";
-import { REVIEW_TYPES } from "@/constants/review";
-import { useKindergartenName } from "@/hooks/useKindergartenName";
-import { useReviewPage } from "@/hooks/useReviewPage";
-import { userAtom } from "@/stores/userStore";
-import { SortType } from "@/types/reviewDTO";
+import { REVIEW_TYPES } from "@/common/constants/review";
+import PostButton from "@/common/ui/buttons/post-button";
+import PageLayout from "@/common/ui/layout/page-layout";
+import LoadingSpinner from "@/common/ui/loading/loading-spinner";
+import { useKindergartenName } from "@/entities/kindergarten/hooks";
+import { SortType } from "@/entities/review/DTO.d";
+import TotalRatingSection from "@/features/review/TotalRatingSection";
+import NavBar from "@/widgets/nav/nav-bar";
+import ReviewList from "@/widgets/reviewList";
+import { useReviewPage } from "@/widgets/reviewList/useReviewPage";
 
 const SCHOOL_DEFAULT_NAME = "";
 
@@ -23,7 +21,6 @@ function ReviewContent() {
   const sortType =
     (searchParams.get("sortType") as SortType) || SortType.LATEST;
   const navigate = useNavigate();
-  const [user] = useAtom(userAtom);
 
   const safeKindergartenId = kindergartenId || "unknown";
   const { data: kindergartenData } = useKindergartenName(safeKindergartenId);
@@ -34,13 +31,8 @@ function ReviewContent() {
   const kindergartenName = kindergartenData?.name || SCHOOL_DEFAULT_NAME;
 
   const handleWriteReview = () => {
-    if (safeKindergartenId && user && safeKindergartenId !== "unknown") {
-      if (user.role === "TEACHER") {
-        navigate(`/school/${safeKindergartenId}/review/new?type=work`);
-      } else if (user.role === "PROSPECTIVE_TEACHER") {
-        navigate(`/school/${safeKindergartenId}/review/new?type=learning`);
-      }
-    }
+    if (!safeKindergartenId || safeKindergartenId === "unknown") return;
+    navigate(`/kindergarten/${safeKindergartenId}/review/new?type=${type}`);
   };
 
   return (
@@ -81,8 +73,8 @@ export default function ReviewPage() {
     <PageLayout
       title={`원바원 | ${safeKindergartenId} 유치원`}
       headerTitle={kindergartenName}
-      headerType="school"
-      currentPath={`/school/${safeKindergartenId}/review`}
+      headerType="kindergarten"
+      currentPath={`/kindergarten/${safeKindergartenId}/review`}
       kindergartenId={safeKindergartenId}
       showBookmark={true}
       mainBg="gray"

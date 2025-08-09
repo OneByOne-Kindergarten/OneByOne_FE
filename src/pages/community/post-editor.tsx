@@ -4,41 +4,41 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 
-import Button from "@/components/@shared/buttons/base-button";
+import { URL_PATHS } from "@/common/constants/url-path";
+import Button from "@/common/ui/buttons/base-button";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-} from "@/components/@shared/form";
-import ErrorMessage from "@/components/@shared/form/error-message";
-import Input from "@/components/@shared/form/input";
-import Textarea from "@/components/@shared/form/textarea";
-import PageLayout from "@/components/@shared/layout/page-layout";
-import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
-import { URL_PATHS } from "@/constants/url-path";
-import { useCreatePost } from "@/hooks/useCommunity";
-import { CreateCommunityPostRequest } from "@/types/communityDTO";
+} from "@/common/ui/form";
+import ErrorMessage from "@/common/ui/form/error-message";
+import Input from "@/common/ui/form/input";
+import Textarea from "@/common/ui/form/textarea";
+import PageLayout from "@/common/ui/layout/page-layout";
+import LoadingSpinner from "@/common/ui/loading/loading-spinner";
 import {
   getCategoryOptions,
   getValidCategoryName,
-} from "@/utils/categoryUtils";
+} from "@/common/utils/categoryUtils";
 import {
   getCommunityCategory,
   getCommunityCategoryName,
   setCommunityCategory,
   setCommunityCategoryName,
-} from "@/utils/lastVisitedPathUtils";
+} from "@/common/utils/lastVisitedPathUtils";
 import {
   POST_CONTENT_MAX_LENGTH,
   POST_TITLE_MAX_LENGTH,
   postSchema,
-} from "@/utils/validationSchemas";
+} from "@/common/utils/validationSchemas";
+import { CreateCommunityPostRequest } from "@/entities/community/DTO.d";
+import { useCreatePost } from "@/entities/community/hooks";
 
 type PostFormData = z.infer<typeof postSchema>;
 
-export default function PostEditorPage() {
+export default function CommunityPostEditorPage() {
   const isSubmitting = useRef(false);
 
   const [selectedCategory, _setSelectedCategory] = useState<
@@ -272,7 +272,7 @@ export default function PostEditorPage() {
                     isPending || isSubmitting.current || !formState.isValid
                   }
                 >
-                  {isPending ? "등록 중..." : "등록"}
+                  {isPending ? "등록 중" : "등록"}
                 </Button>
               </div>
             </form>

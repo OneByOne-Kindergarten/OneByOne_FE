@@ -1,13 +1,13 @@
 import clsx from "clsx";
 import { useState } from "react";
 
-import Toggle from "@/components/@shared/buttons/base-toggle";
-import InquiryList from "@/components/@shared/inquiry/InquiryList";
-import PageLayout from "@/components/@shared/layout/page-layout";
-import { INQUIRY_TAB_OPTIONS } from "@/constants/inquiry";
-import { URL_PATHS } from "@/constants/url-path";
-import { useAllInquiries, useInquiriesByStatus } from "@/hooks/useInquiry";
-import { InquiryStatus } from "@/types/inquiryDTO";
+import AutoFetchSentinel from "@/common/components/AutoFetchSentinel";
+import { INQUIRY_TAB_OPTIONS } from "@/common/constants/inquiry";
+import { URL_PATHS } from "@/common/constants/url-path";
+import Toggle from "@/common/ui/buttons/base-toggle";
+import PageLayout from "@/common/ui/layout/page-layout";
+import { useInfiniteAllInquiries } from "@/entities/inquiry/hooks";
+import InquiryList from "@/features/inquiry/InquiryList";
 
 type InquiryTab = (typeof INQUIRY_TAB_OPTIONS)[number]["type"];
 
@@ -17,16 +17,21 @@ export default function InquiryAdminPage() {
     null
   );
 
-  const { data: allInquiries } = useAllInquiries();
-  const { data: statusInquiries } = useInquiriesByStatus(
-    activeTab !== "ALL" ? activeTab : InquiryStatus.PENDING
-  );
+  const { data, hasNextPage, fetchNextPage, isFetchingNextPage } =
+    useInfiniteAllInquiries({ pageSize: 10 });
 
   const handleToggleExpand = (inquiryId: number) => {
     setExpandedInquiryId(expandedInquiryId === inquiryId ? null : inquiryId);
   };
 
-  const inquiries = activeTab === "ALL" ? allInquiries : statusInquiries;
+  const allPages = data?.pages as
+    | Array<import("@/entities/inquiry/DTO.d").InquiryResponse>
+    | undefined;
+  const allInquiries = (allPages ?? []).flatMap((p) => p.content);
+  const inquiries =
+    activeTab === "ALL"
+      ? allInquiries
+      : allInquiries.filter((inq) => inq.status === activeTab);
 
   return (
     <PageLayout
@@ -56,9 +61,15 @@ export default function InquiryAdminPage() {
         </section>
 
         <InquiryList
-          inquiries={inquiries?.content || []}
+          inquiries={inquiries}
           onToggleExpand={handleToggleExpand}
           expandedInquiryId={expandedInquiryId}
+        />
+
+        <AutoFetchSentinel
+          hasNext={Boolean(hasNextPage)}
+          loading={Boolean(isFetchingNextPage)}
+          fetchNext={() => fetchNextPage()}
         />
       </div>
     </PageLayout>

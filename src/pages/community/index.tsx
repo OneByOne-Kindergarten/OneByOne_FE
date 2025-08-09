@@ -1,19 +1,19 @@
 import { Suspense, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-import PostButton from "@/components/@shared/buttons/post-button";
-import PageLayout from "@/components/@shared/layout/page-layout";
-import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
-import NavBar from "@/components/@shared/nav/nav-bar";
-import CategorySelector from "@/components/community/CategorySelector";
-import PopularPostList from "@/components/community/PopularPostList";
-import PostList from "@/components/community/PostList";
-import { SVG_PATHS } from "@/constants/assets-path";
+import { SVG_PATHS } from "@/common/constants/assets-path";
 import {
   PROSPECTIVE_TEACHER_CATEGORIES,
   TEACHER_CATEGORIES,
-} from "@/constants/community";
-import { setCommunityState } from "@/utils/lastVisitedPathUtils";
+} from "@/common/constants/community";
+import PostButton from "@/common/ui/buttons/post-button";
+import PageLayout from "@/common/ui/layout/page-layout";
+import LoadingSpinner from "@/common/ui/loading/loading-spinner";
+import { setCommunityState } from "@/common/utils/lastVisitedPathUtils";
+import CategorySelector from "@/features/community/CategorySelector";
+import NavBar from "@/widgets/nav/nav-bar";
+import PostList from "@/widgets/postList";
+import PopularPostList from "@/widgets/postList/PopularPostList";
 
 const communityTypeOptions = [
   {

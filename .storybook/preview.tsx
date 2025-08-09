@@ -1,4 +1,4 @@
-import "@/styles/global.css";
+import "@/app/styles/global.css";
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 

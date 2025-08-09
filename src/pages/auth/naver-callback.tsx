@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 
-import Error from "@/components/@shared/layout/error";
-import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
-import { extractAuthParams, useNaverAuth } from "@/hooks/useSocialAuth";
-import { getCookie } from "@/services/authService";
+import Error from "@/common/ui/layout/error";
+import LoadingSpinner from "@/common/ui/loading/loading-spinner";
+import { getCookie } from "@/entities/auth/api";
+import { extractAuthParams, useNaverAuth } from "@/entities/auth/hooks";
 
 export default function NaverCallbackPage() {
   const naverAuthMutation = useNaverAuth();

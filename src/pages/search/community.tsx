@@ -1,13 +1,13 @@
 import { useMemo } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-import SearchPageLayout from "@/components/@shared/layout/search-page-layout";
-import RecentSearches from "@/components/@shared/search/recent-searches";
-import CommunitySearchResult from "@/components/community/CommunitySearchResult";
-import { URL_PATHS } from "@/constants/url-path";
-import { useCommunityPosts } from "@/hooks/useCommunity";
-import { useSearchPage } from "@/hooks/useSearchPage";
-import { CommunityPostItem } from "@/types/communityDTO";
+import { URL_PATHS } from "@/common/constants/url-path";
+import SearchPageLayout from "@/common/ui/layout/search-page-layout";
+import RecentSearches from "@/common/ui/search/recent-searches";
+import { CommunityPostItem } from "@/entities/community/DTO.d";
+import { useCommunityPosts } from "@/entities/community/hooks";
+import CommunitySearchResult from "@/features/community/CommunitySearchResult";
+import { useSearchPage } from "@/features/search/useSearchPage";
 
 export default function CommunitySearchPage() {
   const [searchParams] = useSearchParams();

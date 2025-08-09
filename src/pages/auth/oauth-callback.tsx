@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import Error from "@/components/@shared/layout/error";
-import LoadingSpinner from "@/components/@shared/loading/loading-spinner";
-import { URL_PATHS } from "@/constants/url-path";
+import { URL_PATHS } from "@/common/constants/url-path";
+import { useToast } from "@/common/hooks/useToast";
+import Error from "@/common/ui/layout/error";
+import LoadingSpinner from "@/common/ui/loading/loading-spinner";
+import { getCookie, setCookie } from "@/entities/auth/api";
 import {
   extractAuthParams,
   useKakaoAuth,
   useNaverAuth,
-} from "@/hooks/useSocialAuth";
-import { useToast } from "@/hooks/useToast";
-import { getCookie, setCookie } from "@/services/authService";
-import { getUserInfo } from "@/services/userService";
+} from "@/entities/auth/hooks";
+import { getUserInfo } from "@/entities/user/api";
 
 type SocialProvider = "naver" | "kakao";
 
@@ -183,10 +183,9 @@ export default function OAuthCallbackPage() {
 
       // FCM 토큰 가져오기
       const fcmToken = getCookie("fcmToken") || "";
-      
-      const requestBody = provider === "naver" 
-        ? { code, state, fcmToken } 
-        : { code, fcmToken };
+
+      const requestBody =
+        provider === "naver" ? { code, state, fcmToken } : { code, fcmToken };
 
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -236,7 +235,7 @@ export default function OAuthCallbackPage() {
           </div>
         </div>
         {import.meta.env.DEV && (
-          <div className="bg-green-100 max-w-md rounded p-4 text-xs">
+          <div className="max-w-md rounded bg-green-100 p-4 text-xs">
             <h3 className="mb-2 font-bold">직접 토큰 처리:</h3>
             <p>✅ 백엔드에서 직접 받은 토큰을 처리 중입니다.</p>
           </div>
@@ -295,7 +294,7 @@ export default function OAuthCallbackPage() {
               </p>
             </div>
           ) : (
-            <p className="text-green-600 mt-2 text-xs">
+            <p className="mt-2 text-xs text-green-600">
               ✅ 토큰이 정상적으로 저장되었습니다.
             </p>
           )}

@@ -3,21 +3,21 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 
-import Button from "@/components/@shared/buttons/base-button";
+import { INQUIRY_TITLE_LABEL } from "@/common/constants/inquiry";
+import { URL_PATHS } from "@/common/constants/url-path";
+import Button from "@/common/ui/buttons/base-button";
 import {
   Form,
+  FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormControl,
   FormMessage,
-} from "@/components/@shared/form";
-import Textarea from "@/components/@shared/form/textarea";
-import PageLayout from "@/components/@shared/layout/page-layout";
-import { INQUIRY_TITLE_LABEL } from "@/constants/inquiry";
-import { URL_PATHS } from "@/constants/url-path";
-import { useCreateInquiry } from "@/hooks/useInquiry";
-import type { CreateInquiryRequest } from "@/types/inquiryDTO";
+} from "@/common/ui/form";
+import Textarea from "@/common/ui/form/textarea";
+import PageLayout from "@/common/ui/layout/page-layout";
+import type { CreateInquiryRequest } from "@/entities/inquiry/DTO";
+import { useCreateInquiry } from "@/entities/inquiry/hooks";
 
 const inquirySchema = z.object({
   title: z.enum(["GENERAL", "REPORT", "SERVICE", "ETC"]),

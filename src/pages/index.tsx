@@ -1,16 +1,16 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import Button from "@/components/@shared/buttons/base-button";
-import PageLayout from "@/components/@shared/layout/page-layout";
-import OauthButton from "@/components/sign-in/OauthButton";
-import { IMAGE_PATHS, SVG_PATHS } from "@/constants/assets-path";
-import { URL_PATHS } from "@/constants/url-path";
+import { IMAGE_PATHS, SVG_PATHS } from "@/common/constants/assets-path";
+import { URL_PATHS } from "@/common/constants/url-path";
 import {
   isFlutterWebView,
   useRequestFcmToken,
-} from "@/hooks/useFlutterCommunication";
-import { setCookie } from "@/services/authService";
+} from "@/common/hooks/useFlutterCommunication";
+import Button from "@/common/ui/buttons/base-button";
+import PageLayout from "@/common/ui/layout/page-layout";
+import { setCookie } from "@/entities/auth/api";
+import OauthButton from "@/features/auth/OauthButton";
 
 const oauthButtons = [
   { type: "kakao" as const },
@@ -26,7 +26,7 @@ export default function RootPage() {
       const token = await requestFcmToken();
       if (token) {
         setCookie("fcmToken", token);
-        console.log("FCM 토큰 저장  >> ", token);
+        console.log("FCM 토큰 >> ", token);
       }
     };
 
@@ -48,7 +48,7 @@ export default function RootPage() {
         </h1>
         <img
           src={IMAGE_PATHS.LOGO.MAIN}
-          alt="원바원 로고"
+          alt="원바원 로고고"
           width={89}
           height={31}
           className="animate-slide-in-from-left mx-auto"
