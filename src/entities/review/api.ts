@@ -1,7 +1,7 @@
-import { API_PATHS } from "@/common/constants/api-path";
-import { apiCall } from "@/common/utils/apiUtils";
-import type { LearningReviewFormValues } from "@/features/review/LearningReviewForm";
-import type { WorkReviewFormValues } from "@/features/review/WorkReviewForm";
+import type { LearningReviewFormValues } from "@/features/review-form/LearningReviewForm";
+import type { WorkReviewFormValues } from "@/features/review-form/WorkReviewForm";
+import { apiCall } from "@/shared/api/utils";
+import { API_PATHS } from "@/shared/config/api";
 
 import type {
   InternshipReviewResponse,

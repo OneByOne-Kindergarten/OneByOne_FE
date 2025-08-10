@@ -1,6 +1,6 @@
-import { API_PATHS } from "@/common/constants/api-path";
-import { apiCall } from "@/common/utils/apiUtils";
 import { clearUserInfo, getUserInfo } from "@/entities/user/api";
+import { apiCall } from "@/shared/api/utils";
+import { API_PATHS } from "@/shared/config/api";
 
 import {
   AppleCallbackRequest,

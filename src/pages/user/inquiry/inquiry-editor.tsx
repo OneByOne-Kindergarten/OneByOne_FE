@@ -3,9 +3,12 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 
-import { INQUIRY_TITLE_LABEL } from "@/common/constants/inquiry";
-import { URL_PATHS } from "@/common/constants/url-path";
-import Button from "@/common/ui/buttons/base-button";
+import type { CreateInquiryRequest } from "@/entities/inquiry/DTO";
+import { useCreateInquiry } from "@/entities/inquiry/hooks";
+import SubmitButton from "@/features/auth-form/ui/SubmitButton";
+import { INQUIRY_TITLE_LABEL } from "@/shared/constants/inquiry";
+import { URL_PATHS } from "@/shared/constants/url-path";
+import Button from "@/shared/ui/buttons/base-button";
 import {
   Form,
   FormControl,
@@ -13,11 +16,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/common/ui/form";
-import Textarea from "@/common/ui/form/textarea";
-import PageLayout from "@/common/ui/layout/page-layout";
-import type { CreateInquiryRequest } from "@/entities/inquiry/DTO";
-import { useCreateInquiry } from "@/entities/inquiry/hooks";
+} from "@/shared/ui/form";
+import Textarea from "@/shared/ui/form/textarea";
+import PageLayout from "@/shared/ui/layout/page-layout";
 
 const inquirySchema = z.object({
   title: z.enum(["GENERAL", "REPORT", "SERVICE", "ETC"]),
@@ -122,14 +123,11 @@ export default function InquiryEditorPage() {
                 </FormItem>
               )}
             />
-            <Button
-              variant="secondary"
-              type="submit"
-              className="flex-1"
+            <SubmitButton
+              label="문의하기"
               disabled={!form.formState.isValid || isPending}
-            >
-              문의하기
-            </Button>
+              isLoading={isPending}
+            />
           </form>
         </Form>
       </section>

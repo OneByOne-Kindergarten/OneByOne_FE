@@ -1,8 +1,8 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
 
-import { DYNAMIC_CACHE_CONFIG } from "@/common/constants/query-config";
-import { REVIEW_TYPES } from "@/common/constants/review";
+import { DYNAMIC_CACHE_CONFIG } from "@/shared/config/query";
+import { REVIEW_TYPES } from "@/shared/constants/review";
 
 import { getMyInternshipReviews, getMyWorkReviews } from "../api";
 import { MyPostParams } from "../DTO";

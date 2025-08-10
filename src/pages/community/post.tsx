@@ -1,20 +1,20 @@
 import { Suspense, useCallback, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
-import { URL_PATHS } from "@/common/constants/url-path";
-import { useUrlNavigation } from "@/common/hooks/useUrlNavigation";
-import Error from "@/common/ui/layout/error";
-import PageLayout from "@/common/ui/layout/page-layout";
-import LoadingSpinner from "@/common/ui/loading/loading-spinner";
 import { useCreateComment } from "@/entities/community/comment/hooks";
 import {
   useCommunityPostDetail,
   useLikeStatus,
   useToggleLike,
 } from "@/entities/community/hooks";
-import ChatBar from "@/features/community/ChatBar";
-import Post from "@/features/community/Post";
-import CommentList from "@/widgets/commentList";
+import { URL_PATHS } from "@/shared/constants/url-path";
+import { useUrlNavigation } from "@/shared/hooks/useUrlNavigation";
+import Error from "@/shared/ui/layout/error";
+import PageLayout from "@/shared/ui/layout/page-layout";
+import LoadingSpinner from "@/shared/ui/loading/loading-spinner";
+import ChatBar from "@/widgets/community-feed/ChatBar";
+import Post from "@/widgets/community-feed/Post";
+import CommentList from "@/widgets/community-feed/comment-list";
 
 export default function CommunityPostPage() {
   const { id } = useParams<{ id: string }>();

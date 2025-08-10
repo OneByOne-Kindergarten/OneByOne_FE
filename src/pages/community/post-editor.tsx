@@ -4,37 +4,37 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 
-import { URL_PATHS } from "@/common/constants/url-path";
-import Button from "@/common/ui/buttons/base-button";
+import { CreateCommunityPostRequest } from "@/entities/community/DTO.d";
+import { useCreatePost } from "@/entities/community/hooks";
+import { URL_PATHS } from "@/shared/constants/url-path";
+import Button from "@/shared/ui/buttons/base-button";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-} from "@/common/ui/form";
-import ErrorMessage from "@/common/ui/form/error-message";
-import Input from "@/common/ui/form/input";
-import Textarea from "@/common/ui/form/textarea";
-import PageLayout from "@/common/ui/layout/page-layout";
-import LoadingSpinner from "@/common/ui/loading/loading-spinner";
+} from "@/shared/ui/form";
+import ErrorMessage from "@/shared/ui/form/error-message";
+import Input from "@/shared/ui/form/input";
+import Textarea from "@/shared/ui/form/textarea";
+import PageLayout from "@/shared/ui/layout/page-layout";
+import LoadingSpinner from "@/shared/ui/loading/loading-spinner";
 import {
   getCategoryOptions,
   getValidCategoryName,
-} from "@/common/utils/categoryUtils";
+} from "@/shared/utils/categoryUtils";
 import {
   getCommunityCategory,
   getCommunityCategoryName,
   setCommunityCategory,
   setCommunityCategoryName,
-} from "@/common/utils/lastVisitedPathUtils";
+} from "@/shared/utils/lastVisitedPathUtils";
 import {
   POST_CONTENT_MAX_LENGTH,
   POST_TITLE_MAX_LENGTH,
   postSchema,
-} from "@/common/utils/validationSchemas";
-import { CreateCommunityPostRequest } from "@/entities/community/DTO.d";
-import { useCreatePost } from "@/entities/community/hooks";
+} from "@/shared/utils/validationSchemas";
 
 type PostFormData = z.infer<typeof postSchema>;
 

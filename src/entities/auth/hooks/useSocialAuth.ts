@@ -1,8 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
-import { URL_PATHS } from "@/common/constants/url-path";
-import { useToast } from "@/common/hooks/useToast";
 import {
   appleCallback,
   kakaoCallback,
@@ -14,6 +12,8 @@ import {
   NaverCallbackRequest,
   SignInResponse,
 } from "@/entities/auth/DTO.d";
+import { URL_PATHS } from "@/shared/constants/url-path";
+import { useToast } from "@/shared/hooks/useToast";
 
 export const useNaverAuth = () => {
   const navigate = useNavigate();

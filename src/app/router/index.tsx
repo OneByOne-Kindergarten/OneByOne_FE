@@ -1,8 +1,8 @@
 import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 
-import { URL_PATHS } from "@/common/constants/url-path";
-import LoadingSpinner from "@/common/ui/loading/loading-spinner";
+import { URL_PATHS } from "@/shared/constants/url-path";
+import LoadingSpinner from "@/shared/ui/loading/loading-spinner";
 
 const RootPage = lazy(() => import("@/pages"));
 const HomePage = lazy(() => import("@/pages/home"));

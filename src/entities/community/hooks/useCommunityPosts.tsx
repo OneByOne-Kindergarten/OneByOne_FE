@@ -1,6 +1,6 @@
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 
-import { DYNAMIC_CACHE_CONFIG } from "@/common/constants/query-config";
+import { DYNAMIC_CACHE_CONFIG } from "@/shared/config/query";
 
 import { getCommunityPosts } from "../api";
 

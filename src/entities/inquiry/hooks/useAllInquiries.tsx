@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { INQUIRY_CACHE_CONFIG } from "@/common/constants/query-config";
+import { INQUIRY_CACHE_CONFIG } from "@/shared/config/query";
 
 import { getAllInquiries } from "../api";
 import { InquiryResponse } from "../DTO.d";

@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { DETAIL_CACHE_CONFIG } from "@/common/constants/query-config";
+import { DETAIL_CACHE_CONFIG } from "@/shared/config/query";
 
 import { getCommunityPostDetail } from "../api";
 import { CommunityPostDetailResponse } from "../DTO.d";

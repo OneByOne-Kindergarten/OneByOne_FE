@@ -1,11 +1,11 @@
 import { Suspense, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
-import { URL_PATHS } from "@/common/constants/url-path";
-import Error from "@/common/ui/layout/error";
-import PageLayout from "@/common/ui/layout/page-layout";
-import LoadingSpinner from "@/common/ui/loading/loading-spinner";
-import SchoolInfoOverView from "@/features/kindergarten/SchoolInfoOverView";
+import { URL_PATHS } from "@/shared/constants/url-path";
+import Error from "@/shared/ui/layout/error";
+import PageLayout from "@/shared/ui/layout/page-layout";
+import LoadingSpinner from "@/shared/ui/loading/loading-spinner";
+import KindergartenInfoPanel from "@/widgets/kindergarten-info-panel";
 
 const SCHOOL_DEFAULT_NAME = "유치원";
 
@@ -41,7 +41,7 @@ export default function KindergartenDetailPage() {
     >
       {id || id === "unknown" ? (
         <Suspense fallback={<LoadingSpinner />}>
-          <SchoolInfoOverView
+          <KindergartenInfoPanel
             safeId={safeId}
             onKindergartenLoad={setKindergartenName}
           />

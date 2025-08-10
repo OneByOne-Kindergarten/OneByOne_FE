@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 
-import { toast } from "@/common/hooks/useToast";
 import { checkEmailCertification } from "@/entities/user/api";
+import { toast } from "@/shared/hooks/useToast";
 
 /**
  * 이메일 인증 번호 검증 API 호출

@@ -1,9 +1,9 @@
-import Button from "@/common/ui/buttons/base-button";
-import { formatDate } from "@/common/utils/dateUtils";
 import type { BlockedUser } from "@/entities/block/DTO.d";
 import { useBlock } from "@/entities/block/hooks";
 import { UserRole } from "@/entities/user/DTO.d";
-import ProfileImage from "@/widgets/userProfile/ProfileImage";
+import ProfileImage from "@/features/user-profile/ProfileImage";
+import Button from "@/shared/ui/buttons/base-button";
+import { formatDate } from "@/shared/utils/dateUtils";
 
 export default function BlockedUserList({
   blockedUsers,

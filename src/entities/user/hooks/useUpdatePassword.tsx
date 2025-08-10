@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 
-import { toast } from "@/common/hooks/useToast";
 import { updatePassword } from "@/entities/user/api";
+import { toast } from "@/shared/hooks/useToast";
 
 interface PasswordUpdateParams {
   currentPassword: string;

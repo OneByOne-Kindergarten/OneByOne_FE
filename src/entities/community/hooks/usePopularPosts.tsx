@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 
-import { DYNAMIC_CACHE_CONFIG } from "@/common/constants/query-config";
 import { getPopularPosts } from "@/entities/community/api";
+import { DYNAMIC_CACHE_CONFIG } from "@/shared/config/query";
 
 import { PopularPostsResponse } from "../DTO.d";
 

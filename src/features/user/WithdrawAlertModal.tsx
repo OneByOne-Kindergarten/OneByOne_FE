@@ -1,6 +1,6 @@
-import { SVG_PATHS } from "@/common/constants/assets-path";
-import Button from "@/common/ui/buttons/base-button";
-import PopUpModal from "@/common/ui/modal/pop-up";
+import { SVG_PATHS } from "@/shared/constants/assets-path";
+import Button from "@/shared/ui/buttons/base-button";
+import PopUpModal from "@/shared/ui/modal/pop-up";
 
 interface WithdrawAlertModalProps {
   isOpen: boolean;

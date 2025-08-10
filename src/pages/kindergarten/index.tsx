@@ -1,13 +1,13 @@
 import { useMemo } from "react";
 
-import { URL_PATHS } from "@/common/constants/url-path";
-import { useGeolocation } from "@/common/hooks/useGeolocation";
-import Error from "@/common/ui/layout/error";
-import PageLayout from "@/common/ui/layout/page-layout";
-import KindergartenPageSkeleton from "@/common/ui/skeleton/kindergarten-page-skeleton";
 import { useNearbyKindergartens } from "@/entities/kindergarten/hooks";
-import KindergartenList from "@/features/kindergarten/KindergartenList";
-import NearbySchoolMap from "@/features/kindergarten/NearbySchoolMap";
+import { URL_PATHS } from "@/shared/constants/url-path";
+import { useGeolocation } from "@/shared/hooks/useGeolocation";
+import Error from "@/shared/ui/layout/error";
+import PageLayout from "@/shared/ui/layout/page-layout";
+import KindergartenPageSkeleton from "@/shared/ui/skeleton/kindergarten-page-skeleton";
+import KindergartenList from "@/widgets/content-list/kindergarten-list";
+import NearbySchoolMap from "@/widgets/kindergarten-map/NearbySchoolMap";
 
 export default function KindergartenPage() {
   const geolocationOptions = useMemo(

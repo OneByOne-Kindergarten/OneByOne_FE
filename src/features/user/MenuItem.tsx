@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import { SVG_PATHS } from "@/common/constants/assets-path";
+import { SVG_PATHS } from "@/shared/constants/assets-path";
 
 interface MenuItemProps {
   iconPath: string;

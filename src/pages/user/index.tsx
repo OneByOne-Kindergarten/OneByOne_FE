@@ -1,13 +1,13 @@
 import { useAtom } from "jotai";
 import { Link } from "react-router-dom";
 
-import { SVG_PATHS } from "@/common/constants/assets-path";
-import { URL_PATHS } from "@/common/constants/url-path";
-import PageLayout from "@/common/ui/layout/page-layout";
 import { userAtom } from "@/entities/auth/model";
+import ProfileDetail from "@/features/user-profile/ProfileDetail";
+import ProfileImage from "@/features/user-profile/ProfileImage";
 import MenuItem from "@/features/user/MenuItem";
-import ProfileDetail from "@/widgets/userProfile/ProfileDetail";
-import ProfileImage from "@/widgets/userProfile/ProfileImage";
+import { SVG_PATHS } from "@/shared/constants/assets-path";
+import { URL_PATHS } from "@/shared/constants/url-path";
+import PageLayout from "@/shared/ui/layout/page-layout";
 
 export default function User() {
   const [user] = useAtom(userAtom);

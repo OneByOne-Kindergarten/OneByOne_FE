@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { toast } from "@/common/hooks/useToast";
+import { toast } from "@/shared/hooks/useToast";
 
 import { answerInquiry } from "../api";
 import { AnswerInquiryRequest, InquiryResponse } from "../DTO.d";

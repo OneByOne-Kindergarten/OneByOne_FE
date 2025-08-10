@@ -1,12 +1,12 @@
 import { lazy, Suspense } from "react";
 
-import { URL_PATHS } from "@/common/constants/url-path";
-import Button from "@/common/ui/buttons/base-button";
-import PageLayout from "@/common/ui/layout/page-layout";
-import LoadingSpinner from "@/common/ui/loading/loading-spinner";
 import { useAlarms, useReadAllAlarms } from "@/entities/alarm/hooks";
+import { URL_PATHS } from "@/shared/constants/url-path";
+import Button from "@/shared/ui/buttons/base-button";
+import PageLayout from "@/shared/ui/layout/page-layout";
+import LoadingSpinner from "@/shared/ui/loading/loading-spinner";
 
-const AlarmList = lazy(() => import("@/widgets/alarmList"));
+const AlarmList = lazy(() => import("@/widgets/content-list/alarm-list"));
 
 export default function AlarmPage() {
   const { mutate: readAllAlarms, isPending } = useReadAllAlarms();

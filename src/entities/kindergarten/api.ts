@@ -1,5 +1,5 @@
-import { API_PATHS } from "@/common/constants/api-path";
-import { apiCall } from "@/common/utils/apiUtils";
+import { apiCall } from "@/shared/api/utils";
+import { API_PATHS } from "@/shared/config/api";
 
 import {
   KindergartenDetailResponse,

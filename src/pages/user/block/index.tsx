@@ -1,10 +1,10 @@
-import { URL_PATHS } from "@/common/constants/url-path";
-import Empty from "@/common/ui/layout/empty";
-import Error from "@/common/ui/layout/error";
-import PageLayout from "@/common/ui/layout/page-layout";
-import LoadingSpinner from "@/common/ui/loading/loading-spinner";
 import { useGetBlockedUsers } from "@/entities/block/hooks";
 import BlockedUserList from "@/features/user/BlockedUserList";
+import { URL_PATHS } from "@/shared/constants/url-path";
+import Empty from "@/shared/ui/layout/empty";
+import Error from "@/shared/ui/layout/error";
+import PageLayout from "@/shared/ui/layout/page-layout";
+import LoadingSpinner from "@/shared/ui/loading/loading-spinner";
 
 export default function BlockPage() {
   const { data, isLoading, error } = useGetBlockedUsers();

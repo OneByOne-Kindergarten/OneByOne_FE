@@ -1,9 +1,9 @@
 import { Suspense } from "react";
 
-import { URL_PATHS } from "@/common/constants/url-path";
-import PageLayout from "@/common/ui/layout/page-layout";
-import LoadingSpinner from "@/common/ui/loading/loading-spinner";
-import NoticeList from "@/widgets/noticeList";
+import { URL_PATHS } from "@/shared/constants/url-path";
+import PageLayout from "@/shared/ui/layout/page-layout";
+import LoadingSpinner from "@/shared/ui/loading/loading-spinner";
+import NoticeList from "@/widgets/content-list/notice-list";
 
 export default function NoticePage() {
   return (

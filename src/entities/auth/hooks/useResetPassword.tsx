@@ -1,9 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
-import { URL_PATHS } from "@/common/constants/url-path";
-import { toast } from "@/common/hooks/useToast";
 import { resetPassword } from "@/entities/auth/api";
+import { URL_PATHS } from "@/shared/constants/url-path";
+import { toast } from "@/shared/hooks/useToast";
 
 import { ResetPasswordRequest, ResetPasswordResponse } from "../type";
 

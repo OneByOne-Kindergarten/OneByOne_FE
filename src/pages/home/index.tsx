@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 
-import { IMAGE_PATHS } from "@/common/constants/assets-path";
-import { URL_PATHS } from "@/common/constants/url-path";
-import PageLayout from "@/common/ui/layout/page-layout";
-import NoticeCard from "@/features/home/NoticeCard";
-import PopularPostsPreview from "@/features/home/PopularPostsPreview";
-import ShortCutList from "@/widgets/shortCutList";
+import { IMAGE_PATHS } from "@/shared/constants/assets-path";
+import { URL_PATHS } from "@/shared/constants/url-path";
+import PageLayout from "@/shared/ui/layout/page-layout";
+import ShortCutList from "@/widgets/content-list/shortcut-list";
+import NoticeCard from "@/widgets/home-dashboard/NoticeCard";
+import PopularPostsPreview from "@/widgets/home-dashboard/PopularPostsPreview";
 
 export default function HomePage() {
   return (

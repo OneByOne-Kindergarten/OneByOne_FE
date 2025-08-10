@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { REALTIME_CACHE_CONFIG } from "@/common/constants/query-config";
+import { REALTIME_CACHE_CONFIG } from "@/shared/config/query";
 
 import { getLikeStatus } from "../api";
 import { LikeStatusResponse } from "../DTO.d";

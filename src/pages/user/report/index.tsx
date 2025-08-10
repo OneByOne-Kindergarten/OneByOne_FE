@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-import { URL_PATHS } from "@/common/constants/url-path";
-import { useToast } from "@/common/hooks/useToast";
-import Button from "@/common/ui/buttons/base-button";
-import PageLayout from "@/common/ui/layout/page-layout";
-import { RadioGroup, RadioGroupItem } from "@/common/ui/radio-group";
 import { reportService } from "@/entities/report/api";
 import type { ReportRequest, ReportTargetType } from "@/entities/report/DTO.d";
+import { URL_PATHS } from "@/shared/constants/url-path";
+import { useToast } from "@/shared/hooks/useToast";
+import Button from "@/shared/ui/buttons/base-button";
+import PageLayout from "@/shared/ui/layout/page-layout";
+import { RadioGroup, RadioGroupItem } from "@/shared/ui/radio-group";
 
 const REPORT_REASONS = [
   {

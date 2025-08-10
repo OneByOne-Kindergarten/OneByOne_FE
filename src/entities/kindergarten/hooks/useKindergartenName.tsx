@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { isValidId, safeParseId } from "@/common/utils/idValidation";
+import { isValidId, safeParseId } from "@/shared/utils/idValidation";
 
 import { getKindergartenName } from "../api";
 

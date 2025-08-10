@@ -2,8 +2,8 @@ import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { URL_PATHS } from "@/common/constants/url-path";
 import { userAtom } from "@/entities/auth/model";
+import { URL_PATHS } from "@/shared/constants/url-path";
 
 import { getUserInfo } from "../../user/api";
 import { updateUserShortcuts } from "../api";

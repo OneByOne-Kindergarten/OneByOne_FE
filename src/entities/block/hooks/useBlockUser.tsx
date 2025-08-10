@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { useToast } from "@/common/hooks/useToast";
-import { parseErrorMessage } from "@/common/utils/parseErrorMessage";
 import { blockService } from "@/entities/block/api";
+import { useToast } from "@/shared/hooks/useToast";
+import { parseErrorMessage } from "@/shared/utils/parseErrorMessage";
 
 import type { BlockUserRequest, UnblockUserRequest } from "../dto";
 

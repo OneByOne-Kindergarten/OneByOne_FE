@@ -1,11 +1,11 @@
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 
-import { useToast } from "@/common/hooks/useToast";
 import { searchKindergartens } from "@/entities/kindergarten/api";
 import {
   KindergartenSearchParams,
   KindergartenSearchResponse,
 } from "@/entities/kindergarten/DTO";
+import { useToast } from "@/shared/hooks/useToast";
 
 export const useSearchKindergartens = (
   searchParams: KindergartenSearchParams

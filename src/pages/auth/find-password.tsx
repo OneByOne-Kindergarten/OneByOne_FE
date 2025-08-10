@@ -1,11 +1,12 @@
-import { URL_PATHS } from "@/common/constants/url-path";
-import useFormData from "@/common/hooks/useFormdata";
-import { useStepNavigation } from "@/common/hooks/useStepNavigation";
-import { useStepRenderer } from "@/common/hooks/useStepRenderer";
-import PageLayout from "@/common/ui/layout/page-layout";
 import { useResetPassword } from "@/entities/auth/hooks";
-import { EmailCertificationForm } from "@/features/auth/EmailCertificationForm";
-import { EmailForm, EmailFormValues } from "@/features/auth/EmailForm";
+import AuthStepper from "@/features/auth-form/ui/AuthStepper";
+import { URL_PATHS } from "@/shared/constants/url-path";
+import useFormData from "@/shared/hooks/useFormdata";
+import { useStepNavigation } from "@/shared/hooks/useStepNavigation";
+import { useStepRenderer } from "@/shared/hooks/useStepRenderer";
+import PageLayout from "@/shared/ui/layout/page-layout";
+import { EmailCertificationForm } from "@/widgets/auth/EmailCertificationForm";
+import { EmailForm, EmailFormValues } from "@/widgets/auth/EmailForm";
 
 type FindPasswordFormData = {
   email: string;
@@ -70,6 +71,10 @@ export default function FindPasswordPage() {
     ),
   };
 
+  const title = getStepTitle(step, formData);
+  const subtitle = getStepSubtitle(step, formData);
+  const content = renderStep(step, stepComponents);
+
   return (
     <PageLayout
       title="원바원 | 비밀번호 찾기"
@@ -82,13 +87,7 @@ export default function FindPasswordPage() {
       hasBackButton={true}
       onBackButtonClick={goToPreviousStep}
     >
-      <section className="text-center text-lg">
-        <h1>{getStepTitle(step, formData)}</h1>
-        {getStepSubtitle(step, formData)}
-      </section>
-      <section className="flex flex-col gap-9 px-5">
-        {renderStep(step, stepComponents)}
-      </section>
+      <AuthStepper title={title} subtitle={subtitle} content={content} />
     </PageLayout>
   );
 }

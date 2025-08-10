@@ -2,8 +2,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { URL_PATHS } from "@/common/constants/url-path";
-import Button from "@/common/ui/buttons/base-button";
+import { useUpdatePassword } from "@/entities/user/hooks";
+import { URL_PATHS } from "@/shared/constants/url-path";
+import Button from "@/shared/ui/buttons/base-button";
 import {
   Form,
   FormControl,
@@ -11,11 +12,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/common/ui/form";
-import ToggleInput from "@/common/ui/form/toggle-input";
-import PageLayout from "@/common/ui/layout/page-layout";
-import { passwordChangeSchema } from "@/common/utils/validationSchemas";
-import { useUpdatePassword } from "@/entities/user/hooks";
+} from "@/shared/ui/form";
+import ToggleInput from "@/shared/ui/form/toggle-input";
+import PageLayout from "@/shared/ui/layout/page-layout";
+import { passwordChangeSchema } from "@/shared/utils/validationSchemas";
 
 type PasswordFormData = z.infer<typeof passwordChangeSchema>;
 

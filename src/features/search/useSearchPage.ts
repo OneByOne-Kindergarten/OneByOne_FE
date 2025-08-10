@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-import { useRecentSearches } from "@/common/hooks/useRecentSearches";
+import { useRecentSearches } from "@/shared/hooks/useRecentSearches";
 
 interface UseSearchPageReturn<T = unknown> {
   searchQuery: string;

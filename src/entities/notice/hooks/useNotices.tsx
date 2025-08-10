@@ -1,6 +1,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 
-import { STATIC_CACHE_CONFIG } from "@/common/constants/query-config";
+import { STATIC_CACHE_CONFIG } from "@/shared/config/query";
 
 import { getNotices } from "../api";
 

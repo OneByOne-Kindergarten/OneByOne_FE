@@ -5,17 +5,17 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 
-import { CommunityCategoryType } from "@/common/constants/community";
-import { URL_PATHS } from "@/common/constants/url-path";
-import Button from "@/common/ui/buttons/base-button";
-import { Form } from "@/common/ui/form";
-import ErrorMessage from "@/common/ui/form/error-message";
-import PageLayout from "@/common/ui/layout/page-layout";
-import { profileSchema } from "@/common/utils/validationSchemas";
 import { userAtom } from "@/entities/auth/model";
 import { useUpdateNickname, useUpdateUserRole } from "@/entities/user/hooks";
 import NicknameField from "@/features/auth/NicknameField";
 import RoleField from "@/features/auth/RoleField";
+import { CommunityCategoryType } from "@/shared/constants/community";
+import { URL_PATHS } from "@/shared/constants/url-path";
+import Button from "@/shared/ui/buttons/base-button";
+import { Form } from "@/shared/ui/form";
+import ErrorMessage from "@/shared/ui/form/error-message";
+import PageLayout from "@/shared/ui/layout/page-layout";
+import { profileSchema } from "@/shared/utils/validationSchemas";
 
 const roleSchema = z.object({
   role: z.enum(["TEACHER", "PROSPECTIVE_TEACHER"], {

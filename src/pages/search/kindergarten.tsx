@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { URL_PATHS } from "@/common/constants/url-path";
-import SearchPageLayout from "@/common/ui/layout/search-page-layout";
-import RecentSearches from "@/common/ui/search/recent-searches";
 import {
   Kindergarten,
   KindergartenSearchParams,
@@ -11,6 +8,9 @@ import {
 import { useSearchKindergartens } from "@/entities/kindergarten/hooks";
 import SchoolSearchResult from "@/features/kindergarten/SchoolSearchResult";
 import { useSearchPage } from "@/features/search/useSearchPage";
+import { URL_PATHS } from "@/shared/constants/url-path";
+import SearchPageLayout from "@/shared/ui/layout/search-page-layout";
+import RecentSearches from "@/shared/ui/search/recent-searches";
 
 export default function KindergartenSearchPage() {
   const navigate = useNavigate();

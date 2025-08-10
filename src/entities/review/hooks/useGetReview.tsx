@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 
-import { REVIEW_TYPES } from "@/common/constants/review";
-import { safeParseId } from "@/common/utils/idValidation";
+import { REVIEW_TYPES } from "@/shared/constants/review";
+import { safeParseId } from "@/shared/utils/idValidation";
 
 import { getInternshipReviews, getWorkReviews } from "../api";
 import { InternshipReview, SortType, WorkReview } from "../DTO.d";

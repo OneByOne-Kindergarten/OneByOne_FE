@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { REVIEW_TYPES } from "@/common/constants/review";
 import { likeInternshipReview, likeWorkReview } from "@/entities/review/api";
+import { REVIEW_TYPES } from "@/shared/constants/review";
 
 export function useReviewLike(type: string, reviewId: number) {
   const queryClient = useQueryClient();

@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 
-import { toast } from "@/common/hooks/useToast";
 import { updateUserRole } from "@/entities/user/api";
+import { toast } from "@/shared/hooks/useToast";
 
 /**
  * 사용자 권한 변경 API 호출

@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-import { toast } from "@/common/hooks/useToast";
+import { toast } from "@/shared/hooks/useToast";
 
 import { getAlarmSettings, updateAlarmSettings } from "../api";
 import { AlarmSetting } from "../DTO";

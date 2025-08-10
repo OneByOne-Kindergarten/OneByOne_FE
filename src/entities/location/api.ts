@@ -1,7 +1,7 @@
 import {
   MessageType,
   sendToFlutter,
-} from "@/common/utils/webViewCommunication";
+} from "@/shared/utils/webViewCommunication";
 
 import type { LocationPosition, LocationResponse } from "./DTO.d";
 

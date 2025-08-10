@@ -1,9 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
-import { URL_PATHS } from "@/common/constants/url-path";
-import { toast } from "@/common/hooks/useToast";
 import { withdrawUser } from "@/entities/user/api";
+import { URL_PATHS } from "@/shared/constants/url-path";
+import { toast } from "@/shared/hooks/useToast";
 
 /**
  * 회원 탈퇴 API 호출

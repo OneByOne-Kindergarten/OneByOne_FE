@@ -3,7 +3,7 @@ import {
   useSuspenseInfiniteQuery,
 } from "@tanstack/react-query";
 
-import { DYNAMIC_CACHE_CONFIG } from "@/common/constants/query-config";
+import { DYNAMIC_CACHE_CONFIG } from "@/shared/config/query";
 
 import { getComments } from "../api";
 import { CommentListParams, CommentListResponse } from "../DTO.d";

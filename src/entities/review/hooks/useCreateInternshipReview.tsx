@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { useToast } from "@/common/hooks/useToast";
-import { LearningReviewFormValues } from "@/features/review/LearningReviewForm";
+import { LearningReviewFormValues } from "@/features/review-form/LearningReviewForm";
+import { useToast } from "@/shared/hooks/useToast";
 
 import { createInternshipReview } from "../api";
 import { LikeResponse } from "../DTO.d";

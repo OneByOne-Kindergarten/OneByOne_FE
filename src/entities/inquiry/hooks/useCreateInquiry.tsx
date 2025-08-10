@@ -4,7 +4,7 @@ import {
   type InfiniteData,
 } from "@tanstack/react-query";
 
-import { toast } from "@/common/hooks/useToast";
+import { toast } from "@/shared/hooks/useToast";
 
 import { createInquiry } from "../api";
 import { CreateInquiryRequest, InquiryResponse } from "../DTO.d";

@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 
-import { toast } from "@/common/hooks/useToast";
+import { toast } from "@/shared/hooks/useToast";
 
 import { toggleLike } from "../api";
 import { LikeStatusResponse } from "../DTO.d";

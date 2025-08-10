@@ -2,16 +2,16 @@ import { useCallback, useRef } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { FixedSizeList as List } from "react-window";
 
-import { REVIEW_TYPES } from "@/common/constants/review";
-import { URL_PATHS } from "@/common/constants/url-path";
-import Empty from "@/common/ui/layout/empty";
-import Error from "@/common/ui/layout/error";
-import LoadingSpinner from "@/common/ui/loading/loading-spinner";
-import { getTotalRating, getWorkYear } from "@/common/utils/reviewUtils";
 import { InternshipReview, WorkReview } from "@/entities/review/DTO.d";
 import { useMyPosts } from "@/entities/user/my-post/hooks/useMyPosts";
+import NavBar from "@/features/nav/nav-bar";
 import ReviewSummary from "@/features/review/ReviewSummary";
-import NavBar from "@/widgets/nav/nav-bar";
+import { REVIEW_TYPES } from "@/shared/constants/review";
+import { URL_PATHS } from "@/shared/constants/url-path";
+import Empty from "@/shared/ui/layout/empty";
+import Error from "@/shared/ui/layout/error";
+import LoadingSpinner from "@/shared/ui/loading/loading-spinner";
+import { getTotalRating, getWorkYear } from "@/shared/utils/reviewUtils";
 
 const ITEM_HEIGHT = 110;
 const LIST_HEIGHT = 690;

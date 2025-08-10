@@ -1,8 +1,8 @@
 import { useParams, useSearchParams } from "react-router-dom";
 
-import { REVIEW_TYPES, REVIEW_TYPE_LABELS } from "@/common/constants/review";
-import PageLayout from "@/common/ui/layout/page-layout";
-import ReviewFormManager from "@/features/review/ReviewFormManager";
+import ReviewFormManager from "@/features/review-form/ReviewFormManager";
+import { REVIEW_TYPES, REVIEW_TYPE_LABELS } from "@/shared/constants/review";
+import PageLayout from "@/shared/ui/layout/page-layout";
 
 export default function ReviewEditorPage() {
   const { id } = useParams<{ id: string }>();

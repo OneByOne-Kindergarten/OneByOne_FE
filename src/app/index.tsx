@@ -1,5 +1,5 @@
 import AppRouter from "@/app/router";
-import AppProvider from "@/common/ui/providers/AppProvider";
+import AppProvider from "@/shared/ui/providers/AppProvider";
 
 export default function App() {
   return (

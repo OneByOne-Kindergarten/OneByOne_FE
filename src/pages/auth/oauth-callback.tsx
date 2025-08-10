@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { URL_PATHS } from "@/common/constants/url-path";
-import { useToast } from "@/common/hooks/useToast";
-import Error from "@/common/ui/layout/error";
-import LoadingSpinner from "@/common/ui/loading/loading-spinner";
 import { getCookie, setCookie } from "@/entities/auth/api";
 import {
   extractAuthParams,
@@ -12,6 +8,10 @@ import {
   useNaverAuth,
 } from "@/entities/auth/hooks";
 import { getUserInfo } from "@/entities/user/api";
+import { URL_PATHS } from "@/shared/constants/url-path";
+import { useToast } from "@/shared/hooks/useToast";
+import Error from "@/shared/ui/layout/error";
+import LoadingSpinner from "@/shared/ui/loading/loading-spinner";
 
 type SocialProvider = "naver" | "kakao";
 

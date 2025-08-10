@@ -1,9 +1,9 @@
 import { getDefaultStore } from "jotai/vanilla";
 
-import { API_PATHS } from "@/common/constants/api-path";
-import { apiCall } from "@/common/utils/apiUtils";
 import { getAccessToken, signOut } from "@/entities/auth/api";
 import { userAtom } from "@/entities/auth/model";
+import { apiCall } from "@/shared/api/utils";
+import { API_PATHS } from "@/shared/config/api";
 
 import { User, UserResponse } from "./DTO.d";
 

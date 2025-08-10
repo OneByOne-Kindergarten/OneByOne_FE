@@ -1,16 +1,17 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import { IMAGE_PATHS, SVG_PATHS } from "@/common/constants/assets-path";
-import { URL_PATHS } from "@/common/constants/url-path";
+import { setCookie } from "@/entities/auth/api";
+import { IMAGE_PATHS, SVG_PATHS } from "@/shared/constants/assets-path";
+import { URL_PATHS } from "@/shared/constants/url-path";
 import {
   isFlutterWebView,
   useRequestFcmToken,
-} from "@/common/hooks/useFlutterCommunication";
-import Button from "@/common/ui/buttons/base-button";
-import PageLayout from "@/common/ui/layout/page-layout";
-import { setCookie } from "@/entities/auth/api";
-import OauthButton from "@/features/auth/OauthButton";
+} from "@/shared/hooks/useFlutterCommunication";
+import Button from "@/shared/ui/buttons/base-button";
+import PageLayout from "@/shared/ui/layout/page-layout";
+import AuthTextLinks from "@/widgets/auth/AuthTextLinks";
+import OauthButton from "@/widgets/auth/OauthButton";
 
 const oauthButtons = [
   { type: "kakao" as const },
@@ -48,7 +49,7 @@ export default function RootPage() {
         </h1>
         <img
           src={IMAGE_PATHS.LOGO.MAIN}
-          alt="원바원 로고고"
+          alt="원바원 로고"
           width={89}
           height={31}
           className="animate-slide-in-from-left mx-auto"
@@ -71,15 +72,7 @@ export default function RootPage() {
             </Button>
           </Link>
         </div>
-        <div className="flex justify-center gap-2 text-xs">
-          <p className="text-primary-dark01">아직 회원이 아니신가요?</p>
-          <Link
-            to={URL_PATHS.SIGNUP}
-            className="font-semibold text-tertiary-3 active:opacity-70"
-          >
-            회원가입
-          </Link>
-        </div>
+        <AuthTextLinks types={["회원가입"]} />
       </section>
     </PageLayout>
   );
