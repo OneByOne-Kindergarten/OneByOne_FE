@@ -5,7 +5,7 @@ import { resetPassword } from "@/entities/auth/api";
 import { URL_PATHS } from "@/shared/constants/url-path";
 import { toast } from "@/shared/hooks/useToast";
 
-import { ResetPasswordRequest, ResetPasswordResponse } from "../type";
+import { ResetPasswordRequest, ResetPasswordResponse } from "../DTO.d";
 
 /**
  * 임시 비밀번호 요청 API 호출

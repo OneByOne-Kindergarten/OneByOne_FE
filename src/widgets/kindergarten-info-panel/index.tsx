@@ -4,29 +4,19 @@ import { Link } from "react-router-dom";
 
 import { getKindergartenDetail } from "@/entities/kindergarten/api";
 import { Kindergarten } from "@/entities/kindergarten/DTO.d";
-import NavBar from "@/features/nav/nav-bar";
+import NavBar from "@/features/nav/ui/NavBar";
+import { STATIC_CACHE_CONFIG } from "@/shared/config/query";
 import { SVG_PATHS } from "@/shared/constants/assets-path";
-import { REVIEW_TYPES } from "@/shared/constants/review";
 import { URL_PATHS } from "@/shared/constants/url-path";
+import {
+  calculateStats,
+  calculateStudentStats,
+} from "@/widgets/kindergarten-info-panel/lib/calculateStats";
+import { buildReviewCategoryOptions } from "@/widgets/kindergarten-info-panel/lib/category";
+import { formatDate } from "@/widgets/kindergarten-info-panel/lib/formatDate";
+import SchoolDetailMap from "@/widgets/kindergarten-info-panel/ui/SchoolDetailMap";
 import SchoolInfoChart from "@/widgets/kindergarten-info-panel/ui/SchoolInfoChart";
 import SchoolInfoItem from "@/widgets/kindergarten-info-panel/ui/SchoolInfoItem";
-import SchoolDetailMap from "@/widgets/kindergarten-map/SchoolDetailMap";
-
-const SCHOOL_STATS_COLORS = {
-  AGE_3: "bg-star",
-  AGE_4: "bg-green",
-  AGE_5: "bg-tertiary-3",
-};
-
-const SCHOOL_STATS_AGES = [3, 4, 5];
-
-const SCHOOL_QUERY_CONFIG = {
-  staleTime: 1000 * 60 * 5, // 5분
-  gcTime: 1000 * 60 * 30, // 30분
-  refetchOnWindowFocus: false,
-};
-
-type StatsType = keyof typeof SCHOOL_STATS_COLORS;
 
 interface KindergartenInfoPanelProps {
   safeId: string;
@@ -40,59 +30,8 @@ export default function KindergartenInfoPanel({
   const { data: kindergarten } = useSuspenseQuery<Kindergarten, Error>({
     queryKey: ["kindergarten", "detail", safeId],
     queryFn: () => getKindergartenDetail(Number(safeId)),
-    ...SCHOOL_QUERY_CONFIG,
+    ...STATIC_CACHE_CONFIG,
   });
-
-  const REVIEW_CATEGORY_OPTIONS = [
-    { href: `/kindergarten/${safeId}`, label: "기관정보" },
-    {
-      href: `/kindergarten/${safeId}/review?type=${REVIEW_TYPES.WORK}`,
-      label: "근무리뷰",
-    },
-    {
-      href: `/kindergarten/${safeId}/review?type=${REVIEW_TYPES.LEARNING}`,
-      label: "실습리뷰",
-    },
-  ];
-
-  const calculateStats = (data: Kindergarten) => {
-    const totalCount = data.totalClassCount;
-
-    const stats = SCHOOL_STATS_AGES.map((age) => {
-      const count = data[`classCount${age}` as keyof Kindergarten] as number;
-      return {
-        age,
-        count,
-        percent:
-          totalCount > 0 ? `${Math.round((count / totalCount) * 100)}%` : "0%",
-        color: SCHOOL_STATS_COLORS[`AGE_${age}` as StatsType],
-      };
-    });
-
-    return stats;
-  };
-
-  const calculateStudentStats = (data: Kindergarten) => {
-    const totalCount = data.totalPupilCount;
-
-    const stats = SCHOOL_STATS_AGES.map((age) => {
-      const count = data[`pupilCount${age}` as keyof Kindergarten] as number;
-      return {
-        age,
-        count,
-        percent:
-          totalCount > 0 ? `${Math.round((count / totalCount) * 100)}%` : "0%",
-        color: SCHOOL_STATS_COLORS[`AGE_${age}` as StatsType],
-      };
-    });
-
-    return stats;
-  };
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
-  };
 
   const classStats = calculateStats(kindergarten);
   const studentStats = calculateStudentStats(kindergarten);
@@ -103,6 +42,8 @@ export default function KindergartenInfoPanel({
       onKindergartenLoad(kindergarten.name);
     }
   }, [onKindergartenLoad, kindergarten.name]);
+
+  const REVIEW_CATEGORY_OPTIONS = buildReviewCategoryOptions(safeId);
 
   return (
     <>

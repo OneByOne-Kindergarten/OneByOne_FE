@@ -5,19 +5,12 @@ import { z } from "zod";
 
 import type { CreateInquiryRequest } from "@/entities/inquiry/DTO";
 import { useCreateInquiry } from "@/entities/inquiry/hooks";
-import SubmitButton from "@/features/auth-form/ui/SubmitButton";
+import TextareaField from "@/features/form/ui/fields/TextareaField";
+import ToggleChoicesField from "@/features/form/ui/fields/ToggleChoicesField";
+import SubmitButton from "@/features/form/ui/SubmitButton";
 import { INQUIRY_TITLE_LABEL } from "@/shared/constants/inquiry";
 import { URL_PATHS } from "@/shared/constants/url-path";
-import Button from "@/shared/ui/buttons/base-button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/shared/ui/form";
-import Textarea from "@/shared/ui/form/textarea";
+import { Form } from "@/shared/ui/form";
 import PageLayout from "@/shared/ui/layout/page-layout";
 
 const inquirySchema = z.object({
@@ -66,62 +59,24 @@ export default function InquiryEditorPage() {
             onSubmit={form.handleSubmit(onSubmit)}
             className="flex flex-col gap-7"
           >
-            <FormField
+            <ToggleChoicesField
               control={form.control}
               name="title"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-base font-semibold text-primary-dark01">
-                    문의 유형
-                  </FormLabel>
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    {Object.entries(INQUIRY_TITLE_LABEL).map(([key, label]) => (
-                      <Button
-                        key={key}
-                        variant={field.value === key ? "secondary" : "default"}
-                        size="lg"
-                        font="md"
-                        shape="full"
-                        type="button"
-                        onClick={() => field.onChange(key)}
-                        className="font-normal"
-                      >
-                        {label}
-                      </Button>
-                    ))}
-                  </div>
-                  <FormMessage />
-                </FormItem>
+              label="문의 유형"
+              options={Object.entries(INQUIRY_TITLE_LABEL).map(
+                ([value, label]) => ({
+                  label,
+                  value,
+                })
               )}
             />
-            <FormField
+            <TextareaField
               control={form.control}
               name="content"
-              render={({ field, fieldState }) => (
-                <FormItem>
-                  <div className="flex items-center justify-between">
-                    <FormLabel className="text-base font-semibold text-primary-dark01">
-                      내용
-                    </FormLabel>
-                    <span className="text-xs font-semibold text-primary-normal02">
-                      *200자 이내
-                    </span>
-                  </div>
-                  <FormControl>
-                    <Textarea
-                      font="md"
-                      padding="sm"
-                      placeholder="문의 내용을 자유롭게 작성해주세요"
-                      {...field}
-                      value={field.value || ""}
-                      onChange={(e) => field.onChange(e.target.value)}
-                      onBlur={field.onBlur}
-                      error={!!fieldState.error}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="내용"
+              placeholder="문의 내용을 자유롭게 작성해주세요"
+              showCounter
+              maxLength={200}
             />
             <SubmitButton
               label="문의하기"

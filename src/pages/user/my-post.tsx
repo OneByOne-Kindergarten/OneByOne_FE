@@ -1,9 +1,9 @@
 import { Suspense } from "react";
 
-import MyPostList from "@/features/user/MyPostList";
 import { URL_PATHS } from "@/shared/constants/url-path";
 import PageLayout from "@/shared/ui/layout/page-layout";
 import LoadingSpinner from "@/shared/ui/loading/loading-spinner";
+import MyPostList from "@/widgets/user-dashboard/my-post-list";
 
 export default function MyPostPage() {
   return (

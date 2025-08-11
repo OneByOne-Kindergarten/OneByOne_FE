@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
 import { signIn } from "@/entities/auth/api";
-import { SignInRequest, SignInResponse } from "@/entities/auth/type";
+import { SignInRequest, SignInResponse } from "@/entities/auth/DTO.d";
 import { URL_PATHS } from "@/shared/constants/url-path";
 import { toast } from "@/shared/hooks/useToast";
 

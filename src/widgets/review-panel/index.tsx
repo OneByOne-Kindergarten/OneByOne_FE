@@ -2,10 +2,10 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import { useKindergartenName } from "@/entities/kindergarten/hooks";
 import { SortType } from "@/entities/review/DTO.d";
-import NavBar from "@/features/nav/nav-bar";
+import NavBar from "@/features/nav/ui/NavBar";
 import { REVIEW_TYPES } from "@/shared/constants/review";
 import PostButton from "@/shared/ui/buttons/post-button";
-import ReviewList from "@/widgets/content-list/review-list";
+import ReviewList from "@/widgets/review-list";
 import { useReviewPage } from "@/widgets/review-panel/lib/useReviewPage";
 import TotalRatingSection from "@/widgets/review-panel/ui/TotalRatingSection";
 

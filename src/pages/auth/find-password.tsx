@@ -1,12 +1,12 @@
 import { useResetPassword } from "@/entities/auth/hooks";
-import AuthStepper from "@/features/auth-form/ui/AuthStepper";
 import { URL_PATHS } from "@/shared/constants/url-path";
 import useFormData from "@/shared/hooks/useFormdata";
 import { useStepNavigation } from "@/shared/hooks/useStepNavigation";
 import { useStepRenderer } from "@/shared/hooks/useStepRenderer";
 import PageLayout from "@/shared/ui/layout/page-layout";
-import { EmailCertificationForm } from "@/widgets/auth/EmailCertificationForm";
-import { EmailForm, EmailFormValues } from "@/widgets/auth/EmailForm";
+import AuthStepper from "@/widgets/auth/ui/AuthStepper";
+import { EmailCertificationForm } from "@/widgets/auth/ui/EmailCertificationForm";
+import { EmailForm, EmailFormValues } from "@/widgets/auth/ui/EmailForm";
 
 type FindPasswordFormData = {
   email: string;

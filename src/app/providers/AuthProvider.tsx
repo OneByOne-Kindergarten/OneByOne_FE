@@ -2,12 +2,9 @@ import { useAtom } from "jotai";
 import { ReactNode, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
+import { getCookie, refreshAccessToken } from "@/entities/auth/api";
 import { userAtom } from "@/entities/auth/model";
 import { getUserInfo } from "@/entities/user/api";
-import {
-  getCookie,
-  refreshAccessToken,
-} from "@/features/auth/services/authService";
 import { URL_PATHS } from "@/shared/constants/url-path";
 
 const isIncompleteProfile = (role?: string | null) => {

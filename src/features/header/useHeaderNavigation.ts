@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
-import { useUrlNavigation } from "@/shared/hooks/useUrlNavigation";
-import { UrlKeys } from "@/shared/utils/urlUtils";
+import { useUrlNavigation } from "@/features/nav/lib/useUrlNavigation";
+import { UrlKeys } from "@/shared/utils/getUrl";
 
 interface HeaderNavigationOptions {
   hasBackButton?: boolean;

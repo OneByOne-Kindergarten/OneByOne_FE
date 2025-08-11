@@ -5,7 +5,7 @@ import { URL_PATHS } from "@/shared/constants/url-path";
 import Empty from "@/shared/ui/layout/empty";
 import PageLayout from "@/shared/ui/layout/page-layout";
 import LoadingSpinner from "@/shared/ui/loading/loading-spinner";
-import NoticeDetail from "@/widgets/content-list/notice-list/ui/NoticeDetail";
+import NoticeDetail from "@/widgets/notice-list/ui/NoticeDetail";
 
 export default function NoticeDetailPage() {
   const { id } = useParams();

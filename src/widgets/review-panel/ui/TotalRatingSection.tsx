@@ -1,4 +1,4 @@
-import { ReviewFieldConfig } from "@/features/content-list/review-list/ReviewContent";
+import type { ReviewFieldConfig } from "@/widgets/review-panel/lib/config";
 import TotalRatingCard from "@/widgets/review-panel/ui/TotalRatingCard";
 
 interface TotalRatingSectionProps {

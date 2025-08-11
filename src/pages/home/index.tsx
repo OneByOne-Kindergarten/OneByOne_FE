@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { IMAGE_PATHS } from "@/shared/constants/assets-path";
 import { URL_PATHS } from "@/shared/constants/url-path";
 import PageLayout from "@/shared/ui/layout/page-layout";
-import ShortCutList from "@/widgets/content-list/shortcut-list";
-import NoticeCard from "@/widgets/home-dashboard/NoticeCard";
-import PopularPostsPreview from "@/widgets/home-dashboard/PopularPostsPreview";
+import NoticeCard from "@/widgets/home-dashboard/ui/NoticeCard";
+import PopularPostsPreview from "@/widgets/home-dashboard/ui/PopularPostsPreview";
+import ShortCutList from "@/widgets/shortcut-list";
 
 export default function HomePage() {
   return (

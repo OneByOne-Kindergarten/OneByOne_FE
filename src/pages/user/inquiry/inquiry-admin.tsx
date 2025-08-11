@@ -2,12 +2,12 @@ import clsx from "clsx";
 import { useState } from "react";
 
 import { useInfiniteAllInquiries } from "@/entities/inquiry/hooks";
-import InquiryList from "@/features/inquiry/InquiryList";
 import AutoFetchSentinel from "@/shared/components/AutoFetchSentinel";
 import { INQUIRY_TAB_OPTIONS } from "@/shared/constants/inquiry";
 import { URL_PATHS } from "@/shared/constants/url-path";
 import Toggle from "@/shared/ui/buttons/base-toggle";
 import PageLayout from "@/shared/ui/layout/page-layout";
+import InquiryList from "@/widgets/user-dashboard/inquiry-list";
 
 type InquiryTab = (typeof INQUIRY_TAB_OPTIONS)[number]["type"];
 

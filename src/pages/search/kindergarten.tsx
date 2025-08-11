@@ -6,11 +6,11 @@ import {
   KindergartenSearchParams,
 } from "@/entities/kindergarten/DTO";
 import { useSearchKindergartens } from "@/entities/kindergarten/hooks";
-import SchoolSearchResult from "@/features/kindergarten/SchoolSearchResult";
-import { useSearchPage } from "@/features/search/useSearchPage";
 import { URL_PATHS } from "@/shared/constants/url-path";
 import SearchPageLayout from "@/shared/ui/layout/search-page-layout";
 import RecentSearches from "@/shared/ui/search/recent-searches";
+import { useSearchPage } from "@/widgets/search/lib/useSearchPage";
+import SchoolSearchResult from "@/widgets/search/ui/SchoolSearchResult";
 
 export default function KindergartenSearchPage() {
   const navigate = useNavigate();

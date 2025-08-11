@@ -10,8 +10,8 @@ import {
 } from "@/shared/hooks/useFlutterCommunication";
 import Button from "@/shared/ui/buttons/base-button";
 import PageLayout from "@/shared/ui/layout/page-layout";
-import AuthTextLinks from "@/widgets/auth/AuthTextLinks";
-import OauthButton from "@/widgets/auth/OauthButton";
+import AuthTextLinks from "@/widgets/auth/ui/AuthTextLinks";
+import OauthButton from "@/widgets/auth/ui/OauthButton";
 
 const oauthButtons = [
   { type: "kakao" as const },

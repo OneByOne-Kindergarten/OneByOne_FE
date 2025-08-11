@@ -1,30 +1,24 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAtom } from "jotai";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 
 import { userAtom } from "@/entities/auth/model";
 import { useUpdateNickname, useUpdateUserRole } from "@/entities/user/hooks";
-import NicknameField from "@/features/auth/NicknameField";
-import RoleField from "@/features/auth/RoleField";
-import { CommunityCategoryType } from "@/shared/constants/community";
 import { URL_PATHS } from "@/shared/constants/url-path";
-import Button from "@/shared/ui/buttons/base-button";
-import { Form } from "@/shared/ui/form";
 import ErrorMessage from "@/shared/ui/form/error-message";
 import PageLayout from "@/shared/ui/layout/page-layout";
 import { profileSchema } from "@/shared/utils/validationSchemas";
-
-const roleSchema = z.object({
-  role: z.enum(["TEACHER", "PROSPECTIVE_TEACHER"], {
-    errorMap: () => ({ message: "회원 유형을 선택해주세요." }),
-  }),
-});
+import { useProfileDefaults } from "@/widgets/user-dashboard/profile-editor/lib/useProfileDefaults";
+import { useRoleSelection } from "@/widgets/user-dashboard/profile-editor/lib/useRoleSelection";
+import { useStartButtonState } from "@/widgets/user-dashboard/profile-editor/lib/useStartButtonState";
+import NicknameSection from "@/widgets/user-dashboard/profile-editor/ui/NicknameSection";
+import RoleSection from "@/widgets/user-dashboard/profile-editor/ui/RoleSection";
+import StartButton from "@/widgets/user-dashboard/profile-editor/ui/StartButton";
 
 type ProfileFormData = z.infer<typeof profileSchema>;
-type RoleFormData = z.infer<typeof roleSchema>;
 
 export default function ProfileEditorPage() {
   const navigate = useNavigate();
@@ -42,23 +36,12 @@ export default function ProfileEditorPage() {
     error: roleError,
   } = useUpdateUserRole();
 
-  const computedValues = useMemo(() => {
-    const isNewUser = !user?.role || user.role === "GENERAL";
-    const defaultRole =
-      !user?.role || user.role === "GENERAL" || user.role === "ADMIN"
-        ? "TEACHER"
-        : (user.role as CommunityCategoryType);
-    const defaultNickname = user?.nickname || "";
+  const computedValues = useProfileDefaults(user);
 
-    return {
-      isNewUser,
-      defaultRole,
-      defaultNickname,
-    };
-  }, [user?.role, user?.nickname]);
-
-  const [selectedRole, setSelectedRole] = useState<CommunityCategoryType>(
-    () => computedValues.defaultRole
+  const { selectedRole, setSelectedRole, handleRoleUpdate } = useRoleSelection(
+    computedValues.defaultRole,
+    (role, opts) => updateUserRole(role, opts),
+    (to) => navigate(to)
   );
 
   const nicknameFormConfig = useMemo(
@@ -72,19 +55,7 @@ export default function ProfileEditorPage() {
     }),
     [computedValues.defaultNickname]
   );
-
-  const roleFormConfig = useMemo(
-    () => ({
-      resolver: zodResolver(roleSchema),
-      defaultValues: {
-        role: computedValues.defaultRole,
-      },
-    }),
-    [computedValues.defaultRole]
-  );
-
   const nicknameForm = useForm<ProfileFormData>(nicknameFormConfig);
-  const roleForm = useForm<RoleFormData>(roleFormConfig);
 
   // 핸들러 함수들을 메모이제이션
   const handleNicknameUpdate = useCallback(
@@ -97,14 +68,6 @@ export default function ProfileEditorPage() {
     },
     [updateNickname, navigate]
   );
-
-  const handleRoleUpdate = useCallback(() => {
-    updateUserRole(selectedRole, {
-      onSuccess: () => {
-        navigate(URL_PATHS.USER);
-      },
-    });
-  }, [updateUserRole, selectedRole, navigate]);
 
   const handleNewUserSubmit = useCallback(() => {
     const nicknameValue = nicknameForm.getValues("nickname");
@@ -131,6 +94,13 @@ export default function ProfileEditorPage() {
   const error = useMemo(
     () => nicknameError || roleError,
     [nicknameError, roleError]
+  );
+
+  // 시작 버튼 비활성화 상태 (훅은 조건문 밖에서 호출)
+  const isStartDisabled = useStartButtonState(
+    isNicknamePending,
+    isRolePending,
+    nicknameForm
   );
 
   // 페이지 레이아웃 props를 메모이제이션
@@ -161,91 +131,30 @@ export default function ProfileEditorPage() {
       )}
 
       <div className="flex flex-col gap-7">
-        <section>
-          <h2 className="sr-only">닉네임 변경</h2>
-          <Form {...nicknameForm}>
-            <form
-              onSubmit={nicknameForm.handleSubmit(handleNicknameUpdate)}
-              className="flex flex-col gap-4"
-            >
-              <NicknameField
-                control={nicknameForm.control}
-                name="nickname"
-                setValue={nicknameForm.setValue}
-                label={
-                  computedValues.isNewUser
-                    ? "선생님이 사용하실 닉네임이에요!"
-                    : "닉네임"
-                }
-              />
-              {!computedValues.isNewUser && (
-                <Button
-                  type="submit"
-                  disabled={
-                    isNicknamePending || !nicknameForm.formState.isValid
-                  }
-                  variant="secondary"
-                  font="md"
-                >
-                  닉네임 변경하기
-                </Button>
-              )}
-            </form>
-          </Form>
-        </section>
+        <NicknameSection
+          defaultNickname={computedValues.defaultNickname}
+          isNewUser={computedValues.isNewUser}
+          isPending={isNicknamePending}
+          onSubmit={(nickname) =>
+            handleNicknameUpdate({ nickname } as ProfileFormData)
+          }
+        />
 
-        <section>
-          <h2 className="sr-only">역할 변경</h2>
-          <Form {...roleForm}>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleRoleUpdate();
-              }}
-              className="flex flex-col gap-4"
-            >
-              <RoleField
-                selectedRole={selectedRole}
-                onRoleChange={setSelectedRole}
-                label={
-                  computedValues.isNewUser
-                    ? "해당되는 역할을 선택해주세요."
-                    : "역할"
-                }
-              />
-              {!computedValues.isNewUser && (
-                <Button
-                  type="submit"
-                  disabled={isRolePending}
-                  variant="secondary"
-                  font="md"
-                >
-                  역할 변경하기
-                </Button>
-              )}
-            </form>
-          </Form>
-        </section>
+        <RoleSection
+          selectedRole={selectedRole}
+          isNewUser={computedValues.isNewUser}
+          isPending={isRolePending}
+          onChange={setSelectedRole}
+          onSubmit={handleRoleUpdate}
+        />
 
         {computedValues.isNewUser && (
-          <Button
-            type="button"
+          <StartButton
             onClick={handleNewUserSubmit}
-            disabled={
-              isNicknamePending ||
-              isRolePending ||
-              !nicknameForm.formState.isValid ||
-              !nicknameForm.getValues("nickname")
-            }
-            variant="secondary"
-            font="md"
-            className="mt-2"
-          >
-            시작하기
-          </Button>
+            isDisabled={isStartDisabled}
+          />
         )}
       </div>
-
       {error && <ErrorMessage error={error.message} />}
     </PageLayout>
   );

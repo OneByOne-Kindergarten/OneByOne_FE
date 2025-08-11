@@ -262,7 +262,7 @@ export const Gallery: Story = {
         },
       ]}
       component={Input}
-      commonProps={{ placeholder: "입력해보세요" }}
+      sharedProps={{ placeholder: "입력해보세요" }}
     />
   ),
   parameters: {

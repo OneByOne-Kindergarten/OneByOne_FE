@@ -7,8 +7,8 @@ import { SignInRequest } from "@/entities/auth/DTO.d";
 import { useSignIn } from "@/entities/auth/hooks";
 import { URL_PATHS } from "@/shared/constants/url-path";
 import PageLayout from "@/shared/ui/layout/page-layout";
-import AuthTextLinks from "@/widgets/auth/AuthTextLinks";
-import SignInForm from "@/widgets/auth/SignInForm";
+import AuthTextLinks from "@/widgets/auth/ui/AuthTextLinks";
+import SignInForm from "@/widgets/auth/ui/SignInForm";
 
 const signInSchema = z.object({
   email: z

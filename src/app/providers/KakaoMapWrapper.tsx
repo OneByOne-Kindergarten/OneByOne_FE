@@ -6,7 +6,7 @@ import {
   kakaoMapErrorAtom,
   kakaoMapSDKLoadedAtom,
 } from "@/entities/kindergarten/model";
-import MapError from "@/features/kindergarten/MapError";
+import MapError from "@/features/map/ui/MapError";
 
 const apiKey = import.meta.env.VITE_KAKAO_JAVASCRIPT_KEY;
 

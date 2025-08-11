@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { WorkReviewFormValues } from "@/features/review-form/WorkReviewForm";
 import { useToast } from "@/shared/hooks/useToast";
+import { WorkReviewFormValues } from "@/widgets/review-editor/ui/WorkReviewForm";
 
 import { createWorkReview } from "../api";
 import { LikeResponse } from "../DTO.d";

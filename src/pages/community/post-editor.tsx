@@ -6,18 +6,12 @@ import { z } from "zod";
 
 import { CreateCommunityPostRequest } from "@/entities/community/DTO.d";
 import { useCreatePost } from "@/entities/community/hooks";
+import InputField from "@/features/form/ui/fields/InputField";
+import TextareaField from "@/features/form/ui/fields/TextareaField";
+import ToggleChoicesField from "@/features/form/ui/fields/ToggleChoicesField";
+import SubmitButton from "@/features/form/ui/SubmitButton";
 import { URL_PATHS } from "@/shared/constants/url-path";
-import Button from "@/shared/ui/buttons/base-button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-} from "@/shared/ui/form";
-import ErrorMessage from "@/shared/ui/form/error-message";
-import Input from "@/shared/ui/form/input";
-import Textarea from "@/shared/ui/form/textarea";
+import { Form } from "@/shared/ui/form";
 import PageLayout from "@/shared/ui/layout/page-layout";
 import LoadingSpinner from "@/shared/ui/loading/loading-spinner";
 import {
@@ -39,24 +33,19 @@ import {
 type PostFormData = z.infer<typeof postSchema>;
 
 export default function CommunityPostEditorPage() {
+  const navigate = useNavigate();
+  const { mutate: createPost, isPending } = useCreatePost();
   const isSubmitting = useRef(false);
-
-  const [selectedCategory, _setSelectedCategory] = useState<
-    "TEACHER" | "PROSPECTIVE_TEACHER"
-  >(() => {
+  const [selectedCategory] = useState<"TEACHER" | "PROSPECTIVE_TEACHER">(() => {
     const category = getCommunityCategory();
     return category || "TEACHER";
   });
-
   const [selectedCategoryName, setSelectedCategoryName] = useState<string>(
     () => {
       const savedCategoryName = getCommunityCategoryName();
       return getValidCategoryName(savedCategoryName, selectedCategory);
     }
   );
-
-  const navigate = useNavigate();
-  const { mutate: createPost, isPending } = useCreatePost();
 
   const form = useForm<PostFormData>({
     resolver: zodResolver(postSchema),
@@ -70,8 +59,6 @@ export default function CommunityPostEditorPage() {
   });
 
   const { formState } = form;
-  const titleValue = form.watch("title");
-  const contentValue = form.watch("content");
 
   // 상위 카테고리 변경 시 하위 카테고리 업데이트
   useEffect(() => {
@@ -95,16 +82,9 @@ export default function CommunityPostEditorPage() {
     }
   }, [selectedCategory, form]);
 
-  const handleCategoryButtonClick = useCallback(
-    (categoryName: string, e: React.MouseEvent) => {
-      e.preventDefault();
-      e.stopPropagation();
-
+  const handleCommunityCategoryChange = useCallback(
+    (categoryName: string) => {
       setSelectedCategoryName(categoryName);
-      form.setValue("communityCategoryName", categoryName, {
-        shouldDirty: true,
-        shouldValidate: false,
-      });
 
       if (form.getValues("category") !== selectedCategory) {
         form.setValue("category", selectedCategory, {
@@ -119,20 +99,7 @@ export default function CommunityPostEditorPage() {
     [selectedCategory, form]
   );
 
-  const handleSubmitClick = useCallback(
-    (e: React.MouseEvent) => {
-      e.preventDefault();
-      e.stopPropagation();
-
-      if (isSubmitting.current) {
-        return;
-      }
-
-      form.handleSubmit(onSubmit)(e as unknown as React.FormEvent);
-    },
-    [form]
-  );
-
+  // 버튼 핸들러 없이 폼 제출 이벤트로만 처리
   const onSubmit = async (data: PostFormData) => {
     if (isSubmitting.current || isPending) {
       return;
@@ -175,106 +142,47 @@ export default function CommunityPostEditorPage() {
         <LoadingSpinner />
       ) : (
         <section className="flex flex-col gap-5 p-5">
-          <h2 className="text-base font-semibold text-primary-dark01">
-            카테고리
-          </h2>
           <Form {...form}>
-            <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
-              <div className="flex flex-wrap gap-2">
-                {categoryOptions.map((option) => (
-                  <Button
-                    key={option.value}
-                    variant={
-                      selectedCategoryName === option.value
-                        ? "secondary"
-                        : "default"
-                    }
-                    size="lg"
-                    font="md"
-                    shape="full"
-                    onClick={(e) => handleCategoryButtonClick(option.value, e)}
-                    type="button"
-                    className="font-normal"
-                  >
-                    {option.label}
-                  </Button>
-                ))}
-              </div>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <ToggleChoicesField
+                control={form.control}
+                name="communityCategoryName"
+                label="카테고리"
+                options={categoryOptions.map((opt) => ({
+                  label: opt.label,
+                  value: opt.value,
+                }))}
+                onChange={handleCommunityCategoryChange}
+              />
 
-              <FormField
+              <InputField
                 control={form.control}
                 name="title"
-                render={({ field, fieldState }) => (
-                  <FormItem>
-                    <div className="flex justify-between">
-                      <FormLabel className="text-base font-semibold text-primary-dark01">
-                        제목
-                      </FormLabel>
-                      <span className="text-xs font-semibold text-primary-normal02">
-                        *{titleValue.length}/{POST_TITLE_MAX_LENGTH}자
-                      </span>
-                    </div>
-                    <FormControl>
-                      <Input
-                        font="md"
-                        placeholder="제목을 입력해주세요"
-                        {...field}
-                        error={!!fieldState.error}
-                      />
-                    </FormControl>
-                    {fieldState.error?.message && (
-                      <ErrorMessage error={fieldState.error.message} />
-                    )}
-                  </FormItem>
-                )}
+                label="제목"
+                placeholder="제목을 입력해주세요"
+                showCounter
+                maxLength={POST_TITLE_MAX_LENGTH}
               />
 
-              <FormField
+              <TextareaField
                 control={form.control}
                 name="content"
-                render={({ field, fieldState }) => (
-                  <FormItem>
-                    <div className="flex justify-between">
-                      <FormLabel className="text-base font-semibold text-primary-dark01">
-                        내용
-                      </FormLabel>
-                      <span className="text-xs font-semibold text-primary-normal02">
-                        *{contentValue.length}/{POST_CONTENT_MAX_LENGTH}자
-                      </span>
-                    </div>
-                    <FormControl>
-                      <Textarea
-                        font="md"
-                        padding="sm"
-                        placeholder="자유롭게 내용을 작성해주세요. 
-                        
+                label="내용"
+                placeholder={`자유롭게 내용을 작성해주세요. 
+
 • 불편할 수 있는 비속어 사용은 피해 주세요. 
 • 상세하고 유익한 정보 공유는 좋지만, 사생활 침해나 명예훼손이 없도록 조심해주세요. 
-• 커뮤니티 에티켓을 지키지 않으면 글이 삭제될 수 있어요."
-                        {...field}
-                        error={!!fieldState.error}
-                      />
-                    </FormControl>
-                    {fieldState.error?.message && (
-                      <ErrorMessage error={fieldState.error.message} />
-                    )}
-                  </FormItem>
-                )}
+• 커뮤니티 에티켓을 지키지 않으면 글이 삭제될 수 있어요.`}
+                showCounter
+                maxLength={POST_CONTENT_MAX_LENGTH}
               />
 
-              <div className="mt-4 flex justify-end gap-3">
-                <Button
-                  variant="secondary"
-                  size="md"
-                  type="button"
-                  onClick={handleSubmitClick}
-                  disabled={
-                    isPending || isSubmitting.current || !formState.isValid
-                  }
-                >
-                  {isPending ? "등록 중" : "등록"}
-                </Button>
-              </div>
+              <SubmitButton
+                label="등록"
+                disabled={
+                  isPending || isSubmitting.current || !formState.isValid
+                }
+              />
             </form>
           </Form>
         </section>

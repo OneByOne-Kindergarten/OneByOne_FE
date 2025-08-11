@@ -1,3 +1,4 @@
+import { getMarkerStyles } from "@/features/map/lib/getMarkerStyles";
 import { SVG_PATHS } from "@/shared/constants/assets-path";
 import {
   GuidelineGrid,
@@ -6,7 +7,6 @@ import {
   SpecGrid,
   SpecTable,
 } from "@/shared/ui/layout/storybook-layout";
-import { getMarkerStyles } from "@/shared/utils/mapUtils";
 
 import type { Meta, StoryObj } from "@storybook/react";
 

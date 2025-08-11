@@ -7,8 +7,8 @@ import { URL_PATHS } from "@/shared/constants/url-path";
 import { useToast } from "@/shared/hooks/useToast";
 import PageLayout from "@/shared/ui/layout/page-layout";
 import LoadingSpinner from "@/shared/ui/loading/loading-spinner";
-import { shortcutOptions } from "@/widgets/content-list/shortcut-list/lib/shortcutOptions";
-import ShortCutOption from "@/widgets/content-list/shortcut-list/ui/ShortCutOption";
+import { shortcutOptions } from "@/widgets/shortcut-list/lib/shortcutOptions";
+import ShortCutOption from "@/widgets/shortcut-list/ui/ShortCutOption";
 
 export default function ShortcutsEditorPage() {
   const { shortcuts: initialShortcuts, updateShortcuts } = useShortcuts();

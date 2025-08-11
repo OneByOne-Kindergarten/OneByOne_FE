@@ -1,26 +1,36 @@
 import { Suspense, useCallback, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
-import { useCreateComment } from "@/entities/community/comment/hooks";
 import {
   useCommunityPostDetail,
   useLikeStatus,
   useToggleLike,
 } from "@/entities/community/hooks";
+import { useUrlNavigation } from "@/features/nav/lib/useUrlNavigation";
 import { URL_PATHS } from "@/shared/constants/url-path";
-import { useUrlNavigation } from "@/shared/hooks/useUrlNavigation";
 import Error from "@/shared/ui/layout/error";
 import PageLayout from "@/shared/ui/layout/page-layout";
 import LoadingSpinner from "@/shared/ui/loading/loading-spinner";
-import ChatBar from "@/widgets/community-feed/ChatBar";
-import Post from "@/widgets/community-feed/Post";
 import CommentList from "@/widgets/community-feed/comment-list";
+import ChatBar from "@/widgets/community-feed/ui/ChatBar";
+import Post from "@/widgets/community-feed/ui/Post";
 
 export default function CommunityPostPage() {
+  const [replyToUser, setReplyToUser] = useState<string | undefined>(undefined);
+  const [replyParentId, setReplyParentId] = useState<number | undefined>(
+    undefined
+  );
+  const [isLiking] = useState(false);
   const { id } = useParams<{ id: string }>();
   const location = useLocation();
   const navigate = useNavigate();
   const postId = id ? Number(id) : 0;
+
+  const { data: postData, isLoading: postLoading } =
+    useCommunityPostDetail(postId);
+  const { data: likeStatus, refetch: refetchLikeStatus } =
+    useLikeStatus(postId);
+  const toggleLikeMutation = useToggleLike();
 
   const customBackHandler = useCallback(() => {
     if (location.state?.fromSearch) {
@@ -32,52 +42,21 @@ export default function CommunityPostPage() {
     return false;
   }, [location.state?.fromSearch, navigate]);
 
-  const { handleBackNavigation } = useUrlNavigation(customBackHandler);
-
-  const [replyToUser, setReplyToUser] = useState<string | undefined>(undefined);
-  const [replyParentId, setReplyParentId] = useState<number | undefined>(
-    undefined
-  );
-  const [isLiking, setIsLiking] = useState(false);
-  const [commentInput, setCommentInput] = useState("");
-
-  const { data: postData, isLoading: postLoading } =
-    useCommunityPostDetail(postId);
-
-  const { data: likeStatus, refetch: refetchLikeStatus } =
-    useLikeStatus(postId);
-
-  const createCommentMutation = useCreateComment();
-
-  const toggleLikeMutation = useToggleLike();
-
   const post = postData?.data;
+
+  const { handleBackNavigation } = useUrlNavigation(customBackHandler);
 
   const handleBackClick = () => {
     handleBackNavigation();
   };
 
   const handleLikeToggle = async () => {
-    if (isLiking || !id) return;
-
-    setIsLiking(true);
-
+    if (!id || toggleLikeMutation.isPending) return;
     await toggleLikeMutation.mutateAsync(postId);
-
     refetchLikeStatus();
-    setIsLiking(false);
   };
 
-  const handleSubmitComment = async (content: string, parentId?: number) => {
-    if (!id || !content.trim()) return;
-
-    await createCommentMutation.mutateAsync({
-      postId,
-      content,
-      parentId,
-    });
-
-    setCommentInput("");
+  const handleSubmitted = () => {
     setReplyToUser(undefined);
     setReplyParentId(undefined);
   };
@@ -86,13 +65,11 @@ export default function CommunityPostPage() {
   const handleReply = (author: string, parentId: number) => {
     setReplyToUser(author);
     setReplyParentId(parentId);
-    setCommentInput("");
   };
 
   const handleCancelReply = () => {
     setReplyToUser(undefined);
     setReplyParentId(undefined);
-    setCommentInput("");
   };
 
   return (
@@ -129,12 +106,11 @@ export default function CommunityPostPage() {
           </Suspense>
 
           <ChatBar
+            postId={postId}
             replyParentId={replyParentId}
             replyUserName={replyToUser}
             onCancelReply={handleCancelReply}
-            onSubmit={handleSubmitComment}
-            value={commentInput}
-            onChange={(value) => setCommentInput(value)}
+            onSubmitted={handleSubmitted}
           />
         </>
       ) : (

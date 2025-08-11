@@ -5,7 +5,7 @@ import BookmarkHeader from "@/features/header/bookmark-header";
 import CommunityHeader from "@/features/header/community-header";
 import KindergartenHeader from "@/features/header/kindergarten-header";
 import SaveHeader from "@/features/header/save-header";
-import GlobalNavBar from "@/features/nav/global-nav-bar";
+import GlobalNavBar from "@/features/nav/ui/GlobalNavBar";
 import Metadata from "@/shared/hooks/useMetadata";
 import Main from "@/shared/ui/layout/main";
 import Wrapper from "@/shared/ui/layout/page-wrapper";

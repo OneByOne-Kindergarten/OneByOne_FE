@@ -2,17 +2,20 @@ import { useNavigate } from "react-router-dom";
 
 import { SignUpRequest } from "@/entities/auth/DTO.d";
 import { useSignUp } from "@/entities/auth/hooks";
-import AuthStepper from "@/features/auth-form/ui/AuthStepper";
 import { URL_PATHS } from "@/shared/constants/url-path";
 import useFormData from "@/shared/hooks/useFormdata";
 import { useStepNavigation } from "@/shared/hooks/useStepNavigation";
 import { useStepRenderer } from "@/shared/hooks/useStepRenderer";
 import PageLayout from "@/shared/ui/layout/page-layout";
-import AuthTextLinks from "@/widgets/auth/AuthTextLinks";
-import { EmailCertificationForm } from "@/widgets/auth/EmailCertificationForm";
-import { EmailForm, EmailFormValues } from "@/widgets/auth/EmailForm";
-import { PasswordForm, PasswordFormValues } from "@/widgets/auth/PasswordForm";
-import { UserInfoForm, UserInfoFormValues } from "@/widgets/auth/UserInfoForm";
+import AuthStepper from "@/widgets/auth/ui/AuthStepper";
+import AuthTextLinks from "@/widgets/auth/ui/AuthTextLinks";
+import { EmailCertificationForm } from "@/widgets/auth/ui/EmailCertificationForm";
+import { EmailForm, EmailFormValues } from "@/widgets/auth/ui/EmailForm";
+import {
+  PasswordForm,
+  PasswordFormValues,
+} from "@/widgets/auth/ui/PasswordForm";
+import { UserInfoForm, UserInfoFormValues } from "@/widgets/auth/ui/SignUpForm";
 
 type SignUpFormData = {
   email: string;

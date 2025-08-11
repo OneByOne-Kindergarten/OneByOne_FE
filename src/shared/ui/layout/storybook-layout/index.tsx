@@ -52,7 +52,7 @@ interface VariantSection {
 interface VariantGridProps {
   sections: VariantSection[];
   component: React.ComponentType<Record<string, unknown>>;
-  commonProps?: Record<string, unknown>;
+  sharedProps?: Record<string, unknown>;
   children?: string | ((value: string) => React.ReactNode);
 }
 
@@ -181,7 +181,7 @@ export const GuidelineGrid = ({
 export const VariantGrid = ({
   sections,
   component: Component,
-  commonProps = {},
+  sharedProps = {},
   children,
 }: VariantGridProps) => (
   <main className="flex flex-col gap-6">
@@ -189,7 +189,7 @@ export const VariantGrid = ({
       <Section key={index} title={section.title} direction={section.direction}>
         {section.values.map((value) => {
           const props = {
-            ...commonProps,
+            ...sharedProps,
             [section.prop]: value,
           };
 

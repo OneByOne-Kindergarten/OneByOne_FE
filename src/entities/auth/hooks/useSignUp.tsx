@@ -5,7 +5,7 @@ import { signUp } from "@/entities/auth/api";
 import { URL_PATHS } from "@/shared/constants/url-path";
 import { toast } from "@/shared/hooks/useToast";
 
-import { SignUpRequest, SignUpResponse } from "../type";
+import { SignUpRequest, SignUpResponse } from "../DTO.d";
 
 interface SignupCallbacks {
   onComplete?: () => void; // 완료 시 추가 동작

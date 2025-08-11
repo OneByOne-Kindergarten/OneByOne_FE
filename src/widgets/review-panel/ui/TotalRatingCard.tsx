@@ -1,10 +1,6 @@
 import BarRating from "@/shared/ui/rating/bar-rating";
 import { StarRating } from "@/shared/ui/rating/star-rating";
-
-export type RatingFieldConfig = {
-  key: string;
-  label: string;
-};
+import { RatingFieldConfig } from "@/widgets/review-panel/lib/config";
 
 export interface TotalRatingCardProps {
   total: number;

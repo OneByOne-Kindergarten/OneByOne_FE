@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
 
 import { useGetFavorites } from "@/entities/favorites/hooks/useGetFavorites";
-import SchoolCard from "@/features/kindergarten/school-card";
 import { URL_PATHS } from "@/shared/constants/url-path";
 import Empty from "@/shared/ui/layout/empty";
 import Error from "@/shared/ui/layout/error";
 import PageLayout from "@/shared/ui/layout/page-layout";
 import LoadingSpinner from "@/shared/ui/loading/loading-spinner";
+import SchoolCard from "@/widgets/kindergarten-list/ui/SchoolCard";
 
 export default function FavoritesPage() {
   const navigate = useNavigate();

@@ -3,11 +3,11 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { CommunityPostItem } from "@/entities/community/DTO.d";
 import { useCommunityPosts } from "@/entities/community/hooks";
-import CommunitySearchResult from "@/features/community/CommunitySearchResult";
-import { useSearchPage } from "@/features/search/useSearchPage";
 import { URL_PATHS } from "@/shared/constants/url-path";
 import SearchPageLayout from "@/shared/ui/layout/search-page-layout";
 import RecentSearches from "@/shared/ui/search/recent-searches";
+import { useSearchPage } from "@/widgets/search/lib/useSearchPage";
+import CommunitySearchResult from "@/widgets/search/ui/CommunitySearchResult";
 
 export default function CommunitySearchPage() {
   const [searchParams] = useSearchParams();

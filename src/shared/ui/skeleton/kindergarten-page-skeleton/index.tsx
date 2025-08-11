@@ -1,4 +1,4 @@
-import MapSkeleton from "@/features/kindergarten/MapSkeleton";
+import MapSkeleton from "@/features/map/ui/MapSkeleton";
 import KindergartenCardSkeleton from "@/shared/ui/skeleton/kindergarten-card-skeleton";
 
 export default function KindergartenPageSkeleton() {

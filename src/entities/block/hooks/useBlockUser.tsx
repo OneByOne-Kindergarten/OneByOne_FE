@@ -4,7 +4,7 @@ import { blockService } from "@/entities/block/api";
 import { useToast } from "@/shared/hooks/useToast";
 import { parseErrorMessage } from "@/shared/utils/parseErrorMessage";
 
-import type { BlockUserRequest, UnblockUserRequest } from "../dto";
+import type { BlockUserRequest, UnblockUserRequest } from "../DTO.d";
 
 export function useBlock() {
   const queryClient = useQueryClient();

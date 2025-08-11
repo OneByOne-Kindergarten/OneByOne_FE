@@ -1,7 +1,6 @@
+import { MyPostParams, MyPostResponse } from "@/entities/user/my-post/DTO.d";
 import { apiCall } from "@/shared/api/utils";
 import { API_PATHS } from "@/shared/config/api";
-
-import { MyPostParams, MyPostResponse } from "./type";
 
 // 근무 리뷰 조회
 export const getMyWorkReviews = async (

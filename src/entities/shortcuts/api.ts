@@ -5,7 +5,7 @@ import {
   Shortcut,
   UpdateShortcutsRequest,
   UpdateShortcutsResponse,
-} from "./type";
+} from "./DTO.d";
 
 /**
  * 사용자 단축키 업데이트

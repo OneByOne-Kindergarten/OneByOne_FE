@@ -1,8 +1,8 @@
 import type { CommentItem } from "@/entities/community/comment/DTO.d";
-import CommentUserInfo from "@/features/community/CommentUserInfo";
 import { SVG_PATHS } from "@/shared/constants/assets-path";
 import UserActionDropDown from "@/shared/ui/drop-down/report-drop-down";
 import { formatDate } from "@/shared/utils/dateUtils";
+import CommentUserInfo from "@/widgets/community-feed/comment-list/ui/CommentUserInfo";
 
 interface ReplyCardProps {
   reply: CommentItem;

@@ -1,5 +1,8 @@
-import type { CommunityCategoryType } from "@/shared/constants/community";
-import { CATEGORY_INFO, CATEGORY_LABELS } from "@/shared/constants/community";
+import type { CommunityCategoryType } from "@/widgets/community-feed/lib/category";
+import {
+  CATEGORY_INFO,
+  CATEGORY_LABELS,
+} from "@/widgets/community-feed/lib/category";
 
 /**
  * 하위 카테고리 value를 label로 변환

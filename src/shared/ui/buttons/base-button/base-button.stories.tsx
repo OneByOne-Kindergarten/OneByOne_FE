@@ -290,7 +290,7 @@ export const Gallery: Story = {
         },
       ]}
       component={Button}
-      commonProps={{ onClick: fn() }}
+      sharedProps={{ onClick: fn() }}
     />
   ),
   parameters: {

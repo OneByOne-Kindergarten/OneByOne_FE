@@ -1,14 +1,14 @@
-import type { LearningReviewFormValues } from "@/features/review-form/LearningReviewForm";
-import type { WorkReviewFormValues } from "@/features/review-form/WorkReviewForm";
 import { apiCall } from "@/shared/api/utils";
 import { API_PATHS } from "@/shared/config/api";
+import type { LearningReviewFormValues } from "@/widgets/review-editor/ui/LearningReviewForm";
+import type { WorkReviewFormValues } from "@/widgets/review-editor/ui/WorkReviewForm";
 
 import type {
   InternshipReviewResponse,
   LikeResponse,
   SortType,
   WorkReviewResponse,
-} from "./types";
+} from "./DTO.d";
 
 /**
  * 근무 리뷰 목록 조회

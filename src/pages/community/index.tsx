@@ -1,42 +1,20 @@
 import { Suspense, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-import NavBar from "@/features/nav/nav-bar";
+import NavBar from "@/features/nav/ui/NavBar";
 import { SVG_PATHS } from "@/shared/constants/assets-path";
-import {
-  PROSPECTIVE_TEACHER_CATEGORIES,
-  TEACHER_CATEGORIES,
-} from "@/shared/constants/community";
 import PostButton from "@/shared/ui/buttons/post-button";
 import PageLayout from "@/shared/ui/layout/page-layout";
 import LoadingSpinner from "@/shared/ui/loading/loading-spinner";
 import { setCommunityState } from "@/shared/utils/lastVisitedPathUtils";
-import CategorySelector from "@/widgets/community-feed/CategorySelector";
+import {
+  CATEGORY_ICONS,
+  PROSPECTIVE_TEACHER_CATEGORIES,
+  TEACHER_CATEGORIES,
+} from "@/widgets/community-feed/lib/category";
 import PostList from "@/widgets/community-feed/post-list";
-import PopularPostList from "@/widgets/community-feed/post-list/PopularPostList";
-
-const communityTypeOptions = [
-  {
-    href: "/community?type=teacher",
-    label: "교사",
-    icon: {
-      path: SVG_PATHS.CHARACTER.chicken,
-      alt: "교사 아이콘",
-      width: 32,
-      height: 32,
-    },
-  },
-  {
-    href: "/community?type=pre-teacher",
-    label: "예비교사",
-    icon: {
-      path: SVG_PATHS.CHARACTER.chick,
-      alt: "예비교사 아이콘",
-      width: 32,
-      height: 32,
-    },
-  },
-];
+import PopularPostList from "@/widgets/community-feed/post-list/ui/PopularPostList";
+import CategorySelector from "@/widgets/community-feed/ui/CategorySelector";
 
 export default function CommunityPage() {
   const [searchParams] = useSearchParams();
@@ -75,7 +53,7 @@ export default function CommunityPage() {
       hasBackButton={false}
     >
       <NavBar
-        options={communityTypeOptions}
+        options={CATEGORY_ICONS}
         currentPath={`/community?type=${communityType}&category=${categoryName}`}
       />
 

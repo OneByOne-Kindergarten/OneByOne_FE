@@ -6,8 +6,8 @@ import { SortType } from "@/entities/review/DTO.d";
 import { useGetReview } from "@/entities/review/hooks";
 import { REVIEW_TYPES, REVIEW_TYPE_LABELS } from "@/shared/constants/review";
 import { useSchoolNavigation } from "@/shared/hooks/useSchoolNavigation";
-import { getFieldConfigsByType } from "@/shared/utils/fieldConfigsUtils";
 import { setReviewState } from "@/shared/utils/lastVisitedPathUtils";
+import { getFieldConfigsByType } from "@/widgets/review-panel/lib/getFieldConfigsByType";
 
 export function useReviewPage(
   kindergartenId: string,

@@ -256,7 +256,7 @@ export const Gallery: Story = {
         },
       ]}
       component={Textarea}
-      commonProps={{ placeholder: "텍스트를 입력하세요" }}
+      sharedProps={{ placeholder: "텍스트를 입력하세요" }}
     />
   ),
   parameters: {
