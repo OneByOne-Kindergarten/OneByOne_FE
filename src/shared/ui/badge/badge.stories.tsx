@@ -32,6 +32,22 @@ const meta = {
         defaultValue: { summary: "primary" },
       },
     },
+    size: {
+      description: "배지의 패딩 크기",
+      control: "select",
+      options: ["md", "lg"],
+      table: {
+        defaultValue: { summary: "md" },
+      },
+    },
+    font: {
+      description: "배지의 폰트 크기",
+      control: "select",
+      options: ["xxs", "xs"],
+      table: {
+        defaultValue: { summary: "xs" },
+      },
+    },
     children: {
       description: "배지에 표시될 텍스트",
       control: "text",
@@ -50,6 +66,8 @@ export const Playground: Story = {
   args: {
     children: "기본",
     variant: "primary",
+    size: "md",
+    font: "xs",
   },
 };
 
@@ -143,18 +161,9 @@ export const Specs: Story = {
                 title: "사용 시나리오",
                 items: [
                   "유치원 설립 유형 (국공립, 사립)",
-                  "게시글 작성자 구분 (교사, 학부모)",
-                  "인기 순위 표시 (HOT, NEW)",
-                  "필터 태그 (지역, 연령)",
-                ],
-              },
-              {
-                title: "접근성 & 성능",
-                items: [
-                  "최소 대비율 4.5:1 준수",
-                  "읽기 쉬운 폰트 크기",
-                  "터치 영역 최소 24px",
-                  "최적화된 CSS 클래스",
+                  "게시글 작성자 구분 ",
+                  "게시글 카테고리 표시",
+                  "태그 표시",
                 ],
               },
             ]}

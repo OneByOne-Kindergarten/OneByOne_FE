@@ -33,10 +33,10 @@ export default function Post({
   };
 
   return (
-    <article className="flex flex-col gap-7 bg-white px-5 pb-4 pt-7">
+    <article className="flex flex-col gap-6 bg-white px-5 pb-4 pt-7">
       <section className="flex flex-col gap-2.5">
         <div className="flex items-center gap-2">
-          <Badge>{getCategoryLabel(post.categoryName)}</Badge>
+          <Badge size="lg">{getCategoryLabel(post.categoryName)}</Badge>
         </div>
         <div className="flex justify-between">
           <div className="flex items-center gap-2.5">
