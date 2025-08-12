@@ -134,55 +134,63 @@ export default function CommunityPostEditorPage() {
       headerTitle=" "
       description="커뮤니티 게시글 작성"
       currentPath={URL_PATHS.COMMUNITY_POST_EDITOR}
-      mainClassName="flex flex-col gap-6 pb-0 mt-14 mb-28"
+      mainClassName="flex gap-6 pb-0 mt-14 h-[calc(100vh-4rem)]"
       hasBackButton={true}
       wrapperBg="white"
+      isGlobalNavBar={false}
     >
       {isPending ? (
         <LoadingSpinner />
       ) : (
-        <section className="flex flex-col gap-5 p-5">
+        <section className="flex w-full flex-1 p-5">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <ToggleChoicesField
-                control={form.control}
-                name="communityCategoryName"
-                label="카테고리"
-                options={categoryOptions.map((opt) => ({
-                  label: opt.label,
-                  value: opt.value,
-                }))}
-                onChange={handleCommunityCategoryChange}
-              />
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="flex flex-1 flex-col justify-between gap-6"
+            >
+              <div className="space-y-6">
+                <ToggleChoicesField
+                  control={form.control}
+                  name="communityCategoryName"
+                  label="카테고리"
+                  options={categoryOptions.map((opt) => ({
+                    label: opt.label,
+                    value: opt.value,
+                  }))}
+                  onChange={handleCommunityCategoryChange}
+                />
 
-              <InputField
-                control={form.control}
-                name="title"
-                label="제목"
-                placeholder="제목을 입력해주세요"
-                showCounter
-                maxLength={POST_TITLE_MAX_LENGTH}
-              />
+                <InputField
+                  control={form.control}
+                  name="title"
+                  label="제목"
+                  placeholder="제목을 입력해주세요"
+                  showCounter
+                  maxLength={POST_TITLE_MAX_LENGTH}
+                />
 
-              <TextareaField
-                control={form.control}
-                name="content"
-                label="내용"
-                placeholder={`자유롭게 내용을 작성해주세요. 
+                <TextareaField
+                  control={form.control}
+                  name="content"
+                  label="내용"
+                  placeholder={`자유롭게 내용을 작성해주세요. 
 
 • 불편할 수 있는 비속어 사용은 피해 주세요. 
 • 상세하고 유익한 정보 공유는 좋지만, 사생활 침해나 명예훼손이 없도록 조심해주세요. 
 • 커뮤니티 에티켓을 지키지 않으면 글이 삭제될 수 있어요.`}
-                showCounter
-                maxLength={POST_CONTENT_MAX_LENGTH}
-              />
-
-              <SubmitButton
-                label="등록"
-                disabled={
-                  isPending || isSubmitting.current || !formState.isValid
-                }
-              />
+                  showCounter
+                  maxLength={POST_CONTENT_MAX_LENGTH}
+                />
+              </div>
+              <div className="mt-auto flex justify-end">
+                <SubmitButton
+                  label="등록"
+                  disabled={
+                    isPending || isSubmitting.current || !formState.isValid
+                  }
+                  className="w-20 font-semibold"
+                />
+              </div>
             </form>
           </Form>
         </section>

@@ -72,7 +72,7 @@ export default function Post({
       <section className="flex flex-col gap-4 text-primary-dark01">
         <div className="flex flex-col gap-2.5">
           <h2 className="font-semibold">{post.title}</h2>
-          <p className="text-sm">{post.content}</p>
+          <p className="whitespace-pre-wrap text-sm">{post.content}</p>
         </div>
         <ul className="flex justify-end gap-1 text-xxs text-primary-normal03">
           <li>{formatDate(post.createdAt)}</li>

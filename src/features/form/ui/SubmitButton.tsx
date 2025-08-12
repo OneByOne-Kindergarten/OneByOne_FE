@@ -5,12 +5,14 @@ interface SubmitButtonProps {
   disabled?: boolean;
   isLoading?: boolean;
   variant?: "primary" | "secondary";
+  className?: string;
 }
 
 export default function SubmitButton({
   label,
   disabled,
   variant = "secondary",
+  className,
 }: SubmitButtonProps) {
   return (
     <Button
@@ -19,6 +21,7 @@ export default function SubmitButton({
       size="lg"
       font="md"
       disabled={disabled}
+      className={className}
     >
       {label}
     </Button>

@@ -24,7 +24,7 @@ const textareaVariants = cva(
         xs: "p-3",
       },
       size: {
-        fixed: "h-80",
+        fixed: "h-52 sm:h-80 ",
         auto: "h-24 focus:h-80",
       },
       error: {
