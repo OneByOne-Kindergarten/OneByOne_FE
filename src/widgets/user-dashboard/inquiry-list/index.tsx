@@ -24,13 +24,15 @@ export default function InquiryList({
     <section className="mb-12 flex flex-col gap-4">
       {inquiries.map((inquiry) => (
         <div key={inquiry.id} className="flex max-w-full flex-col gap-2.5">
-          <InquiryItem inquiry={inquiry} />
-          {inquiry.status === InquiryStatus.ANSWERED && (
-            <InquiryExpandButton
-              expanded={expandedInquiryId === inquiry.id}
-              onClick={() => onToggleExpand(inquiry.id)}
-            />
-          )}
+          <div className="relative">
+            <InquiryItem inquiry={inquiry} />
+            {inquiry.status === InquiryStatus.ANSWERED && (
+              <InquiryExpandButton
+                expanded={expandedInquiryId === inquiry.id}
+                onClick={() => onToggleExpand(inquiry.id)}
+              />
+            )}
+          </div>
 
           <div className="my-1 h-[1px] w-full bg-primary-light02" />
 

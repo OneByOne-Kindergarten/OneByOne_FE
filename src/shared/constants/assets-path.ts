@@ -3,6 +3,7 @@ import alarm from "@/app/assets/icons/alarm.svg";
 import alert from "@/app/assets/icons/alert.svg";
 import apple from "@/app/assets/icons/apple.svg";
 import arrowLeft from "@/app/assets/icons/arrow-left.svg";
+import arrowLight from "@/app/assets/icons/arrow-light.svg";
 import arrowRight from "@/app/assets/icons/arrow-right.svg";
 import bookmarkerActive from "@/app/assets/icons/bookmarker-active.svg";
 import bookmarkerInactive from "@/app/assets/icons/bookmarker-inactive.svg";
@@ -113,6 +114,7 @@ export const SVG_PATHS = {
   ARROW: {
     left: arrowLeft,
     right: arrowRight,
+    light: arrowLight,
   },
   STAR: {
     gray: starGray,

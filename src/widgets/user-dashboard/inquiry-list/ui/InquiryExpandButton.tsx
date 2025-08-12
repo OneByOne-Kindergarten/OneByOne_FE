@@ -11,22 +11,22 @@ interface InquiryExpandButtonProps {
 export default function InquiryExpandButton({
   expanded,
   onClick,
-  ariaLabel = "문의 펼치기",
+  ariaLabel = "문의답변 펼치기",
 }: InquiryExpandButtonProps) {
   return (
     <button
-      className="flex items-center gap-2"
+      className="absolute bottom-0 right-0"
       onClick={onClick}
       aria-label={ariaLabel}
     >
       <img
-        src={SVG_PATHS.ARROW.right}
-        width={28}
-        height={28}
+        src={SVG_PATHS.ARROW.light}
+        width={24}
+        height={24}
         alt="더보기"
         className={clsx(
           "transform-gpu transition-transform duration-200 ease-out will-change-transform motion-reduce:transition-none",
-          expanded ? "rotate-90" : "rotate-0"
+          expanded ? "rotate-180" : "rotate-0"
         )}
       />
     </button>
