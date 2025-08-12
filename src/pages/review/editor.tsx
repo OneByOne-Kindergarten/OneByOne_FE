@@ -18,6 +18,7 @@ export default function ReviewEditorPage() {
       description={`${safeId} ${REVIEW_TYPE_LABELS[type as "work" | "learning"]} 작성 페이지`}
       currentPath={`/kindergarten/${safeId}/review/new?type=${type}`}
       mainBg="gray"
+      isGlobalNavBar={false}
     >
       <ReviewFormManager schoolId={safeId} type={type} />
     </PageLayout>

@@ -17,7 +17,7 @@ export default function ProgressBar({ value, max }: ProgressBarProps) {
         />
 
         {/* 도트 오버레이 */}
-        <div className="absolute left-0 top-0 flex h-full w-full items-center pr-3">
+        <div className="absolute left-0 top-0 flex h-full w-full items-center px-2">
           <div className="relative h-full w-full">
             {dots.map((dot) => {
               const leftPosition =
