@@ -21,6 +21,7 @@ export default function ProfilePage() {
       currentPath={URL_PATHS.USER}
       wrapperBg="white"
       mainClassName="flex flex-col gap-5 pb-5 mb-24 mt-14 px-5"
+      isGlobalNavBar={false}
     >
       <section className="flex flex-col items-center gap-2.5 py-5">
         <div className="flex w-full items-center justify-between">

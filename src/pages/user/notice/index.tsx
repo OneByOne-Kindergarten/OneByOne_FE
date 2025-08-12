@@ -15,6 +15,7 @@ export default function NoticePage() {
       hasBackButton={true}
       wrapperBg="white"
       mainClassName="px-5 py-2.5 mt-14"
+      isGlobalNavBar={false}
     >
       <Suspense fallback={<LoadingSpinner />}>
         <NoticeList />

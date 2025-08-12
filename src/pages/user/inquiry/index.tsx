@@ -17,6 +17,7 @@ export default function InquiryPage() {
       currentPath={URL_PATHS.USER}
       hasBackButton={true}
       mainBg="white"
+      isGlobalNavBar={false}
     >
       <section className="flex flex-col gap-4 px-5 pt-5">
         <menu className="flex flex-col gap-6 font-bold text-primary-dark01">

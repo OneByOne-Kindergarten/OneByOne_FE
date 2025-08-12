@@ -23,6 +23,7 @@ export default function AccountSettingPage() {
       mainBg="gray"
       hasBackButton={true}
       mainClassName="flex flex-col gap-0 pb-5 mt-14 mb-24"
+      isGlobalNavBar={false}
     >
       <section className="flex flex-col gap-4 bg-white p-5 font-bold">
         <menu className="flex flex-col gap-6 text-primary-dark01">

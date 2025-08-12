@@ -50,6 +50,7 @@ export default function PasswordEditorPage() {
       currentPath={URL_PATHS.USER}
       wrapperBg="white"
       mainClassName="flex flex-col px-5 mt-14"
+      isGlobalNavBar={false}
     >
       <Form {...form}>
         <form

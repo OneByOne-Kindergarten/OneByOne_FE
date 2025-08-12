@@ -41,6 +41,7 @@ export default function InquiryAdminPage() {
       currentPath={URL_PATHS.INQUIRY}
       wrapperBg="white"
       mainClassName="px-5 mt-14"
+      isGlobalNavBar={false}
     >
       <div className="flex flex-col gap-4">
         <section className="flex items-center justify-between pt-4">

@@ -52,6 +52,7 @@ export default function InquiryEditorPage() {
       currentPath={URL_PATHS.INQUIRY}
       wrapperBg="white"
       mainClassName="px-5 py-8 mt-14"
+      isGlobalNavBar={false}
     >
       <section className="flex flex-col gap-7">
         <Form {...form}>

@@ -115,7 +115,7 @@ export default function ProfileEditorPage() {
       mainClassName: computedValues.isNewUser
         ? "flex flex-col my-auto px-5"
         : "flex flex-col pb-5 mb-24 mt-14 pt-8 px-5",
-      isGlobalNavBar: !computedValues.isNewUser,
+      isGlobalNavBar: false,
     }),
     [computedValues.isNewUser]
   );

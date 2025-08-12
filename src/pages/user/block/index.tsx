@@ -18,6 +18,7 @@ export default function BlockPage() {
       headerTitle="차단 설정"
       currentPath={URL_PATHS.USER}
       hasBackButton={true}
+      isGlobalNavBar={false}
     >
       {isLoading ? (
         <LoadingSpinner />

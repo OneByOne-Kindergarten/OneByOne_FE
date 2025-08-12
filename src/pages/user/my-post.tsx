@@ -14,6 +14,7 @@ export default function MyPostPage() {
       currentPath={URL_PATHS.USER_POST}
       wrapperBg="white"
       mainClassName="mt-14"
+      isGlobalNavBar={false}
     >
       <Suspense fallback={<LoadingSpinner />}>
         <MyPostList />

@@ -23,6 +23,7 @@ export default function NoticeDetailPage() {
       hasBackButton={true}
       wrapperBg="white"
       mainClassName="px-5 py-5 mt-14 mb-14"
+      isGlobalNavBar={false}
     >
       <Suspense fallback={<LoadingSpinner />}>
         <NoticeDetail id={Number(id)} />
