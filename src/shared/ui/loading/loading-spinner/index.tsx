@@ -11,7 +11,7 @@ export default function LoadingSpinner({
 }: LoadingSpinnerProps) {
   return (
     <div
-      className={clsx("flex items-center justify-center", className, {
+      className={clsx("flex flex-1 items-center justify-center", className, {
         "py-14": type === "element",
       })}
       style={type === "page" ? { height: "calc(100vh - 112px)" } : undefined}

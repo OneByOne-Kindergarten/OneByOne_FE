@@ -102,7 +102,7 @@ export default function PostList({
   // 창 크기 변경 시 높이 업데이트
   useEffect(() => {
     const handleResize = () => {
-      setMaxListHeight(window.innerHeight - 270);
+      setMaxListHeight(window.innerHeight - 300);
 
       if (containerRef.current) {
         setContainerWidth(containerRef.current.clientWidth);
@@ -148,7 +148,7 @@ export default function PostList({
     );
   }
 
-  const itemHeight = 124;
+  const itemHeight = 138;
   const listHeight = Math.min(uniquePosts.length * itemHeight, maxListHeight);
 
   return (
