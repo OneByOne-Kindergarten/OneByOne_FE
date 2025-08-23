@@ -1,38 +1,22 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMemo } from "react";
-import { useForm } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 
 import NicknameField from "@/features/form/ui/fields/NicknameField";
 import Button from "@/shared/ui/buttons/base-button";
 import { Form } from "@/shared/ui/form";
-import { profileSchema } from "@/shared/utils/validationSchemas";
 
 interface NicknameSectionProps {
-  defaultNickname: string;
   isNewUser: boolean;
   isPending: boolean;
   onSubmit: (nickname: string) => void;
+  nicknameForm: UseFormReturn<{ nickname: string }>;
 }
 
-type ProfileFormData = { nickname: string };
-
 export default function NicknameSection({
-  defaultNickname,
   isNewUser,
   isPending,
   onSubmit,
+  nicknameForm,
 }: NicknameSectionProps) {
-  const nicknameFormConfig = useMemo(
-    () => ({
-      resolver: zodResolver(profileSchema),
-      mode: "onChange" as const,
-      reValidateMode: "onChange" as const,
-      defaultValues: { nickname: defaultNickname },
-    }),
-    [defaultNickname]
-  );
-
-  const nicknameForm = useForm<ProfileFormData>(nicknameFormConfig);
 
   return (
     <section>

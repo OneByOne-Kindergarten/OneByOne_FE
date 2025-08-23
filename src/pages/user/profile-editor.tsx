@@ -100,7 +100,8 @@ export default function ProfileEditorPage() {
   const isStartDisabled = useStartButtonState(
     isNicknamePending,
     isRolePending,
-    nicknameForm
+    nicknameForm,
+    selectedRole
   );
 
   // 페이지 레이아웃 props를 메모이제이션
@@ -132,12 +133,12 @@ export default function ProfileEditorPage() {
 
       <div className="flex flex-col gap-7">
         <NicknameSection
-          defaultNickname={computedValues.defaultNickname}
           isNewUser={computedValues.isNewUser}
           isPending={isNicknamePending}
           onSubmit={(nickname) =>
             handleNicknameUpdate({ nickname } as ProfileFormData)
           }
+          nicknameForm={nicknameForm}
         />
 
         <RoleSection
