@@ -32,7 +32,7 @@ export default function NoticeDetail({ id }: { id: number }) {
         <p>{notice.content}</p>
       </section>
       <section className="flex flex-col gap-1 text-xs text-primary-dark01">
-        <p>📧 이메일: onebyone.kindergarten.management@gmail.com</p>
+        <p>📧 이메일: saegimworks@gmail.com</p>
       </section>
     </div>
   );
