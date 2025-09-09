@@ -141,10 +141,12 @@ export default function PostList({
 
   if (uniquePosts.length === 0) {
     return (
-      <Empty
-        title="게시글이 없습니다."
-        subTitle="첫 번째 게시글을 남겨보세요!"
-      />
+      <div className="pb-14 pt-16">
+        <Empty
+          title="게시글이 없습니다."
+          subTitle="첫 번째 게시글을 남겨보세요!"
+        />
+      </div>
     );
   }
 
