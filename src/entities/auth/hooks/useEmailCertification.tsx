@@ -10,21 +10,19 @@ export const useSendEmailCertification = () => {
   return useMutation<boolean, Error, string>({
     mutationFn: (email) => sendEmailCertification(email),
     onError: (error) => {
-      const errorMessage =
-        (() => {
-          try {
-            return JSON.parse(error.message).data?.message;
-          } catch {
-            return error.message;
-          }
-        })() || "잠시 후 다시 시도해주세요.";
+      let errorMessage = "잠시 후 다시 시도해주세요.";
+
+      if (error instanceof Error && error.message) {
+        if (error.message !== "Failed to fetch") {
+          errorMessage = error.message;
+        }
+      }
 
       toast({
         title: "인증번호 발송 오류",
         description: errorMessage,
         variant: "destructive",
       });
-      console.error("이메일 인증번호 발송 실패:", error);
     },
   });
 };

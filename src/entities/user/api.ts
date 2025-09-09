@@ -65,7 +65,7 @@ export const updateNickname = async (newNickname: string): Promise<boolean> => {
     return true;
   } catch (error) {
     console.error("닉네임 변경 실패:", error);
-    return false;
+    throw error;
   }
 };
 
@@ -124,7 +124,7 @@ export const withdrawUser = async (): Promise<boolean> => {
 
     if (!token) {
       console.error("회원 탈퇴 실패: 인증 정보 없음");
-      return false;
+      throw new Error("인증 정보가 없습니다.");
     }
 
     await apiCall<null, void>({
@@ -139,7 +139,7 @@ export const withdrawUser = async (): Promise<boolean> => {
     return true;
   } catch (error) {
     console.error("회원 탈퇴 실패:", error);
-    return false;
+    throw error;
   }
 };
 
@@ -164,7 +164,7 @@ export const updateUserRole = async (
 
     if (!token) {
       console.error("역할 변경 실패: 인증 정보 없음");
-      return false;
+      throw new Error("인증 정보가 없습니다.");
     }
 
     await apiCall<{ role: string }, void>({
@@ -180,7 +180,7 @@ export const updateUserRole = async (
     return true;
   } catch (error) {
     console.error("역할 변경 실패:", error);
-    return false;
+    throw error;
   }
 };
 
@@ -203,7 +203,7 @@ export const sendEmailCertification = async (
     return true;
   } catch (error) {
     console.error("이메일 인증 번호 발송 실패:", error);
-    return false;
+    throw error;
   }
 };
 

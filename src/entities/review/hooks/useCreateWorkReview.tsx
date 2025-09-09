@@ -33,21 +33,19 @@ export const useCreateWorkReview = () => {
       });
     },
     onError: (error) => {
-      const errorMessage =
-        (() => {
-          try {
-            return JSON.parse(error.message).data?.message;
-          } catch {
-            return error.message;
-          }
-        })() || "잠시 후 다시 시도해주세요.";
+      let errorMessage = "잠시 후 다시 시도해주세요.";
+
+      if (error instanceof Error && error.message) {
+        if (error.message !== "Failed to fetch") {
+          errorMessage = error.message;
+        }
+      }
 
       toast({
         title: "근무 리뷰 등록 실패",
         description: errorMessage,
         variant: "destructive",
       });
-      console.error("근무 리뷰 생성 에러:", error);
     },
   });
 };

@@ -92,9 +92,18 @@ export function useCreateInquiry() {
         variant: "default",
       });
     },
-    onError: () => {
+    onError: (error) => {
+      let errorMessage = "문의 등록에 실패했습니다.";
+
+      if (error instanceof Error && error.message) {
+        if (error.message !== "Failed to fetch") {
+          errorMessage = error.message;
+        }
+      }
+
       toast({
-        title: "문의 등록에 실패했습니다.",
+        title: "문의 등록 실패",
+        description: errorMessage,
         variant: "destructive",
       });
     },

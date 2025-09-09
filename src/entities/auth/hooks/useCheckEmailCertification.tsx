@@ -11,14 +11,13 @@ export const useCheckEmailCertification = () => {
     mutationFn: ({ email, certification }) =>
       checkEmailCertification(email, certification),
     onError: (error) => {
-      const errorMessage =
-        (() => {
-          try {
-            return JSON.parse(error.message).data?.message;
-          } catch {
-            return error.message;
-          }
-        })() || "잠시 후 다시 시도해주세요.";
+      let errorMessage = "잠시 후 다시 시도해주세요.";
+
+      if (error instanceof Error && error.message) {
+        if (error.message !== "Failed to fetch") {
+          errorMessage = error.message;
+        }
+      }
 
       toast({
         title: "인증번호 검증 오류",

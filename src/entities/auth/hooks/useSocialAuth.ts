@@ -29,10 +29,18 @@ export const useNaverAuth = () => {
         navigate(URL_PATHS.HOME, { replace: true });
       }, 100);
     },
-    onError: () => {
+    onError: (error) => {
+      let errorMessage = "잠시 후 다시 시도해주세요.";
+
+      if (error instanceof Error && error.message) {
+        if (error.message !== "Failed to fetch") {
+          errorMessage = error.message;
+        }
+      }
+
       toast({
         title: "네이버 로그인 실패",
-        description: "잠시 후 다시 시도해주세요.",
+        description: errorMessage,
         variant: "destructive",
       });
       navigate(URL_PATHS.ROOT, { replace: true });
@@ -54,10 +62,18 @@ export const useKakaoAuth = () => {
         navigate(URL_PATHS.HOME, { replace: true });
       }, 100);
     },
-    onError: () => {
+    onError: (error) => {
+      let errorMessage = "잠시 후 다시 시도해주세요.";
+
+      if (error instanceof Error && error.message) {
+        if (error.message !== "Failed to fetch") {
+          errorMessage = error.message;
+        }
+      }
+
       toast({
         title: "카카오 로그인 실패",
-        description: "잠시 후 다시 시도해주세요.",
+        description: errorMessage,
         variant: "destructive",
       });
       navigate(URL_PATHS.ROOT, { replace: true });
@@ -79,12 +95,21 @@ export const useAppleAuth = () => {
         navigate(URL_PATHS.HOME, { replace: true });
       }, 100);
     },
-    onError: () => {
+    onError: (error) => {
+      let errorMessage = "잠시 후 다시 시도해주세요.";
+
+      if (error instanceof Error && error.message) {
+        if (error.message !== "Failed to fetch") {
+          errorMessage = error.message;
+        }
+      }
+
       toast({
         title: "애플 로그인 실패",
-        description: "잠시 후 다시 시도해주세요.",
+        description: errorMessage,
         variant: "destructive",
       });
+      navigate(URL_PATHS.ROOT, { replace: true });
     },
   });
 };

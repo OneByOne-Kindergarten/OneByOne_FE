@@ -27,16 +27,9 @@ export const useSignIn = () => {
     onError: (error) => {
       let errorMessage = "이메일 또는 비밀번호를 다시 확인해주세요.";
 
-      if (error instanceof Error) {
-        try {
-          const errorObj = JSON.parse(error.message);
-          if (errorObj.data?.message) {
-            errorMessage = errorObj.data.message;
-          }
-        } catch (e) {
-          if (error.message && error.message !== "Failed to fetch") {
-            errorMessage = error.message;
-          }
+      if (error instanceof Error && error.message) {
+        if (error.message !== "Failed to fetch") {
+          errorMessage = error.message;
         }
       }
 

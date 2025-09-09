@@ -123,13 +123,24 @@ export async function apiCall<TRequest, TResponse>({
     // JSON 응답 파싱 시도
     const contentType = response.headers.get("content-type");
     if (contentType && contentType.includes("application/json")) {
-      return await response.json();
+      const result = await response.json();
+
+      // 응답에 에러 코드가 있으면 에러로 처리
+      if (result.code && result.message) {
+        throw new Error(result.message);
+      }
+
+      return result;
     } else {
       // console.warn(`Response is not JSON: ${contentType}`);
       return {} as TResponse;
     }
-  } catch {
-    // console.error("Failed to parse JSON response:", jsonError);
+  } catch (parseError) {
+    // JSON 파싱 에러가 아닌 경우 (에러 코드로 인한 throw)
+    if (parseError instanceof Error && parseError.message) {
+      throw parseError;
+    }
+    // console.error("Failed to parse JSON response:", parseError);
     return {} as TResponse;
   }
 }

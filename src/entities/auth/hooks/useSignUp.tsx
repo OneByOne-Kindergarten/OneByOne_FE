@@ -37,28 +37,9 @@ export const useSignUp = (callbacks?: SignupCallbacks) => {
     onError: (error) => {
       let errorMessage = "잠시 후 다시 시도해주세요.";
 
-      if (error instanceof Error) {
-        try {
-          const errorObj = JSON.parse(error.message);
-          if (errorObj.data?.message) {
-            errorMessage = errorObj.data.message;
-          }
-        } catch (e) {
-          // 파싱 실패
-          if (error.message && error.message !== "Failed to fetch") {
-            // 응답 형식 오류지만 회원가입은 성공
-            if (error.message.includes("Failed to parse JSON response")) {
-              toast({
-                title: "회원가입 완료",
-                description: "지금 바로 로그인해보세요! 🎉",
-                variant: "default",
-              });
-              navigate(URL_PATHS.SIGNIN);
-              return;
-            }
-
-            errorMessage = error.message;
-          }
+      if (error instanceof Error && error.message) {
+        if (error.message !== "Failed to fetch") {
+          errorMessage = error.message;
         }
       }
 

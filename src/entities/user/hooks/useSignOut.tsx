@@ -27,16 +27,9 @@ export const useSignOut = () => {
     onError: (error) => {
       let errorMessage = "로그아웃에 실패했습니다. 다시 시도해주세요.";
 
-      if (error instanceof Error) {
-        try {
-          const errorObj = JSON.parse(error.message);
-          if (errorObj.data?.message) {
-            errorMessage = errorObj.data.message;
-          }
-        } catch (e) {
-          if (error.message && error.message !== "Failed to fetch") {
-            errorMessage = error.message;
-          }
+      if (error instanceof Error && error.message) {
+        if (error.message !== "Failed to fetch") {
+          errorMessage = error.message;
         }
       }
 

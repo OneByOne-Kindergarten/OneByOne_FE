@@ -16,14 +16,13 @@ export const useUpdateUserRole = () => {
   >({
     mutationFn: (role) => updateUserRole(role),
     onError: (error) => {
-      const errorMessage =
-        (() => {
-          try {
-            return JSON.parse(error.message).data?.message;
-          } catch {
-            return error.message;
-          }
-        })() || "잠시 후 다시 시도해주세요.";
+      let errorMessage = "잠시 후 다시 시도해주세요.";
+
+      if (error instanceof Error && error.message) {
+        if (error.message !== "Failed to fetch") {
+          errorMessage = error.message;
+        }
+      }
 
       toast({
         title: "변경 실패",

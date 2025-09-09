@@ -16,6 +16,11 @@ import {
 } from "./DTO";
 
 export const setCookie = (name: string, value: string, days: number = 7) => {
+  if (!value || value === "undefined" || value === "null") {
+    console.warn(`setCookie: ${name}에 유효하지 않은 값이 전달됨:`, value);
+    return;
+  }
+
   const date = new Date();
   date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
   const expires = `; expires=${date.toUTCString()}`;
