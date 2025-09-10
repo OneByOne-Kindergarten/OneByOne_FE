@@ -120,27 +120,61 @@ export async function apiCall<TRequest, TResponse>({
   }
 
   try {
-    // JSON 응답 파싱 시도
     const contentType = response.headers.get("content-type");
-    if (contentType && contentType.includes("application/json")) {
-      const result = await response.json();
+    const responseText = await response.text();
 
-      // 응답에 에러 코드가 있으면 에러로 처리
-      if (result.code && result.message) {
-        throw new Error(result.message);
+    // 빈 응답 처리
+    if (!responseText.trim()) {
+      return {} as TResponse;
+    }
+
+    // JSON 응답 처리
+    if (contentType && contentType.includes("application/json")) {
+      try {
+        const result = JSON.parse(responseText);
+
+        // 응답에 에러 코드가 있으면 에러로 처리
+        if (result.code && result.message) {
+          throw new Error(result.message);
+        }
+
+        return result;
+      } catch (jsonError) {
+        // JSON 파싱 실패 시 텍스트 응답으로 처리
+        console.warn("JSON 파싱 실패, 텍스트 응답:", responseText);
+
+        // 성공 메시지 텍스트인 경우 빈 객체 반환
+        if (
+          responseText.includes("변경되었습니다") ||
+          responseText.includes("성공") ||
+          responseText.includes("완료")
+        ) {
+          console.log("성공 메시지 응답:", responseText);
+          return {} as TResponse;
+        }
+
+        // 에러 메시지 텍스트인 경우 에러로 처리
+        throw new Error(responseText);
+      }
+    } else {
+      // 성공 메시지 텍스트인 경우 빈 객체 반환
+      if (
+        responseText.includes("변경되었습니다") ||
+        responseText.includes("성공") ||
+        responseText.includes("완료")
+      ) {
+        return {} as TResponse;
       }
 
-      return result;
-    } else {
-      // console.warn(`Response is not JSON: ${contentType}`);
       return {} as TResponse;
     }
   } catch (parseError) {
-    // JSON 파싱 에러가 아닌 경우 (에러 코드로 인한 throw)
+    // 이미 Error로 throw된 경우
     if (parseError instanceof Error && parseError.message) {
       throw parseError;
     }
-    // console.error("Failed to parse JSON response:", parseError);
+
+    console.error("응답 처리 실패:", parseError);
     return {} as TResponse;
   }
 }
