@@ -85,7 +85,7 @@ export async function apiCall<TRequest, TResponse>({
           isRetry: true,
         });
       }
-    } catch (refreshError) {
+    } catch {
       throw new Error("인증이 만료되었습니다. 다시 로그인해주세요.");
     }
   }
@@ -98,11 +98,16 @@ export async function apiCall<TRequest, TResponse>({
       const contentType = response.headers.get("content-type");
       if (contentType && contentType.includes("application/json")) {
         const errorData = await response.json();
-        errorMessage = JSON.stringify({
-          status: response.status,
-          statusText: response.statusText,
-          data: errorData,
-        });
+
+        if (errorData.message) {
+          errorMessage = errorData.message;
+        } else {
+          errorMessage = JSON.stringify({
+            status: response.status,
+            statusText: response.statusText,
+            data: errorData,
+          });
+        }
       }
     } catch {
       // console.warn("Error response is not valid JSON:", jsonError);
@@ -128,34 +133,44 @@ export async function apiCall<TRequest, TResponse>({
       return {} as TResponse;
     }
 
-    // JSON 응답 처리
-    if (contentType && contentType.includes("application/json")) {
-      try {
-        const result = JSON.parse(responseText);
+    // JSON 응답 처리 (content-type이 JSON이거나 텍스트가 JSON 형태인 경우)
+    if (
+      (contentType && contentType.includes("application/json")) ||
+      responseText.trim().startsWith("{")
+    ) {
+      let result;
+      let isJsonParseError = false;
 
+      try {
+        result = JSON.parse(responseText);
+      } catch {
+        isJsonParseError = true;
+      }
+
+      // JSON 파싱 성공한 경우
+      if (!isJsonParseError && result) {
         // 응답에 에러 코드가 있으면 에러로 처리
         if (result.code && result.message) {
           throw new Error(result.message);
         }
-
         return result;
-      } catch (jsonError) {
-        // JSON 파싱 실패 시 텍스트 응답으로 처리
-        console.warn("JSON 파싱 실패, 텍스트 응답:", responseText);
-
-        // 성공 메시지 텍스트인 경우 빈 객체 반환
-        if (
-          responseText.includes("변경되었습니다") ||
-          responseText.includes("성공") ||
-          responseText.includes("완료")
-        ) {
-          console.log("성공 메시지 응답:", responseText);
-          return {} as TResponse;
-        }
-
-        // 에러 메시지 텍스트인 경우 에러로 처리
-        throw new Error(responseText);
       }
+
+      // JSON 파싱 실패한 경우
+      console.warn("JSON 파싱 실패, 텍스트 응답:", responseText);
+
+      // 성공 메시지 텍스트인 경우 빈 객체 반환
+      if (
+        responseText.includes("변경되었습니다") ||
+        responseText.includes("성공") ||
+        responseText.includes("완료")
+      ) {
+        console.log("성공 메시지 응답:", responseText);
+        return {} as TResponse;
+      }
+
+      // 에러 메시지 텍스트인 경우 에러로 처리
+      throw new Error(responseText);
     } else {
       // 성공 메시지 텍스트인 경우 빈 객체 반환
       if (

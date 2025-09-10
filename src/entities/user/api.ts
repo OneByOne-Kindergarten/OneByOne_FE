@@ -98,16 +98,9 @@ export const updatePassword = async (
     return true;
   } catch (error) {
     if (error instanceof Error) {
-      try {
-        const errorObj = JSON.parse(error.message);
-        if (
-          errorObj.status === 400 &&
-          errorObj.data?.message === "비밀번호가 일치하지 않습니다."
-        ) {
-          return false;
-        }
-      } catch (e) {
-        // 파싱 실패 시 기본 에러 처리
+      // apiCall에서 이미 message를 직접 throw하므로 간단하게 처리
+      if (error.message === "비밀번호가 일치하지 않습니다.") {
+        return false;
       }
     }
     throw error;
