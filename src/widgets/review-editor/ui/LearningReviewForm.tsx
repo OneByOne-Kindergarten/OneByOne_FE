@@ -4,6 +4,7 @@ import { UseFormReturn } from "react-hook-form";
 import OneLineCommentField from "@/features/form/ui/fields/OneLineCommentField";
 import ScoredCommentField from "@/features/form/ui/fields/ScoredCommentField";
 import AlertCard from "@/shared/ui/alert/alert-card";
+import { REVIEW_COMMENT_MAX_LENGTH } from "@/shared/utils/validationSchemas";
 
 export interface LearningReviewFormValues {
   oneLineComment: string;
@@ -27,7 +28,11 @@ export default function LearningReviewForm({
   const steps = useMemo(
     () => [
       <>
-        <OneLineCommentField control={form.control} />
+        <OneLineCommentField
+          control={form.control}
+          showCounter
+          maxLength={200}
+        />
       </>,
       <>
         <div className="flex flex-col gap-2">
@@ -36,6 +41,8 @@ export default function LearningReviewForm({
             commentName="workEnvironmentComment"
             scoreName="workEnvironmentScore"
             label="분위기"
+            showCounter
+            maxLength={REVIEW_COMMENT_MAX_LENGTH}
           />
         </div>
         <div className="flex flex-col gap-2">
@@ -44,6 +51,8 @@ export default function LearningReviewForm({
             commentName="learningSupportComment"
             scoreName="learningSupportScore"
             label="학습 도움"
+            showCounter
+            maxLength={REVIEW_COMMENT_MAX_LENGTH}
           />
         </div>
         <div className="flex flex-col gap-2">
@@ -52,6 +61,8 @@ export default function LearningReviewForm({
             commentName="instructionTeacherComment"
             scoreName="instructionTeacherScore"
             label="지도 교사"
+            showCounter
+            maxLength={REVIEW_COMMENT_MAX_LENGTH}
           />
         </div>
         <AlertCard>
