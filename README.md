@@ -10,10 +10,17 @@
 <p align="center">예비교사부터 현직 교사까지 생생한 후기와 따뜻한 조언이 있는 원바원</p>
 
 <br>
+<br>
 
 
-
-<strong>🔗 [원바원 바로가기](https://one-by-one-fe.vercel.app/) </strong>
+<p align="right">
+  <a href="https://play.google.com/store/apps/details?id=com.kindergarten.onebyone.one_by_one&pcampaignid=web_share">
+    <img src="https://github.com/user-attachments/assets/2e478536-83c7-4137-b3d6-e304ca5d9f75" alt="원바원 Google Play" width="200"/>
+  </a>
+  <a href="https://apps.apple.com/kr/app/%EC%9B%90%EB%B0%94%EC%9B%90/id6744432824">
+    <img src="https://github.com/user-attachments/assets/cd21f8de-8678-4d4b-8750-6f4f45a4b117" alt="원바원 App Store" width="200"/>
+  </a>
+</p>
 
 <br>
 <br>
