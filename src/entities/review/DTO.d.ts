@@ -8,12 +8,21 @@ export interface User {
   nickname: string;
 }
 
-export interface WorkReview {
-  workReviewId: number;
+// 공통 리뷰 베이스 인터페이스
+interface BaseReview {
   user?: User;
-  workYear: number;
-  workType: string;
+  kindergartenId: number;
+  kindergartenName: string;
   oneLineComment: string;
+  workType: string;
+  likeCount?: number;
+  shareCount?: number;
+  createdAt?: string;
+}
+
+export interface WorkReview extends BaseReview {
+  workReviewId: number;
+  workYear: number;
   benefitAndSalaryComment: string;
   benefitAndSalaryScore: number;
   workLifeBalanceComment: string;
@@ -24,25 +33,16 @@ export interface WorkReview {
   managerScore: number;
   customerComment: string;
   customerScore: number;
-  likeCount?: number;
-  shareCount?: number;
-  createdAt?: string;
 }
 
-export interface InternshipReview {
+export interface InternshipReview extends BaseReview {
   internshipReviewId: number;
-  user?: User;
-  oneLineComment: string;
   instructionTeacherComment: string;
   instructionTeacherScore: number;
   learningSupportComment: string;
   learningSupportScore: number;
   workEnvironmentComment: string;
   workEnvironmentScore: number;
-  workType: string;
-  likeCount?: number;
-  shareCount?: number;
-  createdAt?: string;
 }
 
 export type CreateInternshipReviewRequest = Omit<
@@ -63,6 +63,22 @@ export type CreateWorkReviewRequest = Omit<
 export interface ReviewResponse<T> {
   content: T[];
   totalPages: number;
+}
+
+export interface PaginatedReviewResponse<T> {
+  content: T[];
+  totalPages: number;
+  totalElements: number;
+  pageable: {
+    pageNumber: number;
+    pageSize: number;
+  };
+}
+
+export interface ReviewQueryParams {
+  page?: number;
+  size?: number;
+  sortType?: SortType;
 }
 
 export type WorkReviewResponse = ReviewResponse<WorkReview>;
