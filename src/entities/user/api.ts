@@ -144,7 +144,7 @@ export const setUserInfo = (user: User | null): void => {
   setSentryUser(
     user
       ? {
-          id: user.userId,
+          userId: user.userId,
           nickname: user.nickname,
           role: user.role,
         }

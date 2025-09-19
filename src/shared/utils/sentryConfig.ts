@@ -7,7 +7,6 @@ import * as Sentry from "@sentry/react";
  */
 export function initSentry() {
   const isProd = import.meta.env.PROD;
-  const isDev = import.meta.env.DEV;
   const dsn = import.meta.env.VITE_SENTRY_DSN;
 
   if (isProd && !dsn) {
@@ -16,7 +15,7 @@ export function initSentry() {
   }
 
   Sentry.init({
-    // 개발환경에서는 더미 DSN 사용 (에러바운더리만 작동)
+    // 개발환경에서는 더미 DSN 사용
     dsn: isProd ? dsn : "https://dummy@dummy.ingest.sentry.io/dummy",
     environment: isProd ? "production" : "development",
     debug: false,
@@ -61,7 +60,7 @@ export function initSentry() {
         }
       }
 
-      // 간단한 에러 타입 태그만 설정 (실용성 중심)
+      // 간단한 에러 타입 태그만 설정
       if (event.exception?.values?.[0]?.type) {
         event.tags = {
           ...event.tags,

@@ -16,7 +16,7 @@ function ErrorTrigger(): never {
 }
 
 export default function HomePage() {
-  const [shouldError, setShouldError] = useState(false);
+  const [shouldError] = useState(false);
 
   // 에러가 설정되면 ErrorTrigger 컴포넌트를 렌더링해서 에러 발생
   if (shouldError) {
