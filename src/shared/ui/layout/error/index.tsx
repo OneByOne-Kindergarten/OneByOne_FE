@@ -31,7 +31,7 @@ export default function Error({
         </h2>
         <p className="text-sm text-primary-dark01">{children}</p>
         <span className="mt-2 text-xs text-primary-dark01">
-          새로고침 후 다시 시도해보세요.
+          잠시 후 다시 시도해보세요.
         </span>
       </div>
     </section>

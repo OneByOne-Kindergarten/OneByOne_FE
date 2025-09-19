@@ -1,15 +1,27 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { IMAGE_PATHS } from "@/shared/constants/assets-path";
 import { URL_PATHS } from "@/shared/constants/url-path";
-import QueryErrorBoundary from "@/shared/ui/error-boundary/QueryErrorBoundary";
+import QueryErrorBoundary from "@/shared/ui/layout/error/QueryErrorBoundary";
 import PageLayout from "@/shared/ui/layout/page-layout";
 import NoticeCard from "@/widgets/home-dashboard/ui/NoticeCard";
 import PopularPostsPreview from "@/widgets/home-dashboard/ui/PopularPostsPreview";
 import RecentReviewPreview from "@/widgets/home-dashboard/ui/RecentReviewPreview";
 import ShortCutList from "@/widgets/shortcut-list";
 
+// 테스트용 에러 컴포넌트 - 렌더링 시 에러 발생
+function ErrorTrigger(): never {
+  throw new Error("AppErrorFallback UI 테스트용 렌더링 에러입니다!");
+}
+
 export default function HomePage() {
+  const [shouldError, setShouldError] = useState(false);
+
+  // 에러가 설정되면 ErrorTrigger 컴포넌트를 렌더링해서 에러 발생
+  if (shouldError) {
+    return <ErrorTrigger />;
+  }
   return (
     <PageLayout
       title="원바원 | 홈"
