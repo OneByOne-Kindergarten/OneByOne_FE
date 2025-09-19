@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { IMAGE_PATHS } from "@/shared/constants/assets-path";
@@ -10,18 +9,7 @@ import PopularPostsPreview from "@/widgets/home-dashboard/ui/PopularPostsPreview
 import RecentReviewPreview from "@/widgets/home-dashboard/ui/RecentReviewPreview";
 import ShortCutList from "@/widgets/shortcut-list";
 
-// 테스트용 에러 컴포넌트 - 렌더링 시 에러 발생
-function ErrorTrigger(): never {
-  throw new Error("AppErrorFallback UI 테스트용 렌더링 에러입니다!");
-}
-
 export default function HomePage() {
-  const [shouldError] = useState(false);
-
-  // 에러가 설정되면 ErrorTrigger 컴포넌트를 렌더링해서 에러 발생
-  if (shouldError) {
-    return <ErrorTrigger />;
-  }
   return (
     <PageLayout
       title="원바원 | 홈"
