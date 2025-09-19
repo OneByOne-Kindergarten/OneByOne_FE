@@ -85,7 +85,7 @@ export default function PostCard({
             </div>
           </div>
           <div>
-            <span>
+            <span className="ml-4 line-clamp-1">
               {post.userNickname || "알 수 없는 사용자"} ·{" "}
               {formatDate(post.createdAt)}
             </span>
