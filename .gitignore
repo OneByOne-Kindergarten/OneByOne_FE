@@ -12,7 +12,13 @@ dist
 dist-ssr
 *.local
 
-# environment variables file
+# test files
+test-results/
+storybook-static/
+*storybook.log
+playwright-report
+
+# environment variables files
 .env.*.local
 .env
 
@@ -26,8 +32,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-storybook-static/
 
 # typescript
 *.tsbuildinfo
-*storybook.log
+
