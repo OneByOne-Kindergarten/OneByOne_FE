@@ -11,7 +11,10 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,md}\"",
-    "format:check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css,md}\""
+    "format:check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css,md}\"",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:debug": "playwright test --debug"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.3",
@@ -48,6 +51,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
+    "@playwright/test": "^1.55.0",
     "@sentry/vite-plugin": "^4.3.0",
     "@storybook/addon-essentials": "^8.6.4",
     "@storybook/addon-onboarding": "^8.6.4",
@@ -79,7 +83,7 @@
     "eslint-plugin-storybook": "^0.11.4",
     "globals": "^15.15.0",
     "jiti": "^2.4.2",
-    "playwright": "^1.51.0",
+    "playwright": "^1.55.0",
     "postcss": "^8.5.3",
     "postcss-cli": "^11.0.1",
     "prettier": "^3.5.3",
