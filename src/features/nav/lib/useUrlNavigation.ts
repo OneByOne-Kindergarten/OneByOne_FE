@@ -16,6 +16,7 @@ const ROOT_PAGES = [
   "/kindergarten",
   "/community",
   "/favorites",
+  "/review",
   "/user",
 ];
 
@@ -38,11 +39,7 @@ const saveCurrentPath = (currentPath: string): void => {
     setCommunityState({ path: currentPath });
   }
 
-  if (
-    urlKey === "KINDERGARTEN" ||
-    urlKey === "KINDERGARTEN_DETAIL" ||
-    urlKey === "REVIEW"
-  ) {
+  if (urlKey === "KINDERGARTEN") {
     setKindergartenState({ path: currentPath });
   }
 };

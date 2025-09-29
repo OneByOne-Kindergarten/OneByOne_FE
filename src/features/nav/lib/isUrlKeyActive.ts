@@ -9,6 +9,7 @@ export const MAIN_TAB_KEYS: UrlKeys[] = [
   "KINDERGARTEN",
   "COMMUNITY",
   "FAVORITES",
+  "REVIEW",
   "USER",
 ];
 
@@ -31,9 +32,9 @@ export const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
     "KINDERGARTEN",
     "KINDERGARTEN_DETAIL",
     "SEARCH_KINDERGARTEN",
-    "REVIEW",
-    "REVIEW_WORK",
-    "REVIEW_LEARNING",
+    "KINDERGARTEN_REVIEW",
+    "KINDERGARTEN_REVIEW_WORK",
+    "KINDERGARTEN_REVIEW_LEARNING",
     "REVIEW_EDITOR",
   ],
   COMMUNITY: [
@@ -45,6 +46,7 @@ export const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
     "SEARCH_COMMUNITY",
   ],
   FAVORITES: ["FAVORITES"],
+  REVIEW: ["REVIEW"],
   USER: [
     "USER",
     "USER_PROFILE",
@@ -66,9 +68,9 @@ export const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
   KINDERGARTEN_DETAIL: [],
   SEARCH_KINDERGARTEN: [],
   SEARCH_COMMUNITY: [],
-  REVIEW: [],
-  REVIEW_WORK: [],
-  REVIEW_LEARNING: [],
+  KINDERGARTEN_REVIEW: [],
+  KINDERGARTEN_REVIEW_WORK: [],
+  KINDERGARTEN_REVIEW_LEARNING: [],
   REVIEW_EDITOR: [],
   SIGNIN: [],
   SIGNUP: [],

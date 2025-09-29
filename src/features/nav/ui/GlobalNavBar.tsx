@@ -55,6 +55,13 @@ const NAV_BAR_ITEMS: NavigationItem[] = [
     iconPaths: SVG_PATHS.FAVORITES,
   },
   {
+    label: "리뷰",
+    urlKey: "REVIEW",
+    ariaLabel: "리뷰 페이지로 이동",
+    dataButtonName: "리뷰",
+    iconPaths: SVG_PATHS.REVIEW,
+  },
+  {
     label: "프로필",
     urlKey: "USER",
     ariaLabel: "유저 페이지로 이동",

@@ -23,12 +23,7 @@ export default function ReviewSummary({
 }: ReviewSummaryProps) {
   return (
     <div
-      className={cn(
-        "flex flex-col gap-3 text-left",
-        onClick &&
-          "-m-2 cursor-pointer rounded-lg p-2 transition-colors duration-200 ease-out hover:bg-gray-50 active:bg-gray-50",
-        className
-      )}
+      className={cn("flex flex-col gap-3 text-left", className)}
       onClick={onClick}
       role={onClick ? "button" : undefined}
       tabIndex={onClick ? 0 : undefined}

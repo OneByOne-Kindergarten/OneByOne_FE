@@ -211,28 +211,11 @@ export function setKindergartenPath(path: string): void {
 
 /**
  * kindergarten 탭 클릭 시 이동할 경로 반환
- * - kindergarten 페이지를 마지막에 방문했으면 kindergarten 경로 우선
- * - review 페이지를 마지막에 방문했으면 review 경로 반환
+ * - 항상 유치원 목록 페이지로 이동
  */
 export function getKindergartenTabPath(): string {
-  const kindergartenState = getKindergartenState();
-  const reviewState = getReviewState();
-
-  // kindergarten 경로가 있고, review 경로에 "/review"가 포함되어 있지 않으면 kindergarten 우선
-  if (kindergartenState?.path && !kindergartenState.path.includes("/review")) {
-    return kindergartenState.path;
-  }
-
-  // review 경로가 있으면 review 반환
-  if (reviewState?.path) {
-    return reviewState.path;
-  }
-
-  // kindergarten 경로가 있으면 반환 (review 포함)
-  if (kindergartenState?.path) {
-    return kindergartenState.path;
-  }
-
+  // 유치원 상태 초기화
+  setKindergartenState({ path: "/kindergarten" });
   return "/kindergarten";
 }
 
