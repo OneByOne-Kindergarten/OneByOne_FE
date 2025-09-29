@@ -2,9 +2,11 @@ name: E2E Tests
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main]
   pull_request:
     branches: [main, develop]
+  schedule:
+    - cron: "0 2 * * 1-5" # 평일 새벽 2시 정기 테스트
 
 jobs:
   e2e-tests:
