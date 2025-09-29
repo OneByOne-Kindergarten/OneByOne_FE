@@ -61,6 +61,8 @@ import radioOff from "@/app/assets/icons/radio-off.svg";
 import radioOn from "@/app/assets/icons/radio-on.svg";
 import reply from "@/app/assets/icons/reply.svg";
 import resetPassword from "@/app/assets/icons/reset-password.svg";
+import reviewActive from "@/app/assets/icons/review-active.svg";
+import reviewInactive from "@/app/assets/icons/review-inactive.svg";
 import search from "@/app/assets/icons/search.svg";
 import setting from "@/app/assets/icons/setting.svg";
 import share from "@/app/assets/icons/share.svg";
@@ -98,6 +100,10 @@ export const SVG_PATHS = {
   FAVORITES: {
     active: bookmarksActive,
     inactive: bookmarksInactive,
+  },
+  REVIEW: {
+    active: reviewActive,
+    inactive: reviewInactive,
   },
   USER: {
     active: userActive,
