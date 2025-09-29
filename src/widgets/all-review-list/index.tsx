@@ -141,9 +141,9 @@ export default function AllReviewList() {
       <div className="px-5 pb-4">
         {reviews.length > 0 ? (
           <div className="space-y-4">
-            {reviews.map((review) => (
+            {reviews.map((review, index) => (
               <div
-                key={`${reviewType}-${reviewType === REVIEW_TYPES.WORK ? review.workReviewId : review.internshipReviewId}`}
+                key={`${reviewType}-${index}`}
                 className="border-b border-primary-light02 pb-4 last:border-b-0"
               >
                 <div className="space-y-2">
@@ -160,14 +160,6 @@ export default function AllReviewList() {
                   </p>
                   <div className="flex items-center gap-2 text-xs text-primary-normal03">
                     <span>{review.workType}</span>
-                    <span>•</span>
-                    <span>
-                      평점{" "}
-                      {reviewType === REVIEW_TYPES.WORK
-                        ? review.totalRating
-                        : review.overallRating}
-                      /5
-                    </span>
                   </div>
                 </div>
               </div>
