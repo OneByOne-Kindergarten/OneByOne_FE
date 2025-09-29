@@ -34,6 +34,11 @@ export default function AppErrorFallback({
     navigate(URL_PATHS.ROOT);
   };
 
+  const handleRetry = () => {
+    resetError();
+    window.location.reload();
+  };
+
   const handleContactSupport = () => {
     setIsContactModalOpen(true);
   };
@@ -100,27 +105,37 @@ export default function AppErrorFallback({
           불편을 드려 죄송합니다.
         </Error>
 
-        <div className="mx-auto w-3/4 space-y-4 md:w-1/2">
-          <details>
-            <summary className="cursor-pointer text-xs text-primary-normal03 active:opacity-70">
+        <section className="mx-auto w-3/4 space-y-4 md:w-1/2">
+          <div>
+            <p className="text-xs font-medium text-primary-normal03">
               오류 세부정보
-            </summary>
-            <pre className="mt-2 overflow-auto rounded bg-primary-foreground p-2 text-xs text-primary-dark02">
-              {errorMessage}
-            </pre>
-          </details>
-          <Button
-            variant="primary"
-            size="lg"
-            font="md"
-            className="w-full"
-            onClick={handleGoHome}
-          >
-            메인화면으로 돌아가기
-          </Button>
-        </div>
+            </p>
+            <div className="mt-1.5 rounded bg-primary-foreground p-2">
+              <p className="text-xs font-medium text-primary-dark02">
+                {errorMessage}
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-col gap-2">
+            <Button
+              variant="primary"
+              font="md_sb"
+              className="w-full px-2.5 py-3"
+              onClick={handleGoHome}
+            >
+              메인화면으로 돌아가기
+            </Button>
+            <Button
+              font="md_sb"
+              className="w-full px-2.5 py-3 text-primary-dark01"
+              onClick={handleRetry}
+            >
+              다시 시도하기
+            </Button>
+          </div>
+        </section>
 
-        <div className="mt-6 text-center">
+        <section className="mt-6 text-center">
           <p className="text-xs text-primary-dark01">
             문제가 지속되면{" "}
             <button
@@ -131,7 +146,7 @@ export default function AppErrorFallback({
             </button>
             에 문의주세요.
           </p>
-        </div>
+        </section>
       </div>
 
       {/* 고객지원 문의 모달 */}
@@ -142,60 +157,62 @@ export default function AppErrorFallback({
         hasCloseButton={true}
       >
         <ModalHeader
-          className="p-6 pb-4"
+          className="px-3.5 py-4 pb-3.5"
           hasCloseButton={true}
           onClose={() => setIsContactModalOpen(false)}
-        >
-          <h2 className="text-lg font-bold text-primary-dark02">문의하기</h2>
-        </ModalHeader>
-
-        <ModalContent className="px-6 pb-4">
-          <div className="mb-4 space-y-6">
-            <p className="text-xs text-primary-dark01">
-              문의 사항을 메일로 전달할 수 있어요. <br />
-              필요한 경우 문의 내용을 추가해주세요.
-            </p>
+        />
+        <ModalContent className="px-3.5 pb-4">
+          <div className="space-y-3.5">
             <div className="space-y-2">
-              <div className="rounded-lg bg-primary-foreground p-4">
-                <div className="relative">
-                  <div className="space-y-1">
-                    <h3 className="text-sm font-medium text-primary-dark02">
-                      ✉️ 메일
+              <h2 className="text-center text-base font-bold text-primary-dark02">
+                문의하기
+              </h2>
+              <p className="truncate text-center text-xs text-primary-dark01">
+                문의 사항을 메일로 전달할 수 있어요. <br />
+                필요한 경우 내용을 추가해주세요.
+              </p>
+            </div>
+            <ul className="space-y-2">
+              <li className="relative h-14 rounded-lg bg-primary-foreground px-3">
+                <div className="flex h-full items-center gap-2">
+                  <p>🗃️</p>
+                  <h3 className="text-sm font-semibold text-primary-dark02">
+                    오류정보
+                  </h3>
+                </div>
+                <Button
+                  variant="primary"
+                  font="xs"
+                  size="sm"
+                  className="absolute right-3 top-0 w-16 translate-y-1/2 py-1.5"
+                  onClick={handleCopyErrorDetails}
+                >
+                  복사
+                </Button>
+              </li>
+              <li className="relative h-14 rounded-lg bg-primary-foreground px-3">
+                <div className="flex h-full items-center gap-2">
+                  <p>✉️</p>
+                  <div>
+                    <h3 className="text-sm font-semibold text-primary-dark02">
+                      메일
                     </h3>
-                    <p className="text-xs text-primary-dark01">
+                    <p className="text-xxs font-medium text-primary-dark01">
                       saegimworks@gmail.com
                     </p>
                   </div>
-                  <Button
-                    variant="primary"
-                    font="xs_sb"
-                    size="sm"
-                    className="absolute -right-1 top-0 py-1.5"
-                    onClick={handleCopyContact}
-                  >
-                    복사
-                  </Button>
                 </div>
-              </div>
-              <div className="rounded-lg bg-primary-foreground p-4">
-                <div className="relative">
-                  <div>
-                    <h3 className="text-sm font-medium text-primary-dark02">
-                      🗃️ 오류 정보
-                    </h3>
-                  </div>
-                  <Button
-                    variant="primary"
-                    font="xs_sb"
-                    size="sm"
-                    className="absolute -right-1 -top-1 py-1.5"
-                    onClick={handleCopyErrorDetails}
-                  >
-                    복사
-                  </Button>
-                </div>
-              </div>
-            </div>
+                <Button
+                  variant="primary"
+                  font="xs"
+                  size="sm"
+                  className="absolute right-3 top-0 w-16 translate-y-1/2 py-1.5"
+                  onClick={handleCopyContact}
+                >
+                  문의하기
+                </Button>
+              </li>
+            </ul>
           </div>
         </ModalContent>
       </BaseModal>
