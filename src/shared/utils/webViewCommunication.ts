@@ -7,6 +7,7 @@ export enum MessageType {
   REQUEST_FCM_TOKEN = "REQUEST_FCM_TOKEN",
   REQUEST_LAT_LONG = "REQUEST_LAT_LONG",
   REQUEST_PERMISSION = "REQUEST_PERMISSION",
+  KAKAO_SHARE = "KAKAO_SHARE",
   // TODO : 테스트 메시지 추가
 }
 
@@ -148,4 +149,48 @@ export interface PermissionResult {
  */
 export function requestPermission(permissionType: PermissionType): void {
   sendToFlutter(MessageType.REQUEST_PERMISSION, { type: permissionType });
+}
+
+// 카카오 공유 타입 정의
+export enum ShareType {
+  COMMUNITY = "community",
+  KINDERGARTEN = "kindergarten", 
+  REVIEW = "review",
+}
+
+// 카카오 공유 요청 인터페이스
+export interface KakaoShareRequest {
+  title: string;
+  id: string;
+  isWork: boolean; // 근무/실습 리뷰 여부
+  shareType: ShareType;
+}
+
+// 카카오 공유 결과 인터페이스
+export interface KakaoShareResult {
+  status: "success" | "error";
+  message: string;
+}
+
+/**
+ * 카카오 공유 기능 호출
+ * @param shareData 공유할 데이터
+ * @returns 공유 결과
+ */
+export async function requestKakaoShare(
+  shareData: KakaoShareRequest
+): Promise<KakaoShareResult> {
+  try {
+    const result = await sendToFlutter<KakaoShareRequest, KakaoShareResult>(
+      MessageType.KAKAO_SHARE,
+      shareData
+    );
+    return result;
+  } catch (error) {
+    console.error("카카오 공유 요청 오류:", error);
+    return {
+      status: "error",
+      message: error instanceof Error ? error.message : "알 수 없는 오류",
+    };
+  }
 }

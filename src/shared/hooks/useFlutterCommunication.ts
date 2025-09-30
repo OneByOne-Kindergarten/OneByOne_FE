@@ -1,9 +1,12 @@
 import { useCallback, useState } from "react";
 
 import {
+  KakaoShareRequest,
+  KakaoShareResult,
   MessageType,
   PermissionResult,
   PermissionType,
+  requestKakaoShare,
   sendToFlutter,
 } from "@/shared/utils/webViewCommunication";
 
@@ -160,4 +163,84 @@ export function usePermission(
   }, [permissionType]);
 
   return [requestPermission, permissionGranted, isLoading, error];
+}
+
+/**
+ * 카카오 공유 기능을 위한 훅
+ * @returns [shareToKakao, isSharing, shareError]
+ *
+ * @example
+ * function PostComponent({ post }) {
+ *   const [shareToKakao, isSharing, shareError] = useKakaoShare();
+ *
+ *   const handleShare = async () => {
+ *     const result = await shareToKakao({
+ *       title: post.title,
+ *       url: `${window.location.origin}/community/${post.id}`,
+ *       id: post.id.toString(),
+ *       shareType: ShareType.COMMUNITY
+ *     });
+ *
+ *     if (result.status === 'success') {
+ *       // 공유 성공 처리
+ *     } else {
+ *       // 공유 실패 처리
+ *     }
+ *   };
+ *
+ *   return (
+ *     <button onClick={handleShare} disabled={isSharing}>
+ *       {isSharing ? '공유 중...' : '카카오톡 공유'}
+ *     </button>
+ *   );
+ * }
+ */
+
+export function useKakaoShare(): [
+  (shareData: KakaoShareRequest) => Promise<KakaoShareResult>,
+  boolean,
+  string | null,
+] {
+  const [isSharing, setIsSharing] = useState(false);
+  const [shareError, setShareError] = useState<string | null>(null);
+
+  const shareToKakao = useCallback(
+    async (shareData: KakaoShareRequest): Promise<KakaoShareResult> => {
+      setIsSharing(true);
+      setShareError(null);
+
+      try {
+        // 앱 환경인지 확인
+        if (!isFlutterWebView) {
+          console.warn("앱 환경이 아닙니다. 브라우저에서는 카카오 공유가 지원되지 않습니다.");
+          console.log("공유 시도한 데이터:", shareData);
+          return {
+            status: "error",
+            message: "앱 환경에서만 지원되는 기능입니다.",
+          };
+        }
+
+        const result = await requestKakaoShare(shareData);
+
+        if (result.status === "error") {
+          setShareError(result.message);
+        }
+
+        return result;
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : "알 수 없는 오류";
+        console.error("카카오 공유 오류:", error);
+        setShareError(errorMessage);
+        return {
+          status: "error",
+          message: errorMessage,
+        };
+      } finally {
+        setIsSharing(false);
+      }
+    },
+    []
+  );
+
+  return [shareToKakao, isSharing, shareError];
 }
