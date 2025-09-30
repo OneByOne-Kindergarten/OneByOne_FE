@@ -44,10 +44,12 @@ export default function KindergartenPage() {
       mainBg="gray"
       hasBackButton={false}
     >
-      {isLoadingLocation || isLoadingKindergartens || !userLocation ? (
+      {isLoadingLocation ? (
         <KindergartenPageSkeleton />
-      ) : locationError ? (
-        <Error type="page">{locationError}</Error>
+      ) : locationError || !userLocation ? (
+        <Error type="page">위치 정보를 가져올 수 없습니다. 위치 권한을 확인해주세요.</Error>
+      ) : isLoadingKindergartens ? (
+        <KindergartenPageSkeleton />
       ) : kindergartensError ? (
         <Error type="page">{kindergartensError}</Error>
       ) : (
