@@ -1,15 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import {
-  checkFavoriteStatus,
-  toggleFavorite as toggleFavoriteService,
-} from "@/entities/favorites/api";
-import { useGetFavorites } from "@/entities/favorites/hooks/useGetFavorites";
 import { SVG_PATHS } from "@/shared/constants/assets-path";
 import { URL_PATHS } from "@/shared/constants/url-path";
-import { useKakaoShare } from "@/shared/hooks/useFlutterCommunication";
-import { isValidId, safeParseId } from "@/shared/utils/idValidation";
+import BookmarkToggle from "@/shared/ui/buttons/bookmark-toggle";
+import ShareButton from "@/shared/ui/buttons/share-button";
+import { isValidId } from "@/shared/utils/idValidation";
 import { ShareType } from "@/shared/utils/webViewCommunication";
 
 import Header from "../base-header";
@@ -36,68 +31,9 @@ export default function KindergartenHeader({
   showShare = false,
 }: KindergartenHeaderProps) {
   const navigate = useNavigate();
-  const [isFavorite, setIsFavorite] = useState(false);
-  const [favoriteLoading, setFavoriteLoading] = useState(false);
-  const { refetch } = useGetFavorites({ enabled: showBookmark });
-  const [shareToKakao] = useKakaoShare();
-
-  // 즐겨찾기 상태 확인
-  useEffect(() => {
-    if (showBookmark && kindergartenId && isValidId(kindergartenId)) {
-      fetchFavoriteStatus();
-    }
-  }, [showBookmark, kindergartenId]);
-
-  const fetchFavoriteStatus = async () => {
-    if (!kindergartenId || !isValidId(kindergartenId)) return;
-
-    const numericId = safeParseId(kindergartenId);
-    if (!numericId) return;
-
-    try {
-      const response = await checkFavoriteStatus(numericId);
-      setIsFavorite(response.data);
-    } catch (error) {
-      console.error("즐겨찾기 상태 확인 실패:", error);
-    }
-  };
-
-  // 즐겨찾기 토글
-  const handleToggleFavorite = useCallback(async () => {
-    if (!kindergartenId || favoriteLoading || !isValidId(kindergartenId))
-      return;
-
-    const numericId = safeParseId(kindergartenId);
-    if (!numericId) return;
-
-    try {
-      setFavoriteLoading(true);
-      const result = await toggleFavoriteService(numericId);
-
-      if (result.success) {
-        setIsFavorite(result.data.favorite);
-        refetch();
-      }
-    } catch (error) {
-      console.error("즐겨찾기 토글 실패:", error);
-    } finally {
-      setFavoriteLoading(false);
-    }
-  }, [kindergartenId, favoriteLoading, refetch]);
 
   const handleSearch = () => {
     navigate(URL_PATHS.SEARCH_KINDERGARTEN);
-  };
-
-  const handleShare = async () => {
-    if (!kindergartenId || !isValidId(kindergartenId)) return;
-
-    await shareToKakao({
-      title: title || "유치원 정보",
-      id: kindergartenId,
-      isWork: true,
-      shareType: ShareType.KINDERGARTEN,
-    });
   };
 
   return (
@@ -109,37 +45,19 @@ export default function KindergartenHeader({
       onBackButtonClick={onBackButtonClick}
     >
       <div className="flex items-center gap-4">
-        {showShare && (
-          <button onClick={handleShare} aria-label="카카오톡 공유">
-            <img
-              src={SVG_PATHS.SHARE}
-              alt="공유"
-              width={28}
-              height={28}
-              className="brightness-0 filter duration-200 hover:opacity-80 active:opacity-60"
-            />
-          </button>
+        {showShare && kindergartenId && isValidId(kindergartenId) && (
+          <ShareButton
+            variant="icon-only"
+            iconSize={28}
+            shareData={{
+              title: title || "유치원 정보",
+              id: kindergartenId,
+              isWork: true,
+              shareType: ShareType.KINDERGARTEN,
+            }}
+          />
         )}
-        {showBookmark && (
-          <button
-            onClick={handleToggleFavorite}
-            aria-label={isFavorite ? "즐겨찾기 취소" : "즐겨찾기 추가"}
-            disabled={favoriteLoading}
-            className={favoriteLoading ? "opacity-50" : ""}
-          >
-            <img
-              src={
-                isFavorite
-                  ? SVG_PATHS.BOOKMARKER.ACTIVE
-                  : SVG_PATHS.BOOKMARKER.INACTIVE
-              }
-              alt="북마크"
-              width={24}
-              height={24}
-              className="duration-200 hover:opacity-80 active:opacity-60"
-            />
-          </button>
-        )}
+        {showBookmark && <BookmarkToggle kindergartenId={kindergartenId} />}
 
         <button onClick={handleSearch} aria-label="검색">
           <img
