@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { userAtom } from "@/entities/auth/model";
@@ -46,10 +46,27 @@ function ReviewCardItem({
   const navigate = useNavigate();
   const { id } = useParams();
 
+  // 좋아요 수 낙관적 업데이트를 위한 상태
+  const [localLikeCount, setLocalLikeCount] = useState(review.likeCount || 0);
+  const [localIsLiked, setLocalIsLiked] = useState(false);
+
   const { handleLike, isPending, isLiked } = useReviewLike(
     type,
     "workReviewId" in review ? review.workReviewId : review.internshipReviewId
   );
+
+  useEffect(() => {
+    setLocalIsLiked(isLiked);
+  }, [isLiked]);
+
+  const handleOptimisticLike = () => {
+    const wasLiked = localIsLiked;
+
+    setLocalIsLiked(!wasLiked);
+    setLocalLikeCount((prev) => (wasLiked ? prev - 1 : prev + 1));
+
+    handleLike();
+  };
 
   const handleWriteReview = () => {
     if (id && user && id !== "unknown") {
@@ -130,10 +147,10 @@ function ReviewCardItem({
 
         <div className="flex justify-end">
           <ReviewActions
-            likeCount={review.likeCount || 0}
-            onLike={handleLike}
+            likeCount={localLikeCount}
+            onLike={handleOptimisticLike}
             isPending={isPending}
-            isLiked={isLiked}
+            isLiked={localIsLiked}
             shareData={{
               title: `${review.kindergartenName} ${type === "work" ? "근무" : "실습"} 리뷰`,
               id: reviewId.toString(),

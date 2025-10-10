@@ -57,7 +57,7 @@ export default function SchoolCard({
                 height="18"
                 className="h-[18px] w-[18px] flex-shrink-0"
               />
-              <address className="text-sm font-light not-italic text-primary-normal03">
+              <address className="line-clamp-1 text-sm font-light not-italic text-primary-normal03">
                 {location}
               </address>
             </div>
