@@ -153,7 +153,7 @@ function ReviewCardItem({
             isLiked={localIsLiked}
             shareData={{
               title: `${review.kindergartenName} ${type === "work" ? "근무" : "실습"} 리뷰`,
-              id: reviewId.toString(),
+              id: review.kindergartenId.toString(), // kindergartenId 전달
               isWork: type === "work",
               shareType: ShareType.REVIEW,
             }}
