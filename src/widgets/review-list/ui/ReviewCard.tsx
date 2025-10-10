@@ -86,7 +86,7 @@ function ReviewCardItem({
           <ReviewResource
             kindergartenId={review.kindergartenId.toString()}
             kindergartenName={review.kindergartenName}
-            className="-mt-3"
+            className="-mt-4"
           />
         )}
 

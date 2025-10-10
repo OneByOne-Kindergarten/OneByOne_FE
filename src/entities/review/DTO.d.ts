@@ -68,11 +68,6 @@ export interface ReviewResponse<T> {
 export interface PaginatedReviewResponse<T> {
   content: T[];
   totalPages: number;
-  totalElements: number;
-  pageable: {
-    pageNumber: number;
-    pageSize: number;
-  };
 }
 
 export interface ReviewQueryParams {

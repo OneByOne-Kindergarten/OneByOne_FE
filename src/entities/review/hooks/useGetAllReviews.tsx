@@ -1,10 +1,68 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+
+import { DYNAMIC_CACHE_CONFIG } from "@/shared/config/query";
 
 import { getAllInternshipReviews, getAllWorkReviews } from "../api";
 import { ReviewQueryParams, SortType } from "../DTO.d";
 
 /**
- * 전체 근무 리뷰 조회 훅
+ * 전체 근무 리뷰 조회 훅 (무한 스크롤)
+ */
+export const useInfiniteAllWorkReviews = (
+  params?: Omit<ReviewQueryParams, "page">
+) => {
+  const pageSize = params?.size ?? 10;
+  const sortType = params?.sortType ?? SortType.LATEST;
+
+  return useInfiniteQuery({
+    queryKey: ["allWorkReviews", "infinite", pageSize, sortType],
+    queryFn: ({ pageParam = 0 }) =>
+      getAllWorkReviews({
+        page: pageParam as number,
+        size: pageSize,
+        sortType,
+      }),
+    getNextPageParam: (lastPage, allPages) => {
+      if (!lastPage?.content || lastPage.content.length === 0) return undefined;
+      const currentPage = allPages.length - 1; // 0-based index
+      const isLastPage = currentPage + 1 >= lastPage.totalPages;
+      return isLastPage ? undefined : currentPage + 1;
+    },
+    initialPageParam: 0,
+    ...DYNAMIC_CACHE_CONFIG,
+  });
+};
+
+/**
+ * 전체 실습 리뷰 조회 훅 (무한 스크롤)
+ */
+export const useInfiniteAllInternshipReviews = (
+  params?: Omit<ReviewQueryParams, "page">
+) => {
+  const pageSize = params?.size ?? 10;
+  const sortType = params?.sortType ?? SortType.LATEST;
+
+  return useInfiniteQuery({
+    queryKey: ["allInternshipReviews", "infinite", pageSize, sortType],
+    queryFn: ({ pageParam = 0 }) =>
+      getAllInternshipReviews({
+        page: pageParam as number,
+        size: pageSize,
+        sortType,
+      }),
+    getNextPageParam: (lastPage, allPages) => {
+      if (!lastPage?.content || lastPage.content.length === 0) return undefined;
+      const currentPage = allPages.length - 1; // 0-based index
+      const isLastPage = currentPage + 1 >= lastPage.totalPages;
+      return isLastPage ? undefined : currentPage + 1;
+    },
+    initialPageParam: 0,
+    ...DYNAMIC_CACHE_CONFIG,
+  });
+};
+
+/**
+ * 전체 근무 리뷰 조회 훅 (단일 페이지)
  */
 export const useGetAllWorkReviews = (params?: ReviewQueryParams) => {
   return useQuery({
@@ -15,7 +73,7 @@ export const useGetAllWorkReviews = (params?: ReviewQueryParams) => {
 };
 
 /**
- * 전체 실습 리뷰 조회 훅
+ * 전체 실습 리뷰 조회 훅 (단일 페이지)
  */
 export const useGetAllInternshipReviews = (params?: ReviewQueryParams) => {
   return useQuery({
