@@ -16,7 +16,7 @@ export default function ReviewResource({
     <Link to={`/kindergarten/${kindergartenId}`}>
       <div
         className={clsx(
-          "mt-3 flex justify-between rounded-lg bg-primary-foreground p-3 text-left hover:opacity-70 active:opacity-70",
+          "flex justify-between rounded-lg bg-primary-foreground p-3 text-left hover:opacity-70 active:opacity-70",
           className
         )}
       >

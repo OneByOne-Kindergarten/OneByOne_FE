@@ -53,6 +53,7 @@ export default function RecentReviewPreview() {
               <ReviewResource
                 kindergartenId={review.kindergartenId.toString()}
                 kindergartenName={review.kindergartenName}
+                className="mt-3"
               />
             </div>
           </li>
