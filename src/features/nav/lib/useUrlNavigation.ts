@@ -15,7 +15,6 @@ const ROOT_PAGES = [
   "/home",
   "/kindergarten",
   "/community",
-  "/favorites",
   "/review",
   "/user",
 ];

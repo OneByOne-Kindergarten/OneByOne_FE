@@ -88,7 +88,7 @@ const ToggleInput = React.forwardRef<HTMLInputElement, ToggleInputProps>(
           aria-label={showPassword ? "비밀번호 표시" : "비밀번호 숨기기"}
         >
           <img
-            src={showPassword ? SVG_PATHS.EYE.on : SVG_PATHS.EYE.off}
+            src={showPassword ? SVG_PATHS.FORM.EYE.ON : SVG_PATHS.FORM.EYE.OFF}
             alt={showPassword ? "눈 뜬 아이콘" : "눈 감은 아이콘"}
             className={cn("size-5", iconClassName)}
           />

@@ -109,6 +109,17 @@ export default function KindergartenHeader({
       onBackButtonClick={onBackButtonClick}
     >
       <div className="flex items-center gap-4">
+        {showShare && (
+          <button onClick={handleShare} aria-label="카카오톡 공유">
+            <img
+              src={SVG_PATHS.SHARE}
+              alt="공유"
+              width={28}
+              height={28}
+              className="brightness-0 filter duration-200 hover:opacity-80 active:opacity-60"
+            />
+          </button>
+        )}
         {showBookmark && (
           <button
             onClick={handleToggleFavorite}
@@ -119,37 +130,24 @@ export default function KindergartenHeader({
             <img
               src={
                 isFavorite
-                  ? SVG_PATHS.BOOKMARKER.active
-                  : SVG_PATHS.BOOKMARKER.inactive
+                  ? SVG_PATHS.BOOKMARKER.ACTIVE
+                  : SVG_PATHS.BOOKMARKER.INACTIVE
               }
               alt="북마크"
               width={24}
               height={24}
-              className="duration-200 hover:opacity-80 active:opacity-70"
+              className="duration-200 hover:opacity-80 active:opacity-60"
             />
           </button>
         )}
-        {showShare && (
-          <button
-            onClick={handleShare}
-            aria-label="카카오톡 공유"
-          >
-            <img
-              src={SVG_PATHS.SHARE}
-              alt="공유"
-              width={24}
-              height={24}
-              className="duration-200 hover:opacity-80 active:opacity-70"
-            />
-          </button>
-        )}
+
         <button onClick={handleSearch} aria-label="검색">
           <img
             src={SVG_PATHS.SEARCH}
             alt="검색"
             width={24}
             height={24}
-            className="duration-200 hover:opacity-80 active:opacity-70"
+            className="duration-200 hover:opacity-80 active:opacity-60"
           />
         </button>
       </div>

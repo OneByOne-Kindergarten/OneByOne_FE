@@ -30,7 +30,7 @@ export default function InquiryPage() {
             />
           )}
           <MenuItem
-            iconPath={SVG_PATHS.LOGOUT}
+            iconPath={SVG_PATHS.USER_MENU.LOGOUT}
             to={URL_PATHS.INQUIRY_EDITOR}
             iconAlt="유저 아이콘"
             label="1:1 문의하기"

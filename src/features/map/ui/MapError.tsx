@@ -65,7 +65,7 @@ export default function MapError({ height, error }: MapErrorProps) {
       className={`${height} flex w-full flex-col items-center justify-center gap-3 rounded-lg border border-primary-normal01 bg-primary-light01 p-6`}
     >
       <img
-        src={SVG_PATHS.CHARACTER.cry}
+        src={SVG_PATHS.CHARACTER.CRY}
         alt="경고"
         width={46}
         height={52}

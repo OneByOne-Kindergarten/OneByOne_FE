@@ -18,7 +18,7 @@ export default function KindergartenDetailPage() {
 
   const handleBackClick = () => {
     if (location.state?.fromBookmarks) {
-      navigate(URL_PATHS.FAVORITES);
+      navigate(URL_PATHS.USER_FAVORITES);
       return;
     }
 

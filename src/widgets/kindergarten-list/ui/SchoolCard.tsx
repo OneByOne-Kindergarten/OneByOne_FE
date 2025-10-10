@@ -51,7 +51,7 @@ export default function SchoolCard({
             <p className="text-base font-bold">{schoolName}</p>
             <div className="flex gap-1.5">
               <img
-                src={SVG_PATHS.LOCATION}
+                src={SVG_PATHS.KINDERGARTEN_INFO.LOCATION.PIN}
                 alt="위치 아이콘"
                 width="18"
                 height="18"
@@ -65,7 +65,7 @@ export default function SchoolCard({
         </div>
         <div className="flex gap-2">
           <img
-            src={SVG_PATHS.STAR.yellow}
+            src={SVG_PATHS.STAR.YELLOW}
             alt="별점 아이콘"
             width="24"
             height="24"

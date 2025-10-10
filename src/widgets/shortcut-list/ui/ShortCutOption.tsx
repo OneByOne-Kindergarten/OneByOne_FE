@@ -30,7 +30,9 @@ export default function ShortCutOption({
         <img src={option.iconName} height={19} width={19} />
         <span className="text-sm">{option.name}</span>
       </div>
-      {isAdded && <img src={SVG_PATHS.CHECK.green} height={19} width={19} />}
+      {isAdded && (
+        <img src={SVG_PATHS.FORM.CHECK.SECONDARY} height={19} width={19} />
+      )}
     </button>
   );
 }

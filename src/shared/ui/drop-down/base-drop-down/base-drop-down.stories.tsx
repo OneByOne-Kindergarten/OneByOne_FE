@@ -316,17 +316,23 @@ export const Gallery: Story = {
             {
               label: "아이콘 O",
               onClick: () => action("프로필 보기")(),
-              icon: <img src={SVG_PATHS.USER.inactive} className="h-4 w-4" />,
+              icon: (
+                <img src={SVG_PATHS.NAV.USER.inactive} className="h-4 w-4" />
+              ),
             },
             {
               label: "아이콘 O",
               onClick: () => action("설정")(),
-              icon: <img src={SVG_PATHS.SETTING} className="h-4 w-4" />,
+              icon: (
+                <img src={SVG_PATHS.USER_MENU.SETTING} className="h-4 w-4" />
+              ),
             },
             {
               label: "아이콘 O",
               onClick: () => action("로그아웃")(),
-              icon: <img src={SVG_PATHS.LOGOUT} className="h-4 w-4" />,
+              icon: (
+                <img src={SVG_PATHS.USER_MENU.LOGOUT} className="h-4 w-4" />
+              ),
               variant: "destructive" as const,
             },
           ]}

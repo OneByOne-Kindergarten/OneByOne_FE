@@ -56,7 +56,7 @@ export default function RecentReviewPreview() {
                     {review.kindergartenName}
                   </p>
                   <img
-                    src={SVG_PATHS.ARROW.light}
+                    src={SVG_PATHS.ARROW.LIGHT}
                     alt="오른쪽 방향 화살표"
                     className="-rotate-90"
                   />

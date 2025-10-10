@@ -81,7 +81,7 @@ export default function Post({
           <li aria-hidden="true"> · </li>
           <li className="flex items-center gap-1">
             <img
-              src={SVG_PATHS.EYE.on}
+              src={SVG_PATHS.FORM.EYE.ON}
               alt="조회 아이콘"
               width={15}
               height={15}

@@ -26,7 +26,7 @@ export default function FavoritesPage() {
     <PageLayout
       title="원바원 | 즐겨찾기"
       description="즐겨찾기한 유치원 목록"
-      currentPath={URL_PATHS.FAVORITES}
+      currentPath={URL_PATHS.USER_FAVORITES}
       headerLogo={true}
       mainBg="gray"
       hasBackButton={false}

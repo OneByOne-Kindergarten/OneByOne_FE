@@ -27,7 +27,7 @@ const CommunitySearchPage = lazy(() => import("@/pages/search/community"));
 const CommunityPage = lazy(() => import("@/pages/community"));
 const CommunityPostPage = lazy(() => import("@/pages/community/post"));
 const PostEditorPage = lazy(() => import("@/pages/community/post-editor"));
-const FavoritesPage = lazy(() => import("@/pages/favorites"));
+const FavoritesPage = lazy(() => import("@/pages/user/favorites"));
 const UserPage = lazy(() => import("@/pages/user"));
 const ProfilePage = lazy(() => import("@/pages/user/profile"));
 const ProfileEditorPage = lazy(() => import("@/pages/user/profile-editor"));
@@ -89,7 +89,7 @@ const routes = {
     { path: URL_PATHS.COMMUNITY_POST_EDITOR, element: <PostEditorPage /> },
     { path: URL_PATHS.COMMUNITY_POST, element: <CommunityPostPage /> },
     // 즐겨찾기
-    { path: URL_PATHS.FAVORITES, element: <FavoritesPage /> },
+    { path: URL_PATHS.USER_FAVORITES, element: <FavoritesPage /> },
     // 프로필
     { path: URL_PATHS.USER, element: <UserPage /> },
     { path: URL_PATHS.USER_PROFILE, element: <ProfilePage /> },

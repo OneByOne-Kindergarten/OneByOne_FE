@@ -35,7 +35,7 @@ export default function User() {
             className="duration-200 active:brightness-75"
           >
             <img
-              src={SVG_PATHS.ARROW.right}
+              src={SVG_PATHS.ARROW.RIGHT}
               alt="오른쪽 방향 화살표 아이콘"
               width="20"
               height="20"
@@ -50,13 +50,19 @@ export default function User() {
           <h2 className="text-primary-dark02">내 설정</h2>
           <menu className="flex flex-col gap-6 text-primary-dark01">
             <MenuItem
-              iconPath={SVG_PATHS.POST.edit}
+              iconPath={SVG_PATHS.POST.EDIT}
               iconAlt="게시물 관리 아이콘"
               to={URL_PATHS.USER_POST}
               label="작성한 리뷰 관리"
             />
             <MenuItem
-              iconPath={SVG_PATHS.SETTING}
+              iconPath={SVG_PATHS.BOOKMARKS}
+              iconAlt="즐겨찾기 목록 아이콘"
+              to={URL_PATHS.USER_FAVORITES}
+              label="즐겨찾기"
+            />
+            <MenuItem
+              iconPath={SVG_PATHS.USER_MENU.SETTING}
               iconAlt="설정 아이콘"
               to={URL_PATHS.USER_ACCOUNT_SETTING}
               label="계정 설정"
@@ -68,7 +74,7 @@ export default function User() {
               label="알림 설정"
             />
             <MenuItem
-              iconPath={SVG_PATHS.LEAVE}
+              iconPath={SVG_PATHS.USER_MENU.LEAVE}
               iconAlt="차단 아이콘"
               to={URL_PATHS.BLOCK}
               label="차단 설정"
@@ -80,19 +86,19 @@ export default function User() {
           <h2 className="text-primary-dark02">서비스 안내 · 문의</h2>
           <menu className="flex flex-col gap-6 text-primary-dark01">
             <MenuItem
-              iconPath={SVG_PATHS.DOCUMENT}
+              iconPath={SVG_PATHS.USER_MENU.DOCUMENT}
               iconAlt="문서 아이콘"
               to={URL_PATHS.NOTICE}
               label="공지사항"
             />
             <MenuItem
-              iconPath={SVG_PATHS.INQUIRY}
+              iconPath={SVG_PATHS.USER_MENU.INQUIRY}
               iconAlt="설정 아이콘"
               to={URL_PATHS.INQUIRY}
               label="문의"
             />
             <MenuItem
-              iconPath={SVG_PATHS.POLICY}
+              iconPath={SVG_PATHS.USER_MENU.POLICY}
               iconAlt="설정 아이콘"
               to="https://abounding-leather-799.notion.site/229a1b804ebf80d9968addf0c2733f36?source=copy_link"
               label="운영 정책"

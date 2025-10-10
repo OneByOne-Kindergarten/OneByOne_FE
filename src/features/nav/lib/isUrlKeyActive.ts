@@ -8,7 +8,6 @@ export const MAIN_TAB_KEYS: UrlKeys[] = [
   "HOME",
   "KINDERGARTEN",
   "COMMUNITY",
-  "FAVORITES",
   "REVIEW",
   "USER",
 ];
@@ -45,7 +44,6 @@ export const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
     "COMMUNITY_POST_EDITOR",
     "SEARCH_COMMUNITY",
   ],
-  FAVORITES: ["FAVORITES"],
   REVIEW: ["REVIEW"],
   USER: [
     "USER",
@@ -56,11 +54,13 @@ export const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
     "NOTICE_DETAIL",
     "ALARM",
     "USER_POST",
+    "USER_FAVORITES",
   ],
   // 나머지는 단순 매핑용
   INQUIRY: ["INQUIRY_PUBLIC", "INQUIRY_MY", "INQUIRY_EDITOR"],
   USER_PROFILE: ["USER_PROFILE_EDITOR"],
   USER_ACCOUNT_SETTING: ["USER_PASSWORD_EDITOR"],
+  USER_FAVORITES: [],
   COMMUNITY_TEACHER: [],
   COMMUNITY_STUDENT: [],
   COMMUNITY_POST: [],

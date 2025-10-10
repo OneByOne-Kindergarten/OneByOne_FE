@@ -30,7 +30,7 @@ export default function PostButton({
       }}
     >
       <img
-        src={SVG_PATHS.POST.create}
+        src={SVG_PATHS.POST.CREATE}
         alt="게시글 작성"
         width="20"
         height="20"

@@ -16,7 +16,7 @@ export default function ChatCount({ count, className }: ChatCountProps) {
       )}
     >
       <img
-        src={SVG_PATHS.CHAT.line}
+        src={SVG_PATHS.CHAT.LINE}
         alt="말풍선 아이콘"
         width={20}
         height={20}

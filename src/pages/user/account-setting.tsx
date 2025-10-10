@@ -28,19 +28,19 @@ export default function AccountSettingPage() {
       <section className="flex flex-col gap-4 bg-white p-5 font-bold">
         <menu className="flex flex-col gap-6 text-primary-dark01">
           <MenuItem
-            iconPath={SVG_PATHS.RESET.password}
+            iconPath={SVG_PATHS.AUTH.RESET_PASSWORD}
             iconAlt="비밀번호 변경 아이콘"
             to={URL_PATHS.USER_PASSWORD_EDITOR}
             label="비밀번호 변경"
           />
           <MenuItem
-            iconPath={SVG_PATHS.LOGOUT}
+            iconPath={SVG_PATHS.USER_MENU.LOGOUT}
             iconAlt="유저 아이콘"
             label="로그아웃"
             onClick={() => setIsSignOutModalOpen(true)}
           />
           <MenuItem
-            iconPath={SVG_PATHS.LEAVE}
+            iconPath={SVG_PATHS.USER_MENU.LEAVE}
             iconAlt="회원탈퇴 아이콘"
             label="회원 탈퇴"
             onClick={() => setIsWithdrawModalOpen(true)}

@@ -7,8 +7,7 @@ import arrowLight from "@/app/assets/icons/arrow-light.svg";
 import arrowRight from "@/app/assets/icons/arrow-right.svg";
 import bookmarkerActive from "@/app/assets/icons/bookmarker-active.svg";
 import bookmarkerInactive from "@/app/assets/icons/bookmarker-inactive.svg";
-import bookmarksActive from "@/app/assets/icons/bookmarks-active.svg";
-import bookmarksInactive from "@/app/assets/icons/bookmarks-inactive.svg";
+import bookmarks from "@/app/assets/icons/bookmarks.svg";
 import boss from "@/app/assets/icons/boss.svg";
 import brokenLine from "@/app/assets/icons/broken-line.svg";
 import building from "@/app/assets/icons/building.svg";
@@ -84,121 +83,147 @@ import logoMain from "@/app/assets/images/logo-main.webp";
 import openGraph from "@/app/assets/images/open-graph.png";
 
 export const SVG_PATHS = {
-  FAVICON: favicon,
-  HOME: {
-    active: homeActive,
-    inactive: homeInactive,
+  NAV: {
+    HOME: {
+      active: homeActive,
+      inactive: homeInactive,
+    },
+    KINDERGARTEN: {
+      active: kindergartenActive,
+      inactive: kindergartenInactive,
+    },
+    COMMUNITY: {
+      active: communityActive,
+      inactive: communityInactive,
+    },
+    REVIEW: {
+      active: reviewActive,
+      inactive: reviewInactive,
+    },
+    USER: {
+      active: userActive,
+      inactive: userInactive,
+    },
   },
-  KINDERGARTEN: {
-    active: kindergartenActive,
-    inactive: kindergartenInactive,
+
+  AUTH: {
+    OAUTH: {
+      KAKAO: kakao,
+      NAVER: naver,
+      APPLE: apple,
+    },
+    RESET_PASSWORD: resetPassword,
   },
-  COMMUNITY: {
-    active: communityActive,
-    inactive: communityInactive,
+
+  USER_MENU: {
+    SETTING: setting,
+    NOTICE: notice,
+    DOCUMENT: document,
+    INQUIRY: inquiry,
+    POLICY: policy,
+    LOGOUT: logout,
+    LEAVE: leave,
   },
-  FAVORITES: {
-    active: bookmarksActive,
-    inactive: bookmarksInactive,
+
+  KINDERGARTEN_INFO: {
+    BUILDING: building,
+    CHILD: child,
+    CLASS: classIcon,
+    BOSS: boss,
+    CLOCK: clock,
+    CHART: chart,
+    CERTIFICATION: certification,
+    CONTACT: {
+      CALL: call,
+      EMAIL: email,
+      HOMEPAGE: homepage,
+    },
+    LOCATION: {
+      PIN: location,
+      MAP: map,
+    },
   },
-  REVIEW: {
-    active: reviewActive,
-    inactive: reviewInactive,
-  },
-  USER: {
-    active: userActive,
-    inactive: userInactive,
-  },
+
   POST: {
-    create: post,
-    edit: postEdit,
-  },
-  RADIO: {
-    off: radioOff,
-    on: radioOn,
-  },
-  ARROW: {
-    left: arrowLeft,
-    right: arrowRight,
-    light: arrowLight,
-  },
-  STAR: {
-    gray: starGray,
-    darkgray: starDarkgray,
-    yellow: starYellow,
-  },
-  EYE: {
-    off: eyeOff,
-    on: eyeOn,
+    CREATE: post,
+    EDIT: postEdit,
   },
   CHAT: {
-    color: chatColor,
-    line: chatLine,
+    COLOR: chatColor,
+    LINE: chatLine,
   },
-  OAUTH: {
-    kakao: kakao,
-    naver: naver,
-    apple: apple,
-  },
-  CHARACTER: {
-    chicken: characterChicken,
-    chick: characterChick,
-    user: characterUser,
-    cry: characterCry,
-  },
-  SHORTCUT: {
-    kindergarten: shortcutKindergarten,
-    community: shortcutCommunity,
-  },
-  CALL: call,
-  EMAIL: email,
-  KEBAB: kebab,
-  NOTICE: notice,
-  DOCUMENT: document,
-  CHART: chart,
   THUMB_UP: thumbUp,
   REPLY: reply,
   SHARE: share,
+
+  BOOKMARKS: bookmarks,
+  BOOKMARKER: {
+    ACTIVE: bookmarkerActive,
+    INACTIVE: bookmarkerInactive,
+  },
+
+  FORM: {
+    RADIO: {
+      OFF: radioOff,
+      ON: radioOn,
+    },
+    EYE: {
+      OFF: eyeOff,
+      ON: eyeOn,
+    },
+    CHECK: {
+      PRIMARY: checkBlue,
+      SECONDARY: checkGreen,
+    },
+  },
+
+  // Rating Icons
+  STAR: {
+    GRAY: starGray,
+    DARKGRAY: starDarkgray,
+    YELLOW: starYellow,
+  },
+
+  // UI Control Icons
+  ARROW: {
+    LEFT: arrowLeft,
+    RIGHT: arrowRight,
+    LIGHT: arrowLight,
+  },
+  SEARCH: search,
+  CANCEL: cancel,
+  KEBAB: kebab,
+
+  // System Notifications
   ALARM: alarm,
   NOTIFICATIONS: {
-    on: notificationsOn,
-    off: notificationsOff,
+    ON: notificationsOn,
+    OFF: notificationsOff,
   },
   ALERT: alert,
-  BOOKMARKER: {
-    active: bookmarkerActive,
-    inactive: bookmarkerInactive,
+  ERROR: error,
+
+  CHARACTER: {
+    CHICKEN: characterChicken,
+    CHICK: characterChick,
+    USER: characterUser,
+    CRY: characterCry,
   },
-  CHECK: {
-    green: checkGreen,
-    blue: checkBlue,
-  },
-  RESET: {
-    password: resetPassword,
-  },
+
   QUESTION: {
     BASE: question,
     GLOBAL: questionGlobal,
     BALLOON: questionBalloon,
   },
-  ERROR: error,
-  CANCEL: cancel,
-  INQUIRY: inquiry,
-  MAP: map,
-  POLICY: policy,
-  SEARCH: search,
-  SETTING: setting,
-  LOCATION: location,
-  HOMEPAGE: homepage,
-  BUILDING: building,
-  CHILD: child,
-  CLASS: classIcon,
-  BOSS: boss,
-  CLOCK: clock,
+
+  SHORTCUT: {
+    KINDERGARTEN: shortcutKindergarten,
+    COMMUNITY: shortcutCommunity,
+  },
+
+  // Miscellaneous
+  FAVICON: favicon,
   BROKEN_LINE: brokenLine,
-  CERTIFICATION: certification,
-  LOGOUT: logout,
-  LEAVE: leave,
 };
 
 export const IMAGE_PATHS = {
