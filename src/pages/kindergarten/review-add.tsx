@@ -4,7 +4,7 @@ import { REVIEW_TYPES, REVIEW_TYPE_LABELS } from "@/shared/constants/review";
 import PageLayout from "@/shared/ui/layout/page-layout";
 import ReviewFormManager from "@/widgets/review-editor/ui/ReviewFormManager";
 
-export default function ReviewEditorPage() {
+export default function ReviewAddPage() {
   const { id } = useParams<{ id: string }>();
   const [searchParams] = useSearchParams();
   const type = searchParams.get("type") || REVIEW_TYPES.WORK;

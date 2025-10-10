@@ -36,8 +36,8 @@ export default function KindergartenPage() {
 
   return (
     <PageLayout
-      title="원바원 | 기관 찾기"
-      description="지도와 검색을 통해 기관 찾기"
+      title="원바원 | 유치원 찾기"
+      description="지도와 검색을 통해 유치원 찾기"
       headerType="kindergarten"
       headerLogo={true}
       currentPath={URL_PATHS.KINDERGARTEN}
@@ -47,7 +47,9 @@ export default function KindergartenPage() {
       {isLoadingLocation ? (
         <KindergartenPageSkeleton />
       ) : locationError || !userLocation ? (
-        <Error type="page">위치 정보를 가져올 수 없습니다. 위치 권한을 확인해주세요.</Error>
+        <Error type="page">
+          위치 정보를 가져올 수 없습니다. 위치 권한을 확인해주세요.
+        </Error>
       ) : isLoadingKindergartens ? (
         <KindergartenPageSkeleton />
       ) : kindergartensError ? (

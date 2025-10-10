@@ -17,9 +17,11 @@ const AppleCallbackPage = lazy(() => import("@/pages/auth/apple-callback"));
 const KindergartenDetailPage = lazy(
   () => import("@/pages/kindergarten/detail")
 );
+const KindergartenReviewPage = lazy(
+  () => import("@/pages/kindergarten/review")
+);
+const ReviewAddPage = lazy(() => import("@/pages/kindergarten/review-add"));
 const AllReviewPage = lazy(() => import("@/pages/review/index"));
-const ReviewPage = lazy(() => import("@/pages/review/detail"));
-const ReviewEditorPage = lazy(() => import("@/pages/review/editor"));
 const KindergartenSearchPage = lazy(
   () => import("@/pages/search/kindergarten")
 );
@@ -76,14 +78,13 @@ const routes = {
       path: URL_PATHS.KINDERGARTEN_DETAIL,
       element: <KindergartenDetailPage />,
     },
-    // 통합 리뷰 페이지
-    { path: URL_PATHS.REVIEW, element: <AllReviewPage /> },
-    // 유치원별 리뷰 페이지
     {
       path: URL_PATHS.KINDERGARTEN_REVIEW,
-      element: <ReviewPage />,
+      element: <KindergartenReviewPage />,
     },
-    { path: URL_PATHS.REVIEW_EDITOR, element: <ReviewEditorPage /> },
+    { path: URL_PATHS.REVIEW_EDITOR, element: <ReviewAddPage /> },
+    // 리뷰 모아보기
+    { path: URL_PATHS.REVIEW, element: <AllReviewPage /> },
     // 커뮤니티
     { path: URL_PATHS.COMMUNITY, element: <CommunityPage /> },
     { path: URL_PATHS.COMMUNITY_POST_EDITOR, element: <PostEditorPage /> },
@@ -114,14 +115,6 @@ const routes = {
     { path: "*", to: URL_PATHS.ROOT },
     { path: URL_PATHS.COMMUNITY_TEACHER, to: "/community?type=teacher" },
     { path: URL_PATHS.COMMUNITY_STUDENT, to: "/community?type=pre-teacher" },
-    {
-      path: URL_PATHS.KINDERGARTEN_REVIEW_WORK,
-      to: "/kindergarten/:id/review?type=work",
-    },
-    {
-      path: URL_PATHS.KINDERGARTEN_REVIEW_LEARNING,
-      to: "/kindergarten/:id/review?type=learning",
-    },
   ],
 };
 

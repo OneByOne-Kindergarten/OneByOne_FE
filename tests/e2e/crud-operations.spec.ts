@@ -72,7 +72,7 @@ test.describe("게시글 CRUD", () => {
 
 test.describe("리뷰 CRUD", () => {
   test("근무 리뷰 생성 - 작성 폼", async ({ page }) => {
-    await page.goto("/review/editor?type=work");
+    await page.goto("/kindergarten/1/review/new?type=work");
     await page.waitForLoadState("networkidle");
 
     const currentUrl = page.url();
@@ -100,7 +100,7 @@ test.describe("리뷰 CRUD", () => {
   });
 
   test("실습 리뷰 생성 - 작성 폼", async ({ page }) => {
-    await page.goto("/review/editor?type=learning");
+    await page.goto("/kindergarten/1/review/new?type=learning");
     await page.waitForLoadState("networkidle");
 
     const currentUrl = page.url();

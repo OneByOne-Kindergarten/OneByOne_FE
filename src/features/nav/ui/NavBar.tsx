@@ -42,6 +42,11 @@ function Option({
       return true;
     }
 
+    // 현재 경로에 쿼리 파라미터가 없는데 타겟에는 있으면 비활성
+    if (!params && targetParams) {
+      return false;
+    }
+
     // 타겟의 모든 쿼리 파라미터가 현재 경로에 포함되어 있는지 확인
     if (params && targetParams) {
       const currentParams = new URLSearchParams(params);

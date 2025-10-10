@@ -36,7 +36,7 @@ const NAV_BAR_ITEMS: NavigationItem[] = [
   {
     label: "유치원",
     urlKey: "KINDERGARTEN",
-    ariaLabel: "기관 찾기 페이지로 이동",
+    ariaLabel: "유치원 찾기 페이지로 이동",
     dataButtonName: "유치원",
     iconPaths: SVG_PATHS.NAV.KINDERGARTEN,
   },

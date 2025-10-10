@@ -18,6 +18,10 @@ import { expect, test } from "@playwright/test";
 test.describe("로그인 폼 검증", () => {
   test("빈 필드 검증", async ({ page }) => {
     await page.goto("/signin");
+    await page.waitForLoadState("networkidle");
+
+    // 페이지가 완전히 로드될 때까지 추가 대기
+    await page.waitForTimeout(2000);
 
     // 입력하지 않은 상태에서 로그인 버튼이 비활성화되어 있는지 확인
     const loginButton = page.locator('button[type="submit"]');
@@ -29,6 +33,10 @@ test.describe("로그인 폼 검증", () => {
 
   test("잘못된 이메일 형식", async ({ page }) => {
     await page.goto("/signin");
+    await page.waitForLoadState("networkidle");
+
+    // 페이지가 완전히 로드될 때까지 추가 대기
+    await page.waitForTimeout(2000);
 
     const emailInput = page.locator('input[name="email"]');
     const passwordInput = page.locator('input[name="password"]');
@@ -45,6 +53,10 @@ test.describe("로그인 폼 검증", () => {
 
   test("잘못된 비밀번호 형식", async ({ page }) => {
     await page.goto("/signin");
+    await page.waitForLoadState("networkidle");
+
+    // 페이지가 완전히 로드될 때까지 추가 대기
+    await page.waitForTimeout(2000);
 
     const emailInput = page.locator('input[name="email"]');
     const passwordInput = page.locator('input[name="password"]');
@@ -67,6 +79,10 @@ test.describe("로그인 폼 검증", () => {
 
   test("로그인 성공 플로우", async ({ page }) => {
     await page.goto("/signin");
+    await page.waitForLoadState("networkidle");
+
+    // 페이지가 완전히 로드될 때까지 추가 대기
+    await page.waitForTimeout(2000);
 
     const emailInput = page.locator('input[name="email"]');
     const passwordInput = page.locator('input[name="password"]');

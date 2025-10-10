@@ -16,13 +16,11 @@ export const URL_PATHS = {
   // 유치원
   KINDERGARTEN: "/kindergarten",
   KINDERGARTEN_DETAIL: "/kindergarten/:id",
-  // 통합 리뷰
-  REVIEW: "/review",
   // 유치원별 리뷰
-  KINDERGARTEN_REVIEW: "/kindergarten/:id/review",
-  KINDERGARTEN_REVIEW_WORK: "/kindergarten/:id/review-work",
-  KINDERGARTEN_REVIEW_LEARNING: "/kindergarten/:id/review-learning",
   REVIEW_EDITOR: "/kindergarten/:id/review/new",
+  KINDERGARTEN_REVIEW: "/kindergarten/:id/review",
+  // 전체 유치원 리뷰
+  REVIEW: "/review",
   // 신고
   REPORT: "/report",
   // 커뮤니티

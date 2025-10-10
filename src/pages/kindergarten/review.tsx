@@ -8,7 +8,7 @@ import ReviewPanel from "@/widgets/review-panel";
 
 const SCHOOL_DEFAULT_NAME = "";
 
-export default function ReviewPage() {
+export default function KindergartenReviewPage() {
   const { id: kindergartenId } = useParams<{ id: string }>();
   const safeKindergartenId = kindergartenId || "unknown";
   const { data: kindergartenData } = useKindergartenName(safeKindergartenId);
@@ -17,6 +17,7 @@ export default function ReviewPage() {
   return (
     <PageLayout
       title={`원바원 | ${safeKindergartenId} 유치원`}
+      description={`${kindergartenName} 리뷰`}
       headerTitle={kindergartenName}
       headerType="kindergarten"
       currentPath={`/kindergarten/${safeKindergartenId}/review`}

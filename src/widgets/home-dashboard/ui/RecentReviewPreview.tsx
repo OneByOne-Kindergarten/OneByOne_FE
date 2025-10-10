@@ -1,14 +1,14 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import type { WorkReview } from "@/entities/review/DTO.d";
 import { useGetRecentWorkReviews } from "@/entities/review/hooks";
-import { SVG_PATHS } from "@/shared/constants/assets-path";
 import { REVIEW_TYPES } from "@/shared/constants/review";
 import { URL_PATHS } from "@/shared/constants/url-path";
 import Empty from "@/shared/ui/layout/empty";
 import { cn } from "@/shared/utils/cn";
 import { getTotalRating } from "@/widgets/review-list/lib/getTotalRating";
 import { getWorkYear } from "@/widgets/review-list/lib/getWorkYear";
+import ReviewResource from "@/widgets/review-list/ui/ReviewResource";
 import ReviewSummary from "@/widgets/review-list/ui/ReviewSummary";
 
 export default function RecentReviewPreview() {
@@ -50,18 +50,10 @@ export default function RecentReviewPreview() {
                   )
                 }
               />
-              <Link to={`/kindergarten/${review.kindergartenId}`}>
-                <div className="mt-3 flex justify-between rounded-lg bg-primary-foreground p-3 text-left hover:opacity-70 active:opacity-70">
-                  <p className="text-xs font-medium text-primary-dark02">
-                    {review.kindergartenName}
-                  </p>
-                  <img
-                    src={SVG_PATHS.ARROW.LIGHT}
-                    alt="오른쪽 방향 화살표"
-                    className="-rotate-90"
-                  />
-                </div>
-              </Link>
+              <ReviewResource
+                kindergartenId={review.kindergartenId.toString()}
+                kindergartenName={review.kindergartenName}
+              />
             </div>
           </li>
         ))
