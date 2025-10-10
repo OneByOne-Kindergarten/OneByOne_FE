@@ -1,17 +1,12 @@
-
-
 ![구글 (1)](https://github.com/user-attachments/assets/dd908832-99fa-49c7-85c5-a1af94855423)
 
-
 <br>
-
 
 <h3 align="center">투명한 유치원 정보의 새로운 기준</h3>
 <p align="center">예비교사부터 현직 교사까지 생생한 후기와 따뜻한 조언이 있는 원바원</p>
 
 <br>
 <br>
-
 
 <p align="right">
   <a href="https://play.google.com/store/apps/details?id=com.kindergarten.onebyone.one_by_one&pcampaignid=web_share">
@@ -98,21 +93,22 @@
     </tr>
 </table>
 
-
 <br>
 <br>
 
 ## ![타이틀 아이콘3](https://github.com/user-attachments/assets/0f1d39fc-f6ed-43b4-809e-97f33e104da2) <span>기술 스택</span>
+
 ![aws ec2](https://img.shields.io/badge/aws-ec2-ffffff?style=for-the-badge)
-![story book](https://img.shields.io/badge/StoryBook-FF4785?style=for-the-badge&logo=storybook&logoColor=white) 
+![story book](https://img.shields.io/badge/StoryBook-FF4785?style=for-the-badge&logo=storybook&logoColor=white)
 ![ts](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
-![react 18](https://img.shields.io/badge/React18-000000?style=for-the-badge&logo=react&logoColor=61DAFB) 
+![react 18](https://img.shields.io/badge/React18-000000?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=yellow)
-![react query 5](https://img.shields.io/badge/ReactQuery5-FF4154?style=for-the-badge&logo=reactquery&logoColor=white) 
+![react query 5](https://img.shields.io/badge/ReactQuery5-FF4154?style=for-the-badge&logo=reactquery&logoColor=white)
 ![jotai](https://img.shields.io/badge/jotai-272934?style=for-the-badge)
-![shadcn/ui](https://img.shields.io/badge/shadcn/ui-000000?style=for-the-badge&logo=shadcnui&logoColor=white) 
+![shadcn/ui](https://img.shields.io/badge/shadcn/ui-000000?style=for-the-badge&logo=shadcnui&logoColor=white)
 ![tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![figma](https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=black)
+![sentry](https://img.shields.io/badge/sentry-362D59?style=for-the-badge&logo=sentry&logoColor=white)
 
 <br>
 <br>
@@ -141,4 +137,3 @@
 </table>
 
 <br>
-
