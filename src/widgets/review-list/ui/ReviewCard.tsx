@@ -6,6 +6,7 @@ import { userAtom } from "@/entities/auth/model";
 import { useReviewLike } from "@/entities/review/hooks";
 import Button from "@/shared/ui/buttons/base-button";
 import ReportDropDown from "@/shared/ui/drop-down/report-drop-down";
+import { ShareType } from "@/shared/utils/webViewCommunication";
 import {
   getTotalRating,
   ReviewData,
@@ -53,6 +54,9 @@ function ReviewCardItem({
 
   const isContentBlocked = !user?.hasWrittenReview;
 
+  const reviewId =
+    "workReviewId" in review ? review.workReviewId : review.internshipReviewId;
+
   return (
     <div className="flex flex-col gap-7">
       <div className="flex items-start justify-between">
@@ -64,11 +68,7 @@ function ReviewCardItem({
           workYear={getWorkYear(review, type)}
         />
         <ReportDropDown
-          targetId={
-            "workReviewId" in review
-              ? review.workReviewId
-              : review.internshipReviewId
-          }
+          targetId={reviewId}
           targetType="REVIEW"
         />
       </div>
@@ -115,6 +115,12 @@ function ReviewCardItem({
           onLike={handleLike}
           isPending={isPending}
           isLiked={isLiked}
+          shareData={{
+            title: `${review.kindergartenName} ${type === "work" ? "근무" : "실습"} 리뷰`,
+            id: reviewId.toString(),
+            isWork: type === "work",
+            shareType: ShareType.REVIEW,
+          }}
         />
       </div>
     </div>

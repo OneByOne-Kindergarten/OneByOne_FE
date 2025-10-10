@@ -50,6 +50,7 @@ interface PageLayoutProps {
   isGlobalNavBar?: boolean;
   kindergartenId?: string;
   showBookmark?: boolean;
+  showShare?: boolean;
   onSave?: () => void;
   showAlarmButton?: boolean;
 }
@@ -73,6 +74,7 @@ export default function PageLayout({
   isGlobalNavBar = true,
   kindergartenId,
   showBookmark,
+  showShare,
   onSave,
   showAlarmButton = false,
 }: PageLayoutProps) {
@@ -97,6 +99,7 @@ export default function PageLayout({
             {...headerProps}
             kindergartenId={kindergartenId}
             showBookmark={showBookmark}
+            showShare={showShare}
           />
         );
       case "save":

@@ -8,7 +8,9 @@ import {
 import { useGetFavorites } from "@/entities/favorites/hooks/useGetFavorites";
 import { SVG_PATHS } from "@/shared/constants/assets-path";
 import { URL_PATHS } from "@/shared/constants/url-path";
+import { useKakaoShare } from "@/shared/hooks/useFlutterCommunication";
 import { isValidId, safeParseId } from "@/shared/utils/idValidation";
+import { ShareType } from "@/shared/utils/webViewCommunication";
 
 import Header from "../base-header";
 
@@ -20,6 +22,7 @@ interface KindergartenHeaderProps {
   onBackButtonClick?: () => void;
   kindergartenId?: string;
   showBookmark?: boolean;
+  showShare?: boolean;
 }
 
 export default function KindergartenHeader({
@@ -30,11 +33,13 @@ export default function KindergartenHeader({
   onBackButtonClick,
   kindergartenId,
   showBookmark = false,
+  showShare = false,
 }: KindergartenHeaderProps) {
   const navigate = useNavigate();
   const [isFavorite, setIsFavorite] = useState(false);
   const [favoriteLoading, setFavoriteLoading] = useState(false);
   const { refetch } = useGetFavorites({ enabled: showBookmark });
+  const [shareToKakao] = useKakaoShare();
 
   // 즐겨찾기 상태 확인
   useEffect(() => {
@@ -84,6 +89,17 @@ export default function KindergartenHeader({
     navigate(URL_PATHS.SEARCH_KINDERGARTEN);
   };
 
+  const handleShare = async () => {
+    if (!kindergartenId || !isValidId(kindergartenId)) return;
+
+    await shareToKakao({
+      title: title || "유치원 정보",
+      id: kindergartenId,
+      isWork: true,
+      shareType: ShareType.KINDERGARTEN,
+    });
+  };
+
   return (
     <Header
       title={title}
@@ -107,6 +123,20 @@ export default function KindergartenHeader({
                   : SVG_PATHS.BOOKMARKER.inactive
               }
               alt="북마크"
+              width={24}
+              height={24}
+              className="duration-200 hover:opacity-80 active:opacity-70"
+            />
+          </button>
+        )}
+        {showShare && (
+          <button
+            onClick={handleShare}
+            aria-label="카카오톡 공유"
+          >
+            <img
+              src={SVG_PATHS.SHARE}
+              alt="공유"
               width={24}
               height={24}
               className="duration-200 hover:opacity-80 active:opacity-70"
