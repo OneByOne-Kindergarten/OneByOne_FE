@@ -13,22 +13,22 @@ const PROFILE_CONFIG: Record<
   }
 > = {
   TEACHER: {
-    image: SVG_PATHS.CHARACTER.chicken,
+    image: SVG_PATHS.CHARACTER.CHICKEN,
     altText: "교사 프로필 이미지",
     className: "bg-tertiary-2",
   },
   PROSPECTIVE_TEACHER: {
-    image: SVG_PATHS.CHARACTER.chick,
+    image: SVG_PATHS.CHARACTER.CHICK,
     altText: "예비교사 프로필 이미지",
     className: "bg-tertiary-2",
   },
   ADMIN: {
-    image: SVG_PATHS.CHARACTER.user,
+    image: SVG_PATHS.CHARACTER.USER,
     altText: "운영자 프로필 이미지",
     className: "bg-primary-normal03",
   },
   GENERAL: {
-    image: SVG_PATHS.CHARACTER.user,
+    image: SVG_PATHS.CHARACTER.USER,
     altText: "기본 프로필 이미지",
     className: "bg-primary-normal03",
   },

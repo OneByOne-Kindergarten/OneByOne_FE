@@ -67,7 +67,7 @@ export default function PostCard({
             </div>
             <div className="flex items-center gap-1">
               <img
-                src={SVG_PATHS.CHAT.line}
+                src={SVG_PATHS.CHAT.LINE}
                 alt="말풍선 아이콘"
                 width="15"
                 height="15"
@@ -76,7 +76,7 @@ export default function PostCard({
             </div>
             <div className="flex items-center gap-1">
               <img
-                src={SVG_PATHS.EYE.on}
+                src={SVG_PATHS.FORM.EYE.ON}
                 alt="조회 아이콘"
                 width="15"
                 height="15"
@@ -85,7 +85,7 @@ export default function PostCard({
             </div>
           </div>
           <div>
-            <span>
+            <span className="ml-4 line-clamp-1">
               {post.userNickname || "알 수 없는 사용자"} ·{" "}
               {formatDate(post.createdAt)}
             </span>

@@ -70,7 +70,7 @@ export default function KindergartenMarker({
         >
           {styles.showIcon ? (
             <img
-              src={SVG_PATHS.KINDERGARTEN.active}
+              src={SVG_PATHS.NAV.KINDERGARTEN.active}
               alt={establishment || "유치원"}
               className="h-4 w-4 invert"
             />

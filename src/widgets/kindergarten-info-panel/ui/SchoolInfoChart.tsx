@@ -64,7 +64,7 @@ export default function SchoolInfoChart({
   return (
     <div className="flex flex-col gap-1.5">
       <SchoolInfoItem
-        icon={SVG_PATHS.CLASS}
+        icon={SVG_PATHS.KINDERGARTEN_INFO.CLASS}
         title={title}
         altText={`${title} 아이콘`}
       />

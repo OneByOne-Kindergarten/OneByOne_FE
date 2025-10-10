@@ -19,7 +19,7 @@ export default function MenuItem({
 }: MenuItemProps) {
   const arrowIcon = (
     <img
-      src={SVG_PATHS.ARROW.right}
+      src={SVG_PATHS.ARROW.RIGHT}
       alt="오른쪽 방향 화살표 아이콘"
       width="20"
       height="20"

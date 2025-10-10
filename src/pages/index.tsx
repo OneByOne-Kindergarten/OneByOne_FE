@@ -63,7 +63,7 @@ export default function RootPage() {
           <Link to={URL_PATHS.SIGNIN}>
             <Button font="md" className="relative w-full text-black">
               <img
-                src={SVG_PATHS.EMAIL}
+                src={SVG_PATHS.KINDERGARTEN_INFO.CONTACT.EMAIL}
                 width="24"
                 height="24"
                 className="absolute left-4"

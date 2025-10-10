@@ -28,7 +28,7 @@ export default function BookmarkHeader({
     >
       <button onClick={handleBookmark} aria-label="북마크">
         <img
-          src={SVG_PATHS.BOOKMARKER.inactive}
+          src={SVG_PATHS.BOOKMARKER.INACTIVE}
           alt="북마크"
           width={24}
           height={24}

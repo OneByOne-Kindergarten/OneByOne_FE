@@ -17,8 +17,11 @@ const AppleCallbackPage = lazy(() => import("@/pages/auth/apple-callback"));
 const KindergartenDetailPage = lazy(
   () => import("@/pages/kindergarten/detail")
 );
-const ReviewPage = lazy(() => import("@/pages/review/index"));
-const ReviewEditorPage = lazy(() => import("@/pages/review/editor"));
+const KindergartenReviewPage = lazy(
+  () => import("@/pages/kindergarten/review")
+);
+const ReviewAddPage = lazy(() => import("@/pages/kindergarten/review-add"));
+const AllReviewPage = lazy(() => import("@/pages/review/index"));
 const KindergartenSearchPage = lazy(
   () => import("@/pages/search/kindergarten")
 );
@@ -26,7 +29,7 @@ const CommunitySearchPage = lazy(() => import("@/pages/search/community"));
 const CommunityPage = lazy(() => import("@/pages/community"));
 const CommunityPostPage = lazy(() => import("@/pages/community/post"));
 const PostEditorPage = lazy(() => import("@/pages/community/post-editor"));
-const FavoritesPage = lazy(() => import("@/pages/favorites"));
+const FavoritesPage = lazy(() => import("@/pages/user/favorites"));
 const UserPage = lazy(() => import("@/pages/user"));
 const ProfilePage = lazy(() => import("@/pages/user/profile"));
 const ProfileEditorPage = lazy(() => import("@/pages/user/profile-editor"));
@@ -75,14 +78,19 @@ const routes = {
       path: URL_PATHS.KINDERGARTEN_DETAIL,
       element: <KindergartenDetailPage />,
     },
-    { path: URL_PATHS.REVIEW, element: <ReviewPage /> },
-    { path: URL_PATHS.REVIEW_EDITOR, element: <ReviewEditorPage /> },
+    {
+      path: URL_PATHS.KINDERGARTEN_REVIEW,
+      element: <KindergartenReviewPage />,
+    },
+    { path: URL_PATHS.REVIEW_EDITOR, element: <ReviewAddPage /> },
+    // 리뷰 모아보기
+    { path: URL_PATHS.REVIEW, element: <AllReviewPage /> },
     // 커뮤니티
     { path: URL_PATHS.COMMUNITY, element: <CommunityPage /> },
     { path: URL_PATHS.COMMUNITY_POST_EDITOR, element: <PostEditorPage /> },
     { path: URL_PATHS.COMMUNITY_POST, element: <CommunityPostPage /> },
     // 즐겨찾기
-    { path: URL_PATHS.FAVORITES, element: <FavoritesPage /> },
+    { path: URL_PATHS.USER_FAVORITES, element: <FavoritesPage /> },
     // 프로필
     { path: URL_PATHS.USER, element: <UserPage /> },
     { path: URL_PATHS.USER_PROFILE, element: <ProfilePage /> },
@@ -107,11 +115,6 @@ const routes = {
     { path: "*", to: URL_PATHS.ROOT },
     { path: URL_PATHS.COMMUNITY_TEACHER, to: "/community?type=teacher" },
     { path: URL_PATHS.COMMUNITY_STUDENT, to: "/community?type=pre-teacher" },
-    { path: URL_PATHS.REVIEW_WORK, to: "/kindergarten/:id/review?type=work" },
-    {
-      path: URL_PATHS.REVIEW_LEARNING,
-      to: "/kindergarten/:id/review?type=learning",
-    },
   ],
 };
 

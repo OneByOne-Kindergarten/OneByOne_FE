@@ -5,6 +5,7 @@ import OneLineCommentField from "@/features/form/ui/fields/OneLineCommentField";
 import ScoredCommentField from "@/features/form/ui/fields/ScoredCommentField";
 import ToggleChoicesField from "@/features/form/ui/fields/ToggleChoicesField";
 import AlertCard from "@/shared/ui/alert/alert-card";
+import { REVIEW_COMMENT_MAX_LENGTH } from "@/shared/utils/validationSchemas";
 
 export interface WorkReviewFormValues {
   // 1 step: 근무 기간, 근무 유형, 한 줄 평가
@@ -35,7 +36,11 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
   const steps = useMemo(
     () => [
       <>
-        <OneLineCommentField control={form.control} />
+        <OneLineCommentField
+          control={form.control}
+          showCounter
+          maxLength={200}
+        />
         <ToggleChoicesField
           control={form.control}
           name="workYear"
@@ -63,30 +68,40 @@ export default function WorkReviewForm({ form, step }: WorkReviewFormProps) {
           commentName="benefitAndSalaryComment"
           scoreName="benefitAndSalaryScore"
           label="복지/급여"
+          showCounter
+          maxLength={REVIEW_COMMENT_MAX_LENGTH}
         />
         <ScoredCommentField
           control={form.control}
           commentName="workLifeBalanceComment"
           scoreName="workLifeBalanceScore"
           label="워라벨"
+          showCounter
+          maxLength={REVIEW_COMMENT_MAX_LENGTH}
         />
         <ScoredCommentField
           control={form.control}
           commentName="workEnvironmentComment"
           scoreName="workEnvironmentScore"
           label="분위기"
+          showCounter
+          maxLength={REVIEW_COMMENT_MAX_LENGTH}
         />
         <ScoredCommentField
           control={form.control}
           commentName="managerComment"
           scoreName="managerScore"
           label="관리자"
+          showCounter
+          maxLength={REVIEW_COMMENT_MAX_LENGTH}
         />
         <ScoredCommentField
           control={form.control}
           commentName="customerComment"
           scoreName="customerScore"
           label="고객"
+          showCounter
+          maxLength={REVIEW_COMMENT_MAX_LENGTH}
         />
         <AlertCard>
           <strong>익명성 보장을 위한 안내</strong> <br /> 확실한 익명 보장을

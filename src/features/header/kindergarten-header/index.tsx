@@ -1,14 +1,11 @@
-import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import {
-  checkFavoriteStatus,
-  toggleFavorite as toggleFavoriteService,
-} from "@/entities/favorites/api";
-import { useGetFavorites } from "@/entities/favorites/hooks/useGetFavorites";
 import { SVG_PATHS } from "@/shared/constants/assets-path";
 import { URL_PATHS } from "@/shared/constants/url-path";
-import { isValidId, safeParseId } from "@/shared/utils/idValidation";
+import BookmarkToggle from "@/shared/ui/buttons/bookmark-toggle";
+import ShareButton from "@/shared/ui/buttons/share-button";
+import { isValidId } from "@/shared/utils/idValidation";
+import { ShareType } from "@/shared/utils/webViewCommunication";
 
 import Header from "../base-header";
 
@@ -20,6 +17,7 @@ interface KindergartenHeaderProps {
   onBackButtonClick?: () => void;
   kindergartenId?: string;
   showBookmark?: boolean;
+  showShare?: boolean;
 }
 
 export default function KindergartenHeader({
@@ -30,55 +28,9 @@ export default function KindergartenHeader({
   onBackButtonClick,
   kindergartenId,
   showBookmark = false,
+  showShare = false,
 }: KindergartenHeaderProps) {
   const navigate = useNavigate();
-  const [isFavorite, setIsFavorite] = useState(false);
-  const [favoriteLoading, setFavoriteLoading] = useState(false);
-  const { refetch } = useGetFavorites({ enabled: showBookmark });
-
-  // 즐겨찾기 상태 확인
-  useEffect(() => {
-    if (showBookmark && kindergartenId && isValidId(kindergartenId)) {
-      fetchFavoriteStatus();
-    }
-  }, [showBookmark, kindergartenId]);
-
-  const fetchFavoriteStatus = async () => {
-    if (!kindergartenId || !isValidId(kindergartenId)) return;
-
-    const numericId = safeParseId(kindergartenId);
-    if (!numericId) return;
-
-    try {
-      const response = await checkFavoriteStatus(numericId);
-      setIsFavorite(response.data);
-    } catch (error) {
-      console.error("즐겨찾기 상태 확인 실패:", error);
-    }
-  };
-
-  // 즐겨찾기 토글
-  const handleToggleFavorite = useCallback(async () => {
-    if (!kindergartenId || favoriteLoading || !isValidId(kindergartenId))
-      return;
-
-    const numericId = safeParseId(kindergartenId);
-    if (!numericId) return;
-
-    try {
-      setFavoriteLoading(true);
-      const result = await toggleFavoriteService(numericId);
-
-      if (result.success) {
-        setIsFavorite(result.data.favorite);
-        refetch();
-      }
-    } catch (error) {
-      console.error("즐겨찾기 토글 실패:", error);
-    } finally {
-      setFavoriteLoading(false);
-    }
-  }, [kindergartenId, favoriteLoading, refetch]);
 
   const handleSearch = () => {
     navigate(URL_PATHS.SEARCH_KINDERGARTEN);
@@ -93,33 +45,27 @@ export default function KindergartenHeader({
       onBackButtonClick={onBackButtonClick}
     >
       <div className="flex items-center gap-4">
-        {showBookmark && (
-          <button
-            onClick={handleToggleFavorite}
-            aria-label={isFavorite ? "즐겨찾기 취소" : "즐겨찾기 추가"}
-            disabled={favoriteLoading}
-            className={favoriteLoading ? "opacity-50" : ""}
-          >
-            <img
-              src={
-                isFavorite
-                  ? SVG_PATHS.BOOKMARKER.active
-                  : SVG_PATHS.BOOKMARKER.inactive
-              }
-              alt="북마크"
-              width={24}
-              height={24}
-              className="duration-200 hover:opacity-80 active:opacity-70"
-            />
-          </button>
+        {showShare && kindergartenId && isValidId(kindergartenId) && (
+          <ShareButton
+            variant="icon-only"
+            iconSize={28}
+            shareData={{
+              title: title || "유치원 정보",
+              id: kindergartenId,
+              isWork: true,
+              shareType: ShareType.KINDERGARTEN,
+            }}
+          />
         )}
+        {showBookmark && <BookmarkToggle kindergartenId={kindergartenId} />}
+
         <button onClick={handleSearch} aria-label="검색">
           <img
             src={SVG_PATHS.SEARCH}
             alt="검색"
             width={24}
             height={24}
-            className="duration-200 hover:opacity-80 active:opacity-70"
+            className="duration-200 hover:opacity-80 active:opacity-60"
           />
         </button>
       </div>

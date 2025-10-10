@@ -19,7 +19,7 @@ export default function MyPostItem({ data, index, style }: MyPostItemProps) {
   const reviewType =
     "workReviewId" in review ? REVIEW_TYPES.WORK : REVIEW_TYPES.LEARNING;
 
-  const reviewUrl = `${URL_PATHS.REVIEW.replace(":id", review.kindergartenId.toString())}?type=${reviewType}`;
+  const reviewUrl = `${URL_PATHS.KINDERGARTEN_REVIEW.replace(":id", review.kindergartenId.toString())}?type=${reviewType}`;
 
   return (
     <Link to={reviewUrl} style={style} className="">

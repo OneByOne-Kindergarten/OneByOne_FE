@@ -6,6 +6,7 @@ import { userAtom } from "@/entities/auth/model";
 import { useReviewLike } from "@/entities/review/hooks";
 import Button from "@/shared/ui/buttons/base-button";
 import ReportDropDown from "@/shared/ui/drop-down/report-drop-down";
+import { ShareType } from "@/shared/utils/webViewCommunication";
 import {
   getTotalRating,
   ReviewData,
@@ -13,6 +14,7 @@ import {
 import { getWorkYear } from "@/widgets/review-list/lib/getWorkYear";
 import ReviewActions from "@/widgets/review-list/ui/ReviewActions";
 import ReviewContent from "@/widgets/review-list/ui/ReviewContent";
+import ReviewResource from "@/widgets/review-list/ui/ReviewResource";
 import ReviewSummary from "@/widgets/review-list/ui/ReviewSummary";
 import { ReviewFieldConfig } from "@/widgets/review-panel/lib/config";
 
@@ -20,16 +22,24 @@ export interface ReviewCardProps {
   review: ReviewData | ReviewData[];
   fieldConfigs: ReviewFieldConfig[];
   type: string;
+  showResource?: boolean; // 유치원 정보 링크 표시 여부 (기본값: false)
+  limitItems?: number; // ReviewContent의 아이템 수 제한 (기본값: undefined = 전체 표시)
 }
 
 function ReviewCardItem({
   review,
   fieldConfigs,
   type,
+  showResource = false,
+  limitItems,
+  isLastItem = false,
 }: {
   review: ReviewData;
   fieldConfigs: ReviewFieldConfig[];
   type: string;
+  showResource?: boolean;
+  limitItems?: number;
+  isLastItem?: boolean;
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [user] = useAtom(userAtom);
@@ -53,69 +63,85 @@ function ReviewCardItem({
 
   const isContentBlocked = !user?.hasWrittenReview;
 
+  const reviewId =
+    "workReviewId" in review ? review.workReviewId : review.internshipReviewId;
+
   return (
-    <div className="flex flex-col gap-7">
-      <div className="flex items-start justify-between">
-        <ReviewSummary
-          rating={getTotalRating(review, type)}
-          title={review.oneLineComment}
-          workType={review.workType}
-          createdAt={review.createdAt || ""}
-          workYear={getWorkYear(review, type)}
-        />
-        <ReportDropDown
-          targetId={
-            "workReviewId" in review
-              ? review.workReviewId
-              : review.internshipReviewId
-          }
-          targetType="REVIEW"
-        />
-      </div>
-
-      {isContentBlocked ? (
-        <div className="relative">
-          <div className="pointer-events-none opacity-70 blur-sm">
-            <ReviewContent
-              review={review}
-              type={type}
-              fieldConfigs={fieldConfigs}
-              isExpanded={isExpanded}
-              onToggleExpand={() => setIsExpanded(!isExpanded)}
-            />
-          </div>
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
-            <p className="text-center text-sm font-medium text-primary">
-              리뷰를 작성하고 <br /> 전체 리뷰를 확인해보세요!
-            </p>
-            <Button
-              variant="primary"
-              size="md"
-              font="sm_sb"
-              onClick={handleWriteReview}
-              className="px-4 text-primary-normal02"
-            >
-              리뷰쓰기
-            </Button>
-          </div>
+    <div
+      className={`${!isLastItem ? "border-b border-b-primary-light02 pb-7" : ""}`}
+    >
+      <div className="flex flex-col gap-7 px-5">
+        <div className="flex items-start justify-between">
+          <ReviewSummary
+            rating={getTotalRating(review, type)}
+            title={review.oneLineComment}
+            workType={review.workType}
+            createdAt={review.createdAt || ""}
+            workYear={getWorkYear(review, type)}
+          />
+          <ReportDropDown targetId={reviewId} targetType="REVIEW" />
         </div>
-      ) : (
-        <ReviewContent
-          review={review}
-          type={type}
-          fieldConfigs={fieldConfigs}
-          isExpanded={isExpanded}
-          onToggleExpand={() => setIsExpanded(!isExpanded)}
-        />
-      )}
 
-      <div className="flex justify-end">
-        <ReviewActions
-          likeCount={review.likeCount || 0}
-          onLike={handleLike}
-          isPending={isPending}
-          isLiked={isLiked}
-        />
+        {showResource && (
+          <ReviewResource
+            kindergartenId={review.kindergartenId.toString()}
+            kindergartenName={review.kindergartenName}
+            className="-mt-4"
+          />
+        )}
+
+        {isContentBlocked ? (
+          <div className="relative">
+            <div className="pointer-events-none opacity-70 blur-sm">
+              <ReviewContent
+                review={review}
+                type={type}
+                fieldConfigs={fieldConfigs}
+                isExpanded={isExpanded}
+                onToggleExpand={() => setIsExpanded(!isExpanded)}
+                limitItems={limitItems}
+              />
+            </div>
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
+              <p className="text-center text-sm font-medium text-primary">
+                리뷰를 작성하고 <br /> 전체 리뷰를 확인해보세요!
+              </p>
+              <Button
+                variant="primary"
+                size="md"
+                font="sm_sb"
+                onClick={handleWriteReview}
+                className="px-4 text-primary-normal02"
+              >
+                리뷰쓰기
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <ReviewContent
+            review={review}
+            type={type}
+            fieldConfigs={fieldConfigs}
+            isExpanded={isExpanded}
+            onToggleExpand={() => setIsExpanded(!isExpanded)}
+            limitItems={limitItems}
+          />
+        )}
+
+        <div className="flex justify-end">
+          <ReviewActions
+            likeCount={review.likeCount || 0}
+            onLike={handleLike}
+            isPending={isPending}
+            isLiked={isLiked}
+            shareData={{
+              title: `${review.kindergartenName} ${type === "work" ? "근무" : "실습"} 리뷰`,
+              id: reviewId.toString(),
+              isWork: type === "work",
+              shareType: ShareType.REVIEW,
+            }}
+          />
+        </div>
       </div>
     </div>
   );
@@ -125,11 +151,13 @@ export default function ReviewCard({
   review,
   fieldConfigs,
   type,
+  showResource = false,
+  limitItems,
 }: ReviewCardProps) {
   return (
     <div className="flex flex-col gap-8">
       {Array.isArray(review) ? (
-        review.map((item) => (
+        review.map((item, index) => (
           <ReviewCardItem
             key={
               "workReviewId" in item
@@ -139,6 +167,9 @@ export default function ReviewCard({
             review={item}
             fieldConfigs={fieldConfigs}
             type={type}
+            showResource={showResource}
+            limitItems={limitItems}
+            isLastItem={index === review.length - 1}
           />
         ))
       ) : (
@@ -146,6 +177,9 @@ export default function ReviewCard({
           review={review}
           fieldConfigs={fieldConfigs}
           type={type}
+          showResource={showResource}
+          limitItems={limitItems}
+          isLastItem={true}
         />
       )}
     </div>

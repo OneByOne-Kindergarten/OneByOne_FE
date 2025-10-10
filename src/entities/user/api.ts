@@ -4,6 +4,7 @@ import { getAccessToken, signOut } from "@/entities/auth/api";
 import { userAtom } from "@/entities/auth/model";
 import { apiCall } from "@/shared/api/utils";
 import { API_PATHS } from "@/shared/config/api";
+import { setSentryUser } from "@/shared/utils/sentryConfig";
 
 import { User, UserResponse } from "./DTO.d";
 
@@ -138,10 +139,24 @@ export const withdrawUser = async (): Promise<boolean> => {
 
 export const setUserInfo = (user: User | null): void => {
   jotaiStore.set(userAtom, user);
+
+  // Sentry에 사용자 정보 설정
+  setSentryUser(
+    user
+      ? {
+          userId: user.userId,
+          nickname: user.nickname,
+          role: user.role,
+        }
+      : null
+  );
 };
 
 export const clearUserInfo = (): void => {
   jotaiStore.set(userAtom, null);
+
+  // Sentry에서 사용자 정보 제거
+  setSentryUser(null);
 };
 
 /**

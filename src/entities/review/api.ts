@@ -3,17 +3,22 @@ import { API_PATHS } from "@/shared/config/api";
 import type { LearningReviewFormValues } from "@/widgets/review-editor/ui/LearningReviewForm";
 import type { WorkReviewFormValues } from "@/widgets/review-editor/ui/WorkReviewForm";
 
+import { SortType } from "./DTO.d";
+
 import type {
+  InternshipReview,
   InternshipReviewResponse,
   LikeResponse,
-  SortType,
+  PaginatedReviewResponse,
+  ReviewQueryParams,
+  WorkReview,
   WorkReviewResponse,
 } from "./DTO.d";
 
 /**
  * 근무 리뷰 목록 조회
  * @param kindergartenId 유치원 ID
- * @param sortType 정렬 타입
+ * @param sortType 최신순, 인기순
  * @returns
  */
 export const getWorkReviews = async (
@@ -23,7 +28,7 @@ export const getWorkReviews = async (
   const queryParams = sortType ? `?sortType=${sortType}` : "";
   return apiCall<null, WorkReviewResponse>({
     method: "GET",
-    path: API_PATHS.WORK.GET_ALL(kindergartenId) + queryParams,
+    path: API_PATHS.WORK.GET(kindergartenId) + queryParams,
     withAuth: true,
   });
 };
@@ -31,7 +36,7 @@ export const getWorkReviews = async (
 /**
  * 실습 리뷰 목록 조회
  * @param kindergartenId 유치원 ID
- * @param sortType 정렬 타입
+ * @param sortType 최신순, 인기순
  * @returns
  */
 export const getInternshipReviews = async (
@@ -41,7 +46,7 @@ export const getInternshipReviews = async (
   const queryParams = sortType ? `?sortType=${sortType}` : "";
   return apiCall<null, InternshipReviewResponse>({
     method: "GET",
-    path: API_PATHS.INTERNSHIP.GET_ALL(kindergartenId) + queryParams,
+    path: API_PATHS.INTERNSHIP.GET(kindergartenId) + queryParams,
     withAuth: true,
   });
 };
@@ -106,6 +111,56 @@ export const likeInternshipReview = async (internshipReviewId: number) => {
   return apiCall<null, LikeResponse>({
     method: "POST",
     path: API_PATHS.INTERNSHIP.LIKE(internshipReviewId),
+    withAuth: true,
+  });
+};
+
+/**
+ * 전체 근무 리뷰 조회
+ * @param page
+ * @param size
+ * @param sortType 최신순, 인기순
+ * @returns
+ */
+export const getAllWorkReviews = async (
+  params: ReviewQueryParams = {}
+): Promise<PaginatedReviewResponse<WorkReview>> => {
+  const { page = 0, size = 10, sortType = SortType.LATEST } = params;
+
+  const queryParams = new URLSearchParams({
+    page: page.toString(),
+    size: size.toString(),
+    sortType: sortType.toString(),
+  });
+
+  return apiCall<null, PaginatedReviewResponse<WorkReview>>({
+    method: "GET",
+    path: `${API_PATHS.WORK.GET_ALL}?${queryParams.toString()}`,
+    withAuth: true,
+  });
+};
+
+/**
+ * 전체 실습 리뷰 조회
+ * @param page
+ * @param size
+ * @param sortType 최신순, 인기순
+ * @returns
+ */
+export const getAllInternshipReviews = async (
+  params: ReviewQueryParams = {}
+): Promise<PaginatedReviewResponse<InternshipReview>> => {
+  const { page = 0, size = 10, sortType = SortType.LATEST } = params;
+
+  const queryParams = new URLSearchParams({
+    page: page.toString(),
+    size: size.toString(),
+    sortType: sortType.toString(),
+  });
+
+  return apiCall<null, PaginatedReviewResponse<InternshipReview>>({
+    method: "GET",
+    path: `${API_PATHS.INTERNSHIP.GET_ALL}?${queryParams.toString()}`,
     withAuth: true,
   });
 };

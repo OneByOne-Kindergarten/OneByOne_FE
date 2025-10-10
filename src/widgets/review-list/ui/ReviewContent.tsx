@@ -9,6 +9,7 @@ interface ReviewContentProps {
   fieldConfigs: ReviewFieldConfig[];
   isExpanded: boolean;
   onToggleExpand: () => void;
+  limitItems?: number; // 표시할 아이템 수 제한 (undefined면 전체 표시)
 }
 
 export default function ReviewContent({
@@ -17,11 +18,18 @@ export default function ReviewContent({
   fieldConfigs,
   isExpanded,
   onToggleExpand,
+  limitItems,
 }: ReviewContentProps) {
   const truncateText = (text: string, maxLength: number = 40) => {
     if (text.length <= maxLength) return text;
     return text.slice(0, maxLength) + " …";
   };
+
+  // limitItems가 설정되어 있고 확장되지 않은 경우 아이템 수 제한
+  const displayedConfigs =
+    limitItems && !isExpanded
+      ? fieldConfigs.slice(0, limitItems)
+      : fieldConfigs;
 
   // 필드별 점수와 내용 가져오기
   const getFieldData = (fieldKey: string) => {
@@ -84,7 +92,7 @@ export default function ReviewContent({
   return (
     <>
       <ul className="flex flex-col gap-3">
-        {fieldConfigs.map((config) => {
+        {displayedConfigs.map((config) => {
           const { score, content } = getFieldData(config.key);
 
           return (

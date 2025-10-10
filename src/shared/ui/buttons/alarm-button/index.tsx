@@ -28,8 +28,8 @@ export default function AlarmButton({ className }: AlarmButtonProps) {
       <img
         src={
           hasUnreadAlarms
-            ? SVG_PATHS.NOTIFICATIONS.on
-            : SVG_PATHS.NOTIFICATIONS.off
+            ? SVG_PATHS.NOTIFICATIONS.ON
+            : SVG_PATHS.NOTIFICATIONS.OFF
         }
         alt="알림 아이콘"
         width={24}

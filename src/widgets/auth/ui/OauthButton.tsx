@@ -9,17 +9,17 @@ interface OauthButtonProps {
 
 const oauthConfig = {
   kakao: {
-    icon: SVG_PATHS.OAUTH.kakao,
+    icon: SVG_PATHS.AUTH.OAUTH.KAKAO,
     className: "bg-[#FAE300] text-black",
     label: "KaKao",
   },
   naver: {
-    icon: SVG_PATHS.OAUTH.naver,
+    icon: SVG_PATHS.AUTH.OAUTH.NAVER,
     className: "bg-[#20C803] text-white",
     label: "Naver",
   },
   apple: {
-    icon: SVG_PATHS.OAUTH.apple,
+    icon: SVG_PATHS.AUTH.OAUTH.APPLE,
     className: "bg-black text-white",
     label: "Apple",
   },

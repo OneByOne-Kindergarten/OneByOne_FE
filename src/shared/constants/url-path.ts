@@ -1,7 +1,5 @@
 export const URL_PATHS = {
   ROOT: "/",
-  HOME: "/home",
-  SHORTCUTS_EDITOR: "/home/shortcuts",
   // auth
   SIGNIN: "/signin",
   SIGNUP: "/signup",
@@ -9,17 +7,20 @@ export const URL_PATHS = {
   NAVER_CALLBACK: "/users/naver/callback",
   KAKAO_CALLBACK: "/users/kakao/callback",
   APPLE_CALLBACK: "/users/apple/callback",
+  // 홈
+  HOME: "/home",
+  SHORTCUTS_EDITOR: "/home/shortcuts",
   // 검색
   SEARCH_KINDERGARTEN: "/search/kindergarten",
   SEARCH_COMMUNITY: "/search/community",
   // 유치원
   KINDERGARTEN: "/kindergarten",
   KINDERGARTEN_DETAIL: "/kindergarten/:id",
-  // 유치원 - 리뷰
-  REVIEW: "/kindergarten/:id/review",
-  REVIEW_WORK: "/kindergarten/:id/review-work",
-  REVIEW_LEARNING: "/kindergarten/:id/review-learning",
+  // 유치원별 리뷰
   REVIEW_EDITOR: "/kindergarten/:id/review/new",
+  KINDERGARTEN_REVIEW: "/kindergarten/:id/review",
+  // 전체 유치원 리뷰
+  REVIEW: "/review",
   // 신고
   REPORT: "/report",
   // 커뮤니티
@@ -28,8 +29,6 @@ export const URL_PATHS = {
   COMMUNITY_STUDENT: "/community-pre-teacher",
   COMMUNITY_POST: "/community/:id",
   COMMUNITY_POST_EDITOR: "/community/new",
-  // 즐겨찾기
-  FAVORITES: "/favorites",
   // 알람
   ALARM: "/user/alarm",
   ALARM_SETTING: "/user/alarm-setting",
@@ -38,6 +37,7 @@ export const URL_PATHS = {
   USER_PROFILE: "/user/profile",
   USER_PROFILE_EDITOR: "/user/profile/editor",
   USER_POST: "/user/my-post",
+  USER_FAVORITES: "/user/favorites",
   // 프로필 - 계정 설정
   USER_PASSWORD_EDITOR: "/user/account-setting/password",
   USER_ACCOUNT_SETTING: "/user/account-setting",

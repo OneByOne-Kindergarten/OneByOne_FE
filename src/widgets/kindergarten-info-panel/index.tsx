@@ -56,7 +56,7 @@ export default function KindergartenInfoPanel({
         <ul className="flex flex-1 flex-col gap-7">
           <div className="flex flex-col gap-1.5">
             <SchoolInfoItem
-              icon={SVG_PATHS.LOCATION}
+              icon={SVG_PATHS.KINDERGARTEN_INFO.LOCATION.PIN}
               title="위치정보"
               altText="위치 아이콘"
             >
@@ -73,7 +73,7 @@ export default function KindergartenInfoPanel({
           </div>
 
           <SchoolInfoItem
-            icon={SVG_PATHS.CALL}
+            icon={SVG_PATHS.KINDERGARTEN_INFO.CONTACT.CALL}
             title="전화"
             altText="전화기 아이콘"
           >
@@ -83,7 +83,7 @@ export default function KindergartenInfoPanel({
           </SchoolInfoItem>
 
           <SchoolInfoItem
-            icon={SVG_PATHS.BUILDING}
+            icon={SVG_PATHS.KINDERGARTEN_INFO.BUILDING}
             title="설립"
             altText="건물 아이콘"
           >
@@ -118,7 +118,7 @@ export default function KindergartenInfoPanel({
 
           {kindergarten.homepage && (
             <SchoolInfoItem
-              icon={SVG_PATHS.HOMEPAGE}
+              icon={SVG_PATHS.KINDERGARTEN_INFO.CONTACT.HOMEPAGE}
               title="홈페이지"
               altText="홈 아이콘"
             >

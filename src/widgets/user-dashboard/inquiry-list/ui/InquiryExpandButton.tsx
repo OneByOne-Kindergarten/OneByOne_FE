@@ -20,7 +20,7 @@ export default function InquiryExpandButton({
       aria-label={ariaLabel}
     >
       <img
-        src={SVG_PATHS.ARROW.light}
+        src={SVG_PATHS.ARROW.LIGHT}
         width={24}
         height={24}
         alt="더보기"

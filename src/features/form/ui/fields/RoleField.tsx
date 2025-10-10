@@ -26,7 +26,7 @@ export default function RoleField({
           role="TEACHER"
           isSelected={selectedRole === "TEACHER"}
           onClick={() => onRoleChange("TEACHER")}
-          character={SVG_PATHS.CHARACTER.chicken}
+          character={SVG_PATHS.CHARACTER.CHICKEN}
           title="교사예요."
           description="교사 경력을 인증할 수 있어요!"
         />
@@ -34,7 +34,7 @@ export default function RoleField({
           role="PROSPECTIVE_TEACHER"
           isSelected={selectedRole === "PROSPECTIVE_TEACHER"}
           onClick={() => onRoleChange("PROSPECTIVE_TEACHER")}
-          character={SVG_PATHS.CHARACTER.chick}
+          character={SVG_PATHS.CHARACTER.CHICK}
           title="예비교사예요."
           description="교사를 꿈꾸는, 아직 경력이 없는 사람이에요!"
         />

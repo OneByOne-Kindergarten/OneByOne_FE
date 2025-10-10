@@ -46,7 +46,7 @@ export default function CommunityHeader({
             alt="검색"
             width={24}
             height={24}
-            className="duration-200 hover:opacity-80 active:opacity-70"
+            className="duration-200 hover:opacity-80 active:opacity-60"
           />
         </button>
         {hasWriteButton && (
@@ -56,7 +56,7 @@ export default function CommunityHeader({
             aria-label="글쓰기"
           >
             <img
-              src={SVG_PATHS.POST.create}
+              src={SVG_PATHS.POST.CREATE}
               alt="연필 아이콘"
               height={12}
               width={12}

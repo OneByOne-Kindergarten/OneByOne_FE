@@ -7,9 +7,11 @@ import { URL_PATHS } from "@/shared/constants/url-path";
 import AlertCard from "@/shared/ui/alert/alert-card";
 import Badge from "@/shared/ui/badge";
 import LikeToggle from "@/shared/ui/buttons/like-toggle";
+import ShareButton from "@/shared/ui/buttons/share-button";
 import UserActionDropDown from "@/shared/ui/drop-down/report-drop-down";
 import { getCategoryLabel } from "@/shared/utils/categoryUtils";
 import { formatDate } from "@/shared/utils/dateUtils";
+import { ShareType } from "@/shared/utils/webViewCommunication";
 import { CATEGORY_LABELS } from "@/widgets/community-feed/lib/category";
 import ChatCount from "@/widgets/community-feed/ui/ChatCount";
 
@@ -79,7 +81,7 @@ export default function Post({
           <li aria-hidden="true"> · </li>
           <li className="flex items-center gap-1">
             <img
-              src={SVG_PATHS.EYE.on}
+              src={SVG_PATHS.FORM.EYE.ON}
               alt="조회 아이콘"
               width={15}
               height={15}
@@ -97,18 +99,27 @@ export default function Post({
           count={
             commentsCount !== undefined ? commentsCount : post.commentCount
           }
-          className="w-1/2"
+          className="w-1/3"
         />
         <LikeToggle
           count={likeStatus?.likeCount || 0}
           onToggle={handleLikeToggle}
           disabled={isLiking}
           isLiked={likeStatus?.liked || false}
-          className="w-1/2"
+          className="w-1/3"
         >
           좋아요
         </LikeToggle>
-        {/* <ShareButton size="xs" className="w-1/3" /> */}
+        <ShareButton 
+          size="xs" 
+          className="w-1/3"
+          shareData={{
+            title: post.title,
+            isWork: true,
+            id: post.id.toString(),
+            shareType: ShareType.COMMUNITY,
+          }}
+        />
       </section>
     </article>
   );

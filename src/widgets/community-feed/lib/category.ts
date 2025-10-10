@@ -21,7 +21,7 @@ export const CATEGORY_ICONS = [
     href: "/community?type=teacher",
     label: "교사",
     icon: {
-      path: SVG_PATHS.CHARACTER.chicken,
+      path: SVG_PATHS.CHARACTER.CHICKEN,
       alt: "교사 아이콘",
       width: 32,
       height: 32,
@@ -31,7 +31,7 @@ export const CATEGORY_ICONS = [
     href: "/community?type=pre-teacher",
     label: "예비교사",
     icon: {
-      path: SVG_PATHS.CHARACTER.chick,
+      path: SVG_PATHS.CHARACTER.CHICK,
       alt: "예비교사 아이콘",
       width: 32,
       height: 32,

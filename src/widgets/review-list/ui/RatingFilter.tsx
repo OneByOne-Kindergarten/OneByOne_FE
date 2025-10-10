@@ -32,7 +32,7 @@ export default function RatingFilter({
         className="py-1.5 text-primary-dark01"
         size="sm"
       >
-        <img src={SVG_PATHS.STAR.darkgray} alt="드롭다운 아이콘" />
+        <img src={SVG_PATHS.STAR.DARKGRAY} alt="드롭다운 아이콘" />
         필터
       </Button>
 

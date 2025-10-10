@@ -18,7 +18,7 @@ export default function KindergartenDetailPage() {
 
   const handleBackClick = () => {
     if (location.state?.fromBookmarks) {
-      navigate(URL_PATHS.FAVORITES);
+      navigate(URL_PATHS.USER_FAVORITES);
       return;
     }
 
@@ -35,6 +35,7 @@ export default function KindergartenDetailPage() {
       wrapperBg="white"
       kindergartenId={safeId}
       showBookmark={true}
+      showShare={true}
       mainClassName="flex flex-col mt-14"
       hasBackButton={true}
       onBackButtonClick={handleBackClick}

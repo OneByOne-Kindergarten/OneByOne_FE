@@ -69,8 +69,8 @@ export default function NicknameField<T extends FieldValues>({
             );
 
             const checkIconSrc = isRandomNickname
-              ? SVG_PATHS.CHECK.blue
-              : SVG_PATHS.CHECK.green;
+              ? SVG_PATHS.FORM.CHECK.PRIMARY
+              : SVG_PATHS.FORM.CHECK.SECONDARY;
 
             return (
               <>

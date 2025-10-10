@@ -60,7 +60,7 @@ export default function SchoolSearchOrder() {
           {currentSortLabel}
         </span>
         <img
-          src={SVG_PATHS.ARROW.left}
+          src={SVG_PATHS.ARROW.LEFT}
           width={20}
           height={20}
           alt="아래 화살표"

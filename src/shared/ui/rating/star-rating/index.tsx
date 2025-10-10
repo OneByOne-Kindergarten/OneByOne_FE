@@ -36,7 +36,7 @@ export const StarIcon = React.memo(
     ...props
   }: React.ImgHTMLAttributes<HTMLImageElement> & { filled?: boolean }) => (
     <img
-      src={filled ? SVG_PATHS.STAR.yellow : SVG_PATHS.STAR.gray}
+      src={filled ? SVG_PATHS.STAR.YELLOW : SVG_PATHS.STAR.GRAY}
       alt={filled ? "노란색 별" : "회색 별"}
       className={className}
       {...props}
