@@ -1,11 +1,14 @@
 export const formatDate = (dateString: string): string => {
-  // 현재 시간을 KST로 변환
   const now = new Date();
   const date = new Date(dateString);
 
-  // UTC를 KST로 변환 (UTC+9)
-  const kstDate = new Date(date.getTime() + 9 * 60 * 60 * 1000);
-  const diffInSeconds = Math.floor((now.getTime() - kstDate.getTime()) / 1000);
+  // 시간 차이 계산 (밀리초 -> 초)
+  const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+
+  // 음수인 경우 (미래 시간) 0으로 처리
+  if (diffInSeconds < 0) {
+    return "방금 전";
+  }
 
   if (diffInSeconds < 60) {
     return `${diffInSeconds}초 전`;
@@ -19,7 +22,7 @@ export const formatDate = (dateString: string): string => {
     const days = Math.floor(diffInSeconds / 86400);
     return `${days}일 전`;
   } else {
-    return kstDate.toLocaleDateString("ko-KR", {
+    return date.toLocaleDateString("ko-KR", {
       year: "2-digit",
       month: "2-digit",
       day: "2-digit",
@@ -29,11 +32,9 @@ export const formatDate = (dateString: string): string => {
 
 export const formatYearMonth = (dateString: string): string => {
   const date = new Date(dateString);
-  // UTC를 KST로 변환 (UTC+9)
-  const kstDate = new Date(date.getTime() + 9 * 60 * 60 * 1000);
 
-  const year = kstDate.getFullYear();
-  const month = String(kstDate.getMonth() + 1).padStart(2, "0");
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
 
   return `${year}.${month}`;
 };
