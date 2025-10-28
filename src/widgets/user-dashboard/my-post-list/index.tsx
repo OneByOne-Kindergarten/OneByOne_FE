@@ -13,8 +13,8 @@ import { MY_REVIEW_CATEGORY_OPTIONS } from "@/widgets/user-dashboard/my-post-lis
 import type { MyReviewData } from "@/widgets/user-dashboard/my-post-list/lib/types";
 import MyPostItem from "@/widgets/user-dashboard/my-post-list/ui/MyPostItem";
 
-const ITEM_HEIGHT = 110;
-const LIST_HEIGHT = 690;
+const ITEM_HEIGHT = 120;
+const LIST_HEIGHT = 710;
 
 export default function MyPostList() {
   const [searchParams] = useSearchParams();

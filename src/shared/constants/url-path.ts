@@ -18,6 +18,7 @@ export const URL_PATHS = {
   KINDERGARTEN_DETAIL: "/kindergarten/:id",
   // 유치원별 리뷰
   REVIEW_EDITOR: "/kindergarten/:id/review/new",
+  REVIEW_EDIT: "/kindergarten/:id/review/edit",
   KINDERGARTEN_REVIEW: "/kindergarten/:id/review",
   // 전체 유치원 리뷰
   REVIEW: "/review",

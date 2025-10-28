@@ -20,7 +20,7 @@ const KindergartenDetailPage = lazy(
 const KindergartenReviewPage = lazy(
   () => import("@/pages/kindergarten/review")
 );
-const ReviewAddPage = lazy(() => import("@/pages/kindergarten/review-add"));
+const ReviewEditorPage = lazy(() => import("@/pages/kindergarten/review-add"));
 const AllReviewPage = lazy(() => import("@/pages/review/index"));
 const KindergartenSearchPage = lazy(
   () => import("@/pages/search/kindergarten")
@@ -82,7 +82,8 @@ const routes = {
       path: URL_PATHS.KINDERGARTEN_REVIEW,
       element: <KindergartenReviewPage />,
     },
-    { path: URL_PATHS.REVIEW_EDITOR, element: <ReviewAddPage /> },
+    { path: URL_PATHS.REVIEW_EDITOR, element: <ReviewEditorPage /> },
+    { path: URL_PATHS.REVIEW_EDIT, element: <ReviewEditorPage /> },
     // 리뷰 모아보기
     { path: URL_PATHS.REVIEW, element: <AllReviewPage /> },
     // 커뮤니티

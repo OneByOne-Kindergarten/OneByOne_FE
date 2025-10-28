@@ -116,6 +116,58 @@ export const likeInternshipReview = async (internshipReviewId: number) => {
 };
 
 /**
+ * 근무 리뷰 수정
+ * @param workReviewId 근무 리뷰 ID
+ * @param data 근무 리뷰 수정 요청 데이터
+ * @returns
+ */
+export const updateWorkReview = async (
+  workReviewId: number,
+  data: WorkReviewFormValues & { kindergartenId: number }
+): Promise<LikeResponse> => {
+  return apiCall<
+    WorkReviewFormValues & { kindergartenId: number; workReviewId: number },
+    LikeResponse
+  >({
+    method: "PUT",
+    path: API_PATHS.WORK.BASE,
+    data: {
+      ...data,
+      workReviewId,
+    },
+    withAuth: true,
+  });
+};
+
+/**
+ * 실습 리뷰 수정
+ * @param internshipReviewId 실습 리뷰 ID
+ * @param data 실습 리뷰 수정 요청 데이터
+ * @returns
+ */
+export const updateInternshipReview = async (
+  internshipReviewId: number,
+  data: LearningReviewFormValues & { kindergartenId: number; workType: string }
+): Promise<LikeResponse> => {
+  return apiCall<
+    LearningReviewFormValues & {
+      kindergartenId: number;
+      workType: string;
+      internshipReviewId: number;
+    },
+    LikeResponse
+  >({
+    method: "PUT",
+    path: API_PATHS.INTERNSHIP.BASE,
+    data: {
+      ...data,
+      internshipReviewId,
+    },
+    withAuth: true,
+  });
+};
+
+/**
  * 전체 근무 리뷰 조회
  * @param page
  * @param size

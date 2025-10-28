@@ -3,9 +3,12 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
+import type { InternshipReview, WorkReview } from "@/entities/review/DTO.d";
 import {
   useCreateInternshipReview,
   useCreateWorkReview,
+  useUpdateInternshipReview,
+  useUpdateWorkReview,
 } from "@/entities/review/hooks";
 import StepButtons from "@/features/form/ui/StepButtons";
 import { REVIEW_TYPES } from "@/shared/constants/review";
@@ -34,25 +37,88 @@ interface ReviewFormManagerProps {
   schoolId: string;
   type: string;
   onSubmitSuccess?: () => void;
+  isEditMode?: boolean;
+  initialData?: WorkReview | InternshipReview;
 }
 
 export default function ReviewFormManager({
   schoolId,
   type,
   onSubmitSuccess,
+  isEditMode = false,
+  initialData,
 }: ReviewFormManagerProps) {
   const navigate = useNavigate();
   const [stepIndex, setStepIndex] = useState(0); // 0-based index
   const createWorkReviewMutation = useCreateWorkReview();
   const createInternshipReviewMutation = useCreateInternshipReview();
+  const updateWorkReviewMutation = useUpdateWorkReview();
+  const updateInternshipReviewMutation = useUpdateInternshipReview();
+
+  // 수정 모드일 때 초기값 설정
+  const workDefaultValues = useMemo(() => {
+    if (isEditMode && initialData && "workReviewId" in initialData) {
+      return {
+        workYear: initialData.workYear,
+        workType: initialData.workType,
+        oneLineComment: initialData.oneLineComment,
+        benefitAndSalaryComment: initialData.benefitAndSalaryComment || "",
+        benefitAndSalaryScore: initialData.benefitAndSalaryScore,
+        workLifeBalanceComment: initialData.workLifeBalanceComment || "",
+        workLifeBalanceScore: initialData.workLifeBalanceScore,
+        workEnvironmentComment: initialData.workEnvironmentComment || "",
+        workEnvironmentScore: initialData.workEnvironmentScore,
+        managerComment: initialData.managerComment || "",
+        managerScore: initialData.managerScore,
+        customerComment: initialData.customerComment || "",
+        customerScore: initialData.customerScore,
+      };
+    }
+    return WORK_REVIEW_DEFAULT_VALUES;
+  }, [isEditMode, initialData]);
+
+  const learningDefaultValues = useMemo(() => {
+    if (isEditMode && initialData && "internshipReviewId" in initialData) {
+      return {
+        oneLineComment: initialData.oneLineComment,
+        workEnvironmentComment: initialData.workEnvironmentComment || "",
+        workEnvironmentScore: initialData.workEnvironmentScore,
+        learningSupportComment: initialData.learningSupportComment || "",
+        learningSupportScore: initialData.learningSupportScore,
+        instructionTeacherComment: initialData.instructionTeacherComment || "",
+        instructionTeacherScore: initialData.instructionTeacherScore,
+      };
+    }
+    return LEARNING_REVIEW_DEFAULT_VALUES;
+  }, [isEditMode, initialData]);
+
   const workReviewForm = useForm<WorkReviewFormValues>({
     resolver: zodResolver(workReviewFormSchema),
-    defaultValues: WORK_REVIEW_DEFAULT_VALUES,
+    defaultValues: workDefaultValues,
   });
   const learningReviewForm = useForm<LearningReviewFormValues>({
     resolver: zodResolver(learningReviewFormSchema),
-    defaultValues: LEARNING_REVIEW_DEFAULT_VALUES,
+    defaultValues: learningDefaultValues,
   });
+
+  // 폼 초기값 리셋 (수정 모드에서 데이터가 변경되었을 때)
+  useEffect(() => {
+    if (isEditMode && initialData) {
+      if (type === REVIEW_TYPES.WORK) {
+        workReviewForm.reset(workDefaultValues);
+      } else {
+        learningReviewForm.reset(learningDefaultValues);
+      }
+    }
+  }, [
+    isEditMode,
+    initialData,
+    type,
+    workDefaultValues,
+    learningDefaultValues,
+    workReviewForm,
+    learningReviewForm,
+  ]);
 
   // 타입 유효성 검증: type이 유효하지 않은 경우 리다이렉트
   const isTypeValid = useMemo(
@@ -74,8 +140,12 @@ export default function ReviewFormManager({
   // 전송 중 버튼 비활성화 상태
   const isSubmitting =
     type === REVIEW_TYPES.WORK
-      ? createWorkReviewMutation.isPending
-      : createInternshipReviewMutation.isPending;
+      ? isEditMode
+        ? updateWorkReviewMutation.isPending
+        : createWorkReviewMutation.isPending
+      : isEditMode
+        ? updateInternshipReviewMutation.isPending
+        : createInternshipReviewMutation.isPending;
 
   // 현재 스텝이 마지막 스텝인지 여부
   const isLastStep = stepIndex === totalSteps - 1;
@@ -100,18 +170,43 @@ export default function ReviewFormManager({
       if (type === REVIEW_TYPES.WORK) {
         const values = workReviewForm.getValues();
 
-        await createWorkReviewMutation.mutateAsync({
-          ...values,
-          kindergartenId: Number(schoolId),
-        });
+        if (isEditMode && initialData && "workReviewId" in initialData) {
+          // 수정 모드
+          await updateWorkReviewMutation.mutateAsync({
+            workReviewId: initialData.workReviewId,
+            data: {
+              ...values,
+              kindergartenId: Number(schoolId),
+            },
+          });
+        } else {
+          // 생성 모드
+          await createWorkReviewMutation.mutateAsync({
+            ...values,
+            kindergartenId: Number(schoolId),
+          });
+        }
       } else {
         const values = learningReviewForm.getValues();
 
-        await createInternshipReviewMutation.mutateAsync({
-          ...values,
-          kindergartenId: Number(schoolId),
-          workType: "실습생", // 고정값
-        });
+        if (isEditMode && initialData && "internshipReviewId" in initialData) {
+          // 수정 모드
+          await updateInternshipReviewMutation.mutateAsync({
+            internshipReviewId: initialData.internshipReviewId,
+            data: {
+              ...values,
+              kindergartenId: Number(schoolId),
+              workType: "실습생", // 고정값
+            },
+          });
+        } else {
+          // 생성 모드
+          await createInternshipReviewMutation.mutateAsync({
+            ...values,
+            kindergartenId: Number(schoolId),
+            workType: "실습생", // 고정값
+          });
+        }
       }
 
       if (onSubmitSuccess) {
