@@ -8,11 +8,11 @@ import { REVIEW_COMMENT_MAX_LENGTH } from "@/shared/utils/validationSchemas";
 
 export interface LearningReviewFormValues {
   oneLineComment: string;
-  workEnvironmentComment?: string;
+  workEnvironmentComment: string;
   workEnvironmentScore: number;
-  learningSupportComment?: string;
+  learningSupportComment: string;
   learningSupportScore: number;
-  instructionTeacherComment?: string;
+  instructionTeacherComment: string;
   instructionTeacherScore: number;
 }
 

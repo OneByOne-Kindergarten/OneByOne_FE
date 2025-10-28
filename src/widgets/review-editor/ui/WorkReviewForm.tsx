@@ -14,15 +14,15 @@ export interface WorkReviewFormValues {
   oneLineComment: string;
 
   // 2 step: 복지/급여, 워라벨, 관리자, 고객
-  benefitAndSalaryComment?: string;
+  benefitAndSalaryComment: string;
   benefitAndSalaryScore: number;
-  workLifeBalanceComment?: string;
+  workLifeBalanceComment: string;
   workLifeBalanceScore: number;
-  workEnvironmentComment?: string;
+  workEnvironmentComment: string;
   workEnvironmentScore: number;
-  managerComment?: string;
+  managerComment: string;
   managerScore: number;
-  customerComment?: string;
+  customerComment: string;
   customerScore: number;
 }
 

@@ -39,11 +39,11 @@ export default function OneLineCommentField<TFieldValues extends FieldValues>({
             </FormLabel>
             {showCounter && typeof field.value === "string" && maxLength ? (
               <span className="text-xs font-semibold text-primary-normal02">
-                *{field.value.length}/{maxLength}자
+                *{field.value.length}/{maxLength}자 (최소 8자)
               </span>
             ) : (
               <span className="text-xs font-semibold text-primary-normal02">
-                *200자 이내
+                *최소 8자, 200자 이내
               </span>
             )}
           </div>

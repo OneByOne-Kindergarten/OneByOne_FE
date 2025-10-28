@@ -13,6 +13,7 @@ const NICKNAME_PATTERN = /^[가-힣a-zA-Z0-9_]+$/;
 // 글자수 제한 상수
 export const POST_TITLE_MAX_LENGTH = 20;
 export const POST_CONTENT_MAX_LENGTH = 200;
+export const REVIEW_COMMENT_MIN_LENGTH = 8;
 export const REVIEW_COMMENT_MAX_LENGTH = 1000;
 
 // 닉네임 스키마
@@ -86,45 +87,63 @@ export const workReviewFormSchema = z.object({
   workType: z.string().optional(),
   oneLineComment: z
     .string()
-    .min(1, "제목을 입력해주세요")
+    .min(
+      REVIEW_COMMENT_MIN_LENGTH,
+      `최소 ${REVIEW_COMMENT_MIN_LENGTH}자 이상 입력해주세요`
+    )
     .max(200, "200자 이내로 입력해주세요"),
   benefitAndSalaryComment: z
     .string()
-    .optional()
-    .refine(
-      (val) => !val || val.length <= REVIEW_COMMENT_MAX_LENGTH,
+    .min(
+      REVIEW_COMMENT_MIN_LENGTH,
+      `최소 ${REVIEW_COMMENT_MIN_LENGTH}자 이상 입력해주세요`
+    )
+    .max(
+      REVIEW_COMMENT_MAX_LENGTH,
       `${REVIEW_COMMENT_MAX_LENGTH}자 이내로 입력해주세요`
     ),
   benefitAndSalaryScore: z.number().min(1, "점수를 선택해주세요").max(5),
   workLifeBalanceComment: z
     .string()
-    .optional()
-    .refine(
-      (val) => !val || val.length <= REVIEW_COMMENT_MAX_LENGTH,
+    .min(
+      REVIEW_COMMENT_MIN_LENGTH,
+      `최소 ${REVIEW_COMMENT_MIN_LENGTH}자 이상 입력해주세요`
+    )
+    .max(
+      REVIEW_COMMENT_MAX_LENGTH,
       `${REVIEW_COMMENT_MAX_LENGTH}자 이내로 입력해주세요`
     ),
   workLifeBalanceScore: z.number().min(1, "점수를 선택해주세요").max(5),
   workEnvironmentComment: z
     .string()
-    .optional()
-    .refine(
-      (val) => !val || val.length <= REVIEW_COMMENT_MAX_LENGTH,
+    .min(
+      REVIEW_COMMENT_MIN_LENGTH,
+      `최소 ${REVIEW_COMMENT_MIN_LENGTH}자 이상 입력해주세요`
+    )
+    .max(
+      REVIEW_COMMENT_MAX_LENGTH,
       `${REVIEW_COMMENT_MAX_LENGTH}자 이내로 입력해주세요`
     ),
   workEnvironmentScore: z.number().min(1, "점수를 선택해주세요").max(5),
   managerComment: z
     .string()
-    .optional()
-    .refine(
-      (val) => !val || val.length <= REVIEW_COMMENT_MAX_LENGTH,
+    .min(
+      REVIEW_COMMENT_MIN_LENGTH,
+      `최소 ${REVIEW_COMMENT_MIN_LENGTH}자 이상 입력해주세요`
+    )
+    .max(
+      REVIEW_COMMENT_MAX_LENGTH,
       `${REVIEW_COMMENT_MAX_LENGTH}자 이내로 입력해주세요`
     ),
   managerScore: z.number().min(1, "점수를 선택해주세요").max(5),
   customerComment: z
     .string()
-    .optional()
-    .refine(
-      (val) => !val || val.length <= REVIEW_COMMENT_MAX_LENGTH,
+    .min(
+      REVIEW_COMMENT_MIN_LENGTH,
+      `최소 ${REVIEW_COMMENT_MIN_LENGTH}자 이상 입력해주세요`
+    )
+    .max(
+      REVIEW_COMMENT_MAX_LENGTH,
       `${REVIEW_COMMENT_MAX_LENGTH}자 이내로 입력해주세요`
     ),
   customerScore: z.number().min(1, "점수를 선택해주세요").max(5),
@@ -133,29 +152,41 @@ export const workReviewFormSchema = z.object({
 export const learningReviewFormSchema = z.object({
   oneLineComment: z
     .string()
-    .min(1, "한 줄 평가를 입력해주세요")
+    .min(
+      REVIEW_COMMENT_MIN_LENGTH,
+      `최소 ${REVIEW_COMMENT_MIN_LENGTH}자 이상 입력해주세요`
+    )
     .max(200, "200자 이내로 입력해주세요"),
   workEnvironmentComment: z
     .string()
-    .optional()
-    .refine(
-      (val) => !val || val.length <= REVIEW_COMMENT_MAX_LENGTH,
+    .min(
+      REVIEW_COMMENT_MIN_LENGTH,
+      `최소 ${REVIEW_COMMENT_MIN_LENGTH}자 이상 입력해주세요`
+    )
+    .max(
+      REVIEW_COMMENT_MAX_LENGTH,
       `${REVIEW_COMMENT_MAX_LENGTH}자 이내로 입력해주세요`
     ),
   workEnvironmentScore: z.number().min(1, "점수를 선택해주세요").max(5),
   learningSupportComment: z
     .string()
-    .optional()
-    .refine(
-      (val) => !val || val.length <= REVIEW_COMMENT_MAX_LENGTH,
+    .min(
+      REVIEW_COMMENT_MIN_LENGTH,
+      `최소 ${REVIEW_COMMENT_MIN_LENGTH}자 이상 입력해주세요`
+    )
+    .max(
+      REVIEW_COMMENT_MAX_LENGTH,
       `${REVIEW_COMMENT_MAX_LENGTH}자 이내로 입력해주세요`
     ),
   learningSupportScore: z.number().min(1, "점수를 선택해주세요").max(5),
   instructionTeacherComment: z
     .string()
-    .optional()
-    .refine(
-      (val) => !val || val.length <= REVIEW_COMMENT_MAX_LENGTH,
+    .min(
+      REVIEW_COMMENT_MIN_LENGTH,
+      `최소 ${REVIEW_COMMENT_MIN_LENGTH}자 이상 입력해주세요`
+    )
+    .max(
+      REVIEW_COMMENT_MAX_LENGTH,
       `${REVIEW_COMMENT_MAX_LENGTH}자 이내로 입력해주세요`
     ),
   instructionTeacherScore: z.number().min(1, "점수를 선택해주세요").max(5),

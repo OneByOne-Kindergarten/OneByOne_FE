@@ -40,7 +40,10 @@ export default function ScoredCommentField<TFieldValues extends FieldValues>({
               </FormLabel>
               {showCounter && typeof field.value === "string" && maxLength && (
                 <span className="text-xs font-semibold text-primary-normal02">
-                  *{field.value.length}/{maxLength}자
+                  *{field.value.length}/{maxLength}자{" "}
+                  {field.value.length > 0 &&
+                    field.value.length < 8 &&
+                    "(최소 8자)"}
                 </span>
               )}
             </div>
@@ -49,7 +52,7 @@ export default function ScoredCommentField<TFieldValues extends FieldValues>({
                 padding="sm"
                 font="md"
                 size="auto"
-                placeholder="점수만 입력하고 내용은 생략 가능해요"
+                placeholder="최소 8글자 이상 입력해주세요."
                 value={field.value || ""}
                 maxLength={maxLength}
                 onChange={field.onChange}
