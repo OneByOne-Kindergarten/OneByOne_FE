@@ -39,7 +39,7 @@ export default function MyPostItem({ data, index, style }: MyPostItemProps) {
         workType={review.workType}
         createdAt={review.createdAt || ""}
         workYear={getWorkYear(review, reviewType)}
-        className="mx-5 border-b border-primary-light02 py-4 hover:opacity-70"
+        className="mx-5 border-b border-primary-light02 py-4 pr-10 hover:opacity-70"
       />
       <div
         className="absolute right-5 top-4"

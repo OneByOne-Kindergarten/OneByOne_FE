@@ -88,15 +88,19 @@ function ReviewCardItem({
       className={`${!isLastItem ? "border-b border-b-primary-light02 pb-7" : ""}`}
     >
       <div className="flex flex-col gap-7 px-5">
-        <div className="flex items-start justify-between">
-          <ReviewSummary
-            rating={getTotalRating(review, type)}
-            title={review.oneLineComment}
-            workType={review.workType}
-            createdAt={review.createdAt || ""}
-            workYear={getWorkYear(review, type)}
-          />
-          <ReportDropDown targetId={reviewId} targetType="REVIEW" />
+        <div className="flex items-start justify-between gap-2">
+          <div className="min-w-0 flex-1">
+            <ReviewSummary
+              rating={getTotalRating(review, type)}
+              title={review.oneLineComment}
+              workType={review.workType}
+              createdAt={review.createdAt || ""}
+              workYear={getWorkYear(review, type)}
+            />
+          </div>
+          <div className="flex-shrink-0">
+            <ReportDropDown targetId={reviewId} targetType="REVIEW" />
+          </div>
         </div>
 
         {showResource && (
@@ -153,7 +157,7 @@ function ReviewCardItem({
             isLiked={localIsLiked}
             shareData={{
               title: `${review.kindergartenName} ${type === "work" ? "근무" : "실습"} 리뷰`,
-              id: review.kindergartenId.toString(), // kindergartenId 전달
+              id: review.kindergartenId.toString(),
               isWork: type === "work",
               shareType: ShareType.REVIEW,
             }}
