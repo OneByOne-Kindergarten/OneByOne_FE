@@ -33,6 +33,7 @@ export const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
     "SEARCH_KINDERGARTEN",
     "KINDERGARTEN_REVIEW",
     "REVIEW_EDITOR",
+    "REVIEW_EDIT",
   ],
   COMMUNITY: [
     "COMMUNITY",
@@ -68,6 +69,7 @@ export const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
   SEARCH_COMMUNITY: [],
   KINDERGARTEN_REVIEW: [],
   REVIEW_EDITOR: [],
+  REVIEW_EDIT: [],
   SIGNIN: [],
   SIGNUP: [],
   FIND_PASSWORD: [],
