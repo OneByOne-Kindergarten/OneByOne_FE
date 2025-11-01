@@ -15,7 +15,7 @@ import OauthButton from "@/widgets/auth/ui/OauthButton";
 
 const oauthButtons = [
   { type: "kakao" as const },
-  { type: "naver" as const },
+  // { type: "naver" as const },
   { type: "apple" as const },
 ];
 
