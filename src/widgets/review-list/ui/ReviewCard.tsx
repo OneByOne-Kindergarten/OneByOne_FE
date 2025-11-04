@@ -99,7 +99,10 @@ function ReviewCardItem({
             />
           </div>
           <div className="flex-shrink-0">
-            <ReportDropDown targetId={reviewId} targetType="REVIEW" />
+            <ReportDropDown
+              targetId={reviewId}
+              targetType={type === "work" ? "WORK_REVIEW" : "INTERNSHIP_REVIEW"}
+            />
           </div>
         </div>
 

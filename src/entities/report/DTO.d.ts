@@ -1,6 +1,11 @@
 export type ReportStatus = "PENDING" | "PROCESSED" | "REJECTED" | "YET";
 
-export type ReportTargetType = "POST" | "COMMENT" | "USER" | "REVIEW";
+export type ReportTargetType =
+  | "POST"
+  | "COMMENT"
+  | "USER"
+  | "INTERNSHIP_REVIEW"
+  | "WORK_REVIEW";
 
 export interface ReportRequest {
   targetId: number;

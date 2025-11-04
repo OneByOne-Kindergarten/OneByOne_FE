@@ -30,7 +30,8 @@ const REPORT_REASONS = [
 const TARGET_TYPE_LABELS: Record<ReportTargetType, string> = {
   POST: "게시글을",
   COMMENT: "댓글을",
-  REVIEW: "리뷰를",
+  INTERNSHIP_REVIEW: "실습 리뷰를",
+  WORK_REVIEW: "근무 리뷰를",
   USER: "사용자를",
 };
 

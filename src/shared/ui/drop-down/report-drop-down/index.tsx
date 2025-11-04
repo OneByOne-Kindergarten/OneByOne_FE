@@ -5,10 +5,9 @@ import { userAtom } from "@/entities/auth/model";
 import { useBlock } from "@/entities/block/hooks";
 import { useDeleteComment } from "@/entities/community/comment/hooks";
 import { useDeletePost } from "@/entities/community/hooks";
+import type { ReportTargetType } from "@/entities/report/DTO.d";
 import { URL_PATHS } from "@/shared/constants/url-path";
 import DropDown from "@/shared/ui/drop-down/base-drop-down";
-
-type ReportTargetType = "REVIEW" | "POST" | "COMMENT";
 
 interface UserActionDropDownProps {
   targetId: number;
