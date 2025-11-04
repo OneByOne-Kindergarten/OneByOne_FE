@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { userAtom } from "@/entities/auth/model";
 import { useReviewLike } from "@/entities/review/hooks";
@@ -44,7 +44,6 @@ function ReviewCardItem({
   const [isExpanded, setIsExpanded] = useState(false);
   const [user] = useAtom(userAtom);
   const navigate = useNavigate();
-  const { id } = useParams();
 
   // 좋아요 수 낙관적 업데이트를 위한 상태
   const [localLikeCount, setLocalLikeCount] = useState(review.likeCount || 0);
@@ -69,11 +68,13 @@ function ReviewCardItem({
   };
 
   const handleWriteReview = () => {
-    if (id && user && id !== "unknown") {
+    if (review.kindergartenId && user) {
       if (user.role === "TEACHER") {
-        navigate(`/kindergarten/${id}/review/new?type=work`);
+        navigate(`/kindergarten/${review.kindergartenId}/review/new?type=work`);
       } else if (user.role === "PROSPECTIVE_TEACHER") {
-        navigate(`/kindergarten/${id}/review/new?type=learning`);
+        navigate(
+          `/kindergarten/${review.kindergartenId}/review/new?type=learning`
+        );
       }
     }
   };
