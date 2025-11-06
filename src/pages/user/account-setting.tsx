@@ -4,9 +4,9 @@ import { useSignOut, useWithdrawUser } from "@/entities/user/hooks";
 import { SVG_PATHS } from "@/shared/constants/assets-path";
 import { URL_PATHS } from "@/shared/constants/url-path";
 import PageLayout from "@/shared/ui/layout/page-layout";
+import AlertModal from "@/shared/ui/modal/alert-modal";
 import LogOutAlertModal from "@/widgets/user-dashboard/ui/LogOutAlertModal";
 import MenuItem from "@/widgets/user-dashboard/ui/MenuItem";
-import WithdrawAlertModal from "@/widgets/user-dashboard/ui/WithdrawAlertModal";
 
 export default function AccountSettingPage() {
   const [isSignOutModalOpen, setIsSignOutModalOpen] = useState(false);
@@ -55,12 +55,15 @@ export default function AccountSettingPage() {
         setIsSignOutModalOpen={setIsSignOutModalOpen}
       />
 
-      <WithdrawAlertModal
+      <AlertModal
         isOpen={isWithdrawModalOpen}
         onClose={() => setIsWithdrawModalOpen(false)}
-        onClick={() => withdraw()}
-        setIsWithdrawModalOpen={setIsWithdrawModalOpen}
-      />
+        onConfirm={() => withdraw()}
+        title="회원 탈퇴"
+        confirmText="탈퇴"
+      >
+        정말로 탈퇴하시겠어요? <br /> 탈퇴 후에는 계정을 복구할 수 없습니다.
+      </AlertModal>
     </PageLayout>
   );
 }

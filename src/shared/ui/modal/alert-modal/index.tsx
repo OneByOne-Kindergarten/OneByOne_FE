@@ -2,19 +2,23 @@ import { SVG_PATHS } from "@/shared/constants/assets-path";
 import Button from "@/shared/ui/buttons/base-button";
 import PopUpModal from "@/shared/ui/modal/pop-up";
 
-interface WithdrawAlertModalProps {
+interface AlertModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onClick: () => void;
-  setIsWithdrawModalOpen: (isOpen: boolean) => void;
+  onConfirm: () => void;
+  title: string;
+  confirmText?: string;
+  children: React.ReactNode;
 }
 
-export default function WithdrawAlertModal({
+export default function AlertModal({
   isOpen,
   onClose,
-  onClick,
-  setIsWithdrawModalOpen,
-}: WithdrawAlertModalProps) {
+  onConfirm,
+  title,
+  confirmText = "확인",
+  children,
+}: AlertModalProps) {
   return (
     <PopUpModal
       isOpen={isOpen}
@@ -29,25 +33,27 @@ export default function WithdrawAlertModal({
               height={30}
             />
           </div>
-          <p className="font-semibold text-primary-dark02">회원 탈퇴</p>
+          <p className="font-semibold text-primary-dark02">{title}</p>
         </div>
       }
       className="text-center"
+      closeOnOverlayClick={false}
       footer={
         <div className="flex flex-1 gap-2">
           <Button
             className="w-full bg-primary-dark02 text-white"
-            onClick={() => setIsWithdrawModalOpen(false)}
+            onClick={onClose}
           >
             취소
           </Button>
-          <Button variant="secondary" className="w-full" onClick={onClick}>
-            탈퇴
+          <Button variant="secondary" className="w-full" onClick={onConfirm}>
+            {confirmText}
           </Button>
         </div>
       }
     >
-      정말로 탈퇴하시겠어요? <br /> 탈퇴 후에는 계정을 복구할 수 없습니다.
+      {children}
     </PopUpModal>
   );
 }
+

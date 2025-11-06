@@ -12,12 +12,15 @@ export const API_PATHS = {
     GET_ALL: "/internship/reviews", // 전체 실습 리뷰 조회
     LIKE: (internshipReviewId: number) =>
       `/internship/review/${internshipReviewId}/like`,
+    DELETE: (internshipReviewId: number) =>
+      `/internship/review/${internshipReviewId}`,
   },
   WORK: {
     BASE: "/work/review", // 근무 리뷰 생성, 수정
     GET: (kindergartenId: number) => `/work/reviews/${kindergartenId}`,
     GET_ALL: "/work/reviews", // 전체 근무 리뷰 조회
     LIKE: (workReviewId: number) => `/work/review/${workReviewId}/like`,
+    DELETE: (workReviewId: number) => `/work/review/${workReviewId}`,
   },
   INQUIRY: {
     BASE: "/inquiry",

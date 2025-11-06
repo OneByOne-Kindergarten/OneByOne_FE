@@ -1,5 +1,7 @@
 export * from "./useCreateInternshipReview";
 export * from "./useCreateWorkReview";
+export * from "./useDeleteInternshipReview";
+export * from "./useDeleteWorkReview";
 export * from "./useGetAllReviews";
 export * from "./useGetReview";
 export * from "./useReviewLike";

@@ -15,12 +15,8 @@ import type {
   WorkReviewResponse,
 } from "./DTO.d";
 
-/**
- * 근무 리뷰 목록 조회
- * @param kindergartenId 유치원 ID
- * @param sortType 최신순, 인기순
- * @returns
- */
+// ------------------------------------------------------------------------------
+
 export const getWorkReviews = async (
   kindergartenId: number,
   sortType?: SortType
@@ -33,12 +29,6 @@ export const getWorkReviews = async (
   });
 };
 
-/**
- * 실습 리뷰 목록 조회
- * @param kindergartenId 유치원 ID
- * @param sortType 최신순, 인기순
- * @returns
- */
 export const getInternshipReviews = async (
   kindergartenId: number,
   sortType?: SortType
@@ -51,11 +41,44 @@ export const getInternshipReviews = async (
   });
 };
 
-/**
- * 실습 리뷰 생성
- * @param data 인습 리뷰 생성 요청 데이터
- * @returns
- */
+export const getAllWorkReviews = async (
+  params: ReviewQueryParams = {}
+): Promise<PaginatedReviewResponse<WorkReview>> => {
+  const { page = 0, size = 10, sortType = SortType.LATEST } = params;
+
+  const queryParams = new URLSearchParams({
+    page: page.toString(),
+    size: size.toString(),
+    sortType: sortType.toString(),
+  });
+
+  return apiCall<null, PaginatedReviewResponse<WorkReview>>({
+    method: "GET",
+    path: `${API_PATHS.WORK.GET_ALL}?${queryParams.toString()}`,
+    withAuth: true,
+  });
+};
+
+export const getAllInternshipReviews = async (
+  params: ReviewQueryParams = {}
+): Promise<PaginatedReviewResponse<InternshipReview>> => {
+  const { page = 0, size = 10, sortType = SortType.LATEST } = params;
+
+  const queryParams = new URLSearchParams({
+    page: page.toString(),
+    size: size.toString(),
+    sortType: sortType.toString(),
+  });
+
+  return apiCall<null, PaginatedReviewResponse<InternshipReview>>({
+    method: "GET",
+    path: `${API_PATHS.INTERNSHIP.GET_ALL}?${queryParams.toString()}`,
+    withAuth: true,
+  });
+};
+
+// ------------------------------------------------------------------------------
+
 export const createInternshipReview = async (
   data: LearningReviewFormValues & { kindergartenId: number; workType: string }
 ): Promise<LikeResponse> => {
@@ -70,11 +93,6 @@ export const createInternshipReview = async (
   });
 };
 
-/**
- * 근무 리뷰 생성
- * @param data 근무 리뷰 생성 요청 데이터
- * @returns
- */
 export const createWorkReview = async (
   data: WorkReviewFormValues & { kindergartenId: number }
 ): Promise<LikeResponse> => {
@@ -89,11 +107,8 @@ export const createWorkReview = async (
   });
 };
 
-/**
- * 좋아요 - 근무 리뷰
- * @param workReviewId 근무 리뷰 ID
- * @returns
- */
+// ------------------------------------------------------------------------------
+
 export const likeWorkReview = async (workReviewId: number) => {
   return apiCall<null, LikeResponse>({
     method: "POST",
@@ -102,11 +117,6 @@ export const likeWorkReview = async (workReviewId: number) => {
   });
 };
 
-/**
- * 좋아요 - 실습 리뷰
- * @param internshipReviewId 실습 리뷰 ID
- * @returns
- */
 export const likeInternshipReview = async (internshipReviewId: number) => {
   return apiCall<null, LikeResponse>({
     method: "POST",
@@ -115,12 +125,8 @@ export const likeInternshipReview = async (internshipReviewId: number) => {
   });
 };
 
-/**
- * 근무 리뷰 수정
- * @param workReviewId 근무 리뷰 ID
- * @param data 근무 리뷰 수정 요청 데이터
- * @returns
- */
+// ------------------------------------------------------------------------------
+
 export const updateWorkReview = async (
   workReviewId: number,
   data: WorkReviewFormValues & { kindergartenId: number }
@@ -139,12 +145,6 @@ export const updateWorkReview = async (
   });
 };
 
-/**
- * 실습 리뷰 수정
- * @param internshipReviewId 실습 리뷰 ID
- * @param data 실습 리뷰 수정 요청 데이터
- * @returns
- */
 export const updateInternshipReview = async (
   internshipReviewId: number,
   data: LearningReviewFormValues & { kindergartenId: number; workType: string }
@@ -167,52 +167,24 @@ export const updateInternshipReview = async (
   });
 };
 
-/**
- * 전체 근무 리뷰 조회
- * @param page
- * @param size
- * @param sortType 최신순, 인기순
- * @returns
- */
-export const getAllWorkReviews = async (
-  params: ReviewQueryParams = {}
-): Promise<PaginatedReviewResponse<WorkReview>> => {
-  const { page = 0, size = 10, sortType = SortType.LATEST } = params;
+// ------------------------------------------------------------------------------
 
-  const queryParams = new URLSearchParams({
-    page: page.toString(),
-    size: size.toString(),
-    sortType: sortType.toString(),
-  });
-
-  return apiCall<null, PaginatedReviewResponse<WorkReview>>({
-    method: "GET",
-    path: `${API_PATHS.WORK.GET_ALL}?${queryParams.toString()}`,
+export const deleteWorkReview = async (
+  workReviewId: number
+): Promise<LikeResponse> => {
+  return apiCall<null, LikeResponse>({
+    method: "DELETE",
+    path: API_PATHS.WORK.DELETE(workReviewId),
     withAuth: true,
   });
 };
 
-/**
- * 전체 실습 리뷰 조회
- * @param page
- * @param size
- * @param sortType 최신순, 인기순
- * @returns
- */
-export const getAllInternshipReviews = async (
-  params: ReviewQueryParams = {}
-): Promise<PaginatedReviewResponse<InternshipReview>> => {
-  const { page = 0, size = 10, sortType = SortType.LATEST } = params;
-
-  const queryParams = new URLSearchParams({
-    page: page.toString(),
-    size: size.toString(),
-    sortType: sortType.toString(),
-  });
-
-  return apiCall<null, PaginatedReviewResponse<InternshipReview>>({
-    method: "GET",
-    path: `${API_PATHS.INTERNSHIP.GET_ALL}?${queryParams.toString()}`,
+export const deleteInternshipReview = async (
+  internshipReviewId: number
+): Promise<LikeResponse> => {
+  return apiCall<null, LikeResponse>({
+    method: "DELETE",
+    path: API_PATHS.INTERNSHIP.DELETE(internshipReviewId),
     withAuth: true,
   });
 };

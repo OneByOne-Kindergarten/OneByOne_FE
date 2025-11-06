@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { userAtom } from "@/entities/auth/model";
 import { useReviewLike } from "@/entities/review/hooks";
 import Button from "@/shared/ui/buttons/base-button";
-import ReportDropDown from "@/shared/ui/drop-down/report-drop-down";
+import ReviewReportDropDown from "@/shared/ui/drop-down/review-report-drop-down";
 import { ShareType } from "@/shared/utils/webViewCommunication";
 import {
   getTotalRating,
@@ -100,7 +100,7 @@ function ReviewCardItem({
             />
           </div>
           <div className="flex-shrink-0">
-            <ReportDropDown
+            <ReviewReportDropDown
               targetId={reviewId}
               targetType={type === "work" ? "WORK_REVIEW" : "INTERNSHIP_REVIEW"}
             />
