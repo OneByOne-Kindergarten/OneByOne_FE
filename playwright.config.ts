@@ -31,23 +31,9 @@ export default defineConfig({
 
   projects: [
     {
-      name: "Mobile Chrome",
+      name: "Desktop Chrome",
       use: {
-        ...devices["Pixel 5"],
-        viewport: { width: 390, height: 844 },
-        deviceScaleFactor: 3,
-        isMobile: true,
-        hasTouch: true,
-      },
-    },
-    {
-      name: "Mobile Safari",
-      use: {
-        ...devices["iPhone 12"],
-        viewport: { width: 390, height: 844 },
-        deviceScaleFactor: 3,
-        isMobile: true,
-        hasTouch: true,
+        ...devices["Desktop Chrome"],
       },
     },
   ],

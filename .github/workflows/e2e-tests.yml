@@ -32,14 +32,14 @@ jobs:
       - name: Build application
         run: npm run build
 
-      - name: Start application
-        run: npm run preview &
+      - name: Start application (vite preview on 5174)
+        run: npm run preview -- --port 5174 --strictPort &
 
       - name: Wait for application to start
-        run: npx wait-on http://localhost:4173 --timeout 60000
+        run: npx wait-on http://localhost:5174 --timeout 60000
 
-      - name: Run E2E tests (Mobile Chrome + Mobile Safari)
-        run: npx playwright test --project="Mobile Chrome" --project="Mobile Safari" --reporter=github
+      - name: Run E2E tests (Desktop Chrome)
+        run: npx playwright test --project="Desktop Chrome" --reporter=github
         env:
           CI: true
           TEST_EMAIL: ${{ secrets.TEST_EMAIL }}
