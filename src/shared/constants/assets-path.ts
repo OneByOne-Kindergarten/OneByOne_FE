@@ -75,7 +75,9 @@ import userActive from "@/app/assets/icons/user-active.svg";
 import userInactive from "@/app/assets/icons/user-inactive.svg";
 // Import statements for images
 import bannerCommunity from "@/app/assets/images/banner-community.webp";
+import bannerReviewGuide from "@/app/assets/images/banner-review-guide.webp";
 import bannerKindergarten from "@/app/assets/images/banner-school.webp";
+import bannerShareGuide from "@/app/assets/images/banner-share-guide.webp";
 import certificationImg from "@/app/assets/images/certification.webp";
 import guideProfile from "@/app/assets/images/guide-profile.webp";
 import logoInactive from "@/app/assets/images/logo-inactive.webp";
@@ -234,6 +236,8 @@ export const IMAGE_PATHS = {
   BANNER: {
     KINDERGARTEN: bannerKindergarten,
     COMMUNITY: bannerCommunity,
+    REVIEW_GUIDE: bannerReviewGuide,
+    SHARE_GUIDE: bannerShareGuide,
   },
   CERTIFICATION: certificationImg,
   GUIDE: {
