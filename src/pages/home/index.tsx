@@ -1,8 +1,9 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { IMAGE_PATHS } from "@/shared/constants/assets-path";
 import { URL_PATHS } from "@/shared/constants/url-path";
 import Toggle from "@/shared/ui/buttons/base-toggle";
+import HomeCarousel from "@/shared/ui/carousel/home-carousel";
 import QueryErrorBoundary from "@/shared/ui/layout/error/QueryErrorBoundary";
 import PageLayout from "@/shared/ui/layout/page-layout";
 import NoticeCard from "@/widgets/home-dashboard/ui/NoticeCard";
@@ -29,18 +30,7 @@ export default function HomePage() {
     >
       <section className="flex flex-col gap-4">
         <NoticeCard />
-        <Link
-          to={URL_PATHS.KINDERGARTEN}
-          className="block overflow-hidden rounded-3xl"
-        >
-          <img
-            src={IMAGE_PATHS.BANNER.KINDERGARTEN}
-            alt="유치원 찾기 배너"
-            width={335}
-            height={190}
-            className="h-full w-full object-cover transition-all duration-300 ease-out hover:scale-110 active:scale-110"
-          />
-        </Link>
+        <HomeCarousel />
       </section>
       <ShortCutList />
 
