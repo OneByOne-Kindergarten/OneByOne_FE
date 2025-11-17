@@ -28,13 +28,13 @@ test.describe("페이지 접근 및 UI 렌더링", () => {
     // 초기 랜딩은 애니메이션/레이아웃에 따라 body 가시성 판정이 달라질 수 있어
     // 실제 첫 화면 주요 요소(로고 또는 이메일 시작 버튼) 가시성으로 검증
     const logo = page.locator('img[alt="원바원 로고"]');
-    const emailStartButton = page.getByRole("button", { name: "Email로 시작하기" });
+    const emailStartButton = page.getByTestId("start-email-button");
 
-    if (await logo.count()) {
-      await expect(logo.first()).toBeVisible();
-    } else {
-      await expect(emailStartButton.first()).toBeVisible();
-    }
+    const hasLogo = (await logo.count()) > 0;
+    const hasCta = (await emailStartButton.count()) > 0;
+    expect(hasLogo || hasCta).toBeTruthy();
+    if (hasLogo) await expect(logo.first()).toBeVisible();
+    if (hasCta) await expect(emailStartButton.first()).toBeVisible();
 
     const buttonCount = await page.locator("button").count();
     expect(buttonCount).toBeGreaterThanOrEqual(3);
