@@ -19,15 +19,20 @@ interface HeaderProps extends VariantProps<typeof headerVariants> {
 }
 
 const headerVariants = cva(
-  "fixed top-0 z-50 gap-3 w-full min-w-80 max-w-3xl bg-white flex h-14 items-center px-5 font-bold text-lg",
+  "fixed top-0 z-50 gap-3 w-full min-w-80 max-w-3xl flex h-14 items-center px-5 font-bold text-lg",
   {
     variants: {
+      bgColor: {
+        white: "bg-white",
+        ghost: "bg-transparent",
+      },
       hasBorder: {
         true: "border-b border-opacity-5",
         false: "",
       },
     },
     defaultVariants: {
+      bgColor: "white",
       hasBorder: true,
     },
   }
@@ -38,6 +43,7 @@ export default function Header({
   title,
   titleElement,
   headerLogo,
+  bgColor = "white",
   hasBorder = true,
   hasBackButton,
   onBackButtonClick,
@@ -50,7 +56,7 @@ export default function Header({
   });
 
   return (
-    <header className={cn(headerVariants({ hasBorder }))}>
+    <header className={cn(headerVariants({ bgColor, hasBorder }))}>
       {shouldShowBackButton && (
         <button
           onClick={(e) => {
