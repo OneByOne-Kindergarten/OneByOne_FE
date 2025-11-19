@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
 
+import HomeCarousel from "@/features/home-carousel";
 import { IMAGE_PATHS } from "@/shared/constants/assets-path";
 import { URL_PATHS } from "@/shared/constants/url-path";
 import Toggle from "@/shared/ui/buttons/base-toggle";
-import HomeCarousel from "@/shared/ui/carousel/home-carousel";
 import QueryErrorBoundary from "@/shared/ui/layout/error/QueryErrorBoundary";
 import PageLayout from "@/shared/ui/layout/page-layout";
 import NoticeCard from "@/widgets/home-dashboard/ui/NoticeCard";

@@ -61,7 +61,11 @@ export default function RootPage() {
             <OauthButton key={button.type} type={button.type} />
           ))}
           <Link to={URL_PATHS.SIGNIN}>
-            <Button font="md" className="relative w-full text-black">
+            <Button
+              font="md"
+              className="relative w-full text-black"
+              data-testid="start-email-button"
+            >
               <img
                 src={SVG_PATHS.KINDERGARTEN_INFO.CONTACT.EMAIL}
                 width="24"

@@ -26,7 +26,7 @@ export const isCommunityPost = (currentPath: string): boolean => {
  */
 export const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
   ROOT: [],
-  HOME: ["HOME", "SHORTCUTS_EDITOR"],
+  HOME: ["HOME", "LANDING_SHARE", "SHORTCUTS_EDITOR"],
   KINDERGARTEN: [
     "KINDERGARTEN",
     "KINDERGARTEN_DETAIL",
@@ -56,6 +56,7 @@ export const URL_GROUPS: Record<UrlKeys, UrlKeys[]> = {
     "USER_FAVORITES",
   ],
   // 나머지는 단순 매핑용
+  LANDING_SHARE: [],
   INQUIRY: ["INQUIRY_PUBLIC", "INQUIRY_MY", "INQUIRY_EDITOR"],
   USER_PROFILE: ["USER_PROFILE_EDITOR"],
   USER_ACCOUNT_SETTING: ["USER_PASSWORD_EDITOR"],

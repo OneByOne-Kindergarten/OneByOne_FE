@@ -7,9 +7,14 @@ export const URL_PATHS = {
   NAVER_CALLBACK: "/users/naver/callback",
   KAKAO_CALLBACK: "/users/kakao/callback",
   APPLE_CALLBACK: "/users/apple/callback",
+  // 공지사항
+  NOTICE: "/user/notice",
+  NOTICE_DETAIL: "/user/notice/:id",
   // 홈
   HOME: "/home",
   SHORTCUTS_EDITOR: "/home/shortcuts",
+  // 랜딩
+  LANDING_SHARE: "/share",
   // 검색
   SEARCH_KINDERGARTEN: "/search/kindergarten",
   SEARCH_COMMUNITY: "/search/community",
@@ -44,9 +49,6 @@ export const URL_PATHS = {
   USER_ACCOUNT_SETTING: "/user/account-setting",
   // 프로필 - 차단 설정
   BLOCK: "/user/block",
-  // 프로필 - 공지사항
-  NOTICE: "/user/notice",
-  NOTICE_DETAIL: "/user/notice/:id",
   // 프로필 - 문의사항
   INQUIRY: "/user/inquiry",
   INQUIRY_PUBLIC: "/user/inquiry/public",

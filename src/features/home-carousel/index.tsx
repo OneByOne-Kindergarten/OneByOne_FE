@@ -24,13 +24,13 @@ const HOME_BANNER_ITEMS = [
     id: "banner-review-guide",
     src: IMAGE_PATHS.BANNER.REVIEW_GUIDE,
     alt: "리뷰 작성 가이드 배너",
-    href: URL_PATHS.REVIEW,
+    href: URL_PATHS.NOTICE_DETAIL.replace(":id", "1"),
   },
   {
     id: "banner-share-guide",
     src: IMAGE_PATHS.BANNER.SHARE_GUIDE,
     alt: "공유 가이드 배너",
-    href: URL_PATHS.COMMUNITY,
+    href: URL_PATHS.LANDING_SHARE,
   },
 ];
 
@@ -147,7 +147,7 @@ const HomeCarousel = () => {
                   to={banner.href}
                   className={cn(
                     "block overflow-hidden rounded-xl transition-all duration-500 ease-out xl:rounded-3xl",
-                    isActive ? "opacity-100" : "opacity-40"
+                    isActive ? "opacity-100" : "opacity-30"
                   )}
                 >
                   <img

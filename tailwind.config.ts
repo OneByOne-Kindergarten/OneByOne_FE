@@ -49,8 +49,11 @@ export default {
         },
         tertiary: {
           1: "hsl(var(--tertiary-01))",
+          1.5: "hsl(var(--tertiary-01-5))",
           2: "hsl(var(--tertiary-02))",
+          2.5: "hsl(var(--tertiary-02-5))",
           3: "hsl(var(--tertiary-03))",
+          4: "hsl(var(--tertiary-04))",
         },
         muted: {
           DEFAULT: "hsl(var(--muted))",

@@ -48,8 +48,11 @@
     --secondary-dark-03: 52, 30%, 35%;
     --secondary-foreground: 51, 30%, 27%;
     --tertiary-01: 214, 100%, 97%;
+    --tertiary-01-5: 211, 96%, 90%;
     --tertiary-02: 213, 100%, 85%;
+    --tertiary-02-5: 211, 98%, 81%;
     --tertiary-03: 213, 78%, 68%;
+    --tertiary-04: 220, 56%, 49%;
     --muted: 0 0% 96.1%;
     --muted-foreground: 0 0% 45.1%;
     --accent: 0 0% 96.1%;

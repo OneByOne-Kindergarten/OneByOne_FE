@@ -6,6 +6,7 @@ import LoadingSpinner from "@/shared/ui/loading/loading-spinner";
 
 const RootPage = lazy(() => import("@/pages"));
 const HomePage = lazy(() => import("@/pages/home"));
+const LandingSharePage = lazy(() => import("@/pages/landing/share"));
 const ShortcutsEditorPage = lazy(() => import("@/pages/home/shortcuts-editor"));
 const KindergartenPage = lazy(() => import("@/pages/kindergarten"));
 const SignInPage = lazy(() => import("@/pages/auth/sign-in"));
@@ -66,6 +67,8 @@ const routes = {
     // 홈
     { path: URL_PATHS.HOME, element: <HomePage /> },
     { path: URL_PATHS.SHORTCUTS_EDITOR, element: <ShortcutsEditorPage /> },
+    // 랜딩
+    { path: URL_PATHS.LANDING_SHARE, element: <LandingSharePage /> },
     // 검색
     {
       path: URL_PATHS.SEARCH_KINDERGARTEN,

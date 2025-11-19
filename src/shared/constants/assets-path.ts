@@ -80,6 +80,7 @@ import bannerKindergarten from "@/app/assets/images/banner-school.webp";
 import bannerShareGuide from "@/app/assets/images/banner-share-guide.webp";
 import certificationImg from "@/app/assets/images/certification.webp";
 import guideProfile from "@/app/assets/images/guide-profile.webp";
+import landingShare from "@/app/assets/images/landing-share.webp";
 import logoInactive from "@/app/assets/images/logo-inactive.webp";
 import logoMain from "@/app/assets/images/logo-main.webp";
 import openGraph from "@/app/assets/images/open-graph.png";
@@ -232,6 +233,9 @@ export const IMAGE_PATHS = {
   LOGO: {
     MAIN: logoMain,
     INACTIVE: logoInactive,
+  },
+  LANDING: {
+    SHARE: landingShare,
   },
   BANNER: {
     KINDERGARTEN: bannerKindergarten,
