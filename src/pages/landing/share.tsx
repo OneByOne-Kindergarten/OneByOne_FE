@@ -31,21 +31,23 @@ export default function SharePage() {
       description="유치원 리뷰 카카오톡으로 공유하기"
       currentPath={URL_PATHS.LANDING_SHARE}
       headerLogo={true}
+      headerTitle=" "
+      headerBgColor="ghost"
       isGlobalNavBar={false}
       headerHasBorder={false}
       wrapperBg="white"
-      mainClassName="mt-16 flex flex-col pb-0"
+      mainClassName="mt-14 flex flex-col pb-0"
     >
       <h1 className="sr-only">유치원 리뷰 카카오톡으로 공유하기</h1>
 
       <section
-        className="bg-tertiary-2.5 w-full rounded-b-3xl px-9"
+        className="bg-tertiary-2.5 relative bottom-14 w-full rounded-b-3xl px-9 pt-8"
         aria-labelledby="share-guide-image"
       >
         <span id="share-guide-image" className="sr-only">
           유치원 리뷰 공유 가이드 이미지
         </span>
-        <div className="relative mx-auto w-full max-w-96 translate-y-5">
+        <div className="mx-auto w-full max-w-96 translate-y-5">
           <img
             src={IMAGE_PATHS.LANDING.SHARE}
             alt="유치원 리뷰 공유 가이드 이미지"
@@ -57,7 +59,7 @@ export default function SharePage() {
       </section>
 
       <section
-        className="mx-auto w-full space-y-7 px-11 py-10 text-primary-dark02"
+        className="mx-auto w-full space-y-7 px-11 pb-10 text-primary-dark02"
         aria-labelledby="share-guide-content"
       >
         <h2

@@ -17,8 +17,9 @@ import Wrapper from "@/shared/ui/layout/page-wrapper";
  * @param description Metadata, 페이지 설명
  * @param ogImage Metadata, 오픈 그래프 이미지 URL
  * @param ogUrl Metadata, 페이지 URL
- * @param headerTitle 설정하지 않을 시 헤더 표시 X
- * @param headerType 헤더 타입 (base, community, kindergarten, save, bookmark)
+ * @param headerTitle 원바원 로고 미노출 시 빈 문자열 기입
+ * @param headerType base, community, kindergarten, save, bookmark
+ * @param headerBgColor
  * @param headerHasBorder Header 하단 테두리 유무, 기본 값 true
  * @param hasBackButton 헤더에 뒤로가기 버튼 표시 여부
  * @param onBackButtonClick 뒤로가기 버튼 클릭 시 실행할 함수
@@ -40,6 +41,7 @@ interface PageLayoutProps {
   ogUrl?: string;
   headerTitle?: string;
   headerType?: "base" | "community" | "kindergarten" | "save" | "bookmark";
+  headerBgColor?: "white" | "ghost";
   headerHasBorder?: boolean;
   hasBackButton?: boolean;
   onBackButtonClick?: () => void;
@@ -64,6 +66,7 @@ export default function PageLayout({
   headerTitle,
   headerLogo,
   headerType = "base",
+  headerBgColor = "white",
   headerHasBorder,
   hasBackButton,
   onBackButtonClick,
@@ -84,6 +87,7 @@ export default function PageLayout({
     const headerProps = {
       title: headerTitle,
       headerLogo: headerLogo,
+      bgColor: headerBgColor,
       hasBorder: headerHasBorder,
       hasBackButton: hasBackButton,
       onBackButtonClick: onBackButtonClick,
