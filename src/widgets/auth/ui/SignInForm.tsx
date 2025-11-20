@@ -43,6 +43,7 @@ export default function SignInForm({
                 <FormLabel>이메일</FormLabel>
                 <FormControl>
                   <Input
+                    type="email"
                     placeholder="이메일을 입력해주세요."
                     error={!!fieldState.error}
                     {...field}

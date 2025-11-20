@@ -36,6 +36,7 @@ export default function EmailField<TFieldValues extends FieldValues>({
           <FormLabel>{label}</FormLabel>
           <FormControl>
             <Input
+              type="email"
               placeholder={placeholder}
               error={!!fieldState.error}
               disabled={disabled}
