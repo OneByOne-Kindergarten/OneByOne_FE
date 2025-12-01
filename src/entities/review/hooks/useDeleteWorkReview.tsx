@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+import { getUserInfo } from "@/entities/user/api";
 import { useToast } from "@/shared/hooks/useToast";
 
 import { deleteWorkReview } from "../api";
@@ -18,18 +19,18 @@ export const useDeleteWorkReview = () => {
     }
   >({
     mutationFn: ({ workReviewId }) => deleteWorkReview(workReviewId),
-    onSuccess: (_, variables) => {
-      // 해당 유치원의 근무 리뷰 목록을 다시 불러오기
+    onSuccess: async (_, variables) => {
       if (variables.kindergartenId) {
         queryClient.invalidateQueries({
           queryKey: ["workReviews", variables.kindergartenId.toString()],
         });
       }
 
-      // 내 게시물 목록도 갱신
       queryClient.invalidateQueries({
         queryKey: ["myPosts"],
       });
+
+      await getUserInfo();
 
       toast({
         title: "근무 리뷰 삭제 완료",

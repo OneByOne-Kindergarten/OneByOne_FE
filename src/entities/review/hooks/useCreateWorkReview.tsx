@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+import { getUserInfo } from "@/entities/user/api";
 import { useToast } from "@/shared/hooks/useToast";
 import { WorkReviewFormValues } from "@/widgets/review-editor/ui/WorkReviewForm";
 
@@ -16,11 +17,16 @@ export const useCreateWorkReview = () => {
     WorkReviewFormValues & { kindergartenId: number }
   >({
     mutationFn: createWorkReview,
-    onSuccess: (_, variables) => {
-      // 해당 유치원의 근무 리뷰 목록을 다시 불러오기
+    onSuccess: async (_, variables) => {
       queryClient.invalidateQueries({
         queryKey: ["workReviews", variables.kindergartenId.toString()],
       });
+
+      queryClient.invalidateQueries({
+        queryKey: ["myPosts"],
+      });
+
+      await getUserInfo();
 
       toast({
         title: "근무 리뷰 작성 완료",

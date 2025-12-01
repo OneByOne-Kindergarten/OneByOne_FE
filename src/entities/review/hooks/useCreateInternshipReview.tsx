@@ -1,15 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+import { getUserInfo } from "@/entities/user/api";
 import { useToast } from "@/shared/hooks/useToast";
 import { LearningReviewFormValues } from "@/widgets/review-editor/ui/LearningReviewForm";
 
 import { createInternshipReview } from "../api";
 import { LikeResponse } from "../DTO.d";
 
-/**
- * 실습 리뷰 생성 훅
- * @returns mutation 객체
- */
 export const useCreateInternshipReview = () => {
   const queryClient = useQueryClient();
   const { toast } = useToast();
@@ -20,11 +17,16 @@ export const useCreateInternshipReview = () => {
     LearningReviewFormValues & { kindergartenId: number; workType: string }
   >({
     mutationFn: createInternshipReview,
-    onSuccess: (_, variables) => {
-      // 해당 유치원의 실습 리뷰 목록을 다시 불러오기
+    onSuccess: async (_, variables) => {
       queryClient.invalidateQueries({
         queryKey: ["internshipReviews", variables.kindergartenId.toString()],
       });
+
+      queryClient.invalidateQueries({
+        queryKey: ["myPosts"],
+      });
+
+      await getUserInfo();
 
       toast({
         title: "실습 리뷰 작성 완료",
