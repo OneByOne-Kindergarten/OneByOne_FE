@@ -37,6 +37,10 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: [{ find: "@", replacement: path.resolve(__dirname, "src") }],
     },
+    optimizeDeps: {
+      include: ["leaflet", "react-leaflet"],
+      exclude: [],
+    },
     build: {
       sourcemap: true,
     },
