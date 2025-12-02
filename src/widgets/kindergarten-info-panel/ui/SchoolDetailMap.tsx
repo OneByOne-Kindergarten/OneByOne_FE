@@ -1,6 +1,6 @@
-import KakaoMap from "@/features/map";
+import LeafletMapWrapper from "@/app/providers/LeafletMapWrapper";
+import LeafletMap from "@/features/map";
 import KindergartenMapMarker from "@/features/map/ui/KindergartenMapMarker";
-import KakaoMapWrapper from "@/shared/ui/providers/KakaoMapWrapper";
 
 interface SchoolDetailMapProps {
   latitude: number;
@@ -18,11 +18,11 @@ export default function SchoolDetailMap({
   className = "",
 }: SchoolDetailMapProps) {
   return (
-    <KakaoMapWrapper height="h-64">
-      <KakaoMap
+    <LeafletMapWrapper height="h-64">
+      <LeafletMap
         latitude={latitude}
         longitude={longitude}
-        level={4}
+        level={17}
         height="h-64"
         className={className}
         showUserLocation={false}
@@ -35,7 +35,7 @@ export default function SchoolDetailMap({
           size="md"
           showLabel={true}
         />
-      </KakaoMap>
-    </KakaoMapWrapper>
+      </LeafletMap>
+    </LeafletMapWrapper>
   );
 }

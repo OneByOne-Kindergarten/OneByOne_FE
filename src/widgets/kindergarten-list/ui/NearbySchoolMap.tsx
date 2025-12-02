@@ -1,7 +1,7 @@
-import KakaoMap from "@/features/map";
+import LeafletMapWrapper from "@/app/providers/LeafletMapWrapper";
+import LeafletMap from "@/features/map";
 import { calculateMapLevel } from "@/features/map/lib/calculateMapLevel";
 import KindergartenMapMarker from "@/features/map/ui/KindergartenMapMarker";
-import KakaoMapWrapper from "@/shared/ui/providers/KakaoMapWrapper";
 
 interface KindergartenMapMarker {
   id: number;
@@ -31,8 +31,8 @@ export default function NearbySchoolMap({
 
   return (
     <section className="flex flex-col gap-3 p-5">
-      <KakaoMapWrapper height="h-80">
-        <KakaoMap
+      <LeafletMapWrapper height="h-80">
+        <LeafletMap
           latitude={latitude}
           longitude={longitude}
           level={mapLevel}
@@ -53,8 +53,8 @@ export default function NearbySchoolMap({
               }}
             />
           ))}
-        </KakaoMap>
-      </KakaoMapWrapper>
+        </LeafletMap>
+      </LeafletMapWrapper>
     </section>
   );
 }

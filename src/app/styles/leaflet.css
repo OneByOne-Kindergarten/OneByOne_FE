@@ -1,0 +1,23 @@
+/* copyright */
+.leaflet-control-attribution {
+  font-size: 8px !important;
+  opacity: 0.5;
+  padding: 1px 3px !important;
+  background: rgba(255, 255, 255, 0.6) !important;
+  pointer-events: auto;
+}
+
+.leaflet-control-attribution:hover {
+  opacity: 0.8;
+}
+
+.leaflet-control-attribution a {
+  color: #666;
+  text-decoration: none;
+}
+
+/* marker */
+.custom-kindergarten-marker {
+  background: transparent !important;
+  border: none !important;
+}

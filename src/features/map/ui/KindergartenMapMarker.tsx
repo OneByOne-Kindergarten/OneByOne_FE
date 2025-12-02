@@ -1,17 +1,67 @@
-import { CustomOverlayMap } from "react-kakao-maps-sdk";
+import { DivIcon } from "leaflet";
+import { useMemo } from "react";
+import { Marker } from "react-leaflet";
 
 import { getMarkerStyles } from "@/features/map/lib/getMarkerStyles";
-import { SVG_PATHS } from "@/shared/constants/assets-path";
 
-interface KindergartenMarkerProps {
-  latitude: number;
-  longitude: number;
+// ------------------------------------------------------------------------------
+
+const MARKER_SIZE_CONFIG = {
+  sm: {
+    size: "w-6 h-6",
+    text: "text-xs",
+    label: "text-xs p-0.5 max-w-20",
+  },
+  md: {
+    size: "w-8 h-8",
+    text: "text-xs",
+    label: "text-xs p-0.5 max-w-24",
+  },
+  lg: {
+    size: "w-10 h-10",
+    text: "text-sm",
+    label: "text-sm px-2 py-1 max-w-32",
+  },
+} as const;
+
+// 공식 문서 권장 방식
+function createMarkerHtml({
+  name,
+  establishment,
+  styles,
+  config,
+  showLabel,
+  hasOnClick,
+}: {
   name: string;
   establishment?: string;
-  onClick?: () => void;
-  size?: "sm" | "md" | "lg";
-  showLabel?: boolean;
+  styles: ReturnType<typeof getMarkerStyles>;
+  config: (typeof MARKER_SIZE_CONFIG)[keyof typeof MARKER_SIZE_CONFIG];
+  showLabel: boolean;
+  hasOnClick: boolean;
+}): string {
+  const arrowColor =
+    styles.borderColor === "transparent" ? styles.bgColor : styles.borderColor;
+
+  return `
+    <div class="flex transform flex-col items-center transition-transform hover:scale-110 ${hasOnClick ? "cursor-pointer" : ""}"
+         title="${name} (${establishment || "기타"})">
+      <div class="${config.size} flex items-center justify-center rounded-full border-2 shadow-xl"
+           style="background-color: ${styles.bgColor}; border-color: ${styles.borderColor}; color: ${styles.textColor}">
+        <span class="${config.text} font-semibold">${styles.text}</span>
+      </div>
+      <div class="h-0 w-0 border-l-2 border-r-2 border-t-4 border-transparent"
+           style="border-top-color: ${arrowColor}"></div>
+      ${
+        showLabel
+          ? `<div class="bg-white opacity-90 ${config.label} rounded shadow-md mt-0.5 font-semibold truncate">${name}</div>`
+          : ""
+      }
+    </div>
+  `;
 }
+
+// ------------------------------------------------------------------------------
 
 export default function KindergartenMarker({
   latitude,
@@ -23,85 +73,48 @@ export default function KindergartenMarker({
   showLabel = true,
 }: KindergartenMarkerProps) {
   const styles = getMarkerStyles(establishment);
+  const config = MARKER_SIZE_CONFIG[size];
 
-  const sizeConfig = {
-    sm: {
-      markerSize: "w-6 h-6",
-      textSize: "text-xs",
-      labelSize: "text-xs",
-      labelPadding: "p-0.5",
-      labelMaxWidth: "max-w-20",
-    },
-    md: {
-      markerSize: "w-8 h-8",
-      textSize: "text-xs",
-      labelSize: "text-xs",
-      labelPadding: "p-0.5",
-      labelMaxWidth: "max-w-24",
-    },
-    lg: {
-      markerSize: "w-10 h-10",
-      textSize: "text-sm",
-      labelSize: "text-sm",
-      labelPadding: "px-2 py-1",
-      labelMaxWidth: "max-w-32",
-    },
-  };
+  const markerHtml = createMarkerHtml({
+    name,
+    establishment,
+    styles,
+    config,
+    showLabel,
+    hasOnClick: !!onClick,
+  });
 
-  const config = sizeConfig[size];
+  const customIcon = useMemo(
+    () =>
+      new DivIcon({
+        html: markerHtml,
+        className: "custom-kindergarten-marker",
+        iconSize: [50, 70],
+        iconAnchor: [25, 70],
+      }),
+    [markerHtml]
+  );
 
   return (
-    <CustomOverlayMap position={{ lat: latitude, lng: longitude }} yAnchor={1}>
-      <div
-        className={`flex transform flex-col items-center transition-transform hover:scale-110 ${
-          onClick ? "cursor-pointer" : ""
-        }`}
-        onClick={onClick}
-        title={`${name} (${establishment || "기타"})`}
-      >
-        {/* 마커 아이콘 */}
-        <div
-          className={`${config.markerSize} flex items-center justify-center rounded-full border-2 shadow-xl`}
-          style={{
-            backgroundColor: styles.bgColor,
-            borderColor: styles.borderColor,
-            color: styles.textColor,
-          }}
-        >
-          {styles.showIcon ? (
-            <img
-              src={SVG_PATHS.NAV.KINDERGARTEN.active}
-              alt={establishment || "유치원"}
-              className="h-4 w-4 invert"
-            />
-          ) : (
-            <span className={`${config.textSize} font-semibold`}>
-              {styles.text}
-            </span>
-          )}
-        </div>
-
-        {/* 화살표 */}
-        <div
-          className="h-0 w-0 border-l-2 border-r-2 border-t-4 border-transparent"
-          style={{
-            borderTopColor: styles.showIcon
-              ? styles.bgColor
-              : styles.borderColor === "transparent"
-                ? styles.bgColor
-                : styles.borderColor,
-          }}
-        />
-
-        {/* 유치원 이름 라벨 */}
-        {showLabel && (
-          <div
-            className={`bg-white opacity-90 ${config.labelPadding} rounded shadow-md ${config.labelSize} mt-0.5 font-semibold ${config.labelMaxWidth} truncate`}
-          >
-            {name}
-          </div>
-        )}
-      </div>
-    </CustomOverlayMap>
+    <Marker
+      position={[latitude, longitude]}
+      icon={customIcon}
+      eventHandlers={{
+        click: () => {
+          if (onClick) onClick();
+        },
+      }}
+    />
   );
+}
+
+// ------------------------------------------------------------------------------
+interface KindergartenMarkerProps {
+  latitude: number;
+  longitude: number;
+  name: string;
+  establishment?: string;
+  onClick?: () => void;
+  size?: "sm" | "md" | "lg";
+  showLabel?: boolean;
 }
